@@ -1,0 +1,13 @@
+name: bidi
+description: BiDi algorithm for dart and flutter.
+version: 0.0.1
+repository: https://github.com/xclud/dart_bidi
+homepage: https://pwa.ir
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+
+dev_dependencies:
+  test: ^1.3.0
