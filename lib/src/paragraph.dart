@@ -2,7 +2,6 @@ library bidi;
 
 import 'dart:core';
 import 'dart:math';
-import 'char_data.dart';
 import 'character_mirror_resolver.dart';
 import 'enums.dart';
 import 'd.dart';
@@ -58,7 +57,7 @@ class Paragraph {
   String get BidiText {
     var ret = _bidi_text;
     if (_paragraph_separator != BidiChars.NotAChar) {
-      ret += _paragraph_separator;
+      ret += String.fromCharCode(_paragraph_separator);
     }
     return ret;
   }
@@ -104,7 +103,7 @@ class Paragraph {
   // set the paragraph embedding level to one; otherwise, set it to zero.
   void recalculateParagraphEmbeddingLevel() {
     for (var c in _text.codeUnits) {
-      final cType = UnicodeCharacterDataResolver.GetBidiCharacterType(c);
+      final cType = getBidiCharacterType(c);
       if (cType == BidiCharacterType.R || cType == BidiCharacterType.AL) {
         embedding_level = 1;
         break;
@@ -138,7 +137,7 @@ class Paragraph {
     for (int i = 0; i < _text.length; ++i) {
       bool x9Char = false;
       final c = _text.codeUnits[i];
-      _text_data[i]._ct = UnicodeCharacterDataResolver.GetBidiCharacterType(c);
+      _text_data[i]._ct = getBidiCharacterType(c);
       _text_data[i]._char = c;
       _text_data[i]._idx = idx;
       idx += _char_lengths[i];
@@ -198,8 +197,8 @@ class Paragraph {
       else if (c == BidiChars.PDF) {
         x9Char = true;
         if (elStack.Count > 0) {
-          embeddingLevel = elStack.Pop();
-          dos = dosStack.Pop();
+          embeddingLevel = elStack.pop();
+          dos = dosStack.pop();
         }
       }
 
@@ -326,7 +325,7 @@ class Paragraph {
       if (_text_data[i]._ct == BidiCharacterType.ET) {
         // locate end of sequence
         int runstart = i;
-        int runlimit = FindRunLimit(runstart, limit, [BidiCharacterType.ET]);
+        int runlimit = findRunLimit(runstart, limit, [BidiCharacterType.ET]);
 
         // check values at ends of sequence
         BidiCharacterType t =
@@ -335,8 +334,9 @@ class Paragraph {
         if (t != BidiCharacterType.EN)
           t = runlimit == limit ? eor : _text_data[runlimit]._ct;
 
-        if (t == BidiCharacterType.EN)
-          SetTypes(runstart, runlimit, BidiCharacterType.EN);
+        if (t == BidiCharacterType.EN) {
+          setTypes(runstart, runlimit, BidiCharacterType.EN);
+        }
 
         // continue at end of sequence
         i = runlimit;
@@ -666,8 +666,7 @@ class Paragraph {
   int getPairwiseComposition(int first, int second) {
     if (first < 0 || first > 0xFFFF || second < 0 || second > 0xFFFF)
       return BidiChars.NotAChar;
-    return UnicodeCharacterDataResolver.Compose(
-        first.toString() + second.toString());
+    return compose(first.toString() + second.toString());
   }
 
   void internalCompose(StringBuilder target, List<int> char_lengths) {
@@ -679,8 +678,7 @@ class Paragraph {
 
     char_lengths[starterPos] = char_lengths[starterPos] + 1;
 
-    UnicodeCanonicalClass lastClass =
-        UnicodeCharacterDataResolver.GetUnicodeCanonicalClass(starterCh);
+    var lastClass = getUnicodeCanonicalClass(starterCh);
 
     if (lastClass != UnicodeCanonicalClass.NR) {
       lastClass = UnicodeCanonicalClass.fromValue(
@@ -693,10 +691,9 @@ class Paragraph {
     int ch;
     for (int decompPos = compPos; decompPos < target.length; ++decompPos) {
       ch = target[decompPos];
-      final chClass = UnicodeCharacterDataResolver.GetUnicodeCanonicalClass(ch);
+      final chClass = getUnicodeCanonicalClass(ch);
       final composite = getPairwiseComposition(starterCh, ch);
-      UnicodeDecompositionType composeType =
-          UnicodeCharacterDataResolver.GetUnicodeDecompositionType(composite);
+      final composeType = getUnicodeDecompositionType(composite);
 
       if (composeType == UnicodeDecompositionType.None &&
           composite != BidiChars.NotAChar &&
@@ -741,12 +738,10 @@ class Paragraph {
 
   void GetRecursiveDecomposition(
       bool canonical, int ch, StringBuilder builder) {
-    final decomp =
-        UnicodeCharacterDataResolver.GetUnicodeDecompositionMapping(ch);
+    final decomp = getUnicodeDecompositionMapping(ch);
     if (decomp != null &&
         !(canonical &&
-            UnicodeCharacterDataResolver.GetUnicodeDecompositionType(ch) !=
-                UnicodeDecompositionType.None)) {
+            getUnicodeDecompositionType(ch) != UnicodeDecompositionType.None)) {
       for (int i = 0; i < decomp.length; ++i) {
         GetRecursiveDecomposition(canonical, decomp.codeUnits[i], builder);
       }
@@ -764,8 +759,7 @@ class Paragraph {
     _hasNSMs = false;
 
     for (int i = 0; i < _text.length; ++i) {
-      BidiCharacterType ct =
-          UnicodeCharacterDataResolver.GetBidiCharacterType(_text.codeUnits[i]);
+      final ct = getBidiCharacterType(_text.codeUnits[i]);
       _hasArabic |=
           ((ct == BidiCharacterType.AL) || (ct == BidiCharacterType.AN));
       _hasNSMs |= (ct == BidiCharacterType.NSM);
@@ -780,20 +774,17 @@ class Paragraph {
       int ch;
       for (int j = 0; j < buffer.length; ++j) {
         ch = buffer[j];
-        UnicodeCanonicalClass chClass =
-            UnicodeCharacterDataResolver.GetUnicodeCanonicalClass(ch);
+        final chClass = getUnicodeCanonicalClass(ch);
         int k = target.length; // insertion point
         if (chClass != UnicodeCanonicalClass.NR) {
           // bubble-sort combining marks as necessary
           int ch2;
           for (; k > 0; --k) {
             ch2 = target[k - 1];
-            if (UnicodeCharacterDataResolver.GetUnicodeCanonicalClass(ch2)
-                    .value <=
-                chClass.value) break;
+            if (getUnicodeCanonicalClass(ch2).value <= chClass.value) break;
           }
         }
-        target.insert(k, ch);
+        target.inserti(k, ch);
       }
     }
     return target;
@@ -842,4 +833,11 @@ class Paragraph {
       _text_data[i]._ct = newType;
     }
   }
+}
+
+class CharData {
+  int _char;
+  int _el; // 0-62 => 6
+  BidiCharacterType _ct; // 0-18 => 5
+  int _idx;
 }

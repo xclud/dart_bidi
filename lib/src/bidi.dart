@@ -64,7 +64,7 @@ List<Paragraph> splitStringToParagraphs(String logicalString) {
   final sb = StringBuilder();
   for (i = 0; i < logicalString.length; ++i) {
     final c = logicalString.codeUnits[i];
-    final cType = UnicodeCharacterDataResolver.GetBidiCharacterType(c);
+    final cType = getBidiCharacterType(c);
     if (cType == BidiCharacterType.B) {
       final p = Paragraph(sb.toString());
       p.ParagraphSeparator = c;
