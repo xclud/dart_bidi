@@ -4,7 +4,7 @@ import 'dart:core';
 import 'dart:math';
 import 'character_mirror_resolver.dart';
 import 'enums.dart';
-import 'd.dart';
+import 'shaping_resolver.dart';
 import 'stack.dart';
 import 'string_builder.dart';
 import 'unicode_character_resolver.dart';
