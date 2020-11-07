@@ -1,3 +1,7 @@
-## [0.0.1] - TODO: Add release date.
+## [1.0.0] - Nov 08, 2020.
 
-* TODO: Describe initial release.
+* First working version of BiDi.
+
+## [0.0.1] - Sep 15, 2020.
+
+* Initial release.

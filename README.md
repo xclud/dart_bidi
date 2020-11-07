@@ -1,14 +1,20 @@
 # bidi
+[![pub package](https://img.shields.io/pub/v/bidi.svg)](https://pub.dartlang.org/packages/bidi)
+Implementation of the BIDI algorithm, as described in http://www.unicode.org/reports/tr9/tr9-17.html.
 
-A new Flutter package project.
+Converts *logical* strings to their equivalent *visual* representation. Persian, Hebrow and Arabic languages (and any other RTL language) are supported.
 
 ## Getting Started
+In your `pubspec.yaml` file add:
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+```dart
+dependencies:
+  bidi: any
+```
+Then, in your code import and use the package:
+```dart
+import 'package:bidi/bidi.dart' as bidi;
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+final visual = bidi.logicalToVisual('نوشته پارسی اینجا گذاشته شود.');
+print(visual);
+```
