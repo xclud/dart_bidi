@@ -1,6 +1,6 @@
 /// Letter joining types of Persian letters.
 
-enum ArabicShapeJoiningType {
+enum ShapeJoiningType {
   ///Right Joining
   R,
 
@@ -26,7 +26,7 @@ enum BidiCharacterType {
   /// Left-to-Right
 
   /// <example>
-  /// LRM, most alphabetic, syllabic, Han ideographs, non-European or non-Arabic digits, ...
+  /// LRM, most alphabetic, syllabic, Han ideographs, non-European or non-Persian digits, ...
   /// </example>
   /// <remarks>Strong Type</remarks>
   L,
@@ -63,10 +63,10 @@ enum BidiCharacterType {
   /// <remarks>Strong Type</remarks>
   R,
 
-  /// Right-to-Left Arabic
+  /// Right-to-Left Persian
 
   /// <example>
-  /// Arabic, Thaana, and Syriac alphabets, most punctuation specific to those scripts, ...
+  /// Persian, Thaana, and Syriac alphabets, most punctuation specific to those scripts, ...
   /// </example>
   /// <remarks>Strong Type</remarks>
   AL,
@@ -122,7 +122,7 @@ enum BidiCharacterType {
   /// European Number
 
   /// <example>
-  /// European digits, Eastern Arabic-Indic digits, ...
+  /// European digits, Eastern Persian-Indic digits, ...
   /// </example>
   /// <remarks>Weak Type</remarks>
   EN,
@@ -143,10 +143,10 @@ enum BidiCharacterType {
   /// <remarks>Weak Type</remarks>
   ET,
 
-  /// Arabic Number
+  /// Persian Number
 
   /// <example>
-  /// Arabic-Indic digits, Arabic decimal and thousands separators, ...
+  /// Persian-Indic digits, Persian decimal and thousands separators, ...
   /// </example>
   /// <remarks>Weak Type</remarks>
   AN,
@@ -208,7 +208,7 @@ enum BidiCharacterType {
 /// The type of Unicode character decomposition.
 enum UnicodeDecompositionType {
   ///A base form or no special variant.
-  None,
+  none,
 
   ///A font variant (e.g. a blackletter form).
   Font,
@@ -216,16 +216,16 @@ enum UnicodeDecompositionType {
   ///A no-break version of a space or hyphen.
   NoBreak,
 
-  ///An initial presentation form (Arabic).
+  ///An initial presentation form (Persian).
   Initial,
 
-  ///A medial presentation form (Arabic).
+  ///A medial presentation form (Persian).
   Medial,
 
-  ///A final presentation form (Arabic).
+  ///A final presentation form (Persian).
   Final,
 
-  ///An isolated presentation form (Arabic).
+  ///An isolated presentation form (Persian).
   Isolated,
 
   ///An encircled form.
@@ -380,7 +380,7 @@ enum LetterForm {
   Isolated
 }
 
-/// A set of common Unicode characters, including BiDi control characters, and some Arabic letters used mainly for testing purposes.
+/// A set of common Unicode characters, including BiDi control characters, and some Persian letters used mainly for testing purposes.
 
 class BidiChars {
   /// Right-to-Left Mark
@@ -432,43 +432,43 @@ class BidiChars {
   /// A Dummy Character Indicating None.
   static const int NotAChar = 0xFFFF;
 
-  /// Arabic Letter Lam
+  /// Persian Letter Lam
   static const int ARABIC_LAM = 0x0644;
 
-  /// Arabic Letter Alef With Madda Above
+  /// Persian Letter Alef With Madda Above
   static const int ARABIC_ALEF_MADDA_ABOVE = 0x0622;
 
-  /// Arabic Letter Alef With Hamza Above
+  /// Persian Letter Alef With Hamza Above
   static const int ARABIC_ALEF_HAMZA_ABOVE = 0x0623;
 
-  /// Arabic Letter Alef With Hamza Below
+  /// Persian Letter Alef With Hamza Below
   static const int ARABIC_ALEF_HAMZA_BELOW = 0x0625;
 
-  /// Arabic Letter Alef
+  /// Persian Letter Alef
   static const int ARABIC_ALEF = 0x0627;
 
-  /// Arabic Ligature Lam With Alef With Madda Above Isolated Form
+  /// Persian Ligature Lam With Alef With Madda Above Isolated Form
   static const int ARABIC_LAM_ALEF_MADDA_ABOVE_ISOLATED = 0xFEF5;
 
-  /// Arabic Ligature Lam With Alef With Madda Above Final Form
+  /// Persian Ligature Lam With Alef With Madda Above Final Form
   static const int ARABIC_LAM_ALEF_MADDA_ABOVE_FINAL = 0xFEF6;
 
-  /// Arabic Ligature Lam With Alef With Hamza Above Isolated Form
+  /// Persian Ligature Lam With Alef With Hamza Above Isolated Form
   static const int ARABIC_LAM_ALEF_HAMZA_ABOVE_ISOLATED = 0xFEF7;
 
-  /// Arabic Ligature Lam With Alef With Hamza Above Final Form
+  /// Persian Ligature Lam With Alef With Hamza Above Final Form
   static const int ARABIC_LAM_ALEF_HAMZA_ABOVE_FINAL = 0xFEF8;
 
-  /// Arabic Ligature Lam With Alef With Hamza Below Isolated Form
+  /// Persian Ligature Lam With Alef With Hamza Below Isolated Form
   static const int ARABIC_LAM_ALEF_HAMZA_BELOW_ISOLATED = 0xFEF9;
 
-  /// Arabic Ligature Lam With Alef With Hamza Below Final Form
+  /// Persian Ligature Lam With Alef With Hamza Below Final Form
   static const int ARABIC_LAM_ALEF_HAMZA_BELOW_FINAL = 0xFEFA;
 
-  /// Arabic Ligature Lam With Alef Isolated Form
+  /// Persian Ligature Lam With Alef Isolated Form
   static const int ARABIC_LAM_ALEF_ISOLATED = 0xFEFB;
 
-  /// Arabic Ligature Lam With Alef Final Form
+  /// Persian Ligature Lam With Alef Final Form
   static const int ARABIC_LAM_ALEF_FINAL = 0xFEFC;
 }
 

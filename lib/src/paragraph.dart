@@ -19,7 +19,7 @@ class Paragraph {
   final List<int> _char_lengths = [];
   final List<int> _bidi_indexes = [];
 
-  bool _hasArabic;
+  bool _hasPersian;
   bool _hasNSMs;
 
   Paragraph(List<int> text) {
@@ -135,8 +135,8 @@ class Paragraph {
     // This method is implemented in such a way it handles the string in logical order,
     // rather than visual order, so it is easier to handle complex layouts. That is why
     // it is placed BEFORE ReorderString rather than AFTER it, as its number suggests.
-    if (_hasArabic) {
-      final shaped = performArabicShaping(_text);
+    if (_hasPersian) {
+      final shaped = performShaping(_text);
       _text.clear();
       _text.addAll(shaped);
     }
@@ -292,7 +292,7 @@ class Paragraph {
       }
     }
 
-    // W2. Search backward from each instance of a European number until the first strong type (R, L, AL, or sor) is found. If an AL is found, change the type of the European number to Arabic number.
+    // W2. Search backward from each instance of a European number until the first strong type (R, L, AL, or sor) is found. If an AL is found, change the type of the European number to Persian number.
 
     var t_w2 = BidiCharacterType.EN;
     for (int i = start; i < limit; ++i) {
@@ -306,7 +306,7 @@ class Paragraph {
     }
 
     // W3. Change all ALs to R.
-    if (_hasArabic) {
+    if (_hasPersian) {
       for (int i = start; i < limit; ++i) {
         if (_text_data[i]._ct == BidiCharacterType.AL)
           _text_data[i]._ct = BidiCharacterType.R;
@@ -396,7 +396,7 @@ class Paragraph {
   void resolveNeutralTypes(int start, int limit, BidiCharacterType sor,
       BidiCharacterType eor, int level) {
     // N1. A sequence of neutrals takes the direction of the surrounding strong text if the text on both sides has the same direction.
-    //     European and Arabic numbers act as if they were R in terms of their influence on neutrals.
+    //     European and Persian numbers act as if they were R in terms of their influence on neutrals.
     //     Start-of-level-run (sor) and end-of-level-run (eor) are used at level run boundaries.
     // N2. Any remaining neutrals take the embedding direction.
 
@@ -560,11 +560,11 @@ class Paragraph {
 
   /// <summary>
   /// 3.5 Shaping
-  /// Implements rules R1-R7 and rules L1-L3 of section 8.2 (Arabic) of the Unicode standard.
+  /// Implements rules R1-R7 and rules L1-L3 of section 8.2 (Persian) of the Unicode standard.
   /// </summary>
   // TODO - this code is very special-cased.
-  List<int> performArabicShaping(List<int> text) {
-    ArabicShapeJoiningType last_jt = ArabicShapeJoiningType.U;
+  List<int> performShaping(List<int> text) {
+    ShapeJoiningType last_jt = ShapeJoiningType.U;
     LetterForm last_form = LetterForm.Isolated;
     int last_pos = 0;
     var last_char = BidiChars.NotAChar;
@@ -574,20 +574,19 @@ class Paragraph {
       var ch = text[curr_pos];
       //string chStr = (ch).toString("X4");
 
-      final jt = getArabicShapeJoiningType(ch);
+      final jt = getShapeJoiningType(ch);
 
-      if ((jt == ArabicShapeJoiningType.R ||
-              jt == ArabicShapeJoiningType.D ||
-              jt == ArabicShapeJoiningType.C) &&
-          (last_jt == ArabicShapeJoiningType.L ||
-              last_jt == ArabicShapeJoiningType.D ||
-              last_jt == ArabicShapeJoiningType.C)) {
+      if ((jt == ShapeJoiningType.R ||
+              jt == ShapeJoiningType.D ||
+              jt == ShapeJoiningType.C) &&
+          (last_jt == ShapeJoiningType.L ||
+              last_jt == ShapeJoiningType.D ||
+              last_jt == ShapeJoiningType.C)) {
         if (last_form == LetterForm.Isolated &&
-            (last_jt == ArabicShapeJoiningType.D ||
-                last_jt == ArabicShapeJoiningType.L)) {
+            (last_jt == ShapeJoiningType.D || last_jt == ShapeJoiningType.L)) {
           letterForms[last_pos] = LetterForm.Initial;
         } else if (last_form == LetterForm.Final &&
-            last_jt == ArabicShapeJoiningType.D) {
+            last_jt == ShapeJoiningType.D) {
           letterForms[last_pos] = LetterForm.Medial;
         }
         letterForms[curr_pos] = LetterForm.Final;
@@ -595,7 +594,7 @@ class Paragraph {
         last_jt = jt;
         last_pos = curr_pos;
         last_char = ch;
-      } else if (jt != ArabicShapeJoiningType.T) {
+      } else if (jt != ShapeJoiningType.T) {
         letterForms[curr_pos] = LetterForm.Isolated;
         last_form = LetterForm.Isolated;
         last_jt = jt;
@@ -614,14 +613,14 @@ class Paragraph {
     for (int curr_pos = 0; curr_pos < text.length; ++curr_pos) {
       var ch = text[curr_pos];
       //string chStr = (ch).toString("X4");
-      final jt = getArabicShapeJoiningType(ch);
+      final jt = getShapeJoiningType(ch);
 
       if (last_char == BidiChars.ARABIC_LAM &&
           ch != BidiChars.ARABIC_ALEF &&
           ch != BidiChars.ARABIC_ALEF_MADDA_ABOVE &&
           ch != BidiChars.ARABIC_ALEF_HAMZA_ABOVE &&
           ch != BidiChars.ARABIC_ALEF_HAMZA_BELOW &&
-          jt != ArabicShapeJoiningType.T) {
+          jt != ShapeJoiningType.T) {
         last_char = BidiChars.NotAChar;
       } else if (ch == BidiChars.ARABIC_LAM) {
         last_char = ch;
@@ -679,7 +678,7 @@ class Paragraph {
         }
       }
 
-      sb.add(getArabicCharacterByLetterForm(ch, letterForms[curr_pos]));
+      sb.add(getCharacterByLetterForm(ch, letterForms[curr_pos]));
     }
 
     return sb;
@@ -695,7 +694,6 @@ class Paragraph {
     if (target.length == 0) return;
     int starterPos = 0;
     int compPos = 1;
-    int text_idx = 0;
     var starterCh = target[0];
 
     char_lengths[starterPos] = char_lengths[starterPos] + 1;
@@ -717,7 +715,7 @@ class Paragraph {
       final composite = getPairwiseComposition(starterCh, ch);
       final composeType = getUnicodeDecompositionType(composite);
 
-      if (composeType == UnicodeDecompositionType.None &&
+      if (composeType == UnicodeDecompositionType.none &&
           composite != BidiChars.NotAChar &&
           (lastClass.value < chClass.value ||
               lastClass == UnicodeCanonicalClass.NR)) {
@@ -730,7 +728,6 @@ class Paragraph {
         if (chClass == UnicodeCanonicalClass.NR) {
           starterPos = compPos;
           starterCh = ch;
-          text_idx++;
         }
         lastClass = chClass;
         target[compPos] = ch;
@@ -760,13 +757,13 @@ class Paragraph {
     }
   }
 
-  void GetRecursiveDecomposition(bool canonical, int ch, List<int> builder) {
+  void getRecursiveDecomposition(bool canonical, int ch, List<int> builder) {
     final decomp = getUnicodeDecompositionMapping(ch);
     if (decomp != null &&
         !(canonical &&
-            getUnicodeDecompositionType(ch) != UnicodeDecompositionType.None)) {
+            getUnicodeDecompositionType(ch) != UnicodeDecompositionType.none)) {
       for (int i = 0; i < decomp.length; ++i) {
-        GetRecursiveDecomposition(canonical, decomp.codeUnits[i], builder);
+        getRecursiveDecomposition(canonical, decomp[i], builder);
       }
     } else // if no decomp, append
     {
@@ -778,17 +775,17 @@ class Paragraph {
     final List<int> target = [];
     final List<int> buffer = [];
 
-    _hasArabic = false;
+    _hasPersian = false;
     _hasNSMs = false;
 
     for (int i = 0; i < _text.length; ++i) {
       final ct = getBidiCharacterType(_text[i]);
-      _hasArabic |=
+      _hasPersian |=
           ((ct == BidiCharacterType.AL) || (ct == BidiCharacterType.AN));
       _hasNSMs |= (ct == BidiCharacterType.NSM);
 
       buffer.clear();
-      GetRecursiveDecomposition(false, _text[i], buffer);
+      getRecursiveDecomposition(false, _text[i], buffer);
       char_lengths.add(1 - buffer.length);
       // add all of the characters in the decomposition.
       // (may be just the original character, if there was

@@ -5,14 +5,7665 @@ bool _initialized = false;
 List<BidiCharacterType> bidiCharType = List<BidiCharacterType>(0xffff);
 Map<int, UnicodeGeneralCategory> categories = {};
 Map<int, UnicodeDecompositionType> decomType = {};
-Map<int, UnicodeCanonicalClass> canonClass = {};
-Map<int, String> decomMapping = {};
-Map<String, int> composeMapping = {};
+const Map<int, UnicodeCanonicalClass> canonClass = {
+  0300: UnicodeCanonicalClass.A,
+  0x0300: UnicodeCanonicalClass.A,
+  0x0301: UnicodeCanonicalClass.A,
+  0x0302: UnicodeCanonicalClass.A,
+  0x0303: UnicodeCanonicalClass.A,
+  0x0304: UnicodeCanonicalClass.A,
+  0x0305: UnicodeCanonicalClass.A,
+  0x0306: UnicodeCanonicalClass.A,
+  0x0307: UnicodeCanonicalClass.A,
+  0x0308: UnicodeCanonicalClass.A,
+  0x0309: UnicodeCanonicalClass.A,
+  0x030A: UnicodeCanonicalClass.A,
+  0x030B: UnicodeCanonicalClass.A,
+  0x030C: UnicodeCanonicalClass.A,
+  0x030D: UnicodeCanonicalClass.A,
+  0x030E: UnicodeCanonicalClass.A,
+  0x030F: UnicodeCanonicalClass.A,
+  0x0310: UnicodeCanonicalClass.A,
+  0x0311: UnicodeCanonicalClass.A,
+  0x0312: UnicodeCanonicalClass.A,
+  0x0313: UnicodeCanonicalClass.A,
+  0x0314: UnicodeCanonicalClass.A,
+  0x0315: UnicodeCanonicalClass.AR,
+  0x0316: UnicodeCanonicalClass.B,
+  0x0317: UnicodeCanonicalClass.B,
+  0x0318: UnicodeCanonicalClass.B,
+  0x0319: UnicodeCanonicalClass.B,
+  0x031A: UnicodeCanonicalClass.AR,
+  0x031B: UnicodeCanonicalClass.ATAR,
+  0x031C: UnicodeCanonicalClass.B,
+  0x031D: UnicodeCanonicalClass.B,
+  0x031E: UnicodeCanonicalClass.B,
+  0x031F: UnicodeCanonicalClass.B,
+  0x0320: UnicodeCanonicalClass.B,
+  0x0321: UnicodeCanonicalClass.ATB,
+  0x0322: UnicodeCanonicalClass.ATB,
+  0x0323: UnicodeCanonicalClass.B,
+  0x0324: UnicodeCanonicalClass.B,
+  0x0325: UnicodeCanonicalClass.B,
+  0x0326: UnicodeCanonicalClass.B,
+  0x0327: UnicodeCanonicalClass.ATB,
+  0x0328: UnicodeCanonicalClass.ATB,
+  0x0329: UnicodeCanonicalClass.B,
+  0x032A: UnicodeCanonicalClass.B,
+  0x032B: UnicodeCanonicalClass.B,
+  0x032C: UnicodeCanonicalClass.B,
+  0x032D: UnicodeCanonicalClass.B,
+  0x032E: UnicodeCanonicalClass.B,
+  0x032F: UnicodeCanonicalClass.B,
+  0x0330: UnicodeCanonicalClass.B,
+  0x0331: UnicodeCanonicalClass.B,
+  0x0332: UnicodeCanonicalClass.B,
+  0x0333: UnicodeCanonicalClass.B,
+  0x0334: UnicodeCanonicalClass.OV,
+  0x0335: UnicodeCanonicalClass.OV,
+  0x0336: UnicodeCanonicalClass.OV,
+  0x0337: UnicodeCanonicalClass.OV,
+  0x0338: UnicodeCanonicalClass.OV,
+  0x0339: UnicodeCanonicalClass.B,
+  0x033A: UnicodeCanonicalClass.B,
+  0x033B: UnicodeCanonicalClass.B,
+  0x033C: UnicodeCanonicalClass.B,
+  0x033D: UnicodeCanonicalClass.A,
+  0x033E: UnicodeCanonicalClass.A,
+  0x033F: UnicodeCanonicalClass.A,
+  0x0340: UnicodeCanonicalClass.A,
+  0x0341: UnicodeCanonicalClass.A,
+  0x0342: UnicodeCanonicalClass.A,
+  0x0343: UnicodeCanonicalClass.A,
+  0x0344: UnicodeCanonicalClass.A,
+  0x0345: UnicodeCanonicalClass.IS,
+  0x0346: UnicodeCanonicalClass.A,
+  0x0347: UnicodeCanonicalClass.B,
+  0x0348: UnicodeCanonicalClass.B,
+  0x0349: UnicodeCanonicalClass.B,
+  0x034A: UnicodeCanonicalClass.A,
+  0x034B: UnicodeCanonicalClass.A,
+  0x034C: UnicodeCanonicalClass.A,
+  0x034D: UnicodeCanonicalClass.B,
+  0x034E: UnicodeCanonicalClass.B,
+  0x0350: UnicodeCanonicalClass.A,
+  0x0351: UnicodeCanonicalClass.A,
+  0x0352: UnicodeCanonicalClass.A,
+  0x0353: UnicodeCanonicalClass.B,
+  0x0354: UnicodeCanonicalClass.B,
+  0x0355: UnicodeCanonicalClass.B,
+  0x0356: UnicodeCanonicalClass.B,
+  0x0357: UnicodeCanonicalClass.A,
+  0x0358: UnicodeCanonicalClass.AR,
+  0x0359: UnicodeCanonicalClass.B,
+  0x035A: UnicodeCanonicalClass.B,
+  0x035B: UnicodeCanonicalClass.A,
+  0x035C: UnicodeCanonicalClass.DB,
+  0x035D: UnicodeCanonicalClass.DA,
+  0x035E: UnicodeCanonicalClass.DA,
+  0x035F: UnicodeCanonicalClass.DB,
+  0x0360: UnicodeCanonicalClass.DA,
+  0x0361: UnicodeCanonicalClass.DA,
+  0x0362: UnicodeCanonicalClass.DB,
+  0x0363: UnicodeCanonicalClass.A,
+  0x0364: UnicodeCanonicalClass.A,
+  0x0365: UnicodeCanonicalClass.A,
+  0x0366: UnicodeCanonicalClass.A,
+  0x0367: UnicodeCanonicalClass.A,
+  0x0368: UnicodeCanonicalClass.A,
+  0x0369: UnicodeCanonicalClass.A,
+  0x036A: UnicodeCanonicalClass.A,
+  0x036B: UnicodeCanonicalClass.A,
+  0x036C: UnicodeCanonicalClass.A,
+  0x036D: UnicodeCanonicalClass.A,
+  0x036E: UnicodeCanonicalClass.A,
+  0x036F: UnicodeCanonicalClass.A,
+  0x0483: UnicodeCanonicalClass.A,
+  0x0484: UnicodeCanonicalClass.A,
+  0x0485: UnicodeCanonicalClass.A,
+  0x0486: UnicodeCanonicalClass.A,
+  0x0487: UnicodeCanonicalClass.A,
+  0x0591: UnicodeCanonicalClass.B,
+  0x0592: UnicodeCanonicalClass.A,
+  0x0593: UnicodeCanonicalClass.A,
+  0x0594: UnicodeCanonicalClass.A,
+  0x0595: UnicodeCanonicalClass.A,
+  0x0596: UnicodeCanonicalClass.B,
+  0x0597: UnicodeCanonicalClass.A,
+  0x0598: UnicodeCanonicalClass.A,
+  0x0599: UnicodeCanonicalClass.A,
+  0x059A: UnicodeCanonicalClass.BR,
+  0x059B: UnicodeCanonicalClass.B,
+  0x059C: UnicodeCanonicalClass.A,
+  0x059D: UnicodeCanonicalClass.A,
+  0x059E: UnicodeCanonicalClass.A,
+  0x059F: UnicodeCanonicalClass.A,
+  0x05A0: UnicodeCanonicalClass.A,
+  0x05A1: UnicodeCanonicalClass.A,
+  0x05A2: UnicodeCanonicalClass.B,
+  0x05A3: UnicodeCanonicalClass.B,
+  0x05A4: UnicodeCanonicalClass.B,
+  0x05A5: UnicodeCanonicalClass.B,
+  0x05A6: UnicodeCanonicalClass.B,
+  0x05A7: UnicodeCanonicalClass.B,
+  0x05A8: UnicodeCanonicalClass.A,
+  0x05A9: UnicodeCanonicalClass.A,
+  0x05AA: UnicodeCanonicalClass.B,
+  0x05AB: UnicodeCanonicalClass.A,
+  0x05AC: UnicodeCanonicalClass.A,
+  0x05AD: UnicodeCanonicalClass.BR,
+  0x05AE: UnicodeCanonicalClass.AL,
+  0x05AF: UnicodeCanonicalClass.A,
+  0x05B0: UnicodeCanonicalClass.CLASS_10,
+  0x05B1: UnicodeCanonicalClass.CLASS_11,
+  0x05B2: UnicodeCanonicalClass.CLASS_12,
+  0x05B3: UnicodeCanonicalClass.CLASS_13,
+  0x05B4: UnicodeCanonicalClass.CLASS_14,
+  0x05B5: UnicodeCanonicalClass.CLASS_15,
+  0x05B6: UnicodeCanonicalClass.CLASS_16,
+  0x05B7: UnicodeCanonicalClass.CLASS_17,
+  0x05B8: UnicodeCanonicalClass.CLASS_18,
+  0x05B9: UnicodeCanonicalClass.CLASS_19,
+  0x05BA: UnicodeCanonicalClass.CLASS_19,
+  0x05BB: UnicodeCanonicalClass.CLASS_20,
+  0x05BC: UnicodeCanonicalClass.CLASS_21,
+  0x05BD: UnicodeCanonicalClass.CLASS_22,
+  0x05BF: UnicodeCanonicalClass.CLASS_23,
+  0x05C1: UnicodeCanonicalClass.CLASS_24,
+  0x05C2: UnicodeCanonicalClass.CLASS_25,
+  0x05C4: UnicodeCanonicalClass.A,
+  0x05C5: UnicodeCanonicalClass.B,
+  0x05C7: UnicodeCanonicalClass.CLASS_18,
+  0x0610: UnicodeCanonicalClass.A,
+  0x0611: UnicodeCanonicalClass.A,
+  0x0612: UnicodeCanonicalClass.A,
+  0x0613: UnicodeCanonicalClass.A,
+  0x0614: UnicodeCanonicalClass.A,
+  0x0615: UnicodeCanonicalClass.A,
+  0x0616: UnicodeCanonicalClass.A,
+  0x0617: UnicodeCanonicalClass.A,
+  0x0618: UnicodeCanonicalClass.CLASS_30,
+  0x0619: UnicodeCanonicalClass.CLASS_31,
+  0x061A: UnicodeCanonicalClass.CLASS_32,
+  0x064B: UnicodeCanonicalClass.CLASS_27,
+  0x064C: UnicodeCanonicalClass.CLASS_28,
+  0x064D: UnicodeCanonicalClass.CLASS_29,
+  0x064E: UnicodeCanonicalClass.CLASS_30,
+  0x064F: UnicodeCanonicalClass.CLASS_31,
+  0x0650: UnicodeCanonicalClass.CLASS_32,
+  0x0651: UnicodeCanonicalClass.CLASS_33,
+  0x0652: UnicodeCanonicalClass.CLASS_34,
+  0x0653: UnicodeCanonicalClass.A,
+  0x0654: UnicodeCanonicalClass.A,
+  0x0655: UnicodeCanonicalClass.B,
+  0x0656: UnicodeCanonicalClass.B,
+  0x0657: UnicodeCanonicalClass.A,
+  0x0658: UnicodeCanonicalClass.A,
+  0x0659: UnicodeCanonicalClass.A,
+  0x065A: UnicodeCanonicalClass.A,
+  0x065B: UnicodeCanonicalClass.A,
+  0x065C: UnicodeCanonicalClass.B,
+  0x065D: UnicodeCanonicalClass.A,
+  0x065E: UnicodeCanonicalClass.A,
+  0x065F: UnicodeCanonicalClass.B,
+  0x0670: UnicodeCanonicalClass.CLASS_35,
+  0x06D6: UnicodeCanonicalClass.A,
+  0x06D7: UnicodeCanonicalClass.A,
+  0x06D8: UnicodeCanonicalClass.A,
+  0x06D9: UnicodeCanonicalClass.A,
+  0x06DA: UnicodeCanonicalClass.A,
+  0x06DB: UnicodeCanonicalClass.A,
+  0x06DC: UnicodeCanonicalClass.A,
+  0x06DF: UnicodeCanonicalClass.A,
+  0x06E0: UnicodeCanonicalClass.A,
+  0x06E1: UnicodeCanonicalClass.A,
+  0x06E2: UnicodeCanonicalClass.A,
+  0x06E3: UnicodeCanonicalClass.B,
+  0x06E4: UnicodeCanonicalClass.A,
+  0x06E7: UnicodeCanonicalClass.A,
+  0x06E8: UnicodeCanonicalClass.A,
+  0x06EA: UnicodeCanonicalClass.B,
+  0x06EB: UnicodeCanonicalClass.A,
+  0x06EC: UnicodeCanonicalClass.A,
+  0x06ED: UnicodeCanonicalClass.B,
+  0x0711: UnicodeCanonicalClass.CLASS_36,
+  0x0730: UnicodeCanonicalClass.A,
+  0x0731: UnicodeCanonicalClass.B,
+  0x0732: UnicodeCanonicalClass.A,
+  0x0733: UnicodeCanonicalClass.A,
+  0x0734: UnicodeCanonicalClass.B,
+  0x0735: UnicodeCanonicalClass.A,
+  0x0736: UnicodeCanonicalClass.A,
+  0x0737: UnicodeCanonicalClass.B,
+  0x0738: UnicodeCanonicalClass.B,
+  0x0739: UnicodeCanonicalClass.B,
+  0x073A: UnicodeCanonicalClass.A,
+  0x073B: UnicodeCanonicalClass.B,
+  0x073C: UnicodeCanonicalClass.B,
+  0x073D: UnicodeCanonicalClass.A,
+  0x073E: UnicodeCanonicalClass.B,
+  0x073F: UnicodeCanonicalClass.A,
+  0x0740: UnicodeCanonicalClass.A,
+  0x0741: UnicodeCanonicalClass.A,
+  0x0742: UnicodeCanonicalClass.B,
+  0x0743: UnicodeCanonicalClass.A,
+  0x0744: UnicodeCanonicalClass.B,
+  0x0745: UnicodeCanonicalClass.A,
+  0x0746: UnicodeCanonicalClass.B,
+  0x0747: UnicodeCanonicalClass.A,
+  0x0748: UnicodeCanonicalClass.B,
+  0x0749: UnicodeCanonicalClass.A,
+  0x074A: UnicodeCanonicalClass.A,
+  0x07EB: UnicodeCanonicalClass.A,
+  0x07EC: UnicodeCanonicalClass.A,
+  0x07ED: UnicodeCanonicalClass.A,
+  0x07EE: UnicodeCanonicalClass.A,
+  0x07EF: UnicodeCanonicalClass.A,
+  0x07F0: UnicodeCanonicalClass.A,
+  0x07F1: UnicodeCanonicalClass.A,
+  0x07F2: UnicodeCanonicalClass.B,
+  0x07F3: UnicodeCanonicalClass.A,
+  0x0816: UnicodeCanonicalClass.A,
+  0x0817: UnicodeCanonicalClass.A,
+  0x0818: UnicodeCanonicalClass.A,
+  0x0819: UnicodeCanonicalClass.A,
+  0x081B: UnicodeCanonicalClass.A,
+  0x081C: UnicodeCanonicalClass.A,
+  0x081D: UnicodeCanonicalClass.A,
+  0x081E: UnicodeCanonicalClass.A,
+  0x081F: UnicodeCanonicalClass.A,
+  0x0820: UnicodeCanonicalClass.A,
+  0x0821: UnicodeCanonicalClass.A,
+  0x0822: UnicodeCanonicalClass.A,
+  0x0823: UnicodeCanonicalClass.A,
+  0x0825: UnicodeCanonicalClass.A,
+  0x0826: UnicodeCanonicalClass.A,
+  0x0827: UnicodeCanonicalClass.A,
+  0x0829: UnicodeCanonicalClass.A,
+  0x082A: UnicodeCanonicalClass.A,
+  0x082B: UnicodeCanonicalClass.A,
+  0x082C: UnicodeCanonicalClass.A,
+  0x082D: UnicodeCanonicalClass.A,
+  0x0859: UnicodeCanonicalClass.B,
+  0x085A: UnicodeCanonicalClass.B,
+  0x085B: UnicodeCanonicalClass.B,
+  0x08E4: UnicodeCanonicalClass.A,
+  0x08E5: UnicodeCanonicalClass.A,
+  0x08E6: UnicodeCanonicalClass.B,
+  0x08E7: UnicodeCanonicalClass.A,
+  0x08E8: UnicodeCanonicalClass.A,
+  0x08E9: UnicodeCanonicalClass.B,
+  0x08EA: UnicodeCanonicalClass.A,
+  0x08EB: UnicodeCanonicalClass.A,
+  0x08EC: UnicodeCanonicalClass.A,
+  0x08ED: UnicodeCanonicalClass.B,
+  0x08EE: UnicodeCanonicalClass.B,
+  0x08EF: UnicodeCanonicalClass.B,
+  0x08F0: UnicodeCanonicalClass.CLASS_27,
+  0x08F1: UnicodeCanonicalClass.CLASS_28,
+  0x08F2: UnicodeCanonicalClass.CLASS_29,
+  0x08F3: UnicodeCanonicalClass.A,
+  0x08F4: UnicodeCanonicalClass.A,
+  0x08F5: UnicodeCanonicalClass.A,
+  0x08F6: UnicodeCanonicalClass.B,
+  0x08F7: UnicodeCanonicalClass.A,
+  0x08F8: UnicodeCanonicalClass.A,
+  0x08F9: UnicodeCanonicalClass.B,
+  0x08FA: UnicodeCanonicalClass.B,
+  0x08FB: UnicodeCanonicalClass.A,
+  0x08FC: UnicodeCanonicalClass.A,
+  0x08FD: UnicodeCanonicalClass.A,
+  0x08FE: UnicodeCanonicalClass.A,
+  0x08FF: UnicodeCanonicalClass.A,
+  0x093C: UnicodeCanonicalClass.NK,
+  0x094D: UnicodeCanonicalClass.VR,
+  0x0951: UnicodeCanonicalClass.A,
+  0x0952: UnicodeCanonicalClass.B,
+  0x0953: UnicodeCanonicalClass.A,
+  0x0954: UnicodeCanonicalClass.A,
+  0x09BC: UnicodeCanonicalClass.NK,
+  0x09CD: UnicodeCanonicalClass.VR,
+  0x0A3C: UnicodeCanonicalClass.NK,
+  0x0A4D: UnicodeCanonicalClass.VR,
+  0x0ABC: UnicodeCanonicalClass.NK,
+  0x0ACD: UnicodeCanonicalClass.VR,
+  0x0B3C: UnicodeCanonicalClass.NK,
+  0x0B4D: UnicodeCanonicalClass.VR,
+  0x0BCD: UnicodeCanonicalClass.VR,
+  0x0C4D: UnicodeCanonicalClass.VR,
+  0x0C55: UnicodeCanonicalClass.CLASS_84,
+  0x0C56: UnicodeCanonicalClass.CLASS_91,
+  0x0CBC: UnicodeCanonicalClass.NK,
+  0x0CCD: UnicodeCanonicalClass.VR,
+  0x0D4D: UnicodeCanonicalClass.VR,
+  0x0DCA: UnicodeCanonicalClass.VR,
+  0x0E38: UnicodeCanonicalClass.CLASS_103,
+  0x0E39: UnicodeCanonicalClass.CLASS_103,
+  0x0E3A: UnicodeCanonicalClass.VR,
+  0x0E48: UnicodeCanonicalClass.CLASS_107,
+  0x0E49: UnicodeCanonicalClass.CLASS_107,
+  0x0E4A: UnicodeCanonicalClass.CLASS_107,
+  0x0E4B: UnicodeCanonicalClass.CLASS_107,
+  0x0EB8: UnicodeCanonicalClass.CLASS_118,
+  0x0EB9: UnicodeCanonicalClass.CLASS_118,
+  0x0EC8: UnicodeCanonicalClass.CLASS_162,
+  0x0EC9: UnicodeCanonicalClass.CLASS_162,
+  0x0ECA: UnicodeCanonicalClass.CLASS_162,
+  0x0ECB: UnicodeCanonicalClass.CLASS_162,
+  0x0F18: UnicodeCanonicalClass.B,
+  0x0F19: UnicodeCanonicalClass.B,
+  0x0F35: UnicodeCanonicalClass.B,
+  0x0F37: UnicodeCanonicalClass.B,
+  0x0F39: UnicodeCanonicalClass.ATAR,
+  0x0F71: UnicodeCanonicalClass.CLASS_129,
+  0x0F72: UnicodeCanonicalClass.CLASS_130,
+  0x0F74: UnicodeCanonicalClass.CLASS_132,
+  0x0F7A: UnicodeCanonicalClass.CLASS_130,
+  0x0F7B: UnicodeCanonicalClass.CLASS_130,
+  0x0F7C: UnicodeCanonicalClass.CLASS_130,
+  0x0F7D: UnicodeCanonicalClass.CLASS_130,
+  0x0F80: UnicodeCanonicalClass.CLASS_130,
+  0x0F82: UnicodeCanonicalClass.A,
+  0x0F83: UnicodeCanonicalClass.A,
+  0x0F84: UnicodeCanonicalClass.VR,
+  0x0F86: UnicodeCanonicalClass.A,
+  0x0F87: UnicodeCanonicalClass.A,
+  0x0FC6: UnicodeCanonicalClass.B,
+  0x1037: UnicodeCanonicalClass.NK,
+  0x1039: UnicodeCanonicalClass.VR,
+  0x103A: UnicodeCanonicalClass.VR,
+  0x108D: UnicodeCanonicalClass.B,
+  0x135D: UnicodeCanonicalClass.A,
+  0x135E: UnicodeCanonicalClass.A,
+  0x135F: UnicodeCanonicalClass.A,
+  0x1714: UnicodeCanonicalClass.VR,
+  0x1734: UnicodeCanonicalClass.VR,
+  0x17D2: UnicodeCanonicalClass.VR,
+  0x17DD: UnicodeCanonicalClass.A,
+  0x18A9: UnicodeCanonicalClass.AL,
+  0x1939: UnicodeCanonicalClass.BR,
+  0x193A: UnicodeCanonicalClass.A,
+  0x193B: UnicodeCanonicalClass.B,
+  0x1A17: UnicodeCanonicalClass.A,
+  0x1A18: UnicodeCanonicalClass.B,
+  0x1A60: UnicodeCanonicalClass.VR,
+  0x1A75: UnicodeCanonicalClass.A,
+  0x1A76: UnicodeCanonicalClass.A,
+  0x1A77: UnicodeCanonicalClass.A,
+  0x1A78: UnicodeCanonicalClass.A,
+  0x1A79: UnicodeCanonicalClass.A,
+  0x1A7A: UnicodeCanonicalClass.A,
+  0x1A7B: UnicodeCanonicalClass.A,
+  0x1A7C: UnicodeCanonicalClass.A,
+  0x1A7F: UnicodeCanonicalClass.B,
+  0x1AB0: UnicodeCanonicalClass.A,
+  0x1AB1: UnicodeCanonicalClass.A,
+  0x1AB2: UnicodeCanonicalClass.A,
+  0x1AB3: UnicodeCanonicalClass.A,
+  0x1AB4: UnicodeCanonicalClass.A,
+  0x1AB5: UnicodeCanonicalClass.B,
+  0x1AB6: UnicodeCanonicalClass.B,
+  0x1AB7: UnicodeCanonicalClass.B,
+  0x1AB8: UnicodeCanonicalClass.B,
+  0x1AB9: UnicodeCanonicalClass.B,
+  0x1ABA: UnicodeCanonicalClass.B,
+  0x1ABB: UnicodeCanonicalClass.A,
+  0x1ABC: UnicodeCanonicalClass.A,
+  0x1ABD: UnicodeCanonicalClass.B,
+  0x1B34: UnicodeCanonicalClass.NK,
+  0x1B44: UnicodeCanonicalClass.VR,
+  0x1B6B: UnicodeCanonicalClass.A,
+  0x1B6C: UnicodeCanonicalClass.B,
+  0x1B6D: UnicodeCanonicalClass.A,
+  0x1B6E: UnicodeCanonicalClass.A,
+  0x1B6F: UnicodeCanonicalClass.A,
+  0x1B70: UnicodeCanonicalClass.A,
+  0x1B71: UnicodeCanonicalClass.A,
+  0x1B72: UnicodeCanonicalClass.A,
+  0x1B73: UnicodeCanonicalClass.A,
+  0x1BAA: UnicodeCanonicalClass.VR,
+  0x1BAB: UnicodeCanonicalClass.VR,
+  0x1BE6: UnicodeCanonicalClass.NK,
+  0x1BF2: UnicodeCanonicalClass.VR,
+  0x1BF3: UnicodeCanonicalClass.VR,
+  0x1C37: UnicodeCanonicalClass.NK,
+  0x1CD0: UnicodeCanonicalClass.A,
+  0x1CD1: UnicodeCanonicalClass.A,
+  0x1CD2: UnicodeCanonicalClass.A,
+  0x1CD4: UnicodeCanonicalClass.OV,
+  0x1CD5: UnicodeCanonicalClass.B,
+  0x1CD6: UnicodeCanonicalClass.B,
+  0x1CD7: UnicodeCanonicalClass.B,
+  0x1CD8: UnicodeCanonicalClass.B,
+  0x1CD9: UnicodeCanonicalClass.B,
+  0x1CDA: UnicodeCanonicalClass.A,
+  0x1CDB: UnicodeCanonicalClass.A,
+  0x1CDC: UnicodeCanonicalClass.B,
+  0x1CDD: UnicodeCanonicalClass.B,
+  0x1CDE: UnicodeCanonicalClass.B,
+  0x1CDF: UnicodeCanonicalClass.B,
+  0x1CE0: UnicodeCanonicalClass.A,
+  0x1CE2: UnicodeCanonicalClass.OV,
+  0x1CE3: UnicodeCanonicalClass.OV,
+  0x1CE4: UnicodeCanonicalClass.OV,
+  0x1CE5: UnicodeCanonicalClass.OV,
+  0x1CE6: UnicodeCanonicalClass.OV,
+  0x1CE7: UnicodeCanonicalClass.OV,
+  0x1CE8: UnicodeCanonicalClass.OV,
+  0x1CED: UnicodeCanonicalClass.B,
+  0x1CF4: UnicodeCanonicalClass.A,
+  0x1CF8: UnicodeCanonicalClass.A,
+  0x1CF9: UnicodeCanonicalClass.A,
+  0x1DC0: UnicodeCanonicalClass.A,
+  0x1DC1: UnicodeCanonicalClass.A,
+  0x1DC2: UnicodeCanonicalClass.B,
+  0x1DC3: UnicodeCanonicalClass.A,
+  0x1DC4: UnicodeCanonicalClass.A,
+  0x1DC5: UnicodeCanonicalClass.A,
+  0x1DC6: UnicodeCanonicalClass.A,
+  0x1DC7: UnicodeCanonicalClass.A,
+  0x1DC8: UnicodeCanonicalClass.A,
+  0x1DC9: UnicodeCanonicalClass.A,
+  0x1DCA: UnicodeCanonicalClass.B,
+  0x1DCB: UnicodeCanonicalClass.A,
+  0x1DCC: UnicodeCanonicalClass.A,
+  0x1DCD: UnicodeCanonicalClass.DA,
+  0x1DCE: UnicodeCanonicalClass.ATA,
+  0x1DCF: UnicodeCanonicalClass.B,
+  0x1DD0: UnicodeCanonicalClass.ATB,
+  0x1DD1: UnicodeCanonicalClass.A,
+  0x1DD2: UnicodeCanonicalClass.A,
+  0x1DD3: UnicodeCanonicalClass.A,
+  0x1DD4: UnicodeCanonicalClass.A,
+  0x1DD5: UnicodeCanonicalClass.A,
+  0x1DD6: UnicodeCanonicalClass.A,
+  0x1DD7: UnicodeCanonicalClass.A,
+  0x1DD8: UnicodeCanonicalClass.A,
+  0x1DD9: UnicodeCanonicalClass.A,
+  0x1DDA: UnicodeCanonicalClass.A,
+  0x1DDB: UnicodeCanonicalClass.A,
+  0x1DDC: UnicodeCanonicalClass.A,
+  0x1DDD: UnicodeCanonicalClass.A,
+  0x1DDE: UnicodeCanonicalClass.A,
+  0x1DDF: UnicodeCanonicalClass.A,
+  0x1DE0: UnicodeCanonicalClass.A,
+  0x1DE1: UnicodeCanonicalClass.A,
+  0x1DE2: UnicodeCanonicalClass.A,
+  0x1DE3: UnicodeCanonicalClass.A,
+  0x1DE4: UnicodeCanonicalClass.A,
+  0x1DE5: UnicodeCanonicalClass.A,
+  0x1DE6: UnicodeCanonicalClass.A,
+  0x1DE7: UnicodeCanonicalClass.A,
+  0x1DE8: UnicodeCanonicalClass.A,
+  0x1DE9: UnicodeCanonicalClass.A,
+  0x1DEA: UnicodeCanonicalClass.A,
+  0x1DEB: UnicodeCanonicalClass.A,
+  0x1DEC: UnicodeCanonicalClass.A,
+  0x1DED: UnicodeCanonicalClass.A,
+  0x1DEE: UnicodeCanonicalClass.A,
+  0x1DEF: UnicodeCanonicalClass.A,
+  0x1DF0: UnicodeCanonicalClass.A,
+  0x1DF1: UnicodeCanonicalClass.A,
+  0x1DF2: UnicodeCanonicalClass.A,
+  0x1DF3: UnicodeCanonicalClass.A,
+  0x1DF4: UnicodeCanonicalClass.A,
+  0x1DF5: UnicodeCanonicalClass.A,
+  0x1DFC: UnicodeCanonicalClass.DB,
+  0x1DFD: UnicodeCanonicalClass.B,
+  0x1DFE: UnicodeCanonicalClass.A,
+  0x1DFF: UnicodeCanonicalClass.B,
+  0x20D0: UnicodeCanonicalClass.A,
+  0x20D1: UnicodeCanonicalClass.A,
+  0x20D2: UnicodeCanonicalClass.OV,
+  0x20D3: UnicodeCanonicalClass.OV,
+  0x20D4: UnicodeCanonicalClass.A,
+  0x20D5: UnicodeCanonicalClass.A,
+  0x20D6: UnicodeCanonicalClass.A,
+  0x20D7: UnicodeCanonicalClass.A,
+  0x20D8: UnicodeCanonicalClass.OV,
+  0x20D9: UnicodeCanonicalClass.OV,
+  0x20DA: UnicodeCanonicalClass.OV,
+  0x20DB: UnicodeCanonicalClass.A,
+  0x20DC: UnicodeCanonicalClass.A,
+  0x20E1: UnicodeCanonicalClass.A,
+  0x20E5: UnicodeCanonicalClass.OV,
+  0x20E6: UnicodeCanonicalClass.OV,
+  0x20E7: UnicodeCanonicalClass.A,
+  0x20E8: UnicodeCanonicalClass.B,
+  0x20E9: UnicodeCanonicalClass.A,
+  0x20EA: UnicodeCanonicalClass.OV,
+  0x20EB: UnicodeCanonicalClass.OV,
+  0x20EC: UnicodeCanonicalClass.B,
+  0x20ED: UnicodeCanonicalClass.B,
+  0x20EE: UnicodeCanonicalClass.B,
+  0x20EF: UnicodeCanonicalClass.B,
+  0x20F0: UnicodeCanonicalClass.A,
+  0x2CEF: UnicodeCanonicalClass.A,
+  0x2CF0: UnicodeCanonicalClass.A,
+  0x2CF1: UnicodeCanonicalClass.A,
+  0x2D7F: UnicodeCanonicalClass.VR,
+  0x2DE0: UnicodeCanonicalClass.A,
+  0x2DE1: UnicodeCanonicalClass.A,
+  0x2DE2: UnicodeCanonicalClass.A,
+  0x2DE3: UnicodeCanonicalClass.A,
+  0x2DE4: UnicodeCanonicalClass.A,
+  0x2DE5: UnicodeCanonicalClass.A,
+  0x2DE6: UnicodeCanonicalClass.A,
+  0x2DE7: UnicodeCanonicalClass.A,
+  0x2DE8: UnicodeCanonicalClass.A,
+  0x2DE9: UnicodeCanonicalClass.A,
+  0x2DEA: UnicodeCanonicalClass.A,
+  0x2DEB: UnicodeCanonicalClass.A,
+  0x2DEC: UnicodeCanonicalClass.A,
+  0x2DED: UnicodeCanonicalClass.A,
+  0x2DEE: UnicodeCanonicalClass.A,
+  0x2DEF: UnicodeCanonicalClass.A,
+  0x2DF0: UnicodeCanonicalClass.A,
+  0x2DF1: UnicodeCanonicalClass.A,
+  0x2DF2: UnicodeCanonicalClass.A,
+  0x2DF3: UnicodeCanonicalClass.A,
+  0x2DF4: UnicodeCanonicalClass.A,
+  0x2DF5: UnicodeCanonicalClass.A,
+  0x2DF6: UnicodeCanonicalClass.A,
+  0x2DF7: UnicodeCanonicalClass.A,
+  0x2DF8: UnicodeCanonicalClass.A,
+  0x2DF9: UnicodeCanonicalClass.A,
+  0x2DFA: UnicodeCanonicalClass.A,
+  0x2DFB: UnicodeCanonicalClass.A,
+  0x2DFC: UnicodeCanonicalClass.A,
+  0x2DFD: UnicodeCanonicalClass.A,
+  0x2DFE: UnicodeCanonicalClass.A,
+  0x2DFF: UnicodeCanonicalClass.A,
+  0x302A: UnicodeCanonicalClass.BL,
+  0x302B: UnicodeCanonicalClass.AL,
+  0x302C: UnicodeCanonicalClass.AR,
+  0x302D: UnicodeCanonicalClass.BR,
+  0x302E: UnicodeCanonicalClass.L,
+  0x302F: UnicodeCanonicalClass.L,
+  0x3099: UnicodeCanonicalClass.KV,
+  0x309A: UnicodeCanonicalClass.KV,
+  0xA66F: UnicodeCanonicalClass.A,
+  0xA674: UnicodeCanonicalClass.A,
+  0xA675: UnicodeCanonicalClass.A,
+  0xA676: UnicodeCanonicalClass.A,
+  0xA677: UnicodeCanonicalClass.A,
+  0xA678: UnicodeCanonicalClass.A,
+  0xA679: UnicodeCanonicalClass.A,
+  0xA67A: UnicodeCanonicalClass.A,
+  0xA67B: UnicodeCanonicalClass.A,
+  0xA67C: UnicodeCanonicalClass.A,
+  0xA67D: UnicodeCanonicalClass.A,
+  0xA69F: UnicodeCanonicalClass.A,
+  0xA6F0: UnicodeCanonicalClass.A,
+  0xA6F1: UnicodeCanonicalClass.A,
+  0xA806: UnicodeCanonicalClass.VR,
+  0xA8C4: UnicodeCanonicalClass.VR,
+  0xA8E0: UnicodeCanonicalClass.A,
+  0xA8E1: UnicodeCanonicalClass.A,
+  0xA8E2: UnicodeCanonicalClass.A,
+  0xA8E3: UnicodeCanonicalClass.A,
+  0xA8E4: UnicodeCanonicalClass.A,
+  0xA8E5: UnicodeCanonicalClass.A,
+  0xA8E6: UnicodeCanonicalClass.A,
+  0xA8E7: UnicodeCanonicalClass.A,
+  0xA8E8: UnicodeCanonicalClass.A,
+  0xA8E9: UnicodeCanonicalClass.A,
+  0xA8EA: UnicodeCanonicalClass.A,
+  0xA8EB: UnicodeCanonicalClass.A,
+  0xA8EC: UnicodeCanonicalClass.A,
+  0xA8ED: UnicodeCanonicalClass.A,
+  0xA8EE: UnicodeCanonicalClass.A,
+  0xA8EF: UnicodeCanonicalClass.A,
+  0xA8F0: UnicodeCanonicalClass.A,
+  0xA8F1: UnicodeCanonicalClass.A,
+  0xA92B: UnicodeCanonicalClass.B,
+  0xA92C: UnicodeCanonicalClass.B,
+  0xA92D: UnicodeCanonicalClass.B,
+  0xA953: UnicodeCanonicalClass.VR,
+  0xA9B3: UnicodeCanonicalClass.NK,
+  0xA9C0: UnicodeCanonicalClass.VR,
+  0xAAB0: UnicodeCanonicalClass.A,
+  0xAAB2: UnicodeCanonicalClass.A,
+  0xAAB3: UnicodeCanonicalClass.A,
+  0xAAB4: UnicodeCanonicalClass.B,
+  0xAAB7: UnicodeCanonicalClass.A,
+  0xAAB8: UnicodeCanonicalClass.A,
+  0xAABE: UnicodeCanonicalClass.A,
+  0xAABF: UnicodeCanonicalClass.A,
+  0xAAC1: UnicodeCanonicalClass.A,
+  0xAAF6: UnicodeCanonicalClass.VR,
+  0xABED: UnicodeCanonicalClass.VR,
+  0xFB1E: UnicodeCanonicalClass.CLASS_26,
+  0xFE20: UnicodeCanonicalClass.A,
+  0xFE21: UnicodeCanonicalClass.A,
+  0xFE22: UnicodeCanonicalClass.A,
+  0xFE23: UnicodeCanonicalClass.A,
+  0xFE24: UnicodeCanonicalClass.A,
+  0xFE25: UnicodeCanonicalClass.A,
+  0xFE26: UnicodeCanonicalClass.A,
+  0xFE27: UnicodeCanonicalClass.B,
+  0xFE28: UnicodeCanonicalClass.B,
+  0xFE29: UnicodeCanonicalClass.B,
+  0xFE2A: UnicodeCanonicalClass.B,
+  0xFE2B: UnicodeCanonicalClass.B,
+  0xFE2C: UnicodeCanonicalClass.B,
+  0xFE2D: UnicodeCanonicalClass.B,
+};
 
-List<int> BctList_LRE = [0x202A, 1];
-List<int> BctList_LRO = [0x202D, 1];
-List<int> BctList_LRI = [0x2066, 1];
-List<int> BctList_R = [
+const Map<int, List<int>> decomMapping = {
+  0x00A0: [0x0020],
+  0x00A8: [0x0020, 0x0308],
+  0x00AA: [0x0061],
+  0x00AF: [0x0020, 0x0304],
+  0x00B2: [0x0032],
+  0x00B3: [0x0033],
+  0x00B4: [0x0020, 0x0301],
+  0x00B5: [0x03BC],
+  0x00B8: [0x0020, 0x0327],
+  0x00B9: [0x0031],
+  0x00BA: [0x006F],
+  0x00BC: [0x0031, 0x2044, 0x0034],
+  0x00BD: [0x0031, 0x2044, 0x0032],
+  0x00BE: [0x0033, 0x2044, 0x0034],
+  0x00C0: [0x0041, 0x0300],
+  0x00C1: [0x0041, 0x0301],
+  0x00C2: [0x0041, 0x0302],
+  0x00C3: [0x0041, 0x0303],
+  0x00C4: [0x0041, 0x0308],
+  0x00C5: [0x0041, 0x030A],
+  0x00C7: [0x0043, 0x0327],
+  0x00C8: [0x0045, 0x0300],
+  0x00C9: [0x0045, 0x0301],
+  0x00CA: [0x0045, 0x0302],
+  0x00CB: [0x0045, 0x0308],
+  0x00CC: [0x0049, 0x0300],
+  0x00CD: [0x0049, 0x0301],
+  0x00CE: [0x0049, 0x0302],
+  0x00CF: [0x0049, 0x0308],
+  0x00D1: [0x004E, 0x0303],
+  0x00D2: [0x004F, 0x0300],
+  0x00D3: [0x004F, 0x0301],
+  0x00D4: [0x004F, 0x0302],
+  0x00D5: [0x004F, 0x0303],
+  0x00D6: [0x004F, 0x0308],
+  0x00D9: [0x0055, 0x0300],
+  0x00DA: [0x0055, 0x0301],
+  0x00DB: [0x0055, 0x0302],
+  0x00DC: [0x0055, 0x0308],
+  0x00DD: [0x0059, 0x0301],
+  0x00E0: [0x0061, 0x0300],
+  0x00E1: [0x0061, 0x0301],
+  0x00E2: [0x0061, 0x0302],
+  0x00E3: [0x0061, 0x0303],
+  0x00E4: [0x0061, 0x0308],
+  0x00E5: [0x0061, 0x030A],
+  0x00E7: [0x0063, 0x0327],
+  0x00E8: [0x0065, 0x0300],
+  0x00E9: [0x0065, 0x0301],
+  0x00EA: [0x0065, 0x0302],
+  0x00EB: [0x0065, 0x0308],
+  0x00EC: [0x0069, 0x0300],
+  0x00ED: [0x0069, 0x0301],
+  0x00EE: [0x0069, 0x0302],
+  0x00EF: [0x0069, 0x0308],
+  0x00F1: [0x006E, 0x0303],
+  0x00F2: [0x006F, 0x0300],
+  0x00F3: [0x006F, 0x0301],
+  0x00F4: [0x006F, 0x0302],
+  0x00F5: [0x006F, 0x0303],
+  0x00F6: [0x006F, 0x0308],
+  0x00F9: [0x0075, 0x0300],
+  0x00FA: [0x0075, 0x0301],
+  0x00FB: [0x0075, 0x0302],
+  0x00FC: [0x0075, 0x0308],
+  0x00FD: [0x0079, 0x0301],
+  0x00FF: [0x0079, 0x0308],
+  0x0100: [0x0041, 0x0304],
+  0x0101: [0x0061, 0x0304],
+  0x0102: [0x0041, 0x0306],
+  0x0103: [0x0061, 0x0306],
+  0x0104: [0x0041, 0x0328],
+  0x0105: [0x0061, 0x0328],
+  0x0106: [0x0043, 0x0301],
+  0x0107: [0x0063, 0x0301],
+  0x0108: [0x0043, 0x0302],
+  0x0109: [0x0063, 0x0302],
+  0x010A: [0x0043, 0x0307],
+  0x010B: [0x0063, 0x0307],
+  0x010C: [0x0043, 0x030C],
+  0x010D: [0x0063, 0x030C],
+  0x010E: [0x0044, 0x030C],
+  0x010F: [0x0064, 0x030C],
+  0x0112: [0x0045, 0x0304],
+  0x0113: [0x0065, 0x0304],
+  0x0114: [0x0045, 0x0306],
+  0x0115: [0x0065, 0x0306],
+  0x0116: [0x0045, 0x0307],
+  0x0117: [0x0065, 0x0307],
+  0x0118: [0x0045, 0x0328],
+  0x0119: [0x0065, 0x0328],
+  0x011A: [0x0045, 0x030C],
+  0x011B: [0x0065, 0x030C],
+  0x011C: [0x0047, 0x0302],
+  0x011D: [0x0067, 0x0302],
+  0x011E: [0x0047, 0x0306],
+  0x011F: [0x0067, 0x0306],
+  0x0120: [0x0047, 0x0307],
+  0x0121: [0x0067, 0x0307],
+  0x0122: [0x0047, 0x0327],
+  0x0123: [0x0067, 0x0327],
+  0x0124: [0x0048, 0x0302],
+  0x0125: [0x0068, 0x0302],
+  0x0128: [0x0049, 0x0303],
+  0x0129: [0x0069, 0x0303],
+  0x012A: [0x0049, 0x0304],
+  0x012B: [0x0069, 0x0304],
+  0x012C: [0x0049, 0x0306],
+  0x012D: [0x0069, 0x0306],
+  0x012E: [0x0049, 0x0328],
+  0x012F: [0x0069, 0x0328],
+  0x0130: [0x0049, 0x0307],
+  0x0132: [0x0049, 0x004A],
+  0x0133: [0x0069, 0x006A],
+  0x0134: [0x004A, 0x0302],
+  0x0135: [0x006A, 0x0302],
+  0x0136: [0x004B, 0x0327],
+  0x0137: [0x006B, 0x0327],
+  0x0139: [0x004C, 0x0301],
+  0x013A: [0x006C, 0x0301],
+  0x013B: [0x004C, 0x0327],
+  0x013C: [0x006C, 0x0327],
+  0x013D: [0x004C, 0x030C],
+  0x013E: [0x006C, 0x030C],
+  0x013F: [0x004C, 0x00B7],
+  0x0140: [0x006C, 0x00B7],
+  0x0143: [0x004E, 0x0301],
+  0x0144: [0x006E, 0x0301],
+  0x0145: [0x004E, 0x0327],
+  0x0146: [0x006E, 0x0327],
+  0x0147: [0x004E, 0x030C],
+  0x0148: [0x006E, 0x030C],
+  0x0149: [0x02BC, 0x006E],
+  0x014C: [0x004F, 0x0304],
+  0x014D: [0x006F, 0x0304],
+  0x014E: [0x004F, 0x0306],
+  0x014F: [0x006F, 0x0306],
+  0x0150: [0x004F, 0x030B],
+  0x0151: [0x006F, 0x030B],
+  0x0154: [0x0052, 0x0301],
+  0x0155: [0x0072, 0x0301],
+  0x0156: [0x0052, 0x0327],
+  0x0157: [0x0072, 0x0327],
+  0x0158: [0x0052, 0x030C],
+  0x0159: [0x0072, 0x030C],
+  0x015A: [0x0053, 0x0301],
+  0x015B: [0x0073, 0x0301],
+  0x015C: [0x0053, 0x0302],
+  0x015D: [0x0073, 0x0302],
+  0x015E: [0x0053, 0x0327],
+  0x015F: [0x0073, 0x0327],
+  0x0160: [0x0053, 0x030C],
+  0x0161: [0x0073, 0x030C],
+  0x0162: [0x0054, 0x0327],
+  0x0163: [0x0074, 0x0327],
+  0x0164: [0x0054, 0x030C],
+  0x0165: [0x0074, 0x030C],
+  0x0168: [0x0055, 0x0303],
+  0x0169: [0x0075, 0x0303],
+  0x016A: [0x0055, 0x0304],
+  0x016B: [0x0075, 0x0304],
+  0x016C: [0x0055, 0x0306],
+  0x016D: [0x0075, 0x0306],
+  0x016E: [0x0055, 0x030A],
+  0x016F: [0x0075, 0x030A],
+  0x0170: [0x0055, 0x030B],
+  0x0171: [0x0075, 0x030B],
+  0x0172: [0x0055, 0x0328],
+  0x0173: [0x0075, 0x0328],
+  0x0174: [0x0057, 0x0302],
+  0x0175: [0x0077, 0x0302],
+  0x0176: [0x0059, 0x0302],
+  0x0177: [0x0079, 0x0302],
+  0x0178: [0x0059, 0x0308],
+  0x0179: [0x005A, 0x0301],
+  0x017A: [0x007A, 0x0301],
+  0x017B: [0x005A, 0x0307],
+  0x017C: [0x007A, 0x0307],
+  0x017D: [0x005A, 0x030C],
+  0x017E: [0x007A, 0x030C],
+  0x017F: [0x0073],
+  0x01A0: [0x004F, 0x031B],
+  0x01A1: [0x006F, 0x031B],
+  0x01AF: [0x0055, 0x031B],
+  0x01B0: [0x0075, 0x031B],
+  0x01C4: [0x0044, 0x017D],
+  0x01C5: [0x0044, 0x017E],
+  0x01C6: [0x0064, 0x017E],
+  0x01C7: [0x004C, 0x004A],
+  0x01C8: [0x004C, 0x006A],
+  0x01C9: [0x006C, 0x006A],
+  0x01CA: [0x004E, 0x004A],
+  0x01CB: [0x004E, 0x006A],
+  0x01CC: [0x006E, 0x006A],
+  0x01CD: [0x0041, 0x030C],
+  0x01CE: [0x0061, 0x030C],
+  0x01CF: [0x0049, 0x030C],
+  0x01D0: [0x0069, 0x030C],
+  0x01D1: [0x004F, 0x030C],
+  0x01D2: [0x006F, 0x030C],
+  0x01D3: [0x0055, 0x030C],
+  0x01D4: [0x0075, 0x030C],
+  0x01D5: [0x00DC, 0x0304],
+  0x01D6: [0x00FC, 0x0304],
+  0x01D7: [0x00DC, 0x0301],
+  0x01D8: [0x00FC, 0x0301],
+  0x01D9: [0x00DC, 0x030C],
+  0x01DA: [0x00FC, 0x030C],
+  0x01DB: [0x00DC, 0x0300],
+  0x01DC: [0x00FC, 0x0300],
+  0x01DE: [0x00C4, 0x0304],
+  0x01DF: [0x00E4, 0x0304],
+  0x01E0: [0x0226, 0x0304],
+  0x01E1: [0x0227, 0x0304],
+  0x01E2: [0x00C6, 0x0304],
+  0x01E3: [0x00E6, 0x0304],
+  0x01E6: [0x0047, 0x030C],
+  0x01E7: [0x0067, 0x030C],
+  0x01E8: [0x004B, 0x030C],
+  0x01E9: [0x006B, 0x030C],
+  0x01EA: [0x004F, 0x0328],
+  0x01EB: [0x006F, 0x0328],
+  0x01EC: [0x01EA, 0x0304],
+  0x01ED: [0x01EB, 0x0304],
+  0x01EE: [0x01B7, 0x030C],
+  0x01EF: [0x0292, 0x030C],
+  0x01F0: [0x006A, 0x030C],
+  0x01F1: [0x0044, 0x005A],
+  0x01F2: [0x0044, 0x007A],
+  0x01F3: [0x0064, 0x007A],
+  0x01F4: [0x0047, 0x0301],
+  0x01F5: [0x0067, 0x0301],
+  0x01F8: [0x004E, 0x0300],
+  0x01F9: [0x006E, 0x0300],
+  0x01FA: [0x00C5, 0x0301],
+  0x01FB: [0x00E5, 0x0301],
+  0x01FC: [0x00C6, 0x0301],
+  0x01FD: [0x00E6, 0x0301],
+  0x01FE: [0x00D8, 0x0301],
+  0x01FF: [0x00F8, 0x0301],
+  0x0200: [0x0041, 0x030F],
+  0x0201: [0x0061, 0x030F],
+  0x0202: [0x0041, 0x0311],
+  0x0203: [0x0061, 0x0311],
+  0x0204: [0x0045, 0x030F],
+  0x0205: [0x0065, 0x030F],
+  0x0206: [0x0045, 0x0311],
+  0x0207: [0x0065, 0x0311],
+  0x0208: [0x0049, 0x030F],
+  0x0209: [0x0069, 0x030F],
+  0x020A: [0x0049, 0x0311],
+  0x020B: [0x0069, 0x0311],
+  0x020C: [0x004F, 0x030F],
+  0x020D: [0x006F, 0x030F],
+  0x020E: [0x004F, 0x0311],
+  0x020F: [0x006F, 0x0311],
+  0x0210: [0x0052, 0x030F],
+  0x0211: [0x0072, 0x030F],
+  0x0212: [0x0052, 0x0311],
+  0x0213: [0x0072, 0x0311],
+  0x0214: [0x0055, 0x030F],
+  0x0215: [0x0075, 0x030F],
+  0x0216: [0x0055, 0x0311],
+  0x0217: [0x0075, 0x0311],
+  0x0218: [0x0053, 0x0326],
+  0x0219: [0x0073, 0x0326],
+  0x021A: [0x0054, 0x0326],
+  0x021B: [0x0074, 0x0326],
+  0x021E: [0x0048, 0x030C],
+  0x021F: [0x0068, 0x030C],
+  0x0226: [0x0041, 0x0307],
+  0x0227: [0x0061, 0x0307],
+  0x0228: [0x0045, 0x0327],
+  0x0229: [0x0065, 0x0327],
+  0x022A: [0x00D6, 0x0304],
+  0x022B: [0x00F6, 0x0304],
+  0x022C: [0x00D5, 0x0304],
+  0x022D: [0x00F5, 0x0304],
+  0x022E: [0x004F, 0x0307],
+  0x022F: [0x006F, 0x0307],
+  0x0230: [0x022E, 0x0304],
+  0x0231: [0x022F, 0x0304],
+  0x0232: [0x0059, 0x0304],
+  0x0233: [0x0079, 0x0304],
+  0x02B0: [0x0068],
+  0x02B1: [0x0266],
+  0x02B2: [0x006A],
+  0x02B3: [0x0072],
+  0x02B4: [0x0279],
+  0x02B5: [0x027B],
+  0x02B6: [0x0281],
+  0x02B7: [0x0077],
+  0x02B8: [0x0079],
+  0x02D8: [0x0020, 0x0306],
+  0x02D9: [0x0020, 0x0307],
+  0x02DA: [0x0020, 0x030A],
+  0x02DB: [0x0020, 0x0328],
+  0x02DC: [0x0020, 0x0303],
+  0x02DD: [0x0020, 0x030B],
+  0x02E0: [0x0263],
+  0x02E1: [0x006C],
+  0x02E2: [0x0073],
+  0x02E3: [0x0078],
+  0x02E4: [0x0295],
+  0x0340: [0x0300],
+  0x0341: [0x0301],
+  0x0343: [0x0313],
+  0x0344: [0x0308, 0x0301],
+  0x0374: [0x02B9],
+  0x037A: [0x0020, 0x0345],
+  0x037E: [0x003B],
+  0x0384: [0x0020, 0x0301],
+  0x0385: [0x00A8, 0x0301],
+  0x0386: [0x0391, 0x0301],
+  0x0387: [0x00B7],
+  0x0388: [0x0395, 0x0301],
+  0x0389: [0x0397, 0x0301],
+  0x038A: [0x0399, 0x0301],
+  0x038C: [0x039F, 0x0301],
+  0x038E: [0x03A5, 0x0301],
+  0x038F: [0x03A9, 0x0301],
+  0x0390: [0x03CA, 0x0301],
+  0x03AA: [0x0399, 0x0308],
+  0x03AB: [0x03A5, 0x0308],
+  0x03AC: [0x03B1, 0x0301],
+  0x03AD: [0x03B5, 0x0301],
+  0x03AE: [0x03B7, 0x0301],
+  0x03AF: [0x03B9, 0x0301],
+  0x03B0: [0x03CB, 0x0301],
+  0x03CA: [0x03B9, 0x0308],
+  0x03CB: [0x03C5, 0x0308],
+  0x03CC: [0x03BF, 0x0301],
+  0x03CD: [0x03C5, 0x0301],
+  0x03CE: [0x03C9, 0x0301],
+  0x03D0: [0x03B2],
+  0x03D1: [0x03B8],
+  0x03D2: [0x03A5],
+  0x03D3: [0x03D2, 0x0301],
+  0x03D4: [0x03D2, 0x0308],
+  0x03D5: [0x03C6],
+  0x03D6: [0x03C0],
+  0x03F0: [0x03BA],
+  0x03F1: [0x03C1],
+  0x03F2: [0x03C2],
+  0x03F4: [0x0398],
+  0x03F5: [0x03B5],
+  0x03F9: [0x03A3],
+  0x0400: [0x0415, 0x0300],
+  0x0401: [0x0415, 0x0308],
+  0x0403: [0x0413, 0x0301],
+  0x0407: [0x0406, 0x0308],
+  0x040C: [0x041A, 0x0301],
+  0x040D: [0x0418, 0x0300],
+  0x040E: [0x0423, 0x0306],
+  0x0419: [0x0418, 0x0306],
+  0x0439: [0x0438, 0x0306],
+  0x0450: [0x0435, 0x0300],
+  0x0451: [0x0435, 0x0308],
+  0x0453: [0x0433, 0x0301],
+  0x0457: [0x0456, 0x0308],
+  0x045C: [0x043A, 0x0301],
+  0x045D: [0x0438, 0x0300],
+  0x045E: [0x0443, 0x0306],
+  0x0476: [0x0474, 0x030F],
+  0x0477: [0x0475, 0x030F],
+  0x04C1: [0x0416, 0x0306],
+  0x04C2: [0x0436, 0x0306],
+  0x04D0: [0x0410, 0x0306],
+  0x04D1: [0x0430, 0x0306],
+  0x04D2: [0x0410, 0x0308],
+  0x04D3: [0x0430, 0x0308],
+  0x04D6: [0x0415, 0x0306],
+  0x04D7: [0x0435, 0x0306],
+  0x04DA: [0x04D8, 0x0308],
+  0x04DB: [0x04D9, 0x0308],
+  0x04DC: [0x0416, 0x0308],
+  0x04DD: [0x0436, 0x0308],
+  0x04DE: [0x0417, 0x0308],
+  0x04DF: [0x0437, 0x0308],
+  0x04E2: [0x0418, 0x0304],
+  0x04E3: [0x0438, 0x0304],
+  0x04E4: [0x0418, 0x0308],
+  0x04E5: [0x0438, 0x0308],
+  0x04E6: [0x041E, 0x0308],
+  0x04E7: [0x043E, 0x0308],
+  0x04EA: [0x04E8, 0x0308],
+  0x04EB: [0x04E9, 0x0308],
+  0x04EC: [0x042D, 0x0308],
+  0x04ED: [0x044D, 0x0308],
+  0x04EE: [0x0423, 0x0304],
+  0x04EF: [0x0443, 0x0304],
+  0x04F0: [0x0423, 0x0308],
+  0x04F1: [0x0443, 0x0308],
+  0x04F2: [0x0423, 0x030B],
+  0x04F3: [0x0443, 0x030B],
+  0x04F4: [0x0427, 0x0308],
+  0x04F5: [0x0447, 0x0308],
+  0x04F8: [0x042B, 0x0308],
+  0x04F9: [0x044B, 0x0308],
+  0x0587: [0x0565, 0x0582],
+  0x0622: [0x0627, 0x0653],
+  0x0623: [0x0627, 0x0654],
+  0x0624: [0x0648, 0x0654],
+  0x0625: [0x0627, 0x0655],
+  0x0626: [0x064A, 0x0654],
+  0x0675: [0x0627, 0x0674],
+  0x0676: [0x0648, 0x0674],
+  0x0677: [0x06C7, 0x0674],
+  0x0678: [0x064A, 0x0674],
+  0x06C0: [0x06D5, 0x0654],
+  0x06C2: [0x06C1, 0x0654],
+  0x06D3: [0x06D2, 0x0654],
+  0x0929: [0x0928, 0x093C],
+  0x0931: [0x0930, 0x093C],
+  0x0934: [0x0933, 0x093C],
+  0x0958: [0x0915, 0x093C],
+  0x0959: [0x0916, 0x093C],
+  0x095A: [0x0917, 0x093C],
+  0x095B: [0x091C, 0x093C],
+  0x095C: [0x0921, 0x093C],
+  0x095D: [0x0922, 0x093C],
+  0x095E: [0x092B, 0x093C],
+  0x095F: [0x092F, 0x093C],
+  0x09CB: [0x09C7, 0x09BE],
+  0x09CC: [0x09C7, 0x09D7],
+  0x09DC: [0x09A1, 0x09BC],
+  0x09DD: [0x09A2, 0x09BC],
+  0x09DF: [0x09AF, 0x09BC],
+  0x0A33: [0x0A32, 0x0A3C],
+  0x0A36: [0x0A38, 0x0A3C],
+  0x0A59: [0x0A16, 0x0A3C],
+  0x0A5A: [0x0A17, 0x0A3C],
+  0x0A5B: [0x0A1C, 0x0A3C],
+  0x0A5E: [0x0A2B, 0x0A3C],
+  0x0B48: [0x0B47, 0x0B56],
+  0x0B4B: [0x0B47, 0x0B3E],
+  0x0B4C: [0x0B47, 0x0B57],
+  0x0B5C: [0x0B21, 0x0B3C],
+  0x0B5D: [0x0B22, 0x0B3C],
+  0x0B94: [0x0B92, 0x0BD7],
+  0x0BCA: [0x0BC6, 0x0BBE],
+  0x0BCB: [0x0BC7, 0x0BBE],
+  0x0BCC: [0x0BC6, 0x0BD7],
+  0x0C48: [0x0C46, 0x0C56],
+  0x0CC0: [0x0CBF, 0x0CD5],
+  0x0CC7: [0x0CC6, 0x0CD5],
+  0x0CC8: [0x0CC6, 0x0CD6],
+  0x0CCA: [0x0CC6, 0x0CC2],
+  0x0CCB: [0x0CCA, 0x0CD5],
+  0x0D4A: [0x0D46, 0x0D3E],
+  0x0D4B: [0x0D47, 0x0D3E],
+  0x0D4C: [0x0D46, 0x0D57],
+  0x0DDA: [0x0DD9, 0x0DCA],
+  0x0DDC: [0x0DD9, 0x0DCF],
+  0x0DDD: [0x0DDC, 0x0DCA],
+  0x0DDE: [0x0DD9, 0x0DDF],
+  0x0E33: [0x0E4D, 0x0E32],
+  0x0EB3: [0x0ECD, 0x0EB2],
+  0x0EDC: [0x0EAB, 0x0E99],
+  0x0EDD: [0x0EAB, 0x0EA1],
+  0x0F0C: [0x0F0B],
+  0x0F43: [0x0F42, 0x0FB7],
+  0x0F4D: [0x0F4C, 0x0FB7],
+  0x0F52: [0x0F51, 0x0FB7],
+  0x0F57: [0x0F56, 0x0FB7],
+  0x0F5C: [0x0F5B, 0x0FB7],
+  0x0F69: [0x0F40, 0x0FB5],
+  0x0F73: [0x0F71, 0x0F72],
+  0x0F75: [0x0F71, 0x0F74],
+  0x0F76: [0x0FB2, 0x0F80],
+  0x0F77: [0x0FB2, 0x0F81],
+  0x0F78: [0x0FB3, 0x0F80],
+  0x0F79: [0x0FB3, 0x0F81],
+  0x0F81: [0x0F71, 0x0F80],
+  0x0F93: [0x0F92, 0x0FB7],
+  0x0F9D: [0x0F9C, 0x0FB7],
+  0x0FA2: [0x0FA1, 0x0FB7],
+  0x0FA7: [0x0FA6, 0x0FB7],
+  0x0FAC: [0x0FAB, 0x0FB7],
+  0x0FB9: [0x0F90, 0x0FB5],
+  0x1026: [0x1025, 0x102E],
+  0x10FC: [0x10DC],
+  0x1B06: [0x1B05, 0x1B35],
+  0x1B08: [0x1B07, 0x1B35],
+  0x1B0A: [0x1B09, 0x1B35],
+  0x1B0C: [0x1B0B, 0x1B35],
+  0x1B0E: [0x1B0D, 0x1B35],
+  0x1B12: [0x1B11, 0x1B35],
+  0x1B3B: [0x1B3A, 0x1B35],
+  0x1B3D: [0x1B3C, 0x1B35],
+  0x1B40: [0x1B3E, 0x1B35],
+  0x1B41: [0x1B3F, 0x1B35],
+  0x1B43: [0x1B42, 0x1B35],
+  0x1D2C: [0x0041],
+  0x1D2D: [0x00C6],
+  0x1D2E: [0x0042],
+  0x1D30: [0x0044],
+  0x1D31: [0x0045],
+  0x1D32: [0x018E],
+  0x1D33: [0x0047],
+  0x1D34: [0x0048],
+  0x1D35: [0x0049],
+  0x1D36: [0x004A],
+  0x1D37: [0x004B],
+  0x1D38: [0x004C],
+  0x1D39: [0x004D],
+  0x1D3A: [0x004E],
+  0x1D3C: [0x004F],
+  0x1D3D: [0x0222],
+  0x1D3E: [0x0050],
+  0x1D3F: [0x0052],
+  0x1D40: [0x0054],
+  0x1D41: [0x0055],
+  0x1D42: [0x0057],
+  0x1D43: [0x0061],
+  0x1D44: [0x0250],
+  0x1D45: [0x0251],
+  0x1D46: [0x1D02],
+  0x1D47: [0x0062],
+  0x1D48: [0x0064],
+  0x1D49: [0x0065],
+  0x1D4A: [0x0259],
+  0x1D4B: [0x025B],
+  0x1D4C: [0x025C],
+  0x1D4D: [0x0067],
+  0x1D4F: [0x006B],
+  0x1D50: [0x006D],
+  0x1D51: [0x014B],
+  0x1D52: [0x006F],
+  0x1D53: [0x0254],
+  0x1D54: [0x1D16],
+  0x1D55: [0x1D17],
+  0x1D56: [0x0070],
+  0x1D57: [0x0074],
+  0x1D58: [0x0075],
+  0x1D59: [0x1D1D],
+  0x1D5A: [0x026F],
+  0x1D5B: [0x0076],
+  0x1D5C: [0x1D25],
+  0x1D5D: [0x03B2],
+  0x1D5E: [0x03B3],
+  0x1D5F: [0x03B4],
+  0x1D60: [0x03C6],
+  0x1D61: [0x03C7],
+  0x1D62: [0x0069],
+  0x1D63: [0x0072],
+  0x1D64: [0x0075],
+  0x1D65: [0x0076],
+  0x1D66: [0x03B2],
+  0x1D67: [0x03B3],
+  0x1D68: [0x03C1],
+  0x1D69: [0x03C6],
+  0x1D6A: [0x03C7],
+  0x1D78: [0x043D],
+  0x1D9B: [0x0252],
+  0x1D9C: [0x0063],
+  0x1D9D: [0x0255],
+  0x1D9E: [0x00F0],
+  0x1D9F: [0x025C],
+  0x1DA0: [0x0066],
+  0x1DA1: [0x025F],
+  0x1DA2: [0x0261],
+  0x1DA3: [0x0265],
+  0x1DA4: [0x0268],
+  0x1DA5: [0x0269],
+  0x1DA6: [0x026A],
+  0x1DA7: [0x1D7B],
+  0x1DA8: [0x029D],
+  0x1DA9: [0x026D],
+  0x1DAA: [0x1D85],
+  0x1DAB: [0x029F],
+  0x1DAC: [0x0271],
+  0x1DAD: [0x0270],
+  0x1DAE: [0x0272],
+  0x1DAF: [0x0273],
+  0x1DB0: [0x0274],
+  0x1DB1: [0x0275],
+  0x1DB2: [0x0278],
+  0x1DB3: [0x0282],
+  0x1DB4: [0x0283],
+  0x1DB5: [0x01AB],
+  0x1DB6: [0x0289],
+  0x1DB7: [0x028A],
+  0x1DB8: [0x1D1C],
+  0x1DB9: [0x028B],
+  0x1DBA: [0x028C],
+  0x1DBB: [0x007A],
+  0x1DBC: [0x0290],
+  0x1DBD: [0x0291],
+  0x1DBE: [0x0292],
+  0x1DBF: [0x03B8],
+  0x1E00: [0x0041, 0x0325],
+  0x1E01: [0x0061, 0x0325],
+  0x1E02: [0x0042, 0x0307],
+  0x1E03: [0x0062, 0x0307],
+  0x1E04: [0x0042, 0x0323],
+  0x1E05: [0x0062, 0x0323],
+  0x1E06: [0x0042, 0x0331],
+  0x1E07: [0x0062, 0x0331],
+  0x1E08: [0x00C7, 0x0301],
+  0x1E09: [0x00E7, 0x0301],
+  0x1E0A: [0x0044, 0x0307],
+  0x1E0B: [0x0064, 0x0307],
+  0x1E0C: [0x0044, 0x0323],
+  0x1E0D: [0x0064, 0x0323],
+  0x1E0E: [0x0044, 0x0331],
+  0x1E0F: [0x0064, 0x0331],
+  0x1E10: [0x0044, 0x0327],
+  0x1E11: [0x0064, 0x0327],
+  0x1E12: [0x0044, 0x032D],
+  0x1E13: [0x0064, 0x032D],
+  0x1E14: [0x0112, 0x0300],
+  0x1E15: [0x0113, 0x0300],
+  0x1E16: [0x0112, 0x0301],
+  0x1E17: [0x0113, 0x0301],
+  0x1E18: [0x0045, 0x032D],
+  0x1E19: [0x0065, 0x032D],
+  0x1E1A: [0x0045, 0x0330],
+  0x1E1B: [0x0065, 0x0330],
+  0x1E1C: [0x0228, 0x0306],
+  0x1E1D: [0x0229, 0x0306],
+  0x1E1E: [0x0046, 0x0307],
+  0x1E1F: [0x0066, 0x0307],
+  0x1E20: [0x0047, 0x0304],
+  0x1E21: [0x0067, 0x0304],
+  0x1E22: [0x0048, 0x0307],
+  0x1E23: [0x0068, 0x0307],
+  0x1E24: [0x0048, 0x0323],
+  0x1E25: [0x0068, 0x0323],
+  0x1E26: [0x0048, 0x0308],
+  0x1E27: [0x0068, 0x0308],
+  0x1E28: [0x0048, 0x0327],
+  0x1E29: [0x0068, 0x0327],
+  0x1E2A: [0x0048, 0x032E],
+  0x1E2B: [0x0068, 0x032E],
+  0x1E2C: [0x0049, 0x0330],
+  0x1E2D: [0x0069, 0x0330],
+  0x1E2E: [0x00CF, 0x0301],
+  0x1E2F: [0x00EF, 0x0301],
+  0x1E30: [0x004B, 0x0301],
+  0x1E31: [0x006B, 0x0301],
+  0x1E32: [0x004B, 0x0323],
+  0x1E33: [0x006B, 0x0323],
+  0x1E34: [0x004B, 0x0331],
+  0x1E35: [0x006B, 0x0331],
+  0x1E36: [0x004C, 0x0323],
+  0x1E37: [0x006C, 0x0323],
+  0x1E38: [0x1E36, 0x0304],
+  0x1E39: [0x1E37, 0x0304],
+  0x1E3A: [0x004C, 0x0331],
+  0x1E3B: [0x006C, 0x0331],
+  0x1E3C: [0x004C, 0x032D],
+  0x1E3D: [0x006C, 0x032D],
+  0x1E3E: [0x004D, 0x0301],
+  0x1E3F: [0x006D, 0x0301],
+  0x1E40: [0x004D, 0x0307],
+  0x1E41: [0x006D, 0x0307],
+  0x1E42: [0x004D, 0x0323],
+  0x1E43: [0x006D, 0x0323],
+  0x1E44: [0x004E, 0x0307],
+  0x1E45: [0x006E, 0x0307],
+  0x1E46: [0x004E, 0x0323],
+  0x1E47: [0x006E, 0x0323],
+  0x1E48: [0x004E, 0x0331],
+  0x1E49: [0x006E, 0x0331],
+  0x1E4A: [0x004E, 0x032D],
+  0x1E4B: [0x006E, 0x032D],
+  0x1E4C: [0x00D5, 0x0301],
+  0x1E4D: [0x00F5, 0x0301],
+  0x1E4E: [0x00D5, 0x0308],
+  0x1E4F: [0x00F5, 0x0308],
+  0x1E50: [0x014C, 0x0300],
+  0x1E51: [0x014D, 0x0300],
+  0x1E52: [0x014C, 0x0301],
+  0x1E53: [0x014D, 0x0301],
+  0x1E54: [0x0050, 0x0301],
+  0x1E55: [0x0070, 0x0301],
+  0x1E56: [0x0050, 0x0307],
+  0x1E57: [0x0070, 0x0307],
+  0x1E58: [0x0052, 0x0307],
+  0x1E59: [0x0072, 0x0307],
+  0x1E5A: [0x0052, 0x0323],
+  0x1E5B: [0x0072, 0x0323],
+  0x1E5C: [0x1E5A, 0x0304],
+  0x1E5D: [0x1E5B, 0x0304],
+  0x1E5E: [0x0052, 0x0331],
+  0x1E5F: [0x0072, 0x0331],
+  0x1E60: [0x0053, 0x0307],
+  0x1E61: [0x0073, 0x0307],
+  0x1E62: [0x0053, 0x0323],
+  0x1E63: [0x0073, 0x0323],
+  0x1E64: [0x015A, 0x0307],
+  0x1E65: [0x015B, 0x0307],
+  0x1E66: [0x0160, 0x0307],
+  0x1E67: [0x0161, 0x0307],
+  0x1E68: [0x1E62, 0x0307],
+  0x1E69: [0x1E63, 0x0307],
+  0x1E6A: [0x0054, 0x0307],
+  0x1E6B: [0x0074, 0x0307],
+  0x1E6C: [0x0054, 0x0323],
+  0x1E6D: [0x0074, 0x0323],
+  0x1E6E: [0x0054, 0x0331],
+  0x1E6F: [0x0074, 0x0331],
+  0x1E70: [0x0054, 0x032D],
+  0x1E71: [0x0074, 0x032D],
+  0x1E72: [0x0055, 0x0324],
+  0x1E73: [0x0075, 0x0324],
+  0x1E74: [0x0055, 0x0330],
+  0x1E75: [0x0075, 0x0330],
+  0x1E76: [0x0055, 0x032D],
+  0x1E77: [0x0075, 0x032D],
+  0x1E78: [0x0168, 0x0301],
+  0x1E79: [0x0169, 0x0301],
+  0x1E7A: [0x016A, 0x0308],
+  0x1E7B: [0x016B, 0x0308],
+  0x1E7C: [0x0056, 0x0303],
+  0x1E7D: [0x0076, 0x0303],
+  0x1E7E: [0x0056, 0x0323],
+  0x1E7F: [0x0076, 0x0323],
+  0x1E80: [0x0057, 0x0300],
+  0x1E81: [0x0077, 0x0300],
+  0x1E82: [0x0057, 0x0301],
+  0x1E83: [0x0077, 0x0301],
+  0x1E84: [0x0057, 0x0308],
+  0x1E85: [0x0077, 0x0308],
+  0x1E86: [0x0057, 0x0307],
+  0x1E87: [0x0077, 0x0307],
+  0x1E88: [0x0057, 0x0323],
+  0x1E89: [0x0077, 0x0323],
+  0x1E8A: [0x0058, 0x0307],
+  0x1E8B: [0x0078, 0x0307],
+  0x1E8C: [0x0058, 0x0308],
+  0x1E8D: [0x0078, 0x0308],
+  0x1E8E: [0x0059, 0x0307],
+  0x1E8F: [0x0079, 0x0307],
+  0x1E90: [0x005A, 0x0302],
+  0x1E91: [0x007A, 0x0302],
+  0x1E92: [0x005A, 0x0323],
+  0x1E93: [0x007A, 0x0323],
+  0x1E94: [0x005A, 0x0331],
+  0x1E95: [0x007A, 0x0331],
+  0x1E96: [0x0068, 0x0331],
+  0x1E97: [0x0074, 0x0308],
+  0x1E98: [0x0077, 0x030A],
+  0x1E99: [0x0079, 0x030A],
+  0x1E9A: [0x0061, 0x02BE],
+  0x1E9B: [0x017F, 0x0307],
+  0x1EA0: [0x0041, 0x0323],
+  0x1EA1: [0x0061, 0x0323],
+  0x1EA2: [0x0041, 0x0309],
+  0x1EA3: [0x0061, 0x0309],
+  0x1EA4: [0x00C2, 0x0301],
+  0x1EA5: [0x00E2, 0x0301],
+  0x1EA6: [0x00C2, 0x0300],
+  0x1EA7: [0x00E2, 0x0300],
+  0x1EA8: [0x00C2, 0x0309],
+  0x1EA9: [0x00E2, 0x0309],
+  0x1EAA: [0x00C2, 0x0303],
+  0x1EAB: [0x00E2, 0x0303],
+  0x1EAC: [0x1EA0, 0x0302],
+  0x1EAD: [0x1EA1, 0x0302],
+  0x1EAE: [0x0102, 0x0301],
+  0x1EAF: [0x0103, 0x0301],
+  0x1EB0: [0x0102, 0x0300],
+  0x1EB1: [0x0103, 0x0300],
+  0x1EB2: [0x0102, 0x0309],
+  0x1EB3: [0x0103, 0x0309],
+  0x1EB4: [0x0102, 0x0303],
+  0x1EB5: [0x0103, 0x0303],
+  0x1EB6: [0x1EA0, 0x0306],
+  0x1EB7: [0x1EA1, 0x0306],
+  0x1EB8: [0x0045, 0x0323],
+  0x1EB9: [0x0065, 0x0323],
+  0x1EBA: [0x0045, 0x0309],
+  0x1EBB: [0x0065, 0x0309],
+  0x1EBC: [0x0045, 0x0303],
+  0x1EBD: [0x0065, 0x0303],
+  0x1EBE: [0x00CA, 0x0301],
+  0x1EBF: [0x00EA, 0x0301],
+  0x1EC0: [0x00CA, 0x0300],
+  0x1EC1: [0x00EA, 0x0300],
+  0x1EC2: [0x00CA, 0x0309],
+  0x1EC3: [0x00EA, 0x0309],
+  0x1EC4: [0x00CA, 0x0303],
+  0x1EC5: [0x00EA, 0x0303],
+  0x1EC6: [0x1EB8, 0x0302],
+  0x1EC7: [0x1EB9, 0x0302],
+  0x1EC8: [0x0049, 0x0309],
+  0x1EC9: [0x0069, 0x0309],
+  0x1ECA: [0x0049, 0x0323],
+  0x1ECB: [0x0069, 0x0323],
+  0x1ECC: [0x004F, 0x0323],
+  0x1ECD: [0x006F, 0x0323],
+  0x1ECE: [0x004F, 0x0309],
+  0x1ECF: [0x006F, 0x0309],
+  0x1ED0: [0x00D4, 0x0301],
+  0x1ED1: [0x00F4, 0x0301],
+  0x1ED2: [0x00D4, 0x0300],
+  0x1ED3: [0x00F4, 0x0300],
+  0x1ED4: [0x00D4, 0x0309],
+  0x1ED5: [0x00F4, 0x0309],
+  0x1ED6: [0x00D4, 0x0303],
+  0x1ED7: [0x00F4, 0x0303],
+  0x1ED8: [0x1ECC, 0x0302],
+  0x1ED9: [0x1ECD, 0x0302],
+  0x1EDA: [0x01A0, 0x0301],
+  0x1EDB: [0x01A1, 0x0301],
+  0x1EDC: [0x01A0, 0x0300],
+  0x1EDD: [0x01A1, 0x0300],
+  0x1EDE: [0x01A0, 0x0309],
+  0x1EDF: [0x01A1, 0x0309],
+  0x1EE0: [0x01A0, 0x0303],
+  0x1EE1: [0x01A1, 0x0303],
+  0x1EE2: [0x01A0, 0x0323],
+  0x1EE3: [0x01A1, 0x0323],
+  0x1EE4: [0x0055, 0x0323],
+  0x1EE5: [0x0075, 0x0323],
+  0x1EE6: [0x0055, 0x0309],
+  0x1EE7: [0x0075, 0x0309],
+  0x1EE8: [0x01AF, 0x0301],
+  0x1EE9: [0x01B0, 0x0301],
+  0x1EEA: [0x01AF, 0x0300],
+  0x1EEB: [0x01B0, 0x0300],
+  0x1EEC: [0x01AF, 0x0309],
+  0x1EED: [0x01B0, 0x0309],
+  0x1EEE: [0x01AF, 0x0303],
+  0x1EEF: [0x01B0, 0x0303],
+  0x1EF0: [0x01AF, 0x0323],
+  0x1EF1: [0x01B0, 0x0323],
+  0x1EF2: [0x0059, 0x0300],
+  0x1EF3: [0x0079, 0x0300],
+  0x1EF4: [0x0059, 0x0323],
+  0x1EF5: [0x0079, 0x0323],
+  0x1EF6: [0x0059, 0x0309],
+  0x1EF7: [0x0079, 0x0309],
+  0x1EF8: [0x0059, 0x0303],
+  0x1EF9: [0x0079, 0x0303],
+  0x1F00: [0x03B1, 0x0313],
+  0x1F01: [0x03B1, 0x0314],
+  0x1F02: [0x1F00, 0x0300],
+  0x1F03: [0x1F01, 0x0300],
+  0x1F04: [0x1F00, 0x0301],
+  0x1F05: [0x1F01, 0x0301],
+  0x1F06: [0x1F00, 0x0342],
+  0x1F07: [0x1F01, 0x0342],
+  0x1F08: [0x0391, 0x0313],
+  0x1F09: [0x0391, 0x0314],
+  0x1F0A: [0x1F08, 0x0300],
+  0x1F0B: [0x1F09, 0x0300],
+  0x1F0C: [0x1F08, 0x0301],
+  0x1F0D: [0x1F09, 0x0301],
+  0x1F0E: [0x1F08, 0x0342],
+  0x1F0F: [0x1F09, 0x0342],
+  0x1F10: [0x03B5, 0x0313],
+  0x1F11: [0x03B5, 0x0314],
+  0x1F12: [0x1F10, 0x0300],
+  0x1F13: [0x1F11, 0x0300],
+  0x1F14: [0x1F10, 0x0301],
+  0x1F15: [0x1F11, 0x0301],
+  0x1F18: [0x0395, 0x0313],
+  0x1F19: [0x0395, 0x0314],
+  0x1F1A: [0x1F18, 0x0300],
+  0x1F1B: [0x1F19, 0x0300],
+  0x1F1C: [0x1F18, 0x0301],
+  0x1F1D: [0x1F19, 0x0301],
+  0x1F20: [0x03B7, 0x0313],
+  0x1F21: [0x03B7, 0x0314],
+  0x1F22: [0x1F20, 0x0300],
+  0x1F23: [0x1F21, 0x0300],
+  0x1F24: [0x1F20, 0x0301],
+  0x1F25: [0x1F21, 0x0301],
+  0x1F26: [0x1F20, 0x0342],
+  0x1F27: [0x1F21, 0x0342],
+  0x1F28: [0x0397, 0x0313],
+  0x1F29: [0x0397, 0x0314],
+  0x1F2A: [0x1F28, 0x0300],
+  0x1F2B: [0x1F29, 0x0300],
+  0x1F2C: [0x1F28, 0x0301],
+  0x1F2D: [0x1F29, 0x0301],
+  0x1F2E: [0x1F28, 0x0342],
+  0x1F2F: [0x1F29, 0x0342],
+  0x1F30: [0x03B9, 0x0313],
+  0x1F31: [0x03B9, 0x0314],
+  0x1F32: [0x1F30, 0x0300],
+  0x1F33: [0x1F31, 0x0300],
+  0x1F34: [0x1F30, 0x0301],
+  0x1F35: [0x1F31, 0x0301],
+  0x1F36: [0x1F30, 0x0342],
+  0x1F37: [0x1F31, 0x0342],
+  0x1F38: [0x0399, 0x0313],
+  0x1F39: [0x0399, 0x0314],
+  0x1F3A: [0x1F38, 0x0300],
+  0x1F3B: [0x1F39, 0x0300],
+  0x1F3C: [0x1F38, 0x0301],
+  0x1F3D: [0x1F39, 0x0301],
+  0x1F3E: [0x1F38, 0x0342],
+  0x1F3F: [0x1F39, 0x0342],
+  0x1F40: [0x03BF, 0x0313],
+  0x1F41: [0x03BF, 0x0314],
+  0x1F42: [0x1F40, 0x0300],
+  0x1F43: [0x1F41, 0x0300],
+  0x1F44: [0x1F40, 0x0301],
+  0x1F45: [0x1F41, 0x0301],
+  0x1F48: [0x039F, 0x0313],
+  0x1F49: [0x039F, 0x0314],
+  0x1F4A: [0x1F48, 0x0300],
+  0x1F4B: [0x1F49, 0x0300],
+  0x1F4C: [0x1F48, 0x0301],
+  0x1F4D: [0x1F49, 0x0301],
+  0x1F50: [0x03C5, 0x0313],
+  0x1F51: [0x03C5, 0x0314],
+  0x1F52: [0x1F50, 0x0300],
+  0x1F53: [0x1F51, 0x0300],
+  0x1F54: [0x1F50, 0x0301],
+  0x1F55: [0x1F51, 0x0301],
+  0x1F56: [0x1F50, 0x0342],
+  0x1F57: [0x1F51, 0x0342],
+  0x1F59: [0x03A5, 0x0314],
+  0x1F5B: [0x1F59, 0x0300],
+  0x1F5D: [0x1F59, 0x0301],
+  0x1F5F: [0x1F59, 0x0342],
+  0x1F60: [0x03C9, 0x0313],
+  0x1F61: [0x03C9, 0x0314],
+  0x1F62: [0x1F60, 0x0300],
+  0x1F63: [0x1F61, 0x0300],
+  0x1F64: [0x1F60, 0x0301],
+  0x1F65: [0x1F61, 0x0301],
+  0x1F66: [0x1F60, 0x0342],
+  0x1F67: [0x1F61, 0x0342],
+  0x1F68: [0x03A9, 0x0313],
+  0x1F69: [0x03A9, 0x0314],
+  0x1F6A: [0x1F68, 0x0300],
+  0x1F6B: [0x1F69, 0x0300],
+  0x1F6C: [0x1F68, 0x0301],
+  0x1F6D: [0x1F69, 0x0301],
+  0x1F6E: [0x1F68, 0x0342],
+  0x1F6F: [0x1F69, 0x0342],
+  0x1F70: [0x03B1, 0x0300],
+  0x1F71: [0x03AC],
+  0x1F72: [0x03B5, 0x0300],
+  0x1F73: [0x03AD],
+  0x1F74: [0x03B7, 0x0300],
+  0x1F75: [0x03AE],
+  0x1F76: [0x03B9, 0x0300],
+  0x1F77: [0x03AF],
+  0x1F78: [0x03BF, 0x0300],
+  0x1F79: [0x03CC],
+  0x1F7A: [0x03C5, 0x0300],
+  0x1F7B: [0x03CD],
+  0x1F7C: [0x03C9, 0x0300],
+  0x1F7D: [0x03CE],
+  0x1F80: [0x1F00, 0x0345],
+  0x1F81: [0x1F01, 0x0345],
+  0x1F82: [0x1F02, 0x0345],
+  0x1F83: [0x1F03, 0x0345],
+  0x1F84: [0x1F04, 0x0345],
+  0x1F85: [0x1F05, 0x0345],
+  0x1F86: [0x1F06, 0x0345],
+  0x1F87: [0x1F07, 0x0345],
+  0x1F88: [0x1F08, 0x0345],
+  0x1F89: [0x1F09, 0x0345],
+  0x1F8A: [0x1F0A, 0x0345],
+  0x1F8B: [0x1F0B, 0x0345],
+  0x1F8C: [0x1F0C, 0x0345],
+  0x1F8D: [0x1F0D, 0x0345],
+  0x1F8E: [0x1F0E, 0x0345],
+  0x1F8F: [0x1F0F, 0x0345],
+  0x1F90: [0x1F20, 0x0345],
+  0x1F91: [0x1F21, 0x0345],
+  0x1F92: [0x1F22, 0x0345],
+  0x1F93: [0x1F23, 0x0345],
+  0x1F94: [0x1F24, 0x0345],
+  0x1F95: [0x1F25, 0x0345],
+  0x1F96: [0x1F26, 0x0345],
+  0x1F97: [0x1F27, 0x0345],
+  0x1F98: [0x1F28, 0x0345],
+  0x1F99: [0x1F29, 0x0345],
+  0x1F9A: [0x1F2A, 0x0345],
+  0x1F9B: [0x1F2B, 0x0345],
+  0x1F9C: [0x1F2C, 0x0345],
+  0x1F9D: [0x1F2D, 0x0345],
+  0x1F9E: [0x1F2E, 0x0345],
+  0x1F9F: [0x1F2F, 0x0345],
+  0x1FA0: [0x1F60, 0x0345],
+  0x1FA1: [0x1F61, 0x0345],
+  0x1FA2: [0x1F62, 0x0345],
+  0x1FA3: [0x1F63, 0x0345],
+  0x1FA4: [0x1F64, 0x0345],
+  0x1FA5: [0x1F65, 0x0345],
+  0x1FA6: [0x1F66, 0x0345],
+  0x1FA7: [0x1F67, 0x0345],
+  0x1FA8: [0x1F68, 0x0345],
+  0x1FA9: [0x1F69, 0x0345],
+  0x1FAA: [0x1F6A, 0x0345],
+  0x1FAB: [0x1F6B, 0x0345],
+  0x1FAC: [0x1F6C, 0x0345],
+  0x1FAD: [0x1F6D, 0x0345],
+  0x1FAE: [0x1F6E, 0x0345],
+  0x1FAF: [0x1F6F, 0x0345],
+  0x1FB0: [0x03B1, 0x0306],
+  0x1FB1: [0x03B1, 0x0304],
+  0x1FB2: [0x1F70, 0x0345],
+  0x1FB3: [0x03B1, 0x0345],
+  0x1FB4: [0x03AC, 0x0345],
+  0x1FB6: [0x03B1, 0x0342],
+  0x1FB7: [0x1FB6, 0x0345],
+  0x1FB8: [0x0391, 0x0306],
+  0x1FB9: [0x0391, 0x0304],
+  0x1FBA: [0x0391, 0x0300],
+  0x1FBB: [0x0386],
+  0x1FBC: [0x0391, 0x0345],
+  0x1FBD: [0x0020, 0x0313],
+  0x1FBE: [0x03B9],
+  0x1FBF: [0x0020, 0x0313],
+  0x1FC0: [0x0020, 0x0342],
+  0x1FC1: [0x00A8, 0x0342],
+  0x1FC2: [0x1F74, 0x0345],
+  0x1FC3: [0x03B7, 0x0345],
+  0x1FC4: [0x03AE, 0x0345],
+  0x1FC6: [0x03B7, 0x0342],
+  0x1FC7: [0x1FC6, 0x0345],
+  0x1FC8: [0x0395, 0x0300],
+  0x1FC9: [0x0388],
+  0x1FCA: [0x0397, 0x0300],
+  0x1FCB: [0x0389],
+  0x1FCC: [0x0397, 0x0345],
+  0x1FCD: [0x1FBF, 0x0300],
+  0x1FCE: [0x1FBF, 0x0301],
+  0x1FCF: [0x1FBF, 0x0342],
+  0x1FD0: [0x03B9, 0x0306],
+  0x1FD1: [0x03B9, 0x0304],
+  0x1FD2: [0x03CA, 0x0300],
+  0x1FD3: [0x0390],
+  0x1FD6: [0x03B9, 0x0342],
+  0x1FD7: [0x03CA, 0x0342],
+  0x1FD8: [0x0399, 0x0306],
+  0x1FD9: [0x0399, 0x0304],
+  0x1FDA: [0x0399, 0x0300],
+  0x1FDB: [0x038A],
+  0x1FDD: [0x1FFE, 0x0300],
+  0x1FDE: [0x1FFE, 0x0301],
+  0x1FDF: [0x1FFE, 0x0342],
+  0x1FE0: [0x03C5, 0x0306],
+  0x1FE1: [0x03C5, 0x0304],
+  0x1FE2: [0x03CB, 0x0300],
+  0x1FE3: [0x03B0],
+  0x1FE4: [0x03C1, 0x0313],
+  0x1FE5: [0x03C1, 0x0314],
+  0x1FE6: [0x03C5, 0x0342],
+  0x1FE7: [0x03CB, 0x0342],
+  0x1FE8: [0x03A5, 0x0306],
+  0x1FE9: [0x03A5, 0x0304],
+  0x1FEA: [0x03A5, 0x0300],
+  0x1FEB: [0x038E],
+  0x1FEC: [0x03A1, 0x0314],
+  0x1FED: [0x00A8, 0x0300],
+  0x1FEE: [0x0385],
+  0x1FEF: [0x0060],
+  0x1FF2: [0x1F7C, 0x0345],
+  0x1FF3: [0x03C9, 0x0345],
+  0x1FF4: [0x03CE, 0x0345],
+  0x1FF6: [0x03C9, 0x0342],
+  0x1FF7: [0x1FF6, 0x0345],
+  0x1FF8: [0x039F, 0x0300],
+  0x1FF9: [0x038C],
+  0x1FFA: [0x03A9, 0x0300],
+  0x1FFB: [0x038F],
+  0x1FFC: [0x03A9, 0x0345],
+  0x1FFD: [0x00B4],
+  0x1FFE: [0x0020, 0x0314],
+  0x2000: [0x2002],
+  0x2001: [0x2003],
+  0x2002: [0x0020],
+  0x2003: [0x0020],
+  0x2004: [0x0020],
+  0x2005: [0x0020],
+  0x2006: [0x0020],
+  0x2007: [0x0020],
+  0x2008: [0x0020],
+  0x2009: [0x0020],
+  0x200A: [0x0020],
+  0x2011: [0x2010],
+  0x2017: [0x0020, 0x0333],
+  0x2024: [0x002E],
+  0x2025: [0x002E, 0x002E],
+  0x2026: [0x002E, 0x002E, 0x002E],
+  0x202F: [0x0020],
+  0x2033: [0x2032, 0x2032],
+  0x2034: [0x2032, 0x2032, 0x2032],
+  0x2036: [0x2035, 0x2035],
+  0x2037: [0x2035, 0x2035, 0x2035],
+  0x203C: [0x0021, 0x0021],
+  0x203E: [0x0020, 0x0305],
+  0x2047: [0x003F, 0x003F],
+  0x2048: [0x003F, 0x0021],
+  0x2049: [0x0021, 0x003F],
+  0x2057: [0x2032, 0x2032, 0x2032, 0x2032],
+  0x205F: [0x0020],
+  0x2070: [0x0030],
+  0x2071: [0x0069],
+  0x2074: [0x0034],
+  0x2075: [0x0035],
+  0x2076: [0x0036],
+  0x2077: [0x0037],
+  0x2078: [0x0038],
+  0x2079: [0x0039],
+  0x207A: [0x002B],
+  0x207B: [0x2212],
+  0x207C: [0x003D],
+  0x207D: [0x0028],
+  0x207E: [0x0029],
+  0x207F: [0x006E],
+  0x2080: [0x0030],
+  0x2081: [0x0031],
+  0x2082: [0x0032],
+  0x2083: [0x0033],
+  0x2084: [0x0034],
+  0x2085: [0x0035],
+  0x2086: [0x0036],
+  0x2087: [0x0037],
+  0x2088: [0x0038],
+  0x2089: [0x0039],
+  0x208A: [0x002B],
+  0x208B: [0x2212],
+  0x208C: [0x003D],
+  0x208D: [0x0028],
+  0x208E: [0x0029],
+  0x2090: [0x0061],
+  0x2091: [0x0065],
+  0x2092: [0x006F],
+  0x2093: [0x0078],
+  0x2094: [0x0259],
+  0x2095: [0x0068],
+  0x2096: [0x006B],
+  0x2097: [0x006C],
+  0x2098: [0x006D],
+  0x2099: [0x006E],
+  0x209A: [0x0070],
+  0x209B: [0x0073],
+  0x209C: [0x0074],
+  0x20A8: [0x0052, 0x0073],
+  0x2100: [0x0061, 0x002F, 0x0063],
+  0x2101: [0x0061, 0x002F, 0x0073],
+  0x2102: [0x0043],
+  0x2103: [0x00B0, 0x0043],
+  0x2105: [0x0063, 0x002F, 0x006F],
+  0x2106: [0x0063, 0x002F, 0x0075],
+  0x2107: [0x0190],
+  0x2109: [0x00B0, 0x0046],
+  0x210A: [0x0067],
+  0x210B: [0x0048],
+  0x210C: [0x0048],
+  0x210D: [0x0048],
+  0x210E: [0x0068],
+  0x210F: [0x0127],
+  0x2110: [0x0049],
+  0x2111: [0x0049],
+  0x2112: [0x004C],
+  0x2113: [0x006C],
+  0x2115: [0x004E],
+  0x2116: [0x004E, 0x006F],
+  0x2119: [0x0050],
+  0x211A: [0x0051],
+  0x211B: [0x0052],
+  0x211C: [0x0052],
+  0x211D: [0x0052],
+  0x2120: [0x0053, 0x004D],
+  0x2121: [0x0054, 0x0045, 0x004C],
+  0x2122: [0x0054, 0x004D],
+  0x2124: [0x005A],
+  0x2126: [0x03A9],
+  0x2128: [0x005A],
+  0x212A: [0x004B],
+  0x212B: [0x00C5],
+  0x212C: [0x0042],
+  0x212D: [0x0043],
+  0x212F: [0x0065],
+  0x2130: [0x0045],
+  0x2131: [0x0046],
+  0x2133: [0x004D],
+  0x2134: [0x006F],
+  0x2135: [0x05D0],
+  0x2136: [0x05D1],
+  0x2137: [0x05D2],
+  0x2138: [0x05D3],
+  0x2139: [0x0069],
+  0x213B: [0x0046, 0x0041, 0x0058],
+  0x213C: [0x03C0],
+  0x213D: [0x03B3],
+  0x213E: [0x0393],
+  0x213F: [0x03A0],
+  0x2140: [0x2211],
+  0x2145: [0x0044],
+  0x2146: [0x0064],
+  0x2147: [0x0065],
+  0x2148: [0x0069],
+  0x2149: [0x006A],
+  0x2150: [0x0031, 0x2044, 0x0037],
+  0x2151: [0x0031, 0x2044, 0x0039],
+  0x2152: [0x0031, 0x2044, 0x0031, 0x0030],
+  0x2153: [0x0031, 0x2044, 0x0033],
+  0x2154: [0x0032, 0x2044, 0x0033],
+  0x2155: [0x0031, 0x2044, 0x0035],
+  0x2156: [0x0032, 0x2044, 0x0035],
+  0x2157: [0x0033, 0x2044, 0x0035],
+  0x2158: [0x0034, 0x2044, 0x0035],
+  0x2159: [0x0031, 0x2044, 0x0036],
+  0x215A: [0x0035, 0x2044, 0x0036],
+  0x215B: [0x0031, 0x2044, 0x0038],
+  0x215C: [0x0033, 0x2044, 0x0038],
+  0x215D: [0x0035, 0x2044, 0x0038],
+  0x215E: [0x0037, 0x2044, 0x0038],
+  0x215F: [0x0031, 0x2044],
+  0x2160: [0x0049],
+  0x2161: [0x0049, 0x0049],
+  0x2162: [0x0049, 0x0049, 0x0049],
+  0x2163: [0x0049, 0x0056],
+  0x2164: [0x0056],
+  0x2165: [0x0056, 0x0049],
+  0x2166: [0x0056, 0x0049, 0x0049],
+  0x2167: [0x0056, 0x0049, 0x0049, 0x0049],
+  0x2168: [0x0049, 0x0058],
+  0x2169: [0x0058],
+  0x216A: [0x0058, 0x0049],
+  0x216B: [0x0058, 0x0049, 0x0049],
+  0x216C: [0x004C],
+  0x216D: [0x0043],
+  0x216E: [0x0044],
+  0x216F: [0x004D],
+  0x2170: [0x0069],
+  0x2171: [0x0069, 0x0069],
+  0x2172: [0x0069, 0x0069, 0x0069],
+  0x2173: [0x0069, 0x0076],
+  0x2174: [0x0076],
+  0x2175: [0x0076, 0x0069],
+  0x2176: [0x0076, 0x0069, 0x0069],
+  0x2177: [0x0076, 0x0069, 0x0069, 0x0069],
+  0x2178: [0x0069, 0x0078],
+  0x2179: [0x0078],
+  0x217A: [0x0078, 0x0069],
+  0x217B: [0x0078, 0x0069, 0x0069],
+  0x217C: [0x006C],
+  0x217D: [0x0063],
+  0x217E: [0x0064],
+  0x217F: [0x006D],
+  0x2189: [0x0030, 0x2044, 0x0033],
+  0x219A: [0x2190, 0x0338],
+  0x219B: [0x2192, 0x0338],
+  0x21AE: [0x2194, 0x0338],
+  0x21CD: [0x21D0, 0x0338],
+  0x21CE: [0x21D4, 0x0338],
+  0x21CF: [0x21D2, 0x0338],
+  0x2204: [0x2203, 0x0338],
+  0x2209: [0x2208, 0x0338],
+  0x220C: [0x220B, 0x0338],
+  0x2224: [0x2223, 0x0338],
+  0x2226: [0x2225, 0x0338],
+  0x222C: [0x222B, 0x222B],
+  0x222D: [0x222B, 0x222B, 0x222B],
+  0x222F: [0x222E, 0x222E],
+  0x2230: [0x222E, 0x222E, 0x222E],
+  0x2241: [0x223C, 0x0338],
+  0x2244: [0x2243, 0x0338],
+  0x2247: [0x2245, 0x0338],
+  0x2249: [0x2248, 0x0338],
+  0x2260: [0x003D, 0x0338],
+  0x2262: [0x2261, 0x0338],
+  0x226D: [0x224D, 0x0338],
+  0x226E: [0x003C, 0x0338],
+  0x226F: [0x003E, 0x0338],
+  0x2270: [0x2264, 0x0338],
+  0x2271: [0x2265, 0x0338],
+  0x2274: [0x2272, 0x0338],
+  0x2275: [0x2273, 0x0338],
+  0x2278: [0x2276, 0x0338],
+  0x2279: [0x2277, 0x0338],
+  0x2280: [0x227A, 0x0338],
+  0x2281: [0x227B, 0x0338],
+  0x2284: [0x2282, 0x0338],
+  0x2285: [0x2283, 0x0338],
+  0x2288: [0x2286, 0x0338],
+  0x2289: [0x2287, 0x0338],
+  0x22AC: [0x22A2, 0x0338],
+  0x22AD: [0x22A8, 0x0338],
+  0x22AE: [0x22A9, 0x0338],
+  0x22AF: [0x22AB, 0x0338],
+  0x22E0: [0x227C, 0x0338],
+  0x22E1: [0x227D, 0x0338],
+  0x22E2: [0x2291, 0x0338],
+  0x22E3: [0x2292, 0x0338],
+  0x22EA: [0x22B2, 0x0338],
+  0x22EB: [0x22B3, 0x0338],
+  0x22EC: [0x22B4, 0x0338],
+  0x22ED: [0x22B5, 0x0338],
+  0x2329: [0x3008],
+  0x232A: [0x3009],
+  0x2460: [0x0031],
+  0x2461: [0x0032],
+  0x2462: [0x0033],
+  0x2463: [0x0034],
+  0x2464: [0x0035],
+  0x2465: [0x0036],
+  0x2466: [0x0037],
+  0x2467: [0x0038],
+  0x2468: [0x0039],
+  0x2469: [0x0031, 0x0030],
+  0x246A: [0x0031, 0x0031],
+  0x246B: [0x0031, 0x0032],
+  0x246C: [0x0031, 0x0033],
+  0x246D: [0x0031, 0x0034],
+  0x246E: [0x0031, 0x0035],
+  0x246F: [0x0031, 0x0036],
+  0x2470: [0x0031, 0x0037],
+  0x2471: [0x0031, 0x0038],
+  0x2472: [0x0031, 0x0039],
+  0x2473: [0x0032, 0x0030],
+  0x2474: [0x0028, 0x0031, 0x0029],
+  0x2475: [0x0028, 0x0032, 0x0029],
+  0x2476: [0x0028, 0x0033, 0x0029],
+  0x2477: [0x0028, 0x0034, 0x0029],
+  0x2478: [0x0028, 0x0035, 0x0029],
+  0x2479: [0x0028, 0x0036, 0x0029],
+  0x247A: [0x0028, 0x0037, 0x0029],
+  0x247B: [0x0028, 0x0038, 0x0029],
+  0x247C: [0x0028, 0x0039, 0x0029],
+  0x247D: [0x0028, 0x0031, 0x0030, 0x0029],
+  0x247E: [0x0028, 0x0031, 0x0031, 0x0029],
+  0x247F: [0x0028, 0x0031, 0x0032, 0x0029],
+  0x2480: [0x0028, 0x0031, 0x0033, 0x0029],
+  0x2481: [0x0028, 0x0031, 0x0034, 0x0029],
+  0x2482: [0x0028, 0x0031, 0x0035, 0x0029],
+  0x2483: [0x0028, 0x0031, 0x0036, 0x0029],
+  0x2484: [0x0028, 0x0031, 0x0037, 0x0029],
+  0x2485: [0x0028, 0x0031, 0x0038, 0x0029],
+  0x2486: [0x0028, 0x0031, 0x0039, 0x0029],
+  0x2487: [0x0028, 0x0032, 0x0030, 0x0029],
+  0x2488: [0x0031, 0x002E],
+  0x2489: [0x0032, 0x002E],
+  0x248A: [0x0033, 0x002E],
+  0x248B: [0x0034, 0x002E],
+  0x248C: [0x0035, 0x002E],
+  0x248D: [0x0036, 0x002E],
+  0x248E: [0x0037, 0x002E],
+  0x248F: [0x0038, 0x002E],
+  0x2490: [0x0039, 0x002E],
+  0x2491: [0x0031, 0x0030, 0x002E],
+  0x2492: [0x0031, 0x0031, 0x002E],
+  0x2493: [0x0031, 0x0032, 0x002E],
+  0x2494: [0x0031, 0x0033, 0x002E],
+  0x2495: [0x0031, 0x0034, 0x002E],
+  0x2496: [0x0031, 0x0035, 0x002E],
+  0x2497: [0x0031, 0x0036, 0x002E],
+  0x2498: [0x0031, 0x0037, 0x002E],
+  0x2499: [0x0031, 0x0038, 0x002E],
+  0x249A: [0x0031, 0x0039, 0x002E],
+  0x249B: [0x0032, 0x0030, 0x002E],
+  0x249C: [0x0028, 0x0061, 0x0029],
+  0x249D: [0x0028, 0x0062, 0x0029],
+  0x249E: [0x0028, 0x0063, 0x0029],
+  0x249F: [0x0028, 0x0064, 0x0029],
+  0x24A0: [0x0028, 0x0065, 0x0029],
+  0x24A1: [0x0028, 0x0066, 0x0029],
+  0x24A2: [0x0028, 0x0067, 0x0029],
+  0x24A3: [0x0028, 0x0068, 0x0029],
+  0x24A4: [0x0028, 0x0069, 0x0029],
+  0x24A5: [0x0028, 0x006A, 0x0029],
+  0x24A6: [0x0028, 0x006B, 0x0029],
+  0x24A7: [0x0028, 0x006C, 0x0029],
+  0x24A8: [0x0028, 0x006D, 0x0029],
+  0x24A9: [0x0028, 0x006E, 0x0029],
+  0x24AA: [0x0028, 0x006F, 0x0029],
+  0x24AB: [0x0028, 0x0070, 0x0029],
+  0x24AC: [0x0028, 0x0071, 0x0029],
+  0x24AD: [0x0028, 0x0072, 0x0029],
+  0x24AE: [0x0028, 0x0073, 0x0029],
+  0x24AF: [0x0028, 0x0074, 0x0029],
+  0x24B0: [0x0028, 0x0075, 0x0029],
+  0x24B1: [0x0028, 0x0076, 0x0029],
+  0x24B2: [0x0028, 0x0077, 0x0029],
+  0x24B3: [0x0028, 0x0078, 0x0029],
+  0x24B4: [0x0028, 0x0079, 0x0029],
+  0x24B5: [0x0028, 0x007A, 0x0029],
+  0x24B6: [0x0041],
+  0x24B7: [0x0042],
+  0x24B8: [0x0043],
+  0x24B9: [0x0044],
+  0x24BA: [0x0045],
+  0x24BB: [0x0046],
+  0x24BC: [0x0047],
+  0x24BD: [0x0048],
+  0x24BE: [0x0049],
+  0x24BF: [0x004A],
+  0x24C0: [0x004B],
+  0x24C1: [0x004C],
+  0x24C2: [0x004D],
+  0x24C3: [0x004E],
+  0x24C4: [0x004F],
+  0x24C5: [0x0050],
+  0x24C6: [0x0051],
+  0x24C7: [0x0052],
+  0x24C8: [0x0053],
+  0x24C9: [0x0054],
+  0x24CA: [0x0055],
+  0x24CB: [0x0056],
+  0x24CC: [0x0057],
+  0x24CD: [0x0058],
+  0x24CE: [0x0059],
+  0x24CF: [0x005A],
+  0x24D0: [0x0061],
+  0x24D1: [0x0062],
+  0x24D2: [0x0063],
+  0x24D3: [0x0064],
+  0x24D4: [0x0065],
+  0x24D5: [0x0066],
+  0x24D6: [0x0067],
+  0x24D7: [0x0068],
+  0x24D8: [0x0069],
+  0x24D9: [0x006A],
+  0x24DA: [0x006B],
+  0x24DB: [0x006C],
+  0x24DC: [0x006D],
+  0x24DD: [0x006E],
+  0x24DE: [0x006F],
+  0x24DF: [0x0070],
+  0x24E0: [0x0071],
+  0x24E1: [0x0072],
+  0x24E2: [0x0073],
+  0x24E3: [0x0074],
+  0x24E4: [0x0075],
+  0x24E5: [0x0076],
+  0x24E6: [0x0077],
+  0x24E7: [0x0078],
+  0x24E8: [0x0079],
+  0x24E9: [0x007A],
+  0x24EA: [0x0030],
+  0x2A0C: [0x222B, 0x222B, 0x222B, 0x222B],
+  0x2A74: [0x003A, 0x003A, 0x003D],
+  0x2A75: [0x003D, 0x003D],
+  0x2A76: [0x003D, 0x003D, 0x003D],
+  0x2ADC: [0x2ADD, 0x0338],
+  0x2C7C: [0x006A],
+  0x2C7D: [0x0056],
+  0x2D6F: [0x2D61],
+  0x2E9F: [0x6BCD],
+  0x2EF3: [0x9F9F],
+  0x2F00: [0x4E00],
+  0x2F01: [0x4E28],
+  0x2F02: [0x4E36],
+  0x2F03: [0x4E3F],
+  0x2F04: [0x4E59],
+  0x2F05: [0x4E85],
+  0x2F06: [0x4E8C],
+  0x2F07: [0x4EA0],
+  0x2F08: [0x4EBA],
+  0x2F09: [0x513F],
+  0x2F0A: [0x5165],
+  0x2F0B: [0x516B],
+  0x2F0C: [0x5182],
+  0x2F0D: [0x5196],
+  0x2F0E: [0x51AB],
+  0x2F0F: [0x51E0],
+  0x2F10: [0x51F5],
+  0x2F11: [0x5200],
+  0x2F12: [0x529B],
+  0x2F13: [0x52F9],
+  0x2F14: [0x5315],
+  0x2F15: [0x531A],
+  0x2F16: [0x5338],
+  0x2F17: [0x5341],
+  0x2F18: [0x535C],
+  0x2F19: [0x5369],
+  0x2F1A: [0x5382],
+  0x2F1B: [0x53B6],
+  0x2F1C: [0x53C8],
+  0x2F1D: [0x53E3],
+  0x2F1E: [0x56D7],
+  0x2F1F: [0x571F],
+  0x2F20: [0x58EB],
+  0x2F21: [0x5902],
+  0x2F22: [0x590A],
+  0x2F23: [0x5915],
+  0x2F24: [0x5927],
+  0x2F25: [0x5973],
+  0x2F26: [0x5B50],
+  0x2F27: [0x5B80],
+  0x2F28: [0x5BF8],
+  0x2F29: [0x5C0F],
+  0x2F2A: [0x5C22],
+  0x2F2B: [0x5C38],
+  0x2F2C: [0x5C6E],
+  0x2F2D: [0x5C71],
+  0x2F2E: [0x5DDB],
+  0x2F2F: [0x5DE5],
+  0x2F30: [0x5DF1],
+  0x2F31: [0x5DFE],
+  0x2F32: [0x5E72],
+  0x2F33: [0x5E7A],
+  0x2F34: [0x5E7F],
+  0x2F35: [0x5EF4],
+  0x2F36: [0x5EFE],
+  0x2F37: [0x5F0B],
+  0x2F38: [0x5F13],
+  0x2F39: [0x5F50],
+  0x2F3A: [0x5F61],
+  0x2F3B: [0x5F73],
+  0x2F3C: [0x5FC3],
+  0x2F3D: [0x6208],
+  0x2F3E: [0x6236],
+  0x2F3F: [0x624B],
+  0x2F40: [0x652F],
+  0x2F41: [0x6534],
+  0x2F42: [0x6587],
+  0x2F43: [0x6597],
+  0x2F44: [0x65A4],
+  0x2F45: [0x65B9],
+  0x2F46: [0x65E0],
+  0x2F47: [0x65E5],
+  0x2F48: [0x66F0],
+  0x2F49: [0x6708],
+  0x2F4A: [0x6728],
+  0x2F4B: [0x6B20],
+  0x2F4C: [0x6B62],
+  0x2F4D: [0x6B79],
+  0x2F4E: [0x6BB3],
+  0x2F4F: [0x6BCB],
+  0x2F50: [0x6BD4],
+  0x2F51: [0x6BDB],
+  0x2F52: [0x6C0F],
+  0x2F53: [0x6C14],
+  0x2F54: [0x6C34],
+  0x2F55: [0x706B],
+  0x2F56: [0x722A],
+  0x2F57: [0x7236],
+  0x2F58: [0x723B],
+  0x2F59: [0x723F],
+  0x2F5A: [0x7247],
+  0x2F5B: [0x7259],
+  0x2F5C: [0x725B],
+  0x2F5D: [0x72AC],
+  0x2F5E: [0x7384],
+  0x2F5F: [0x7389],
+  0x2F60: [0x74DC],
+  0x2F61: [0x74E6],
+  0x2F62: [0x7518],
+  0x2F63: [0x751F],
+  0x2F64: [0x7528],
+  0x2F65: [0x7530],
+  0x2F66: [0x758B],
+  0x2F67: [0x7592],
+  0x2F68: [0x7676],
+  0x2F69: [0x767D],
+  0x2F6A: [0x76AE],
+  0x2F6B: [0x76BF],
+  0x2F6C: [0x76EE],
+  0x2F6D: [0x77DB],
+  0x2F6E: [0x77E2],
+  0x2F6F: [0x77F3],
+  0x2F70: [0x793A],
+  0x2F71: [0x79B8],
+  0x2F72: [0x79BE],
+  0x2F73: [0x7A74],
+  0x2F74: [0x7ACB],
+  0x2F75: [0x7AF9],
+  0x2F76: [0x7C73],
+  0x2F77: [0x7CF8],
+  0x2F78: [0x7F36],
+  0x2F79: [0x7F51],
+  0x2F7A: [0x7F8A],
+  0x2F7B: [0x7FBD],
+  0x2F7C: [0x8001],
+  0x2F7D: [0x800C],
+  0x2F7E: [0x8012],
+  0x2F7F: [0x8033],
+  0x2F80: [0x807F],
+  0x2F81: [0x8089],
+  0x2F82: [0x81E3],
+  0x2F83: [0x81EA],
+  0x2F84: [0x81F3],
+  0x2F85: [0x81FC],
+  0x2F86: [0x820C],
+  0x2F87: [0x821B],
+  0x2F88: [0x821F],
+  0x2F89: [0x826E],
+  0x2F8A: [0x8272],
+  0x2F8B: [0x8278],
+  0x2F8C: [0x864D],
+  0x2F8D: [0x866B],
+  0x2F8E: [0x8840],
+  0x2F8F: [0x884C],
+  0x2F90: [0x8863],
+  0x2F91: [0x897E],
+  0x2F92: [0x898B],
+  0x2F93: [0x89D2],
+  0x2F94: [0x8A00],
+  0x2F95: [0x8C37],
+  0x2F96: [0x8C46],
+  0x2F97: [0x8C55],
+  0x2F98: [0x8C78],
+  0x2F99: [0x8C9D],
+  0x2F9A: [0x8D64],
+  0x2F9B: [0x8D70],
+  0x2F9C: [0x8DB3],
+  0x2F9D: [0x8EAB],
+  0x2F9E: [0x8ECA],
+  0x2F9F: [0x8F9B],
+  0x2FA0: [0x8FB0],
+  0x2FA1: [0x8FB5],
+  0x2FA2: [0x9091],
+  0x2FA3: [0x9149],
+  0x2FA4: [0x91C6],
+  0x2FA5: [0x91CC],
+  0x2FA6: [0x91D1],
+  0x2FA7: [0x9577],
+  0x2FA8: [0x9580],
+  0x2FA9: [0x961C],
+  0x2FAA: [0x96B6],
+  0x2FAB: [0x96B9],
+  0x2FAC: [0x96E8],
+  0x2FAD: [0x9751],
+  0x2FAE: [0x975E],
+  0x2FAF: [0x9762],
+  0x2FB0: [0x9769],
+  0x2FB1: [0x97CB],
+  0x2FB2: [0x97ED],
+  0x2FB3: [0x97F3],
+  0x2FB4: [0x9801],
+  0x2FB5: [0x98A8],
+  0x2FB6: [0x98DB],
+  0x2FB7: [0x98DF],
+  0x2FB8: [0x9996],
+  0x2FB9: [0x9999],
+  0x2FBA: [0x99AC],
+  0x2FBB: [0x9AA8],
+  0x2FBC: [0x9AD8],
+  0x2FBD: [0x9ADF],
+  0x2FBE: [0x9B25],
+  0x2FBF: [0x9B2F],
+  0x2FC0: [0x9B32],
+  0x2FC1: [0x9B3C],
+  0x2FC2: [0x9B5A],
+  0x2FC3: [0x9CE5],
+  0x2FC4: [0x9E75],
+  0x2FC5: [0x9E7F],
+  0x2FC6: [0x9EA5],
+  0x2FC7: [0x9EBB],
+  0x2FC8: [0x9EC3],
+  0x2FC9: [0x9ECD],
+  0x2FCA: [0x9ED1],
+  0x2FCB: [0x9EF9],
+  0x2FCC: [0x9EFD],
+  0x2FCD: [0x9F0E],
+  0x2FCE: [0x9F13],
+  0x2FCF: [0x9F20],
+  0x2FD0: [0x9F3B],
+  0x2FD1: [0x9F4A],
+  0x2FD2: [0x9F52],
+  0x2FD3: [0x9F8D],
+  0x2FD4: [0x9F9C],
+  0x2FD5: [0x9FA0],
+  0x3000: [0x0020],
+  0x3036: [0x3012],
+  0x3038: [0x5341],
+  0x3039: [0x5344],
+  0x303A: [0x5345],
+  0x304C: [0x304B, 0x3099],
+  0x304E: [0x304D, 0x3099],
+  0x3050: [0x304F, 0x3099],
+  0x3052: [0x3051, 0x3099],
+  0x3054: [0x3053, 0x3099],
+  0x3056: [0x3055, 0x3099],
+  0x3058: [0x3057, 0x3099],
+  0x305A: [0x3059, 0x3099],
+  0x305C: [0x305B, 0x3099],
+  0x305E: [0x305D, 0x3099],
+  0x3060: [0x305F, 0x3099],
+  0x3062: [0x3061, 0x3099],
+  0x3065: [0x3064, 0x3099],
+  0x3067: [0x3066, 0x3099],
+  0x3069: [0x3068, 0x3099],
+  0x3070: [0x306F, 0x3099],
+  0x3071: [0x306F, 0x309A],
+  0x3073: [0x3072, 0x3099],
+  0x3074: [0x3072, 0x309A],
+  0x3076: [0x3075, 0x3099],
+  0x3077: [0x3075, 0x309A],
+  0x3079: [0x3078, 0x3099],
+  0x307A: [0x3078, 0x309A],
+  0x307C: [0x307B, 0x3099],
+  0x307D: [0x307B, 0x309A],
+  0x3094: [0x3046, 0x3099],
+  0x309B: [0x0020, 0x3099],
+  0x309C: [0x0020, 0x309A],
+  0x309E: [0x309D, 0x3099],
+  0x309F: [0x3088, 0x308A],
+  0x30AC: [0x30AB, 0x3099],
+  0x30AE: [0x30AD, 0x3099],
+  0x30B0: [0x30AF, 0x3099],
+  0x30B2: [0x30B1, 0x3099],
+  0x30B4: [0x30B3, 0x3099],
+  0x30B6: [0x30B5, 0x3099],
+  0x30B8: [0x30B7, 0x3099],
+  0x30BA: [0x30B9, 0x3099],
+  0x30BC: [0x30BB, 0x3099],
+  0x30BE: [0x30BD, 0x3099],
+  0x30C0: [0x30BF, 0x3099],
+  0x30C2: [0x30C1, 0x3099],
+  0x30C5: [0x30C4, 0x3099],
+  0x30C7: [0x30C6, 0x3099],
+  0x30C9: [0x30C8, 0x3099],
+  0x30D0: [0x30CF, 0x3099],
+  0x30D1: [0x30CF, 0x309A],
+  0x30D3: [0x30D2, 0x3099],
+  0x30D4: [0x30D2, 0x309A],
+  0x30D6: [0x30D5, 0x3099],
+  0x30D7: [0x30D5, 0x309A],
+  0x30D9: [0x30D8, 0x3099],
+  0x30DA: [0x30D8, 0x309A],
+  0x30DC: [0x30DB, 0x3099],
+  0x30DD: [0x30DB, 0x309A],
+  0x30F4: [0x30A6, 0x3099],
+  0x30F7: [0x30EF, 0x3099],
+  0x30F8: [0x30F0, 0x3099],
+  0x30F9: [0x30F1, 0x3099],
+  0x30FA: [0x30F2, 0x3099],
+  0x30FE: [0x30FD, 0x3099],
+  0x30FF: [0x30B3, 0x30C8],
+  0x3131: [0x1100],
+  0x3132: [0x1101],
+  0x3133: [0x11AA],
+  0x3134: [0x1102],
+  0x3135: [0x11AC],
+  0x3136: [0x11AD],
+  0x3137: [0x1103],
+  0x3138: [0x1104],
+  0x3139: [0x1105],
+  0x313A: [0x11B0],
+  0x313B: [0x11B1],
+  0x313C: [0x11B2],
+  0x313D: [0x11B3],
+  0x313E: [0x11B4],
+  0x313F: [0x11B5],
+  0x3140: [0x111A],
+  0x3141: [0x1106],
+  0x3142: [0x1107],
+  0x3143: [0x1108],
+  0x3144: [0x1121],
+  0x3145: [0x1109],
+  0x3146: [0x110A],
+  0x3147: [0x110B],
+  0x3148: [0x110C],
+  0x3149: [0x110D],
+  0x314A: [0x110E],
+  0x314B: [0x110F],
+  0x314C: [0x1110],
+  0x314D: [0x1111],
+  0x314E: [0x1112],
+  0x314F: [0x1161],
+  0x3150: [0x1162],
+  0x3151: [0x1163],
+  0x3152: [0x1164],
+  0x3153: [0x1165],
+  0x3154: [0x1166],
+  0x3155: [0x1167],
+  0x3156: [0x1168],
+  0x3157: [0x1169],
+  0x3158: [0x116A],
+  0x3159: [0x116B],
+  0x315A: [0x116C],
+  0x315B: [0x116D],
+  0x315C: [0x116E],
+  0x315D: [0x116F],
+  0x315E: [0x1170],
+  0x315F: [0x1171],
+  0x3160: [0x1172],
+  0x3161: [0x1173],
+  0x3162: [0x1174],
+  0x3163: [0x1175],
+  0x3164: [0x1160],
+  0x3165: [0x1114],
+  0x3166: [0x1115],
+  0x3167: [0x11C7],
+  0x3168: [0x11C8],
+  0x3169: [0x11CC],
+  0x316A: [0x11CE],
+  0x316B: [0x11D3],
+  0x316C: [0x11D7],
+  0x316D: [0x11D9],
+  0x316E: [0x111C],
+  0x316F: [0x11DD],
+  0x3170: [0x11DF],
+  0x3171: [0x111D],
+  0x3172: [0x111E],
+  0x3173: [0x1120],
+  0x3174: [0x1122],
+  0x3175: [0x1123],
+  0x3176: [0x1127],
+  0x3177: [0x1129],
+  0x3178: [0x112B],
+  0x3179: [0x112C],
+  0x317A: [0x112D],
+  0x317B: [0x112E],
+  0x317C: [0x112F],
+  0x317D: [0x1132],
+  0x317E: [0x1136],
+  0x317F: [0x1140],
+  0x3180: [0x1147],
+  0x3181: [0x114C],
+  0x3182: [0x11F1],
+  0x3183: [0x11F2],
+  0x3184: [0x1157],
+  0x3185: [0x1158],
+  0x3186: [0x1159],
+  0x3187: [0x1184],
+  0x3188: [0x1185],
+  0x3189: [0x1188],
+  0x318A: [0x1191],
+  0x318B: [0x1192],
+  0x318C: [0x1194],
+  0x318D: [0x119E],
+  0x318E: [0x11A1],
+  0x3192: [0x4E00],
+  0x3193: [0x4E8C],
+  0x3194: [0x4E09],
+  0x3195: [0x56DB],
+  0x3196: [0x4E0A],
+  0x3197: [0x4E2D],
+  0x3198: [0x4E0B],
+  0x3199: [0x7532],
+  0x319A: [0x4E59],
+  0x319B: [0x4E19],
+  0x319C: [0x4E01],
+  0x319D: [0x5929],
+  0x319E: [0x5730],
+  0x319F: [0x4EBA],
+  0x3200: [0x0028, 0x1100, 0x0029],
+  0x3201: [0x0028, 0x1102, 0x0029],
+  0x3202: [0x0028, 0x1103, 0x0029],
+  0x3203: [0x0028, 0x1105, 0x0029],
+  0x3204: [0x0028, 0x1106, 0x0029],
+  0x3205: [0x0028, 0x1107, 0x0029],
+  0x3206: [0x0028, 0x1109, 0x0029],
+  0x3207: [0x0028, 0x110B, 0x0029],
+  0x3208: [0x0028, 0x110C, 0x0029],
+  0x3209: [0x0028, 0x110E, 0x0029],
+  0x320A: [0x0028, 0x110F, 0x0029],
+  0x320B: [0x0028, 0x1110, 0x0029],
+  0x320C: [0x0028, 0x1111, 0x0029],
+  0x320D: [0x0028, 0x1112, 0x0029],
+  0x320E: [0x0028, 0x1100, 0x1161, 0x0029],
+  0x320F: [0x0028, 0x1102, 0x1161, 0x0029],
+  0x3210: [0x0028, 0x1103, 0x1161, 0x0029],
+  0x3211: [0x0028, 0x1105, 0x1161, 0x0029],
+  0x3212: [0x0028, 0x1106, 0x1161, 0x0029],
+  0x3213: [0x0028, 0x1107, 0x1161, 0x0029],
+  0x3214: [0x0028, 0x1109, 0x1161, 0x0029],
+  0x3215: [0x0028, 0x110B, 0x1161, 0x0029],
+  0x3216: [0x0028, 0x110C, 0x1161, 0x0029],
+  0x3217: [0x0028, 0x110E, 0x1161, 0x0029],
+  0x3218: [0x0028, 0x110F, 0x1161, 0x0029],
+  0x3219: [0x0028, 0x1110, 0x1161, 0x0029],
+  0x321A: [0x0028, 0x1111, 0x1161, 0x0029],
+  0x321B: [0x0028, 0x1112, 0x1161, 0x0029],
+  0x321C: [0x0028, 0x110C, 0x116E, 0x0029],
+  0x321D: [0x0028, 0x110B, 0x1169, 0x110C, 0x1165, 0x11AB, 0x0029],
+  0x321E: [0x0028, 0x110B, 0x1169, 0x1112, 0x116E, 0x0029],
+  0x3220: [0x0028, 0x4E00, 0x0029],
+  0x3221: [0x0028, 0x4E8C, 0x0029],
+  0x3222: [0x0028, 0x4E09, 0x0029],
+  0x3223: [0x0028, 0x56DB, 0x0029],
+  0x3224: [0x0028, 0x4E94, 0x0029],
+  0x3225: [0x0028, 0x516D, 0x0029],
+  0x3226: [0x0028, 0x4E03, 0x0029],
+  0x3227: [0x0028, 0x516B, 0x0029],
+  0x3228: [0x0028, 0x4E5D, 0x0029],
+  0x3229: [0x0028, 0x5341, 0x0029],
+  0x322A: [0x0028, 0x6708, 0x0029],
+  0x322B: [0x0028, 0x706B, 0x0029],
+  0x322C: [0x0028, 0x6C34, 0x0029],
+  0x322D: [0x0028, 0x6728, 0x0029],
+  0x322E: [0x0028, 0x91D1, 0x0029],
+  0x322F: [0x0028, 0x571F, 0x0029],
+  0x3230: [0x0028, 0x65E5, 0x0029],
+  0x3231: [0x0028, 0x682A, 0x0029],
+  0x3232: [0x0028, 0x6709, 0x0029],
+  0x3233: [0x0028, 0x793E, 0x0029],
+  0x3234: [0x0028, 0x540D, 0x0029],
+  0x3235: [0x0028, 0x7279, 0x0029],
+  0x3236: [0x0028, 0x8CA1, 0x0029],
+  0x3237: [0x0028, 0x795D, 0x0029],
+  0x3238: [0x0028, 0x52B4, 0x0029],
+  0x3239: [0x0028, 0x4EE3, 0x0029],
+  0x323A: [0x0028, 0x547C, 0x0029],
+  0x323B: [0x0028, 0x5B66, 0x0029],
+  0x323C: [0x0028, 0x76E3, 0x0029],
+  0x323D: [0x0028, 0x4F01, 0x0029],
+  0x323E: [0x0028, 0x8CC7, 0x0029],
+  0x323F: [0x0028, 0x5354, 0x0029],
+  0x3240: [0x0028, 0x796D, 0x0029],
+  0x3241: [0x0028, 0x4F11, 0x0029],
+  0x3242: [0x0028, 0x81EA, 0x0029],
+  0x3243: [0x0028, 0x81F3, 0x0029],
+  0x3244: [0x554F],
+  0x3245: [0x5E7C],
+  0x3246: [0x6587],
+  0x3247: [0x7B8F],
+  0x3250: [0x0050, 0x0054, 0x0045],
+  0x3251: [0x0032, 0x0031],
+  0x3252: [0x0032, 0x0032],
+  0x3253: [0x0032, 0x0033],
+  0x3254: [0x0032, 0x0034],
+  0x3255: [0x0032, 0x0035],
+  0x3256: [0x0032, 0x0036],
+  0x3257: [0x0032, 0x0037],
+  0x3258: [0x0032, 0x0038],
+  0x3259: [0x0032, 0x0039],
+  0x325A: [0x0033, 0x0030],
+  0x325B: [0x0033, 0x0031],
+  0x325C: [0x0033, 0x0032],
+  0x325D: [0x0033, 0x0033],
+  0x325E: [0x0033, 0x0034],
+  0x325F: [0x0033, 0x0035],
+  0x3260: [0x1100],
+  0x3261: [0x1102],
+  0x3262: [0x1103],
+  0x3263: [0x1105],
+  0x3264: [0x1106],
+  0x3265: [0x1107],
+  0x3266: [0x1109],
+  0x3267: [0x110B],
+  0x3268: [0x110C],
+  0x3269: [0x110E],
+  0x326A: [0x110F],
+  0x326B: [0x1110],
+  0x326C: [0x1111],
+  0x326D: [0x1112],
+  0x326E: [0x1100, 0x1161],
+  0x326F: [0x1102, 0x1161],
+  0x3270: [0x1103, 0x1161],
+  0x3271: [0x1105, 0x1161],
+  0x3272: [0x1106, 0x1161],
+  0x3273: [0x1107, 0x1161],
+  0x3274: [0x1109, 0x1161],
+  0x3275: [0x110B, 0x1161],
+  0x3276: [0x110C, 0x1161],
+  0x3277: [0x110E, 0x1161],
+  0x3278: [0x110F, 0x1161],
+  0x3279: [0x1110, 0x1161],
+  0x327A: [0x1111, 0x1161],
+  0x327B: [0x1112, 0x1161],
+  0x327C: [0x110E, 0x1161, 0x11B7, 0x1100, 0x1169],
+  0x327D: [0x110C, 0x116E, 0x110B, 0x1174],
+  0x327E: [0x110B, 0x116E],
+  0x3280: [0x4E00],
+  0x3281: [0x4E8C],
+  0x3282: [0x4E09],
+  0x3283: [0x56DB],
+  0x3284: [0x4E94],
+  0x3285: [0x516D],
+  0x3286: [0x4E03],
+  0x3287: [0x516B],
+  0x3288: [0x4E5D],
+  0x3289: [0x5341],
+  0x328A: [0x6708],
+  0x328B: [0x706B],
+  0x328C: [0x6C34],
+  0x328D: [0x6728],
+  0x328E: [0x91D1],
+  0x328F: [0x571F],
+  0x3290: [0x65E5],
+  0x3291: [0x682A],
+  0x3292: [0x6709],
+  0x3293: [0x793E],
+  0x3294: [0x540D],
+  0x3295: [0x7279],
+  0x3296: [0x8CA1],
+  0x3297: [0x795D],
+  0x3298: [0x52B4],
+  0x3299: [0x79D8],
+  0x329A: [0x7537],
+  0x329B: [0x5973],
+  0x329C: [0x9069],
+  0x329D: [0x512A],
+  0x329E: [0x5370],
+  0x329F: [0x6CE8],
+  0x32A0: [0x9805],
+  0x32A1: [0x4F11],
+  0x32A2: [0x5199],
+  0x32A3: [0x6B63],
+  0x32A4: [0x4E0A],
+  0x32A5: [0x4E2D],
+  0x32A6: [0x4E0B],
+  0x32A7: [0x5DE6],
+  0x32A8: [0x53F3],
+  0x32A9: [0x533B],
+  0x32AA: [0x5B97],
+  0x32AB: [0x5B66],
+  0x32AC: [0x76E3],
+  0x32AD: [0x4F01],
+  0x32AE: [0x8CC7],
+  0x32AF: [0x5354],
+  0x32B0: [0x591C],
+  0x32B1: [0x0033, 0x0036],
+  0x32B2: [0x0033, 0x0037],
+  0x32B3: [0x0033, 0x0038],
+  0x32B4: [0x0033, 0x0039],
+  0x32B5: [0x0034, 0x0030],
+  0x32B6: [0x0034, 0x0031],
+  0x32B7: [0x0034, 0x0032],
+  0x32B8: [0x0034, 0x0033],
+  0x32B9: [0x0034, 0x0034],
+  0x32BA: [0x0034, 0x0035],
+  0x32BB: [0x0034, 0x0036],
+  0x32BC: [0x0034, 0x0037],
+  0x32BD: [0x0034, 0x0038],
+  0x32BE: [0x0034, 0x0039],
+  0x32BF: [0x0035, 0x0030],
+  0x32C0: [0x0031, 0x6708],
+  0x32C1: [0x0032, 0x6708],
+  0x32C2: [0x0033, 0x6708],
+  0x32C3: [0x0034, 0x6708],
+  0x32C4: [0x0035, 0x6708],
+  0x32C5: [0x0036, 0x6708],
+  0x32C6: [0x0037, 0x6708],
+  0x32C7: [0x0038, 0x6708],
+  0x32C8: [0x0039, 0x6708],
+  0x32C9: [0x0031, 0x0030, 0x6708],
+  0x32CA: [0x0031, 0x0031, 0x6708],
+  0x32CB: [0x0031, 0x0032, 0x6708],
+  0x32CC: [0x0048, 0x0067],
+  0x32CD: [0x0065, 0x0072, 0x0067],
+  0x32CE: [0x0065, 0x0056],
+  0x32CF: [0x004C, 0x0054, 0x0044],
+  0x32D0: [0x30A2],
+  0x32D1: [0x30A4],
+  0x32D2: [0x30A6],
+  0x32D3: [0x30A8],
+  0x32D4: [0x30AA],
+  0x32D5: [0x30AB],
+  0x32D6: [0x30AD],
+  0x32D7: [0x30AF],
+  0x32D8: [0x30B1],
+  0x32D9: [0x30B3],
+  0x32DA: [0x30B5],
+  0x32DB: [0x30B7],
+  0x32DC: [0x30B9],
+  0x32DD: [0x30BB],
+  0x32DE: [0x30BD],
+  0x32DF: [0x30BF],
+  0x32E0: [0x30C1],
+  0x32E1: [0x30C4],
+  0x32E2: [0x30C6],
+  0x32E3: [0x30C8],
+  0x32E4: [0x30CA],
+  0x32E5: [0x30CB],
+  0x32E6: [0x30CC],
+  0x32E7: [0x30CD],
+  0x32E8: [0x30CE],
+  0x32E9: [0x30CF],
+  0x32EA: [0x30D2],
+  0x32EB: [0x30D5],
+  0x32EC: [0x30D8],
+  0x32ED: [0x30DB],
+  0x32EE: [0x30DE],
+  0x32EF: [0x30DF],
+  0x32F0: [0x30E0],
+  0x32F1: [0x30E1],
+  0x32F2: [0x30E2],
+  0x32F3: [0x30E4],
+  0x32F4: [0x30E6],
+  0x32F5: [0x30E8],
+  0x32F6: [0x30E9],
+  0x32F7: [0x30EA],
+  0x32F8: [0x30EB],
+  0x32F9: [0x30EC],
+  0x32FA: [0x30ED],
+  0x32FB: [0x30EF],
+  0x32FC: [0x30F0],
+  0x32FD: [0x30F1],
+  0x32FE: [0x30F2],
+  0x3300: [0x30A2, 0x30D1, 0x30FC, 0x30C8],
+  0x3301: [0x30A2, 0x30EB, 0x30D5, 0x30A1],
+  0x3302: [0x30A2, 0x30F3, 0x30DA, 0x30A2],
+  0x3303: [0x30A2, 0x30FC, 0x30EB],
+  0x3304: [0x30A4, 0x30CB, 0x30F3, 0x30B0],
+  0x3305: [0x30A4, 0x30F3, 0x30C1],
+  0x3306: [0x30A6, 0x30A9, 0x30F3],
+  0x3307: [0x30A8, 0x30B9, 0x30AF, 0x30FC, 0x30C9],
+  0x3308: [0x30A8, 0x30FC, 0x30AB, 0x30FC],
+  0x3309: [0x30AA, 0x30F3, 0x30B9],
+  0x330A: [0x30AA, 0x30FC, 0x30E0],
+  0x330B: [0x30AB, 0x30A4, 0x30EA],
+  0x330C: [0x30AB, 0x30E9, 0x30C3, 0x30C8],
+  0x330D: [0x30AB, 0x30ED, 0x30EA, 0x30FC],
+  0x330E: [0x30AC, 0x30ED, 0x30F3],
+  0x330F: [0x30AC, 0x30F3, 0x30DE],
+  0x3310: [0x30AE, 0x30AC],
+  0x3311: [0x30AE, 0x30CB, 0x30FC],
+  0x3312: [0x30AD, 0x30E5, 0x30EA, 0x30FC],
+  0x3313: [0x30AE, 0x30EB, 0x30C0, 0x30FC],
+  0x3314: [0x30AD, 0x30ED],
+  0x3315: [0x30AD, 0x30ED, 0x30B0, 0x30E9, 0x30E0],
+  0x3316: [0x30AD, 0x30ED, 0x30E1, 0x30FC, 0x30C8, 0x30EB],
+  0x3317: [0x30AD, 0x30ED, 0x30EF, 0x30C3, 0x30C8],
+  0x3318: [0x30B0, 0x30E9, 0x30E0],
+  0x3319: [0x30B0, 0x30E9, 0x30E0, 0x30C8, 0x30F3],
+  0x331A: [0x30AF, 0x30EB, 0x30BC, 0x30A4, 0x30ED],
+  0x331B: [0x30AF, 0x30ED, 0x30FC, 0x30CD],
+  0x331C: [0x30B1, 0x30FC, 0x30B9],
+  0x331D: [0x30B3, 0x30EB, 0x30CA],
+  0x331E: [0x30B3, 0x30FC, 0x30DD],
+  0x331F: [0x30B5, 0x30A4, 0x30AF, 0x30EB],
+  0x3320: [0x30B5, 0x30F3, 0x30C1, 0x30FC, 0x30E0],
+  0x3321: [0x30B7, 0x30EA, 0x30F3, 0x30B0],
+  0x3322: [0x30BB, 0x30F3, 0x30C1],
+  0x3323: [0x30BB, 0x30F3, 0x30C8],
+  0x3324: [0x30C0, 0x30FC, 0x30B9],
+  0x3325: [0x30C7, 0x30B7],
+  0x3326: [0x30C9, 0x30EB],
+  0x3327: [0x30C8, 0x30F3],
+  0x3328: [0x30CA, 0x30CE],
+  0x3329: [0x30CE, 0x30C3, 0x30C8],
+  0x332A: [0x30CF, 0x30A4, 0x30C4],
+  0x332B: [0x30D1, 0x30FC, 0x30BB, 0x30F3, 0x30C8],
+  0x332C: [0x30D1, 0x30FC, 0x30C4],
+  0x332D: [0x30D0, 0x30FC, 0x30EC, 0x30EB],
+  0x332E: [0x30D4, 0x30A2, 0x30B9, 0x30C8, 0x30EB],
+  0x332F: [0x30D4, 0x30AF, 0x30EB],
+  0x3330: [0x30D4, 0x30B3],
+  0x3331: [0x30D3, 0x30EB],
+  0x3332: [0x30D5, 0x30A1, 0x30E9, 0x30C3, 0x30C9],
+  0x3333: [0x30D5, 0x30A3, 0x30FC, 0x30C8],
+  0x3334: [0x30D6, 0x30C3, 0x30B7, 0x30A7, 0x30EB],
+  0x3335: [0x30D5, 0x30E9, 0x30F3],
+  0x3336: [0x30D8, 0x30AF, 0x30BF, 0x30FC, 0x30EB],
+  0x3337: [0x30DA, 0x30BD],
+  0x3338: [0x30DA, 0x30CB, 0x30D2],
+  0x3339: [0x30D8, 0x30EB, 0x30C4],
+  0x333A: [0x30DA, 0x30F3, 0x30B9],
+  0x333B: [0x30DA, 0x30FC, 0x30B8],
+  0x333C: [0x30D9, 0x30FC, 0x30BF],
+  0x333D: [0x30DD, 0x30A4, 0x30F3, 0x30C8],
+  0x333E: [0x30DC, 0x30EB, 0x30C8],
+  0x333F: [0x30DB, 0x30F3],
+  0x3340: [0x30DD, 0x30F3, 0x30C9],
+  0x3341: [0x30DB, 0x30FC, 0x30EB],
+  0x3342: [0x30DB, 0x30FC, 0x30F3],
+  0x3343: [0x30DE, 0x30A4, 0x30AF, 0x30ED],
+  0x3344: [0x30DE, 0x30A4, 0x30EB],
+  0x3345: [0x30DE, 0x30C3, 0x30CF],
+  0x3346: [0x30DE, 0x30EB, 0x30AF],
+  0x3347: [0x30DE, 0x30F3, 0x30B7, 0x30E7, 0x30F3],
+  0x3348: [0x30DF, 0x30AF, 0x30ED, 0x30F3],
+  0x3349: [0x30DF, 0x30EA],
+  0x334A: [0x30DF, 0x30EA, 0x30D0, 0x30FC, 0x30EB],
+  0x334B: [0x30E1, 0x30AC],
+  0x334C: [0x30E1, 0x30AC, 0x30C8, 0x30F3],
+  0x334D: [0x30E1, 0x30FC, 0x30C8, 0x30EB],
+  0x334E: [0x30E4, 0x30FC, 0x30C9],
+  0x334F: [0x30E4, 0x30FC, 0x30EB],
+  0x3350: [0x30E6, 0x30A2, 0x30F3],
+  0x3351: [0x30EA, 0x30C3, 0x30C8, 0x30EB],
+  0x3352: [0x30EA, 0x30E9],
+  0x3353: [0x30EB, 0x30D4, 0x30FC],
+  0x3354: [0x30EB, 0x30FC, 0x30D6, 0x30EB],
+  0x3355: [0x30EC, 0x30E0],
+  0x3356: [0x30EC, 0x30F3, 0x30C8, 0x30B2, 0x30F3],
+  0x3357: [0x30EF, 0x30C3, 0x30C8],
+  0x3358: [0x0030, 0x70B9],
+  0x3359: [0x0031, 0x70B9],
+  0x335A: [0x0032, 0x70B9],
+  0x335B: [0x0033, 0x70B9],
+  0x335C: [0x0034, 0x70B9],
+  0x335D: [0x0035, 0x70B9],
+  0x335E: [0x0036, 0x70B9],
+  0x335F: [0x0037, 0x70B9],
+  0x3360: [0x0038, 0x70B9],
+  0x3361: [0x0039, 0x70B9],
+  0x3362: [0x0031, 0x0030, 0x70B9],
+  0x3363: [0x0031, 0x0031, 0x70B9],
+  0x3364: [0x0031, 0x0032, 0x70B9],
+  0x3365: [0x0031, 0x0033, 0x70B9],
+  0x3366: [0x0031, 0x0034, 0x70B9],
+  0x3367: [0x0031, 0x0035, 0x70B9],
+  0x3368: [0x0031, 0x0036, 0x70B9],
+  0x3369: [0x0031, 0x0037, 0x70B9],
+  0x336A: [0x0031, 0x0038, 0x70B9],
+  0x336B: [0x0031, 0x0039, 0x70B9],
+  0x336C: [0x0032, 0x0030, 0x70B9],
+  0x336D: [0x0032, 0x0031, 0x70B9],
+  0x336E: [0x0032, 0x0032, 0x70B9],
+  0x336F: [0x0032, 0x0033, 0x70B9],
+  0x3370: [0x0032, 0x0034, 0x70B9],
+  0x3371: [0x0068, 0x0050, 0x0061],
+  0x3372: [0x0064, 0x0061],
+  0x3373: [0x0041, 0x0055],
+  0x3374: [0x0062, 0x0061, 0x0072],
+  0x3375: [0x006F, 0x0056],
+  0x3376: [0x0070, 0x0063],
+  0x3377: [0x0064, 0x006D],
+  0x3378: [0x0064, 0x006D, 0x00B2],
+  0x3379: [0x0064, 0x006D, 0x00B3],
+  0x337A: [0x0049, 0x0055],
+  0x337B: [0x5E73, 0x6210],
+  0x337C: [0x662D, 0x548C],
+  0x337D: [0x5927, 0x6B63],
+  0x337E: [0x660E, 0x6CBB],
+  0x337F: [0x682A, 0x5F0F, 0x4F1A, 0x793E],
+  0x3380: [0x0070, 0x0041],
+  0x3381: [0x006E, 0x0041],
+  0x3382: [0x03BC, 0x0041],
+  0x3383: [0x006D, 0x0041],
+  0x3384: [0x006B, 0x0041],
+  0x3385: [0x004B, 0x0042],
+  0x3386: [0x004D, 0x0042],
+  0x3387: [0x0047, 0x0042],
+  0x3388: [0x0063, 0x0061, 0x006C],
+  0x3389: [0x006B, 0x0063, 0x0061, 0x006C],
+  0x338A: [0x0070, 0x0046],
+  0x338B: [0x006E, 0x0046],
+  0x338C: [0x03BC, 0x0046],
+  0x338D: [0x03BC, 0x0067],
+  0x338E: [0x006D, 0x0067],
+  0x338F: [0x006B, 0x0067],
+  0x3390: [0x0048, 0x007A],
+  0x3391: [0x006B, 0x0048, 0x007A],
+  0x3392: [0x004D, 0x0048, 0x007A],
+  0x3393: [0x0047, 0x0048, 0x007A],
+  0x3394: [0x0054, 0x0048, 0x007A],
+  0x3395: [0x03BC, 0x2113],
+  0x3396: [0x006D, 0x2113],
+  0x3397: [0x0064, 0x2113],
+  0x3398: [0x006B, 0x2113],
+  0x3399: [0x0066, 0x006D],
+  0x339A: [0x006E, 0x006D],
+  0x339B: [0x03BC, 0x006D],
+  0x339C: [0x006D, 0x006D],
+  0x339D: [0x0063, 0x006D],
+  0x339E: [0x006B, 0x006D],
+  0x339F: [0x006D, 0x006D, 0x00B2],
+  0x33A0: [0x0063, 0x006D, 0x00B2],
+  0x33A1: [0x006D, 0x00B2],
+  0x33A2: [0x006B, 0x006D, 0x00B2],
+  0x33A3: [0x006D, 0x006D, 0x00B3],
+  0x33A4: [0x0063, 0x006D, 0x00B3],
+  0x33A5: [0x006D, 0x00B3],
+  0x33A6: [0x006B, 0x006D, 0x00B3],
+  0x33A7: [0x006D, 0x2215, 0x0073],
+  0x33A8: [0x006D, 0x2215, 0x0073, 0x00B2],
+  0x33A9: [0x0050, 0x0061],
+  0x33AA: [0x006B, 0x0050, 0x0061],
+  0x33AB: [0x004D, 0x0050, 0x0061],
+  0x33AC: [0x0047, 0x0050, 0x0061],
+  0x33AD: [0x0072, 0x0061, 0x0064],
+  0x33AE: [0x0072, 0x0061, 0x0064, 0x2215, 0x0073],
+  0x33AF: [0x0072, 0x0061, 0x0064, 0x2215, 0x0073, 0x00B2],
+  0x33B0: [0x0070, 0x0073],
+  0x33B1: [0x006E, 0x0073],
+  0x33B2: [0x03BC, 0x0073],
+  0x33B3: [0x006D, 0x0073],
+  0x33B4: [0x0070, 0x0056],
+  0x33B5: [0x006E, 0x0056],
+  0x33B6: [0x03BC, 0x0056],
+  0x33B7: [0x006D, 0x0056],
+  0x33B8: [0x006B, 0x0056],
+  0x33B9: [0x004D, 0x0056],
+  0x33BA: [0x0070, 0x0057],
+  0x33BB: [0x006E, 0x0057],
+  0x33BC: [0x03BC, 0x0057],
+  0x33BD: [0x006D, 0x0057],
+  0x33BE: [0x006B, 0x0057],
+  0x33BF: [0x004D, 0x0057],
+  0x33C0: [0x006B, 0x03A9],
+  0x33C1: [0x004D, 0x03A9],
+  0x33C2: [0x0061, 0x002E, 0x006D, 0x002E],
+  0x33C3: [0x0042, 0x0071],
+  0x33C4: [0x0063, 0x0063],
+  0x33C5: [0x0063, 0x0064],
+  0x33C6: [0x0043, 0x2215, 0x006B, 0x0067],
+  0x33C7: [0x0043, 0x006F, 0x002E],
+  0x33C8: [0x0064, 0x0042],
+  0x33C9: [0x0047, 0x0079],
+  0x33CA: [0x0068, 0x0061],
+  0x33CB: [0x0048, 0x0050],
+  0x33CC: [0x0069, 0x006E],
+  0x33CD: [0x004B, 0x004B],
+  0x33CE: [0x004B, 0x004D],
+  0x33CF: [0x006B, 0x0074],
+  0x33D0: [0x006C, 0x006D],
+  0x33D1: [0x006C, 0x006E],
+  0x33D2: [0x006C, 0x006F, 0x0067],
+  0x33D3: [0x006C, 0x0078],
+  0x33D4: [0x006D, 0x0062],
+  0x33D5: [0x006D, 0x0069, 0x006C],
+  0x33D6: [0x006D, 0x006F, 0x006C],
+  0x33D7: [0x0050, 0x0048],
+  0x33D8: [0x0070, 0x002E, 0x006D, 0x002E],
+  0x33D9: [0x0050, 0x0050, 0x004D],
+  0x33DA: [0x0050, 0x0052],
+  0x33DB: [0x0073, 0x0072],
+  0x33DC: [0x0053, 0x0076],
+  0x33DD: [0x0057, 0x0062],
+  0x33DE: [0x0056, 0x2215, 0x006D],
+  0x33DF: [0x0041, 0x2215, 0x006D],
+  0x33E0: [0x0031, 0x65E5],
+  0x33E1: [0x0032, 0x65E5],
+  0x33E2: [0x0033, 0x65E5],
+  0x33E3: [0x0034, 0x65E5],
+  0x33E4: [0x0035, 0x65E5],
+  0x33E5: [0x0036, 0x65E5],
+  0x33E6: [0x0037, 0x65E5],
+  0x33E7: [0x0038, 0x65E5],
+  0x33E8: [0x0039, 0x65E5],
+  0x33E9: [0x0031, 0x0030, 0x65E5],
+  0x33EA: [0x0031, 0x0031, 0x65E5],
+  0x33EB: [0x0031, 0x0032, 0x65E5],
+  0x33EC: [0x0031, 0x0033, 0x65E5],
+  0x33ED: [0x0031, 0x0034, 0x65E5],
+  0x33EE: [0x0031, 0x0035, 0x65E5],
+  0x33EF: [0x0031, 0x0036, 0x65E5],
+  0x33F0: [0x0031, 0x0037, 0x65E5],
+  0x33F1: [0x0031, 0x0038, 0x65E5],
+  0x33F2: [0x0031, 0x0039, 0x65E5],
+  0x33F3: [0x0032, 0x0030, 0x65E5],
+  0x33F4: [0x0032, 0x0031, 0x65E5],
+  0x33F5: [0x0032, 0x0032, 0x65E5],
+  0x33F6: [0x0032, 0x0033, 0x65E5],
+  0x33F7: [0x0032, 0x0034, 0x65E5],
+  0x33F8: [0x0032, 0x0035, 0x65E5],
+  0x33F9: [0x0032, 0x0036, 0x65E5],
+  0x33FA: [0x0032, 0x0037, 0x65E5],
+  0x33FB: [0x0032, 0x0038, 0x65E5],
+  0x33FC: [0x0032, 0x0039, 0x65E5],
+  0x33FD: [0x0033, 0x0030, 0x65E5],
+  0x33FE: [0x0033, 0x0031, 0x65E5],
+  0x33FF: [0x0067, 0x0061, 0x006C],
+  0xA69C: [0x044A],
+  0xA69D: [0x044C],
+  0xA770: [0xA76F],
+  0xA7F8: [0x0126],
+  0xA7F9: [0x0153],
+  0xAB5C: [0xA727],
+  0xAB5D: [0xAB37],
+  0xAB5E: [0x026B],
+  0xAB5F: [0xAB52],
+  0xF900: [0x8C48],
+  0xF901: [0x66F4],
+  0xF902: [0x8ECA],
+  0xF903: [0x8CC8],
+  0xF904: [0x6ED1],
+  0xF905: [0x4E32],
+  0xF906: [0x53E5],
+  0xF907: [0x9F9C],
+  0xF908: [0x9F9C],
+  0xF909: [0x5951],
+  0xF90A: [0x91D1],
+  0xF90B: [0x5587],
+  0xF90C: [0x5948],
+  0xF90D: [0x61F6],
+  0xF90E: [0x7669],
+  0xF90F: [0x7F85],
+  0xF910: [0x863F],
+  0xF911: [0x87BA],
+  0xF912: [0x88F8],
+  0xF913: [0x908F],
+  0xF914: [0x6A02],
+  0xF915: [0x6D1B],
+  0xF916: [0x70D9],
+  0xF917: [0x73DE],
+  0xF918: [0x843D],
+  0xF919: [0x916A],
+  0xF91A: [0x99F1],
+  0xF91B: [0x4E82],
+  0xF91C: [0x5375],
+  0xF91D: [0x6B04],
+  0xF91E: [0x721B],
+  0xF91F: [0x862D],
+  0xF920: [0x9E1E],
+  0xF921: [0x5D50],
+  0xF922: [0x6FEB],
+  0xF923: [0x85CD],
+  0xF924: [0x8964],
+  0xF925: [0x62C9],
+  0xF926: [0x81D8],
+  0xF927: [0x881F],
+  0xF928: [0x5ECA],
+  0xF929: [0x6717],
+  0xF92A: [0x6D6A],
+  0xF92B: [0x72FC],
+  0xF92C: [0x90CE],
+  0xF92D: [0x4F86],
+  0xF92E: [0x51B7],
+  0xF92F: [0x52DE],
+  0xF930: [0x64C4],
+  0xF931: [0x6AD3],
+  0xF932: [0x7210],
+  0xF933: [0x76E7],
+  0xF934: [0x8001],
+  0xF935: [0x8606],
+  0xF936: [0x865C],
+  0xF937: [0x8DEF],
+  0xF938: [0x9732],
+  0xF939: [0x9B6F],
+  0xF93A: [0x9DFA],
+  0xF93B: [0x788C],
+  0xF93C: [0x797F],
+  0xF93D: [0x7DA0],
+  0xF93E: [0x83C9],
+  0xF93F: [0x9304],
+  0xF940: [0x9E7F],
+  0xF941: [0x8AD6],
+  0xF942: [0x58DF],
+  0xF943: [0x5F04],
+  0xF944: [0x7C60],
+  0xF945: [0x807E],
+  0xF946: [0x7262],
+  0xF947: [0x78CA],
+  0xF948: [0x8CC2],
+  0xF949: [0x96F7],
+  0xF94A: [0x58D8],
+  0xF94B: [0x5C62],
+  0xF94C: [0x6A13],
+  0xF94D: [0x6DDA],
+  0xF94E: [0x6F0F],
+  0xF94F: [0x7D2F],
+  0xF950: [0x7E37],
+  0xF951: [0x964B],
+  0xF952: [0x52D2],
+  0xF953: [0x808B],
+  0xF954: [0x51DC],
+  0xF955: [0x51CC],
+  0xF956: [0x7A1C],
+  0xF957: [0x7DBE],
+  0xF958: [0x83F1],
+  0xF959: [0x9675],
+  0xF95A: [0x8B80],
+  0xF95B: [0x62CF],
+  0xF95C: [0x6A02],
+  0xF95D: [0x8AFE],
+  0xF95E: [0x4E39],
+  0xF95F: [0x5BE7],
+  0xF960: [0x6012],
+  0xF961: [0x7387],
+  0xF962: [0x7570],
+  0xF963: [0x5317],
+  0xF964: [0x78FB],
+  0xF965: [0x4FBF],
+  0xF966: [0x5FA9],
+  0xF967: [0x4E0D],
+  0xF968: [0x6CCC],
+  0xF969: [0x6578],
+  0xF96A: [0x7D22],
+  0xF96B: [0x53C3],
+  0xF96C: [0x585E],
+  0xF96D: [0x7701],
+  0xF96E: [0x8449],
+  0xF96F: [0x8AAA],
+  0xF970: [0x6BBA],
+  0xF971: [0x8FB0],
+  0xF972: [0x6C88],
+  0xF973: [0x62FE],
+  0xF974: [0x82E5],
+  0xF975: [0x63A0],
+  0xF976: [0x7565],
+  0xF977: [0x4EAE],
+  0xF978: [0x5169],
+  0xF979: [0x51C9],
+  0xF97A: [0x6881],
+  0xF97B: [0x7CE7],
+  0xF97C: [0x826F],
+  0xF97D: [0x8AD2],
+  0xF97E: [0x91CF],
+  0xF97F: [0x52F5],
+  0xF980: [0x5442],
+  0xF981: [0x5973],
+  0xF982: [0x5EEC],
+  0xF983: [0x65C5],
+  0xF984: [0x6FFE],
+  0xF985: [0x792A],
+  0xF986: [0x95AD],
+  0xF987: [0x9A6A],
+  0xF988: [0x9E97],
+  0xF989: [0x9ECE],
+  0xF98A: [0x529B],
+  0xF98B: [0x66C6],
+  0xF98C: [0x6B77],
+  0xF98D: [0x8F62],
+  0xF98E: [0x5E74],
+  0xF98F: [0x6190],
+  0xF990: [0x6200],
+  0xF991: [0x649A],
+  0xF992: [0x6F23],
+  0xF993: [0x7149],
+  0xF994: [0x7489],
+  0xF995: [0x79CA],
+  0xF996: [0x7DF4],
+  0xF997: [0x806F],
+  0xF998: [0x8F26],
+  0xF999: [0x84EE],
+  0xF99A: [0x9023],
+  0xF99B: [0x934A],
+  0xF99C: [0x5217],
+  0xF99D: [0x52A3],
+  0xF99E: [0x54BD],
+  0xF99F: [0x70C8],
+  0xF9A0: [0x88C2],
+  0xF9A1: [0x8AAA],
+  0xF9A2: [0x5EC9],
+  0xF9A3: [0x5FF5],
+  0xF9A4: [0x637B],
+  0xF9A5: [0x6BAE],
+  0xF9A6: [0x7C3E],
+  0xF9A7: [0x7375],
+  0xF9A8: [0x4EE4],
+  0xF9A9: [0x56F9],
+  0xF9AA: [0x5BE7],
+  0xF9AB: [0x5DBA],
+  0xF9AC: [0x601C],
+  0xF9AD: [0x73B2],
+  0xF9AE: [0x7469],
+  0xF9AF: [0x7F9A],
+  0xF9B0: [0x8046],
+  0xF9B1: [0x9234],
+  0xF9B2: [0x96F6],
+  0xF9B3: [0x9748],
+  0xF9B4: [0x9818],
+  0xF9B5: [0x4F8B],
+  0xF9B6: [0x79AE],
+  0xF9B7: [0x91B4],
+  0xF9B8: [0x96B8],
+  0xF9B9: [0x60E1],
+  0xF9BA: [0x4E86],
+  0xF9BB: [0x50DA],
+  0xF9BC: [0x5BEE],
+  0xF9BD: [0x5C3F],
+  0xF9BE: [0x6599],
+  0xF9BF: [0x6A02],
+  0xF9C0: [0x71CE],
+  0xF9C1: [0x7642],
+  0xF9C2: [0x84FC],
+  0xF9C3: [0x907C],
+  0xF9C4: [0x9F8D],
+  0xF9C5: [0x6688],
+  0xF9C6: [0x962E],
+  0xF9C7: [0x5289],
+  0xF9C8: [0x677B],
+  0xF9C9: [0x67F3],
+  0xF9CA: [0x6D41],
+  0xF9CB: [0x6E9C],
+  0xF9CC: [0x7409],
+  0xF9CD: [0x7559],
+  0xF9CE: [0x786B],
+  0xF9CF: [0x7D10],
+  0xF9D0: [0x985E],
+  0xF9D1: [0x516D],
+  0xF9D2: [0x622E],
+  0xF9D3: [0x9678],
+  0xF9D4: [0x502B],
+  0xF9D5: [0x5D19],
+  0xF9D6: [0x6DEA],
+  0xF9D7: [0x8F2A],
+  0xF9D8: [0x5F8B],
+  0xF9D9: [0x6144],
+  0xF9DA: [0x6817],
+  0xF9DB: [0x7387],
+  0xF9DC: [0x9686],
+  0xF9DD: [0x5229],
+  0xF9DE: [0x540F],
+  0xF9DF: [0x5C65],
+  0xF9E0: [0x6613],
+  0xF9E1: [0x674E],
+  0xF9E2: [0x68A8],
+  0xF9E3: [0x6CE5],
+  0xF9E4: [0x7406],
+  0xF9E5: [0x75E2],
+  0xF9E6: [0x7F79],
+  0xF9E7: [0x88CF],
+  0xF9E8: [0x88E1],
+  0xF9E9: [0x91CC],
+  0xF9EA: [0x96E2],
+  0xF9EB: [0x533F],
+  0xF9EC: [0x6EBA],
+  0xF9ED: [0x541D],
+  0xF9EE: [0x71D0],
+  0xF9EF: [0x7498],
+  0xF9F0: [0x85FA],
+  0xF9F1: [0x96A3],
+  0xF9F2: [0x9C57],
+  0xF9F3: [0x9E9F],
+  0xF9F4: [0x6797],
+  0xF9F5: [0x6DCB],
+  0xF9F6: [0x81E8],
+  0xF9F7: [0x7ACB],
+  0xF9F8: [0x7B20],
+  0xF9F9: [0x7C92],
+  0xF9FA: [0x72C0],
+  0xF9FB: [0x7099],
+  0xF9FC: [0x8B58],
+  0xF9FD: [0x4EC0],
+  0xF9FE: [0x8336],
+  0xF9FF: [0x523A],
+  0xFA00: [0x5207],
+  0xFA01: [0x5EA6],
+  0xFA02: [0x62D3],
+  0xFA03: [0x7CD6],
+  0xFA04: [0x5B85],
+  0xFA05: [0x6D1E],
+  0xFA06: [0x66B4],
+  0xFA07: [0x8F3B],
+  0xFA08: [0x884C],
+  0xFA09: [0x964D],
+  0xFA0A: [0x898B],
+  0xFA0B: [0x5ED3],
+  0xFA0C: [0x5140],
+  0xFA0D: [0x55C0],
+  0xFA10: [0x585A],
+  0xFA12: [0x6674],
+  0xFA15: [0x51DE],
+  0xFA16: [0x732A],
+  0xFA17: [0x76CA],
+  0xFA18: [0x793C],
+  0xFA19: [0x795E],
+  0xFA1A: [0x7965],
+  0xFA1B: [0x798F],
+  0xFA1C: [0x9756],
+  0xFA1D: [0x7CBE],
+  0xFA1E: [0x7FBD],
+  0xFA20: [0x8612],
+  0xFA22: [0x8AF8],
+  0xFA25: [0x9038],
+  0xFA26: [0x90FD],
+  0xFA2A: [0x98EF],
+  0xFA2B: [0x98FC],
+  0xFA2C: [0x9928],
+  0xFA2D: [0x9DB4],
+  0xFA2E: [0x90DE],
+  0xFA2F: [0x96B7],
+  0xFA30: [0x4FAE],
+  0xFA31: [0x50E7],
+  0xFA32: [0x514D],
+  0xFA33: [0x52C9],
+  0xFA34: [0x52E4],
+  0xFA35: [0x5351],
+  0xFA36: [0x559D],
+  0xFA37: [0x5606],
+  0xFA38: [0x5668],
+  0xFA39: [0x5840],
+  0xFA3A: [0x58A8],
+  0xFA3B: [0x5C64],
+  0xFA3C: [0x5C6E],
+  0xFA3D: [0x6094],
+  0xFA3E: [0x6168],
+  0xFA3F: [0x618E],
+  0xFA40: [0x61F2],
+  0xFA41: [0x654F],
+  0xFA42: [0x65E2],
+  0xFA43: [0x6691],
+  0xFA44: [0x6885],
+  0xFA45: [0x6D77],
+  0xFA46: [0x6E1A],
+  0xFA47: [0x6F22],
+  0xFA48: [0x716E],
+  0xFA49: [0x722B],
+  0xFA4A: [0x7422],
+  0xFA4B: [0x7891],
+  0xFA4C: [0x793E],
+  0xFA4D: [0x7949],
+  0xFA4E: [0x7948],
+  0xFA4F: [0x7950],
+  0xFA50: [0x7956],
+  0xFA51: [0x795D],
+  0xFA52: [0x798D],
+  0xFA53: [0x798E],
+  0xFA54: [0x7A40],
+  0xFA55: [0x7A81],
+  0xFA56: [0x7BC0],
+  0xFA57: [0x7DF4],
+  0xFA58: [0x7E09],
+  0xFA59: [0x7E41],
+  0xFA5A: [0x7F72],
+  0xFA5B: [0x8005],
+  0xFA5C: [0x81ED],
+  0xFA5D: [0x8279],
+  0xFA5E: [0x8279],
+  0xFA5F: [0x8457],
+  0xFA60: [0x8910],
+  0xFA61: [0x8996],
+  0xFA62: [0x8B01],
+  0xFA63: [0x8B39],
+  0xFA64: [0x8CD3],
+  0xFA65: [0x8D08],
+  0xFA66: [0x8FB6],
+  0xFA67: [0x9038],
+  0xFA68: [0x96E3],
+  0xFA69: [0x97FF],
+  0xFA6A: [0x983B],
+  0xFA6B: [0x6075],
+  0xFA6C: [0x242EE],
+  0xFA6D: [0x8218],
+  0xFA70: [0x4E26],
+  0xFA71: [0x51B5],
+  0xFA72: [0x5168],
+  0xFA73: [0x4F80],
+  0xFA74: [0x5145],
+  0xFA75: [0x5180],
+  0xFA76: [0x52C7],
+  0xFA77: [0x52FA],
+  0xFA78: [0x559D],
+  0xFA79: [0x5555],
+  0xFA7A: [0x5599],
+  0xFA7B: [0x55E2],
+  0xFA7C: [0x585A],
+  0xFA7D: [0x58B3],
+  0xFA7E: [0x5944],
+  0xFA7F: [0x5954],
+  0xFA80: [0x5A62],
+  0xFA81: [0x5B28],
+  0xFA82: [0x5ED2],
+  0xFA83: [0x5ED9],
+  0xFA84: [0x5F69],
+  0xFA85: [0x5FAD],
+  0xFA86: [0x60D8],
+  0xFA87: [0x614E],
+  0xFA88: [0x6108],
+  0xFA89: [0x618E],
+  0xFA8A: [0x6160],
+  0xFA8B: [0x61F2],
+  0xFA8C: [0x6234],
+  0xFA8D: [0x63C4],
+  0xFA8E: [0x641C],
+  0xFA8F: [0x6452],
+  0xFA90: [0x6556],
+  0xFA91: [0x6674],
+  0xFA92: [0x6717],
+  0xFA93: [0x671B],
+  0xFA94: [0x6756],
+  0xFA95: [0x6B79],
+  0xFA96: [0x6BBA],
+  0xFA97: [0x6D41],
+  0xFA98: [0x6EDB],
+  0xFA99: [0x6ECB],
+  0xFA9A: [0x6F22],
+  0xFA9B: [0x701E],
+  0xFA9C: [0x716E],
+  0xFA9D: [0x77A7],
+  0xFA9E: [0x7235],
+  0xFA9F: [0x72AF],
+  0xFAA0: [0x732A],
+  0xFAA1: [0x7471],
+  0xFAA2: [0x7506],
+  0xFAA3: [0x753B],
+  0xFAA4: [0x761D],
+  0xFAA5: [0x761F],
+  0xFAA6: [0x76CA],
+  0xFAA7: [0x76DB],
+  0xFAA8: [0x76F4],
+  0xFAA9: [0x774A],
+  0xFAAA: [0x7740],
+  0xFAAB: [0x78CC],
+  0xFAAC: [0x7AB1],
+  0xFAAD: [0x7BC0],
+  0xFAAE: [0x7C7B],
+  0xFAAF: [0x7D5B],
+  0xFAB0: [0x7DF4],
+  0xFAB1: [0x7F3E],
+  0xFAB2: [0x8005],
+  0xFAB3: [0x8352],
+  0xFAB4: [0x83EF],
+  0xFAB5: [0x8779],
+  0xFAB6: [0x8941],
+  0xFAB7: [0x8986],
+  0xFAB8: [0x8996],
+  0xFAB9: [0x8ABF],
+  0xFABA: [0x8AF8],
+  0xFABB: [0x8ACB],
+  0xFABC: [0x8B01],
+  0xFABD: [0x8AFE],
+  0xFABE: [0x8AED],
+  0xFABF: [0x8B39],
+  0xFAC0: [0x8B8A],
+  0xFAC1: [0x8D08],
+  0xFAC2: [0x8F38],
+  0xFAC3: [0x9072],
+  0xFAC4: [0x9199],
+  0xFAC5: [0x9276],
+  0xFAC6: [0x967C],
+  0xFAC7: [0x96E3],
+  0xFAC8: [0x9756],
+  0xFAC9: [0x97DB],
+  0xFACA: [0x97FF],
+  0xFACB: [0x980B],
+  0xFACC: [0x983B],
+  0xFACD: [0x9B12],
+  0xFACE: [0x9F9C],
+  0xFACF: [0x2284A],
+  0xFAD0: [0x22844],
+  0xFAD1: [0x233D5],
+  0xFAD2: [0x3B9D],
+  0xFAD3: [0x4018],
+  0xFAD4: [0x4039],
+  0xFAD5: [0x25249],
+  0xFAD6: [0x25CD0],
+  0xFAD7: [0x27ED3],
+  0xFAD8: [0x9F43],
+  0xFAD9: [0x9F8E],
+  0xFB00: [0x0066, 0x0066],
+  0xFB01: [0x0066, 0x0069],
+  0xFB02: [0x0066, 0x006C],
+  0xFB03: [0x0066, 0x0066, 0x0069],
+  0xFB04: [0x0066, 0x0066, 0x006C],
+  0xFB05: [0x017F, 0x0074],
+  0xFB06: [0x0073, 0x0074],
+  0xFB13: [0x0574, 0x0576],
+  0xFB14: [0x0574, 0x0565],
+  0xFB15: [0x0574, 0x056B],
+  0xFB16: [0x057E, 0x0576],
+  0xFB17: [0x0574, 0x056D],
+  0xFB1D: [0x05D9, 0x05B4],
+  0xFB1F: [0x05F2, 0x05B7],
+  0xFB20: [0x05E2],
+  0xFB21: [0x05D0],
+  0xFB22: [0x05D3],
+  0xFB23: [0x05D4],
+  0xFB24: [0x05DB],
+  0xFB25: [0x05DC],
+  0xFB26: [0x05DD],
+  0xFB27: [0x05E8],
+  0xFB28: [0x05EA],
+  0xFB29: [0x002B],
+  0xFB2A: [0x05E9, 0x05C1],
+  0xFB2B: [0x05E9, 0x05C2],
+  0xFB2C: [0xFB49, 0x05C1],
+  0xFB2D: [0xFB49, 0x05C2],
+  0xFB2E: [0x05D0, 0x05B7],
+  0xFB2F: [0x05D0, 0x05B8],
+  0xFB30: [0x05D0, 0x05BC],
+  0xFB31: [0x05D1, 0x05BC],
+  0xFB32: [0x05D2, 0x05BC],
+  0xFB33: [0x05D3, 0x05BC],
+  0xFB34: [0x05D4, 0x05BC],
+  0xFB35: [0x05D5, 0x05BC],
+  0xFB36: [0x05D6, 0x05BC],
+  0xFB38: [0x05D8, 0x05BC],
+  0xFB39: [0x05D9, 0x05BC],
+  0xFB3A: [0x05DA, 0x05BC],
+  0xFB3B: [0x05DB, 0x05BC],
+  0xFB3C: [0x05DC, 0x05BC],
+  0xFB3E: [0x05DE, 0x05BC],
+  0xFB40: [0x05E0, 0x05BC],
+  0xFB41: [0x05E1, 0x05BC],
+  0xFB43: [0x05E3, 0x05BC],
+  0xFB44: [0x05E4, 0x05BC],
+  0xFB46: [0x05E6, 0x05BC],
+  0xFB47: [0x05E7, 0x05BC],
+  0xFB48: [0x05E8, 0x05BC],
+  0xFB49: [0x05E9, 0x05BC],
+  0xFB4A: [0x05EA, 0x05BC],
+  0xFB4B: [0x05D5, 0x05B9],
+  0xFB4C: [0x05D1, 0x05BF],
+  0xFB4D: [0x05DB, 0x05BF],
+  0xFB4E: [0x05E4, 0x05BF],
+  0xFB4F: [0x05D0, 0x05DC],
+  0xFB50: [0x0671],
+  0xFB51: [0x0671],
+  0xFB52: [0x067B],
+  0xFB53: [0x067B],
+  0xFB54: [0x067B],
+  0xFB55: [0x067B],
+  0xFB56: [0x067E],
+  0xFB57: [0x067E],
+  0xFB58: [0x067E],
+  0xFB59: [0x067E],
+  0xFB5A: [0x0680],
+  0xFB5B: [0x0680],
+  0xFB5C: [0x0680],
+  0xFB5D: [0x0680],
+  0xFB5E: [0x067A],
+  0xFB5F: [0x067A],
+  0xFB60: [0x067A],
+  0xFB61: [0x067A],
+  0xFB62: [0x067F],
+  0xFB63: [0x067F],
+  0xFB64: [0x067F],
+  0xFB65: [0x067F],
+  0xFB66: [0x0679],
+  0xFB67: [0x0679],
+  0xFB68: [0x0679],
+  0xFB69: [0x0679],
+  0xFB6A: [0x06A4],
+  0xFB6B: [0x06A4],
+  0xFB6C: [0x06A4],
+  0xFB6D: [0x06A4],
+  0xFB6E: [0x06A6],
+  0xFB6F: [0x06A6],
+  0xFB70: [0x06A6],
+  0xFB71: [0x06A6],
+  0xFB72: [0x0684],
+  0xFB73: [0x0684],
+  0xFB74: [0x0684],
+  0xFB75: [0x0684],
+  0xFB76: [0x0683],
+  0xFB77: [0x0683],
+  0xFB78: [0x0683],
+  0xFB79: [0x0683],
+  0xFB7A: [0x0686],
+  0xFB7B: [0x0686],
+  0xFB7C: [0x0686],
+  0xFB7D: [0x0686],
+  0xFB7E: [0x0687],
+  0xFB7F: [0x0687],
+  0xFB80: [0x0687],
+  0xFB81: [0x0687],
+  0xFB82: [0x068D],
+  0xFB83: [0x068D],
+  0xFB84: [0x068C],
+  0xFB85: [0x068C],
+  0xFB86: [0x068E],
+  0xFB87: [0x068E],
+  0xFB88: [0x0688],
+  0xFB89: [0x0688],
+  0xFB8A: [0x0698],
+  0xFB8B: [0x0698],
+  0xFB8C: [0x0691],
+  0xFB8D: [0x0691],
+  0xFB8E: [0x06A9],
+  0xFB8F: [0x06A9],
+  0xFB90: [0x06A9],
+  0xFB91: [0x06A9],
+  0xFB92: [0x06AF],
+  0xFB93: [0x06AF],
+  0xFB94: [0x06AF],
+  0xFB95: [0x06AF],
+  0xFB96: [0x06B3],
+  0xFB97: [0x06B3],
+  0xFB98: [0x06B3],
+  0xFB99: [0x06B3],
+  0xFB9A: [0x06B1],
+  0xFB9B: [0x06B1],
+  0xFB9C: [0x06B1],
+  0xFB9D: [0x06B1],
+  0xFB9E: [0x06BA],
+  0xFB9F: [0x06BA],
+  0xFBA0: [0x06BB],
+  0xFBA1: [0x06BB],
+  0xFBA2: [0x06BB],
+  0xFBA3: [0x06BB],
+  0xFBA4: [0x06C0],
+  0xFBA5: [0x06C0],
+  0xFBA6: [0x06C1],
+  0xFBA7: [0x06C1],
+  0xFBA8: [0x06C1],
+  0xFBA9: [0x06C1],
+  0xFBAA: [0x06BE],
+  0xFBAB: [0x06BE],
+  0xFBAC: [0x06BE],
+  0xFBAD: [0x06BE],
+  0xFBAE: [0x06D2],
+  0xFBAF: [0x06D2],
+  0xFBB0: [0x06D3],
+  0xFBB1: [0x06D3],
+  0xFBD3: [0x06AD],
+  0xFBD4: [0x06AD],
+  0xFBD5: [0x06AD],
+  0xFBD6: [0x06AD],
+  0xFBD7: [0x06C7],
+  0xFBD8: [0x06C7],
+  0xFBD9: [0x06C6],
+  0xFBDA: [0x06C6],
+  0xFBDB: [0x06C8],
+  0xFBDC: [0x06C8],
+  0xFBDD: [0x0677],
+  0xFBDE: [0x06CB],
+  0xFBDF: [0x06CB],
+  0xFBE0: [0x06C5],
+  0xFBE1: [0x06C5],
+  0xFBE2: [0x06C9],
+  0xFBE3: [0x06C9],
+  0xFBE4: [0x06D0],
+  0xFBE5: [0x06D0],
+  0xFBE6: [0x06D0],
+  0xFBE7: [0x06D0],
+  0xFBE8: [0x0649],
+  0xFBE9: [0x0649],
+  0xFBEA: [0x0626, 0x0627],
+  0xFBEB: [0x0626, 0x0627],
+  0xFBEC: [0x0626, 0x06D5],
+  0xFBED: [0x0626, 0x06D5],
+  0xFBEE: [0x0626, 0x0648],
+  0xFBEF: [0x0626, 0x0648],
+  0xFBF0: [0x0626, 0x06C7],
+  0xFBF1: [0x0626, 0x06C7],
+  0xFBF2: [0x0626, 0x06C6],
+  0xFBF3: [0x0626, 0x06C6],
+  0xFBF4: [0x0626, 0x06C8],
+  0xFBF5: [0x0626, 0x06C8],
+  0xFBF6: [0x0626, 0x06D0],
+  0xFBF7: [0x0626, 0x06D0],
+  0xFBF8: [0x0626, 0x06D0],
+  0xFBF9: [0x0626, 0x0649],
+  0xFBFA: [0x0626, 0x0649],
+  0xFBFB: [0x0626, 0x0649],
+  0xFBFC: [0x06CC],
+  0xFBFD: [0x06CC],
+  0xFBFE: [0x06CC],
+  0xFBFF: [0x06CC],
+  0xFC00: [0x0626, 0x062C],
+  0xFC01: [0x0626, 0x062D],
+  0xFC02: [0x0626, 0x0645],
+  0xFC03: [0x0626, 0x0649],
+  0xFC04: [0x0626, 0x064A],
+  0xFC05: [0x0628, 0x062C],
+  0xFC06: [0x0628, 0x062D],
+  0xFC07: [0x0628, 0x062E],
+  0xFC08: [0x0628, 0x0645],
+  0xFC09: [0x0628, 0x0649],
+  0xFC0A: [0x0628, 0x064A],
+  0xFC0B: [0x062A, 0x062C],
+  0xFC0C: [0x062A, 0x062D],
+  0xFC0D: [0x062A, 0x062E],
+  0xFC0E: [0x062A, 0x0645],
+  0xFC0F: [0x062A, 0x0649],
+  0xFC10: [0x062A, 0x064A],
+  0xFC11: [0x062B, 0x062C],
+  0xFC12: [0x062B, 0x0645],
+  0xFC13: [0x062B, 0x0649],
+  0xFC14: [0x062B, 0x064A],
+  0xFC15: [0x062C, 0x062D],
+  0xFC16: [0x062C, 0x0645],
+  0xFC17: [0x062D, 0x062C],
+  0xFC18: [0x062D, 0x0645],
+  0xFC19: [0x062E, 0x062C],
+  0xFC1A: [0x062E, 0x062D],
+  0xFC1B: [0x062E, 0x0645],
+  0xFC1C: [0x0633, 0x062C],
+  0xFC1D: [0x0633, 0x062D],
+  0xFC1E: [0x0633, 0x062E],
+  0xFC1F: [0x0633, 0x0645],
+  0xFC20: [0x0635, 0x062D],
+  0xFC21: [0x0635, 0x0645],
+  0xFC22: [0x0636, 0x062C],
+  0xFC23: [0x0636, 0x062D],
+  0xFC24: [0x0636, 0x062E],
+  0xFC25: [0x0636, 0x0645],
+  0xFC26: [0x0637, 0x062D],
+  0xFC27: [0x0637, 0x0645],
+  0xFC28: [0x0638, 0x0645],
+  0xFC29: [0x0639, 0x062C],
+  0xFC2A: [0x0639, 0x0645],
+  0xFC2B: [0x063A, 0x062C],
+  0xFC2C: [0x063A, 0x0645],
+  0xFC2D: [0x0641, 0x062C],
+  0xFC2E: [0x0641, 0x062D],
+  0xFC2F: [0x0641, 0x062E],
+  0xFC30: [0x0641, 0x0645],
+  0xFC31: [0x0641, 0x0649],
+  0xFC32: [0x0641, 0x064A],
+  0xFC33: [0x0642, 0x062D],
+  0xFC34: [0x0642, 0x0645],
+  0xFC35: [0x0642, 0x0649],
+  0xFC36: [0x0642, 0x064A],
+  0xFC37: [0x0643, 0x0627],
+  0xFC38: [0x0643, 0x062C],
+  0xFC39: [0x0643, 0x062D],
+  0xFC3A: [0x0643, 0x062E],
+  0xFC3B: [0x0643, 0x0644],
+  0xFC3C: [0x0643, 0x0645],
+  0xFC3D: [0x0643, 0x0649],
+  0xFC3E: [0x0643, 0x064A],
+  0xFC3F: [0x0644, 0x062C],
+  0xFC40: [0x0644, 0x062D],
+  0xFC41: [0x0644, 0x062E],
+  0xFC42: [0x0644, 0x0645],
+  0xFC43: [0x0644, 0x0649],
+  0xFC44: [0x0644, 0x064A],
+  0xFC45: [0x0645, 0x062C],
+  0xFC46: [0x0645, 0x062D],
+  0xFC47: [0x0645, 0x062E],
+  0xFC48: [0x0645, 0x0645],
+  0xFC49: [0x0645, 0x0649],
+  0xFC4A: [0x0645, 0x064A],
+  0xFC4B: [0x0646, 0x062C],
+  0xFC4C: [0x0646, 0x062D],
+  0xFC4D: [0x0646, 0x062E],
+  0xFC4E: [0x0646, 0x0645],
+  0xFC4F: [0x0646, 0x0649],
+  0xFC50: [0x0646, 0x064A],
+  0xFC51: [0x0647, 0x062C],
+  0xFC52: [0x0647, 0x0645],
+  0xFC53: [0x0647, 0x0649],
+  0xFC54: [0x0647, 0x064A],
+  0xFC55: [0x064A, 0x062C],
+  0xFC56: [0x064A, 0x062D],
+  0xFC57: [0x064A, 0x062E],
+  0xFC58: [0x064A, 0x0645],
+  0xFC59: [0x064A, 0x0649],
+  0xFC5A: [0x064A, 0x064A],
+  0xFC5B: [0x0630, 0x0670],
+  0xFC5C: [0x0631, 0x0670],
+  0xFC5D: [0x0649, 0x0670],
+  0xFC5E: [0x0020, 0x064C, 0x0651],
+  0xFC5F: [0x0020, 0x064D, 0x0651],
+  0xFC60: [0x0020, 0x064E, 0x0651],
+  0xFC61: [0x0020, 0x064F, 0x0651],
+  0xFC62: [0x0020, 0x0650, 0x0651],
+  0xFC63: [0x0020, 0x0651, 0x0670],
+  0xFC64: [0x0626, 0x0631],
+  0xFC65: [0x0626, 0x0632],
+  0xFC66: [0x0626, 0x0645],
+  0xFC67: [0x0626, 0x0646],
+  0xFC68: [0x0626, 0x0649],
+  0xFC69: [0x0626, 0x064A],
+  0xFC6A: [0x0628, 0x0631],
+  0xFC6B: [0x0628, 0x0632],
+  0xFC6C: [0x0628, 0x0645],
+  0xFC6D: [0x0628, 0x0646],
+  0xFC6E: [0x0628, 0x0649],
+  0xFC6F: [0x0628, 0x064A],
+  0xFC70: [0x062A, 0x0631],
+  0xFC71: [0x062A, 0x0632],
+  0xFC72: [0x062A, 0x0645],
+  0xFC73: [0x062A, 0x0646],
+  0xFC74: [0x062A, 0x0649],
+  0xFC75: [0x062A, 0x064A],
+  0xFC76: [0x062B, 0x0631],
+  0xFC77: [0x062B, 0x0632],
+  0xFC78: [0x062B, 0x0645],
+  0xFC79: [0x062B, 0x0646],
+  0xFC7A: [0x062B, 0x0649],
+  0xFC7B: [0x062B, 0x064A],
+  0xFC7C: [0x0641, 0x0649],
+  0xFC7D: [0x0641, 0x064A],
+  0xFC7E: [0x0642, 0x0649],
+  0xFC7F: [0x0642, 0x064A],
+  0xFC80: [0x0643, 0x0627],
+  0xFC81: [0x0643, 0x0644],
+  0xFC82: [0x0643, 0x0645],
+  0xFC83: [0x0643, 0x0649],
+  0xFC84: [0x0643, 0x064A],
+  0xFC85: [0x0644, 0x0645],
+  0xFC86: [0x0644, 0x0649],
+  0xFC87: [0x0644, 0x064A],
+  0xFC88: [0x0645, 0x0627],
+  0xFC89: [0x0645, 0x0645],
+  0xFC8A: [0x0646, 0x0631],
+  0xFC8B: [0x0646, 0x0632],
+  0xFC8C: [0x0646, 0x0645],
+  0xFC8D: [0x0646, 0x0646],
+  0xFC8E: [0x0646, 0x0649],
+  0xFC8F: [0x0646, 0x064A],
+  0xFC90: [0x0649, 0x0670],
+  0xFC91: [0x064A, 0x0631],
+  0xFC92: [0x064A, 0x0632],
+  0xFC93: [0x064A, 0x0645],
+  0xFC94: [0x064A, 0x0646],
+  0xFC95: [0x064A, 0x0649],
+  0xFC96: [0x064A, 0x064A],
+  0xFC97: [0x0626, 0x062C],
+  0xFC98: [0x0626, 0x062D],
+  0xFC99: [0x0626, 0x062E],
+  0xFC9A: [0x0626, 0x0645],
+  0xFC9B: [0x0626, 0x0647],
+  0xFC9C: [0x0628, 0x062C],
+  0xFC9D: [0x0628, 0x062D],
+  0xFC9E: [0x0628, 0x062E],
+  0xFC9F: [0x0628, 0x0645],
+  0xFCA0: [0x0628, 0x0647],
+  0xFCA1: [0x062A, 0x062C],
+  0xFCA2: [0x062A, 0x062D],
+  0xFCA3: [0x062A, 0x062E],
+  0xFCA4: [0x062A, 0x0645],
+  0xFCA5: [0x062A, 0x0647],
+  0xFCA6: [0x062B, 0x0645],
+  0xFCA7: [0x062C, 0x062D],
+  0xFCA8: [0x062C, 0x0645],
+  0xFCA9: [0x062D, 0x062C],
+  0xFCAA: [0x062D, 0x0645],
+  0xFCAB: [0x062E, 0x062C],
+  0xFCAC: [0x062E, 0x0645],
+  0xFCAD: [0x0633, 0x062C],
+  0xFCAE: [0x0633, 0x062D],
+  0xFCAF: [0x0633, 0x062E],
+  0xFCB0: [0x0633, 0x0645],
+  0xFCB1: [0x0635, 0x062D],
+  0xFCB2: [0x0635, 0x062E],
+  0xFCB3: [0x0635, 0x0645],
+  0xFCB4: [0x0636, 0x062C],
+  0xFCB5: [0x0636, 0x062D],
+  0xFCB6: [0x0636, 0x062E],
+  0xFCB7: [0x0636, 0x0645],
+  0xFCB8: [0x0637, 0x062D],
+  0xFCB9: [0x0638, 0x0645],
+  0xFCBA: [0x0639, 0x062C],
+  0xFCBB: [0x0639, 0x0645],
+  0xFCBC: [0x063A, 0x062C],
+  0xFCBD: [0x063A, 0x0645],
+  0xFCBE: [0x0641, 0x062C],
+  0xFCBF: [0x0641, 0x062D],
+  0xFCC0: [0x0641, 0x062E],
+  0xFCC1: [0x0641, 0x0645],
+  0xFCC2: [0x0642, 0x062D],
+  0xFCC3: [0x0642, 0x0645],
+  0xFCC4: [0x0643, 0x062C],
+  0xFCC5: [0x0643, 0x062D],
+  0xFCC6: [0x0643, 0x062E],
+  0xFCC7: [0x0643, 0x0644],
+  0xFCC8: [0x0643, 0x0645],
+  0xFCC9: [0x0644, 0x062C],
+  0xFCCA: [0x0644, 0x062D],
+  0xFCCB: [0x0644, 0x062E],
+  0xFCCC: [0x0644, 0x0645],
+  0xFCCD: [0x0644, 0x0647],
+  0xFCCE: [0x0645, 0x062C],
+  0xFCCF: [0x0645, 0x062D],
+  0xFCD0: [0x0645, 0x062E],
+  0xFCD1: [0x0645, 0x0645],
+  0xFCD2: [0x0646, 0x062C],
+  0xFCD3: [0x0646, 0x062D],
+  0xFCD4: [0x0646, 0x062E],
+  0xFCD5: [0x0646, 0x0645],
+  0xFCD6: [0x0646, 0x0647],
+  0xFCD7: [0x0647, 0x062C],
+  0xFCD8: [0x0647, 0x0645],
+  0xFCD9: [0x0647, 0x0670],
+  0xFCDA: [0x064A, 0x062C],
+  0xFCDB: [0x064A, 0x062D],
+  0xFCDC: [0x064A, 0x062E],
+  0xFCDD: [0x064A, 0x0645],
+  0xFCDE: [0x064A, 0x0647],
+  0xFCDF: [0x0626, 0x0645],
+  0xFCE0: [0x0626, 0x0647],
+  0xFCE1: [0x0628, 0x0645],
+  0xFCE2: [0x0628, 0x0647],
+  0xFCE3: [0x062A, 0x0645],
+  0xFCE4: [0x062A, 0x0647],
+  0xFCE5: [0x062B, 0x0645],
+  0xFCE6: [0x062B, 0x0647],
+  0xFCE7: [0x0633, 0x0645],
+  0xFCE8: [0x0633, 0x0647],
+  0xFCE9: [0x0634, 0x0645],
+  0xFCEA: [0x0634, 0x0647],
+  0xFCEB: [0x0643, 0x0644],
+  0xFCEC: [0x0643, 0x0645],
+  0xFCED: [0x0644, 0x0645],
+  0xFCEE: [0x0646, 0x0645],
+  0xFCEF: [0x0646, 0x0647],
+  0xFCF0: [0x064A, 0x0645],
+  0xFCF1: [0x064A, 0x0647],
+  0xFCF2: [0x0640, 0x064E, 0x0651],
+  0xFCF3: [0x0640, 0x064F, 0x0651],
+  0xFCF4: [0x0640, 0x0650, 0x0651],
+  0xFCF5: [0x0637, 0x0649],
+  0xFCF6: [0x0637, 0x064A],
+  0xFCF7: [0x0639, 0x0649],
+  0xFCF8: [0x0639, 0x064A],
+  0xFCF9: [0x063A, 0x0649],
+  0xFCFA: [0x063A, 0x064A],
+  0xFCFB: [0x0633, 0x0649],
+  0xFCFC: [0x0633, 0x064A],
+  0xFCFD: [0x0634, 0x0649],
+  0xFCFE: [0x0634, 0x064A],
+  0xFCFF: [0x062D, 0x0649],
+  0xFD00: [0x062D, 0x064A],
+  0xFD01: [0x062C, 0x0649],
+  0xFD02: [0x062C, 0x064A],
+  0xFD03: [0x062E, 0x0649],
+  0xFD04: [0x062E, 0x064A],
+  0xFD05: [0x0635, 0x0649],
+  0xFD06: [0x0635, 0x064A],
+  0xFD07: [0x0636, 0x0649],
+  0xFD08: [0x0636, 0x064A],
+  0xFD09: [0x0634, 0x062C],
+  0xFD0A: [0x0634, 0x062D],
+  0xFD0B: [0x0634, 0x062E],
+  0xFD0C: [0x0634, 0x0645],
+  0xFD0D: [0x0634, 0x0631],
+  0xFD0E: [0x0633, 0x0631],
+  0xFD0F: [0x0635, 0x0631],
+  0xFD10: [0x0636, 0x0631],
+  0xFD11: [0x0637, 0x0649],
+  0xFD12: [0x0637, 0x064A],
+  0xFD13: [0x0639, 0x0649],
+  0xFD14: [0x0639, 0x064A],
+  0xFD15: [0x063A, 0x0649],
+  0xFD16: [0x063A, 0x064A],
+  0xFD17: [0x0633, 0x0649],
+  0xFD18: [0x0633, 0x064A],
+  0xFD19: [0x0634, 0x0649],
+  0xFD1A: [0x0634, 0x064A],
+  0xFD1B: [0x062D, 0x0649],
+  0xFD1C: [0x062D, 0x064A],
+  0xFD1D: [0x062C, 0x0649],
+  0xFD1E: [0x062C, 0x064A],
+  0xFD1F: [0x062E, 0x0649],
+  0xFD20: [0x062E, 0x064A],
+  0xFD21: [0x0635, 0x0649],
+  0xFD22: [0x0635, 0x064A],
+  0xFD23: [0x0636, 0x0649],
+  0xFD24: [0x0636, 0x064A],
+  0xFD25: [0x0634, 0x062C],
+  0xFD26: [0x0634, 0x062D],
+  0xFD27: [0x0634, 0x062E],
+  0xFD28: [0x0634, 0x0645],
+  0xFD29: [0x0634, 0x0631],
+  0xFD2A: [0x0633, 0x0631],
+  0xFD2B: [0x0635, 0x0631],
+  0xFD2C: [0x0636, 0x0631],
+  0xFD2D: [0x0634, 0x062C],
+  0xFD2E: [0x0634, 0x062D],
+  0xFD2F: [0x0634, 0x062E],
+  0xFD30: [0x0634, 0x0645],
+  0xFD31: [0x0633, 0x0647],
+  0xFD32: [0x0634, 0x0647],
+  0xFD33: [0x0637, 0x0645],
+  0xFD34: [0x0633, 0x062C],
+  0xFD35: [0x0633, 0x062D],
+  0xFD36: [0x0633, 0x062E],
+  0xFD37: [0x0634, 0x062C],
+  0xFD38: [0x0634, 0x062D],
+  0xFD39: [0x0634, 0x062E],
+  0xFD3A: [0x0637, 0x0645],
+  0xFD3B: [0x0638, 0x0645],
+  0xFD3C: [0x0627, 0x064B],
+  0xFD3D: [0x0627, 0x064B],
+  0xFD50: [0x062A, 0x062C, 0x0645],
+  0xFD51: [0x062A, 0x062D, 0x062C],
+  0xFD52: [0x062A, 0x062D, 0x062C],
+  0xFD53: [0x062A, 0x062D, 0x0645],
+  0xFD54: [0x062A, 0x062E, 0x0645],
+  0xFD55: [0x062A, 0x0645, 0x062C],
+  0xFD56: [0x062A, 0x0645, 0x062D],
+  0xFD57: [0x062A, 0x0645, 0x062E],
+  0xFD58: [0x062C, 0x0645, 0x062D],
+  0xFD59: [0x062C, 0x0645, 0x062D],
+  0xFD5A: [0x062D, 0x0645, 0x064A],
+  0xFD5B: [0x062D, 0x0645, 0x0649],
+  0xFD5C: [0x0633, 0x062D, 0x062C],
+  0xFD5D: [0x0633, 0x062C, 0x062D],
+  0xFD5E: [0x0633, 0x062C, 0x0649],
+  0xFD5F: [0x0633, 0x0645, 0x062D],
+  0xFD60: [0x0633, 0x0645, 0x062D],
+  0xFD61: [0x0633, 0x0645, 0x062C],
+  0xFD62: [0x0633, 0x0645, 0x0645],
+  0xFD63: [0x0633, 0x0645, 0x0645],
+  0xFD64: [0x0635, 0x062D, 0x062D],
+  0xFD65: [0x0635, 0x062D, 0x062D],
+  0xFD66: [0x0635, 0x0645, 0x0645],
+  0xFD67: [0x0634, 0x062D, 0x0645],
+  0xFD68: [0x0634, 0x062D, 0x0645],
+  0xFD69: [0x0634, 0x062C, 0x064A],
+  0xFD6A: [0x0634, 0x0645, 0x062E],
+  0xFD6B: [0x0634, 0x0645, 0x062E],
+  0xFD6C: [0x0634, 0x0645, 0x0645],
+  0xFD6D: [0x0634, 0x0645, 0x0645],
+  0xFD6E: [0x0636, 0x062D, 0x0649],
+  0xFD6F: [0x0636, 0x062E, 0x0645],
+  0xFD70: [0x0636, 0x062E, 0x0645],
+  0xFD71: [0x0637, 0x0645, 0x062D],
+  0xFD72: [0x0637, 0x0645, 0x062D],
+  0xFD73: [0x0637, 0x0645, 0x0645],
+  0xFD74: [0x0637, 0x0645, 0x064A],
+  0xFD75: [0x0639, 0x062C, 0x0645],
+  0xFD76: [0x0639, 0x0645, 0x0645],
+  0xFD77: [0x0639, 0x0645, 0x0645],
+  0xFD78: [0x0639, 0x0645, 0x0649],
+  0xFD79: [0x063A, 0x0645, 0x0645],
+  0xFD7A: [0x063A, 0x0645, 0x064A],
+  0xFD7B: [0x063A, 0x0645, 0x0649],
+  0xFD7C: [0x0641, 0x062E, 0x0645],
+  0xFD7D: [0x0641, 0x062E, 0x0645],
+  0xFD7E: [0x0642, 0x0645, 0x062D],
+  0xFD7F: [0x0642, 0x0645, 0x0645],
+  0xFD80: [0x0644, 0x062D, 0x0645],
+  0xFD81: [0x0644, 0x062D, 0x064A],
+  0xFD82: [0x0644, 0x062D, 0x0649],
+  0xFD83: [0x0644, 0x062C, 0x062C],
+  0xFD84: [0x0644, 0x062C, 0x062C],
+  0xFD85: [0x0644, 0x062E, 0x0645],
+  0xFD86: [0x0644, 0x062E, 0x0645],
+  0xFD87: [0x0644, 0x0645, 0x062D],
+  0xFD88: [0x0644, 0x0645, 0x062D],
+  0xFD89: [0x0645, 0x062D, 0x062C],
+  0xFD8A: [0x0645, 0x062D, 0x0645],
+  0xFD8B: [0x0645, 0x062D, 0x064A],
+  0xFD8C: [0x0645, 0x062C, 0x062D],
+  0xFD8D: [0x0645, 0x062C, 0x0645],
+  0xFD8E: [0x0645, 0x062E, 0x062C],
+  0xFD8F: [0x0645, 0x062E, 0x0645],
+  0xFD92: [0x0645, 0x062C, 0x062E],
+  0xFD93: [0x0647, 0x0645, 0x062C],
+  0xFD94: [0x0647, 0x0645, 0x0645],
+  0xFD95: [0x0646, 0x062D, 0x0645],
+  0xFD96: [0x0646, 0x062D, 0x0649],
+  0xFD97: [0x0646, 0x062C, 0x0645],
+  0xFD98: [0x0646, 0x062C, 0x0645],
+  0xFD99: [0x0646, 0x062C, 0x0649],
+  0xFD9A: [0x0646, 0x0645, 0x064A],
+  0xFD9B: [0x0646, 0x0645, 0x0649],
+  0xFD9C: [0x064A, 0x0645, 0x0645],
+  0xFD9D: [0x064A, 0x0645, 0x0645],
+  0xFD9E: [0x0628, 0x062E, 0x064A],
+  0xFD9F: [0x062A, 0x062C, 0x064A],
+  0xFDA0: [0x062A, 0x062C, 0x0649],
+  0xFDA1: [0x062A, 0x062E, 0x064A],
+  0xFDA2: [0x062A, 0x062E, 0x0649],
+  0xFDA3: [0x062A, 0x0645, 0x064A],
+  0xFDA4: [0x062A, 0x0645, 0x0649],
+  0xFDA5: [0x062C, 0x0645, 0x064A],
+  0xFDA6: [0x062C, 0x062D, 0x0649],
+  0xFDA7: [0x062C, 0x0645, 0x0649],
+  0xFDA8: [0x0633, 0x062E, 0x0649],
+  0xFDA9: [0x0635, 0x062D, 0x064A],
+  0xFDAA: [0x0634, 0x062D, 0x064A],
+  0xFDAB: [0x0636, 0x062D, 0x064A],
+  0xFDAC: [0x0644, 0x062C, 0x064A],
+  0xFDAD: [0x0644, 0x0645, 0x064A],
+  0xFDAE: [0x064A, 0x062D, 0x064A],
+  0xFDAF: [0x064A, 0x062C, 0x064A],
+  0xFDB0: [0x064A, 0x0645, 0x064A],
+  0xFDB1: [0x0645, 0x0645, 0x064A],
+  0xFDB2: [0x0642, 0x0645, 0x064A],
+  0xFDB3: [0x0646, 0x062D, 0x064A],
+  0xFDB4: [0x0642, 0x0645, 0x062D],
+  0xFDB5: [0x0644, 0x062D, 0x0645],
+  0xFDB6: [0x0639, 0x0645, 0x064A],
+  0xFDB7: [0x0643, 0x0645, 0x064A],
+  0xFDB8: [0x0646, 0x062C, 0x062D],
+  0xFDB9: [0x0645, 0x062E, 0x064A],
+  0xFDBA: [0x0644, 0x062C, 0x0645],
+  0xFDBB: [0x0643, 0x0645, 0x0645],
+  0xFDBC: [0x0644, 0x062C, 0x0645],
+  0xFDBD: [0x0646, 0x062C, 0x062D],
+  0xFDBE: [0x062C, 0x062D, 0x064A],
+  0xFDBF: [0x062D, 0x062C, 0x064A],
+  0xFDC0: [0x0645, 0x062C, 0x064A],
+  0xFDC1: [0x0641, 0x0645, 0x064A],
+  0xFDC2: [0x0628, 0x062D, 0x064A],
+  0xFDC3: [0x0643, 0x0645, 0x0645],
+  0xFDC4: [0x0639, 0x062C, 0x0645],
+  0xFDC5: [0x0635, 0x0645, 0x0645],
+  0xFDC6: [0x0633, 0x062E, 0x064A],
+  0xFDC7: [0x0646, 0x062C, 0x064A],
+  0xFDF0: [0x0635, 0x0644, 0x06D2],
+  0xFDF1: [0x0642, 0x0644, 0x06D2],
+  0xFDF2: [0x0627, 0x0644, 0x0644, 0x0647],
+  0xFDF3: [0x0627, 0x0643, 0x0628, 0x0631],
+  0xFDF4: [0x0645, 0x062D, 0x0645, 0x062F],
+  0xFDF5: [0x0635, 0x0644, 0x0639, 0x0645],
+  0xFDF6: [0x0631, 0x0633, 0x0648, 0x0644],
+  0xFDF7: [0x0639, 0x0644, 0x064A, 0x0647],
+  0xFDF8: [0x0648, 0x0633, 0x0644, 0x0645],
+  0xFDF9: [0x0635, 0x0644, 0x0649],
+  0xFDFA: [
+    0x0635,
+    0x0644,
+    0x0649,
+    0x0020,
+    0x0627,
+    0x0644,
+    0x0644,
+    0x0647,
+    0x0020,
+    0x0639,
+    0x0644,
+    0x064A,
+    0x0647,
+    0x0020,
+    0x0648,
+    0x0633,
+    0x0644,
+    0x0645
+  ],
+  0xFDFB: [0x062C, 0x0644, 0x0020, 0x062C, 0x0644, 0x0627, 0x0644, 0x0647],
+  0xFDFC: [0x0631, 0x06CC, 0x0627, 0x0644],
+  0xFE10: [0x002C],
+  0xFE11: [0x3001],
+  0xFE12: [0x3002],
+  0xFE13: [0x003A],
+  0xFE14: [0x003B],
+  0xFE15: [0x0021],
+  0xFE16: [0x003F],
+  0xFE17: [0x3016],
+  0xFE18: [0x3017],
+  0xFE19: [0x2026],
+  0xFE30: [0x2025],
+  0xFE31: [0x2014],
+  0xFE32: [0x2013],
+  0xFE33: [0x005F],
+  0xFE34: [0x005F],
+  0xFE35: [0x0028],
+  0xFE36: [0x0029],
+  0xFE37: [0x007B],
+  0xFE38: [0x007D],
+  0xFE39: [0x3014],
+  0xFE3A: [0x3015],
+  0xFE3B: [0x3010],
+  0xFE3C: [0x3011],
+  0xFE3D: [0x300A],
+  0xFE3E: [0x300B],
+  0xFE3F: [0x3008],
+  0xFE40: [0x3009],
+  0xFE41: [0x300C],
+  0xFE42: [0x300D],
+  0xFE43: [0x300E],
+  0xFE44: [0x300F],
+  0xFE47: [0x005B],
+  0xFE48: [0x005D],
+  0xFE49: [0x203E],
+  0xFE4A: [0x203E],
+  0xFE4B: [0x203E],
+  0xFE4C: [0x203E],
+  0xFE4D: [0x005F],
+  0xFE4E: [0x005F],
+  0xFE4F: [0x005F],
+  0xFE50: [0x002C],
+  0xFE51: [0x3001],
+  0xFE52: [0x002E],
+  0xFE54: [0x003B],
+  0xFE55: [0x003A],
+  0xFE56: [0x003F],
+  0xFE57: [0x0021],
+  0xFE58: [0x2014],
+  0xFE59: [0x0028],
+  0xFE5A: [0x0029],
+  0xFE5B: [0x007B],
+  0xFE5C: [0x007D],
+  0xFE5D: [0x3014],
+  0xFE5E: [0x3015],
+  0xFE5F: [0x0023],
+  0xFE60: [0x0026],
+  0xFE61: [0x002A],
+  0xFE62: [0x002B],
+  0xFE63: [0x002D],
+  0xFE64: [0x003C],
+  0xFE65: [0x003E],
+  0xFE66: [0x003D],
+  0xFE68: [0x005C],
+  0xFE69: [0x0024],
+  0xFE6A: [0x0025],
+  0xFE6B: [0x0040],
+  0xFE70: [0x0020, 0x064B],
+  0xFE71: [0x0640, 0x064B],
+  0xFE72: [0x0020, 0x064C],
+  0xFE74: [0x0020, 0x064D],
+  0xFE76: [0x0020, 0x064E],
+  0xFE77: [0x0640, 0x064E],
+  0xFE78: [0x0020, 0x064F],
+  0xFE79: [0x0640, 0x064F],
+  0xFE7A: [0x0020, 0x0650],
+  0xFE7B: [0x0640, 0x0650],
+  0xFE7C: [0x0020, 0x0651],
+  0xFE7D: [0x0640, 0x0651],
+  0xFE7E: [0x0020, 0x0652],
+  0xFE7F: [0x0640, 0x0652],
+  0xFE80: [0x0621],
+  0xFE81: [0x0622],
+  0xFE82: [0x0622],
+  0xFE83: [0x0623],
+  0xFE84: [0x0623],
+  0xFE85: [0x0624],
+  0xFE86: [0x0624],
+  0xFE87: [0x0625],
+  0xFE88: [0x0625],
+  0xFE89: [0x0626],
+  0xFE8A: [0x0626],
+  0xFE8B: [0x0626],
+  0xFE8C: [0x0626],
+  0xFE8D: [0x0627],
+  0xFE8E: [0x0627],
+  0xFE8F: [0x0628],
+  0xFE90: [0x0628],
+  0xFE91: [0x0628],
+  0xFE92: [0x0628],
+  0xFE93: [0x0629],
+  0xFE94: [0x0629],
+  0xFE95: [0x062A],
+  0xFE96: [0x062A],
+  0xFE97: [0x062A],
+  0xFE98: [0x062A],
+  0xFE99: [0x062B],
+  0xFE9A: [0x062B],
+  0xFE9B: [0x062B],
+  0xFE9C: [0x062B],
+  0xFE9D: [0x062C],
+  0xFE9E: [0x062C],
+  0xFE9F: [0x062C],
+  0xFEA0: [0x062C],
+  0xFEA1: [0x062D],
+  0xFEA2: [0x062D],
+  0xFEA3: [0x062D],
+  0xFEA4: [0x062D],
+  0xFEA5: [0x062E],
+  0xFEA6: [0x062E],
+  0xFEA7: [0x062E],
+  0xFEA8: [0x062E],
+  0xFEA9: [0x062F],
+  0xFEAA: [0x062F],
+  0xFEAB: [0x0630],
+  0xFEAC: [0x0630],
+  0xFEAD: [0x0631],
+  0xFEAE: [0x0631],
+  0xFEAF: [0x0632],
+  0xFEB0: [0x0632],
+  0xFEB1: [0x0633],
+  0xFEB2: [0x0633],
+  0xFEB3: [0x0633],
+  0xFEB4: [0x0633],
+  0xFEB5: [0x0634],
+  0xFEB6: [0x0634],
+  0xFEB7: [0x0634],
+  0xFEB8: [0x0634],
+  0xFEB9: [0x0635],
+  0xFEBA: [0x0635],
+  0xFEBB: [0x0635],
+  0xFEBC: [0x0635],
+  0xFEBD: [0x0636],
+  0xFEBE: [0x0636],
+  0xFEBF: [0x0636],
+  0xFEC0: [0x0636],
+  0xFEC1: [0x0637],
+  0xFEC2: [0x0637],
+  0xFEC3: [0x0637],
+  0xFEC4: [0x0637],
+  0xFEC5: [0x0638],
+  0xFEC6: [0x0638],
+  0xFEC7: [0x0638],
+  0xFEC8: [0x0638],
+  0xFEC9: [0x0639],
+  0xFECA: [0x0639],
+  0xFECB: [0x0639],
+  0xFECC: [0x0639],
+  0xFECD: [0x063A],
+  0xFECE: [0x063A],
+  0xFECF: [0x063A],
+  0xFED0: [0x063A],
+  0xFED1: [0x0641],
+  0xFED2: [0x0641],
+  0xFED3: [0x0641],
+  0xFED4: [0x0641],
+  0xFED5: [0x0642],
+  0xFED6: [0x0642],
+  0xFED7: [0x0642],
+  0xFED8: [0x0642],
+  0xFED9: [0x0643],
+  0xFEDA: [0x0643],
+  0xFEDB: [0x0643],
+  0xFEDC: [0x0643],
+  0xFEDD: [0x0644],
+  0xFEDE: [0x0644],
+  0xFEDF: [0x0644],
+  0xFEE0: [0x0644],
+  0xFEE1: [0x0645],
+  0xFEE2: [0x0645],
+  0xFEE3: [0x0645],
+  0xFEE4: [0x0645],
+  0xFEE5: [0x0646],
+  0xFEE6: [0x0646],
+  0xFEE7: [0x0646],
+  0xFEE8: [0x0646],
+  0xFEE9: [0x0647],
+  0xFEEA: [0x0647],
+  0xFEEB: [0x0647],
+  0xFEEC: [0x0647],
+  0xFEED: [0x0648],
+  0xFEEE: [0x0648],
+  0xFEEF: [0x0649],
+  0xFEF0: [0x0649],
+  0xFEF1: [0x064A],
+  0xFEF2: [0x064A],
+  0xFEF3: [0x064A],
+  0xFEF4: [0x064A],
+  0xFEF5: [0x0644, 0x0622],
+  0xFEF6: [0x0644, 0x0622],
+  0xFEF7: [0x0644, 0x0623],
+  0xFEF8: [0x0644, 0x0623],
+  0xFEF9: [0x0644, 0x0625],
+  0xFEFA: [0x0644, 0x0625],
+  0xFEFB: [0x0644, 0x0627],
+  0xFEFC: [0x0644, 0x0627],
+  0xFF01: [0x0021],
+  0xFF02: [0x0022],
+  0xFF03: [0x0023],
+  0xFF04: [0x0024],
+  0xFF05: [0x0025],
+  0xFF06: [0x0026],
+  0xFF07: [0x0027],
+  0xFF08: [0x0028],
+  0xFF09: [0x0029],
+  0xFF0A: [0x002A],
+  0xFF0B: [0x002B],
+  0xFF0C: [0x002C],
+  0xFF0D: [0x002D],
+  0xFF0E: [0x002E],
+  0xFF0F: [0x002F],
+  0xFF10: [0x0030],
+  0xFF11: [0x0031],
+  0xFF12: [0x0032],
+  0xFF13: [0x0033],
+  0xFF14: [0x0034],
+  0xFF15: [0x0035],
+  0xFF16: [0x0036],
+  0xFF17: [0x0037],
+  0xFF18: [0x0038],
+  0xFF19: [0x0039],
+  0xFF1A: [0x003A],
+  0xFF1B: [0x003B],
+  0xFF1C: [0x003C],
+  0xFF1D: [0x003D],
+  0xFF1E: [0x003E],
+  0xFF1F: [0x003F],
+  0xFF20: [0x0040],
+  0xFF21: [0x0041],
+  0xFF22: [0x0042],
+  0xFF23: [0x0043],
+  0xFF24: [0x0044],
+  0xFF25: [0x0045],
+  0xFF26: [0x0046],
+  0xFF27: [0x0047],
+  0xFF28: [0x0048],
+  0xFF29: [0x0049],
+  0xFF2A: [0x004A],
+  0xFF2B: [0x004B],
+  0xFF2C: [0x004C],
+  0xFF2D: [0x004D],
+  0xFF2E: [0x004E],
+  0xFF2F: [0x004F],
+  0xFF30: [0x0050],
+  0xFF31: [0x0051],
+  0xFF32: [0x0052],
+  0xFF33: [0x0053],
+  0xFF34: [0x0054],
+  0xFF35: [0x0055],
+  0xFF36: [0x0056],
+  0xFF37: [0x0057],
+  0xFF38: [0x0058],
+  0xFF39: [0x0059],
+  0xFF3A: [0x005A],
+  0xFF3B: [0x005B],
+  0xFF3C: [0x005C],
+  0xFF3D: [0x005D],
+  0xFF3E: [0x005E],
+  0xFF3F: [0x005F],
+  0xFF40: [0x0060],
+  0xFF41: [0x0061],
+  0xFF42: [0x0062],
+  0xFF43: [0x0063],
+  0xFF44: [0x0064],
+  0xFF45: [0x0065],
+  0xFF46: [0x0066],
+  0xFF47: [0x0067],
+  0xFF48: [0x0068],
+  0xFF49: [0x0069],
+  0xFF4A: [0x006A],
+  0xFF4B: [0x006B],
+  0xFF4C: [0x006C],
+  0xFF4D: [0x006D],
+  0xFF4E: [0x006E],
+  0xFF4F: [0x006F],
+  0xFF50: [0x0070],
+  0xFF51: [0x0071],
+  0xFF52: [0x0072],
+  0xFF53: [0x0073],
+  0xFF54: [0x0074],
+  0xFF55: [0x0075],
+  0xFF56: [0x0076],
+  0xFF57: [0x0077],
+  0xFF58: [0x0078],
+  0xFF59: [0x0079],
+  0xFF5A: [0x007A],
+  0xFF5B: [0x007B],
+  0xFF5C: [0x007C],
+  0xFF5D: [0x007D],
+  0xFF5E: [0x007E],
+  0xFF5F: [0x2985],
+  0xFF60: [0x2986],
+  0xFF61: [0x3002],
+  0xFF62: [0x300C],
+  0xFF63: [0x300D],
+  0xFF64: [0x3001],
+  0xFF65: [0x30FB],
+  0xFF66: [0x30F2],
+  0xFF67: [0x30A1],
+  0xFF68: [0x30A3],
+  0xFF69: [0x30A5],
+  0xFF6A: [0x30A7],
+  0xFF6B: [0x30A9],
+  0xFF6C: [0x30E3],
+  0xFF6D: [0x30E5],
+  0xFF6E: [0x30E7],
+  0xFF6F: [0x30C3],
+  0xFF70: [0x30FC],
+  0xFF71: [0x30A2],
+  0xFF72: [0x30A4],
+  0xFF73: [0x30A6],
+  0xFF74: [0x30A8],
+  0xFF75: [0x30AA],
+  0xFF76: [0x30AB],
+  0xFF77: [0x30AD],
+  0xFF78: [0x30AF],
+  0xFF79: [0x30B1],
+  0xFF7A: [0x30B3],
+  0xFF7B: [0x30B5],
+  0xFF7C: [0x30B7],
+  0xFF7D: [0x30B9],
+  0xFF7E: [0x30BB],
+  0xFF7F: [0x30BD],
+  0xFF80: [0x30BF],
+  0xFF81: [0x30C1],
+  0xFF82: [0x30C4],
+  0xFF83: [0x30C6],
+  0xFF84: [0x30C8],
+  0xFF85: [0x30CA],
+  0xFF86: [0x30CB],
+  0xFF87: [0x30CC],
+  0xFF88: [0x30CD],
+  0xFF89: [0x30CE],
+  0xFF8A: [0x30CF],
+  0xFF8B: [0x30D2],
+  0xFF8C: [0x30D5],
+  0xFF8D: [0x30D8],
+  0xFF8E: [0x30DB],
+  0xFF8F: [0x30DE],
+  0xFF90: [0x30DF],
+  0xFF91: [0x30E0],
+  0xFF92: [0x30E1],
+  0xFF93: [0x30E2],
+  0xFF94: [0x30E4],
+  0xFF95: [0x30E6],
+  0xFF96: [0x30E8],
+  0xFF97: [0x30E9],
+  0xFF98: [0x30EA],
+  0xFF99: [0x30EB],
+  0xFF9A: [0x30EC],
+  0xFF9B: [0x30ED],
+  0xFF9C: [0x30EF],
+  0xFF9D: [0x30F3],
+  0xFF9E: [0x3099],
+  0xFF9F: [0x309A],
+  0xFFA0: [0x3164],
+  0xFFA1: [0x3131],
+  0xFFA2: [0x3132],
+  0xFFA3: [0x3133],
+  0xFFA4: [0x3134],
+  0xFFA5: [0x3135],
+  0xFFA6: [0x3136],
+  0xFFA7: [0x3137],
+  0xFFA8: [0x3138],
+  0xFFA9: [0x3139],
+  0xFFAA: [0x313A],
+  0xFFAB: [0x313B],
+  0xFFAC: [0x313C],
+  0xFFAD: [0x313D],
+  0xFFAE: [0x313E],
+  0xFFAF: [0x313F],
+  0xFFB0: [0x3140],
+  0xFFB1: [0x3141],
+  0xFFB2: [0x3142],
+  0xFFB3: [0x3143],
+  0xFFB4: [0x3144],
+  0xFFB5: [0x3145],
+  0xFFB6: [0x3146],
+  0xFFB7: [0x3147],
+  0xFFB8: [0x3148],
+  0xFFB9: [0x3149],
+  0xFFBA: [0x314A],
+  0xFFBB: [0x314B],
+  0xFFBC: [0x314C],
+  0xFFBD: [0x314D],
+  0xFFBE: [0x314E],
+  0xFFC2: [0x314F],
+  0xFFC3: [0x3150],
+  0xFFC4: [0x3151],
+  0xFFC5: [0x3152],
+  0xFFC6: [0x3153],
+  0xFFC7: [0x3154],
+  0xFFCA: [0x3155],
+  0xFFCB: [0x3156],
+  0xFFCC: [0x3157],
+  0xFFCD: [0x3158],
+  0xFFCE: [0x3159],
+  0xFFCF: [0x315A],
+  0xFFD2: [0x315B],
+  0xFFD3: [0x315C],
+  0xFFD4: [0x315D],
+  0xFFD5: [0x315E],
+  0xFFD6: [0x315F],
+  0xFFD7: [0x3160],
+  0xFFDA: [0x3161],
+  0xFFDB: [0x3162],
+  0xFFDC: [0x3163],
+  0xFFE0: [0x00A2],
+  0xFFE1: [0x00A3],
+  0xFFE2: [0x00AC],
+  0xFFE3: [0x00AF],
+  0xFFE4: [0x00A6],
+  0xFFE5: [0x00A5],
+  0xFFE6: [0x20A9],
+  0xFFE8: [0x2502],
+  0xFFE9: [0x2190],
+  0xFFEA: [0x2191],
+  0xFFEB: [0x2192],
+  0xFFEC: [0x2193],
+  0xFFED: [0x25A0],
+  0xFFEE: [0x25CB],
+};
+const Map<String, int> composeMapping = {
+  '\u0020': 0x3000,
+  '\u0020\u0301': 0x0384,
+  '\u0020\u0303': 0x02DC,
+  '\u0020\u0304': 0x00AF,
+  '\u0020\u0305': 0x203E,
+  '\u0020\u0306': 0x02D8,
+  '\u0020\u0307': 0x02D9,
+  '\u0020\u0308': 0x00A8,
+  '\u0020\u030A': 0x02DA,
+  '\u0020\u030B': 0x02DD,
+  '\u0020\u0313': 0x1FBF,
+  '\u0020\u0314': 0x1FFE,
+  '\u0020\u0327': 0x00B8,
+  '\u0020\u0328': 0x02DB,
+  '\u0020\u0333': 0x2017,
+  '\u0020\u0342': 0x1FC0,
+  '\u0020\u0345': 0x037A,
+  '\u0020\u064B': 0xFE70,
+  '\u0020\u064C': 0xFE72,
+  '\u0020\u064C\u0651': 0xFC5E,
+  '\u0020\u064D': 0xFE74,
+  '\u0020\u064D\u0651': 0xFC5F,
+  '\u0020\u064E': 0xFE76,
+  '\u0020\u064E\u0651': 0xFC60,
+  '\u0020\u064F': 0xFE78,
+  '\u0020\u064F\u0651': 0xFC61,
+  '\u0020\u0650': 0xFE7A,
+  '\u0020\u0650\u0651': 0xFC62,
+  '\u0020\u0651': 0xFE7C,
+  '\u0020\u0651\u0670': 0xFC63,
+  '\u0020\u0652': 0xFE7E,
+  '\u0020\u3099': 0x309B,
+  '\u0020\u309A': 0x309C,
+  '\u0021': 0xFF01,
+  '\u0021\u0021': 0x203C,
+  '\u0021\u003F': 0x2049,
+  '\u0022': 0xFF02,
+  '\u0023': 0xFF03,
+  '\u0024': 0xFF04,
+  '\u0025': 0xFF05,
+  '\u0026': 0xFF06,
+  '\u0027': 0xFF07,
+  '\u0028': 0xFF08,
+  '\u0028\u0031\u0029': 0x2474,
+  '\u0028\u0031\u0030\u0029': 0x247D,
+  '\u0028\u0031\u0031\u0029': 0x247E,
+  '\u0028\u0031\u0032\u0029': 0x247F,
+  '\u0028\u0031\u0033\u0029': 0x2480,
+  '\u0028\u0031\u0034\u0029': 0x2481,
+  '\u0028\u0031\u0035\u0029': 0x2482,
+  '\u0028\u0031\u0036\u0029': 0x2483,
+  '\u0028\u0031\u0037\u0029': 0x2484,
+  '\u0028\u0031\u0038\u0029': 0x2485,
+  '\u0028\u0031\u0039\u0029': 0x2486,
+  '\u0028\u0032\u0029': 0x2475,
+  '\u0028\u0032\u0030\u0029': 0x2487,
+  '\u0028\u0033\u0029': 0x2476,
+  '\u0028\u0034\u0029': 0x2477,
+  '\u0028\u0035\u0029': 0x2478,
+  '\u0028\u0036\u0029': 0x2479,
+  '\u0028\u0037\u0029': 0x247A,
+  '\u0028\u0038\u0029': 0x247B,
+  '\u0028\u0039\u0029': 0x247C,
+  '\u0028\u0061\u0029': 0x249C,
+  '\u0028\u0062\u0029': 0x249D,
+  '\u0028\u0063\u0029': 0x249E,
+  '\u0028\u0064\u0029': 0x249F,
+  '\u0028\u0065\u0029': 0x24A0,
+  '\u0028\u0066\u0029': 0x24A1,
+  '\u0028\u0067\u0029': 0x24A2,
+  '\u0028\u0068\u0029': 0x24A3,
+  '\u0028\u0069\u0029': 0x24A4,
+  '\u0028\u006A\u0029': 0x24A5,
+  '\u0028\u006B\u0029': 0x24A6,
+  '\u0028\u006C\u0029': 0x24A7,
+  '\u0028\u006D\u0029': 0x24A8,
+  '\u0028\u006E\u0029': 0x24A9,
+  '\u0028\u006F\u0029': 0x24AA,
+  '\u0028\u0070\u0029': 0x24AB,
+  '\u0028\u0071\u0029': 0x24AC,
+  '\u0028\u0072\u0029': 0x24AD,
+  '\u0028\u0073\u0029': 0x24AE,
+  '\u0028\u0074\u0029': 0x24AF,
+  '\u0028\u0075\u0029': 0x24B0,
+  '\u0028\u0076\u0029': 0x24B1,
+  '\u0028\u0077\u0029': 0x24B2,
+  '\u0028\u0078\u0029': 0x24B3,
+  '\u0028\u0079\u0029': 0x24B4,
+  '\u0028\u007A\u0029': 0x24B5,
+  '\u0028\u1100\u0029': 0x3200,
+  '\u0028\u1100\u1161\u0029': 0x320E,
+  '\u0028\u1102\u0029': 0x3201,
+  '\u0028\u1102\u1161\u0029': 0x320F,
+  '\u0028\u1103\u0029': 0x3202,
+  '\u0028\u1103\u1161\u0029': 0x3210,
+  '\u0028\u1105\u0029': 0x3203,
+  '\u0028\u1105\u1161\u0029': 0x3211,
+  '\u0028\u1106\u0029': 0x3204,
+  '\u0028\u1106\u1161\u0029': 0x3212,
+  '\u0028\u1107\u0029': 0x3205,
+  '\u0028\u1107\u1161\u0029': 0x3213,
+  '\u0028\u1109\u0029': 0x3206,
+  '\u0028\u1109\u1161\u0029': 0x3214,
+  '\u0028\u110B\u0029': 0x3207,
+  '\u0028\u110B\u1161\u0029': 0x3215,
+  '\u0028\u110B\u1169\u110C\u1165\u11AB\u0029': 0x321D,
+  '\u0028\u110B\u1169\u1112\u116E\u0029': 0x321E,
+  '\u0028\u110C\u0029': 0x3208,
+  '\u0028\u110C\u1161\u0029': 0x3216,
+  '\u0028\u110C\u116E\u0029': 0x321C,
+  '\u0028\u110E\u0029': 0x3209,
+  '\u0028\u110E\u1161\u0029': 0x3217,
+  '\u0028\u110F\u0029': 0x320A,
+  '\u0028\u110F\u1161\u0029': 0x3218,
+  '\u0028\u1110\u0029': 0x320B,
+  '\u0028\u1110\u1161\u0029': 0x3219,
+  '\u0028\u1111\u0029': 0x320C,
+  '\u0028\u1111\u1161\u0029': 0x321A,
+  '\u0028\u1112\u0029': 0x320D,
+  '\u0028\u1112\u1161\u0029': 0x321B,
+  '\u0028\u4E00\u0029': 0x3220,
+  '\u0028\u4E03\u0029': 0x3226,
+  '\u0028\u4E09\u0029': 0x3222,
+  '\u0028\u4E5D\u0029': 0x3228,
+  '\u0028\u4E8C\u0029': 0x3221,
+  '\u0028\u4E94\u0029': 0x3224,
+  '\u0028\u4EE3\u0029': 0x3239,
+  '\u0028\u4F01\u0029': 0x323D,
+  '\u0028\u4F11\u0029': 0x3241,
+  '\u0028\u516B\u0029': 0x3227,
+  '\u0028\u516D\u0029': 0x3225,
+  '\u0028\u52B4\u0029': 0x3238,
+  '\u0028\u5341\u0029': 0x3229,
+  '\u0028\u5354\u0029': 0x323F,
+  '\u0028\u540D\u0029': 0x3234,
+  '\u0028\u547C\u0029': 0x323A,
+  '\u0028\u56DB\u0029': 0x3223,
+  '\u0028\u571F\u0029': 0x322F,
+  '\u0028\u5B66\u0029': 0x323B,
+  '\u0028\u65E5\u0029': 0x3230,
+  '\u0028\u6708\u0029': 0x322A,
+  '\u0028\u6709\u0029': 0x3232,
+  '\u0028\u6728\u0029': 0x322D,
+  '\u0028\u682A\u0029': 0x3231,
+  '\u0028\u6C34\u0029': 0x322C,
+  '\u0028\u706B\u0029': 0x322B,
+  '\u0028\u7279\u0029': 0x3235,
+  '\u0028\u76E3\u0029': 0x323C,
+  '\u0028\u793E\u0029': 0x3233,
+  '\u0028\u795D\u0029': 0x3237,
+  '\u0028\u796D\u0029': 0x3240,
+  '\u0028\u81EA\u0029': 0x3242,
+  '\u0028\u81F3\u0029': 0x3243,
+  '\u0028\u8CA1\u0029': 0x3236,
+  '\u0028\u8CC7\u0029': 0x323E,
+  '\u0028\u91D1\u0029': 0x322E,
+  '\u0029': 0xFF09,
+  '\u002A': 0xFF0A,
+  '\u002B': 0xFF0B,
+  '\u002C': 0xFF0C,
+  '\u002D': 0xFF0D,
+  '\u002E': 0xFF0E,
+  '\u002E\u002E': 0x2025,
+  '\u002E\u002E\u002E': 0x2026,
+  '\u002F': 0xFF0F,
+  '\u0030': 0xFF10,
+  '\u0030\u2044\u0033': 0x2189,
+  '\u0030\u70B9': 0x3358,
+  '\u0031': 0xFF11,
+  '\u0031\u002E': 0x2488,
+  '\u0031\u0030': 0x2469,
+  '\u0031\u0030\u002E': 0x2491,
+  '\u0031\u0030\u65E5': 0x33E9,
+  '\u0031\u0030\u6708': 0x32C9,
+  '\u0031\u0030\u70B9': 0x3362,
+  '\u0031\u0031': 0x246A,
+  '\u0031\u0031\u002E': 0x2492,
+  '\u0031\u0031\u65E5': 0x33EA,
+  '\u0031\u0031\u6708': 0x32CA,
+  '\u0031\u0031\u70B9': 0x3363,
+  '\u0031\u0032': 0x246B,
+  '\u0031\u0032\u002E': 0x2493,
+  '\u0031\u0032\u65E5': 0x33EB,
+  '\u0031\u0032\u6708': 0x32CB,
+  '\u0031\u0032\u70B9': 0x3364,
+  '\u0031\u0033': 0x246C,
+  '\u0031\u0033\u002E': 0x2494,
+  '\u0031\u0033\u65E5': 0x33EC,
+  '\u0031\u0033\u70B9': 0x3365,
+  '\u0031\u0034': 0x246D,
+  '\u0031\u0034\u002E': 0x2495,
+  '\u0031\u0034\u65E5': 0x33ED,
+  '\u0031\u0034\u70B9': 0x3366,
+  '\u0031\u0035': 0x246E,
+  '\u0031\u0035\u002E': 0x2496,
+  '\u0031\u0035\u65E5': 0x33EE,
+  '\u0031\u0035\u70B9': 0x3367,
+  '\u0031\u0036': 0x246F,
+  '\u0031\u0036\u002E': 0x2497,
+  '\u0031\u0036\u65E5': 0x33EF,
+  '\u0031\u0036\u70B9': 0x3368,
+  '\u0031\u0037': 0x2470,
+  '\u0031\u0037\u002E': 0x2498,
+  '\u0031\u0037\u65E5': 0x33F0,
+  '\u0031\u0037\u70B9': 0x3369,
+  '\u0031\u0038': 0x2471,
+  '\u0031\u0038\u002E': 0x2499,
+  '\u0031\u0038\u65E5': 0x33F1,
+  '\u0031\u0038\u70B9': 0x336A,
+  '\u0031\u0039': 0x2472,
+  '\u0031\u0039\u002E': 0x249A,
+  '\u0031\u0039\u65E5': 0x33F2,
+  '\u0031\u0039\u70B9': 0x336B,
+  '\u0031\u2044': 0x215F,
+  '\u0031\u2044\u0031\u0030': 0x2152,
+  '\u0031\u2044\u0032': 0x00BD,
+  '\u0031\u2044\u0033': 0x2153,
+  '\u0031\u2044\u0034': 0x00BC,
+  '\u0031\u2044\u0035': 0x2155,
+  '\u0031\u2044\u0036': 0x2159,
+  '\u0031\u2044\u0037': 0x2150,
+  '\u0031\u2044\u0038': 0x215B,
+  '\u0031\u2044\u0039': 0x2151,
+  '\u0031\u65E5': 0x33E0,
+  '\u0031\u6708': 0x32C0,
+  '\u0031\u70B9': 0x3359,
+  '\u0032': 0xFF12,
+  '\u0032\u002E': 0x2489,
+  '\u0032\u0030': 0x2473,
+  '\u0032\u0030\u002E': 0x249B,
+  '\u0032\u0030\u65E5': 0x33F3,
+  '\u0032\u0030\u70B9': 0x336C,
+  '\u0032\u0031': 0x3251,
+  '\u0032\u0031\u65E5': 0x33F4,
+  '\u0032\u0031\u70B9': 0x336D,
+  '\u0032\u0032': 0x3252,
+  '\u0032\u0032\u65E5': 0x33F5,
+  '\u0032\u0032\u70B9': 0x336E,
+  '\u0032\u0033': 0x3253,
+  '\u0032\u0033\u65E5': 0x33F6,
+  '\u0032\u0033\u70B9': 0x336F,
+  '\u0032\u0034': 0x3254,
+  '\u0032\u0034\u65E5': 0x33F7,
+  '\u0032\u0034\u70B9': 0x3370,
+  '\u0032\u0035': 0x3255,
+  '\u0032\u0035\u65E5': 0x33F8,
+  '\u0032\u0036': 0x3256,
+  '\u0032\u0036\u65E5': 0x33F9,
+  '\u0032\u0037': 0x3257,
+  '\u0032\u0037\u65E5': 0x33FA,
+  '\u0032\u0038': 0x3258,
+  '\u0032\u0038\u65E5': 0x33FB,
+  '\u0032\u0039': 0x3259,
+  '\u0032\u0039\u65E5': 0x33FC,
+  '\u0032\u2044\u0033': 0x2154,
+  '\u0032\u2044\u0035': 0x2156,
+  '\u0032\u65E5': 0x33E1,
+  '\u0032\u6708': 0x32C1,
+  '\u0032\u70B9': 0x335A,
+  '\u0033': 0xFF13,
+  '\u0033\u002E': 0x248A,
+  '\u0033\u0030': 0x325A,
+  '\u0033\u0030\u65E5': 0x33FD,
+  '\u0033\u0031': 0x325B,
+  '\u0033\u0031\u65E5': 0x33FE,
+  '\u0033\u0032': 0x325C,
+  '\u0033\u0033': 0x325D,
+  '\u0033\u0034': 0x325E,
+  '\u0033\u0035': 0x325F,
+  '\u0033\u0036': 0x32B1,
+  '\u0033\u0037': 0x32B2,
+  '\u0033\u0038': 0x32B3,
+  '\u0033\u0039': 0x32B4,
+  '\u0033\u2044\u0034': 0x00BE,
+  '\u0033\u2044\u0035': 0x2157,
+  '\u0033\u2044\u0038': 0x215C,
+  '\u0033\u65E5': 0x33E2,
+  '\u0033\u6708': 0x32C2,
+  '\u0033\u70B9': 0x335B,
+  '\u0034': 0xFF14,
+  '\u0034\u002E': 0x248B,
+  '\u0034\u0030': 0x32B5,
+  '\u0034\u0031': 0x32B6,
+  '\u0034\u0032': 0x32B7,
+  '\u0034\u0033': 0x32B8,
+  '\u0034\u0034': 0x32B9,
+  '\u0034\u0035': 0x32BA,
+  '\u0034\u0036': 0x32BB,
+  '\u0034\u0037': 0x32BC,
+  '\u0034\u0038': 0x32BD,
+  '\u0034\u0039': 0x32BE,
+  '\u0034\u2044\u0035': 0x2158,
+  '\u0034\u65E5': 0x33E3,
+  '\u0034\u6708': 0x32C3,
+  '\u0034\u70B9': 0x335C,
+  '\u0035': 0xFF15,
+  '\u0035\u002E': 0x248C,
+  '\u0035\u0030': 0x32BF,
+  '\u0035\u2044\u0036': 0x215A,
+  '\u0035\u2044\u0038': 0x215D,
+  '\u0035\u65E5': 0x33E4,
+  '\u0035\u6708': 0x32C4,
+  '\u0035\u70B9': 0x335D,
+  '\u0036': 0xFF16,
+  '\u0036\u002E': 0x248D,
+  '\u0036\u65E5': 0x33E5,
+  '\u0036\u6708': 0x32C5,
+  '\u0036\u70B9': 0x335E,
+  '\u0037': 0xFF17,
+  '\u0037\u002E': 0x248E,
+  '\u0037\u2044\u0038': 0x215E,
+  '\u0037\u65E5': 0x33E6,
+  '\u0037\u6708': 0x32C6,
+  '\u0037\u70B9': 0x335F,
+  '\u0038': 0xFF18,
+  '\u0038\u002E': 0x248F,
+  '\u0038\u65E5': 0x33E7,
+  '\u0038\u6708': 0x32C7,
+  '\u0038\u70B9': 0x3360,
+  '\u0039': 0xFF19,
+  '\u0039\u002E': 0x2490,
+  '\u0039\u65E5': 0x33E8,
+  '\u0039\u6708': 0x32C8,
+  '\u0039\u70B9': 0x3361,
+  '\u003A': 0xFF1A,
+  '\u003A\u003A\u003D': 0x2A74,
+  '\u003B': 0xFF1B,
+  '\u003C': 0xFF1C,
+  '\u003C\u0338': 0x226E,
+  '\u003D': 0xFF1D,
+  '\u003D\u003D': 0x2A75,
+  '\u003D\u003D\u003D': 0x2A76,
+  '\u003D\u0338': 0x2260,
+  '\u003E': 0xFF1E,
+  '\u003E\u0338': 0x226F,
+  '\u003F': 0xFF1F,
+  '\u003F\u0021': 0x2048,
+  '\u003F\u003F': 0x2047,
+  '\u0040': 0xFF20,
+  '\u0041': 0xFF21,
+  '\u0041\u0055': 0x3373,
+  '\u0041\u0300': 0x00C0,
+  '\u0041\u0301': 0x00C1,
+  '\u0041\u0302': 0x00C2,
+  '\u0041\u0303': 0x00C3,
+  '\u0041\u0304': 0x0100,
+  '\u0041\u0306': 0x0102,
+  '\u0041\u0307': 0x0226,
+  '\u0041\u0308': 0x00C4,
+  '\u0041\u0309': 0x1EA2,
+  '\u0041\u030A': 0x00C5,
+  '\u0041\u030C': 0x01CD,
+  '\u0041\u030F': 0x0200,
+  '\u0041\u0311': 0x0202,
+  '\u0041\u0323': 0x1EA0,
+  '\u0041\u0325': 0x1E00,
+  '\u0041\u0328': 0x0104,
+  '\u0041\u2215\u006D': 0x33DF,
+  '\u0042': 0xFF22,
+  '\u0042\u0071': 0x33C3,
+  '\u0042\u0307': 0x1E02,
+  '\u0042\u0323': 0x1E04,
+  '\u0042\u0331': 0x1E06,
+  '\u0043': 0xFF23,
+  '\u0043\u006F\u002E': 0x33C7,
+  '\u0043\u0301': 0x0106,
+  '\u0043\u0302': 0x0108,
+  '\u0043\u0307': 0x010A,
+  '\u0043\u030C': 0x010C,
+  '\u0043\u0327': 0x00C7,
+  '\u0043\u2215\u006B\u0067': 0x33C6,
+  '\u0044': 0xFF24,
+  '\u0044\u005A': 0x01F1,
+  '\u0044\u007A': 0x01F2,
+  '\u0044\u017D': 0x01C4,
+  '\u0044\u017E': 0x01C5,
+  '\u0044\u0307': 0x1E0A,
+  '\u0044\u030C': 0x010E,
+  '\u0044\u0323': 0x1E0C,
+  '\u0044\u0327': 0x1E10,
+  '\u0044\u032D': 0x1E12,
+  '\u0044\u0331': 0x1E0E,
+  '\u0045': 0xFF25,
+  '\u0045\u0300': 0x00C8,
+  '\u0045\u0301': 0x00C9,
+  '\u0045\u0302': 0x00CA,
+  '\u0045\u0303': 0x1EBC,
+  '\u0045\u0304': 0x0112,
+  '\u0045\u0306': 0x0114,
+  '\u0045\u0307': 0x0116,
+  '\u0045\u0308': 0x00CB,
+  '\u0045\u0309': 0x1EBA,
+  '\u0045\u030C': 0x011A,
+  '\u0045\u030F': 0x0204,
+  '\u0045\u0311': 0x0206,
+  '\u0045\u0323': 0x1EB8,
+  '\u0045\u0327': 0x0228,
+  '\u0045\u0328': 0x0118,
+  '\u0045\u032D': 0x1E18,
+  '\u0045\u0330': 0x1E1A,
+  '\u0046': 0xFF26,
+  '\u0046\u0041\u0058': 0x213B,
+  '\u0046\u0307': 0x1E1E,
+  '\u0047': 0xFF27,
+  '\u0047\u0042': 0x3387,
+  '\u0047\u0048\u007A': 0x3393,
+  '\u0047\u0050\u0061': 0x33AC,
+  '\u0047\u0079': 0x33C9,
+  '\u0047\u0301': 0x01F4,
+  '\u0047\u0302': 0x011C,
+  '\u0047\u0304': 0x1E20,
+  '\u0047\u0306': 0x011E,
+  '\u0047\u0307': 0x0120,
+  '\u0047\u030C': 0x01E6,
+  '\u0047\u0327': 0x0122,
+  '\u0048': 0xFF28,
+  '\u0048\u0050': 0x33CB,
+  '\u0048\u0067': 0x32CC,
+  '\u0048\u007A': 0x3390,
+  '\u0048\u0302': 0x0124,
+  '\u0048\u0307': 0x1E22,
+  '\u0048\u0308': 0x1E26,
+  '\u0048\u030C': 0x021E,
+  '\u0048\u0323': 0x1E24,
+  '\u0048\u0327': 0x1E28,
+  '\u0048\u032E': 0x1E2A,
+  '\u0049': 0xFF29,
+  '\u0049\u0049': 0x2161,
+  '\u0049\u0049\u0049': 0x2162,
+  '\u0049\u004A': 0x0132,
+  '\u0049\u0055': 0x337A,
+  '\u0049\u0056': 0x2163,
+  '\u0049\u0058': 0x2168,
+  '\u0049\u0300': 0x00CC,
+  '\u0049\u0301': 0x00CD,
+  '\u0049\u0302': 0x00CE,
+  '\u0049\u0303': 0x0128,
+  '\u0049\u0304': 0x012A,
+  '\u0049\u0306': 0x012C,
+  '\u0049\u0307': 0x0130,
+  '\u0049\u0308': 0x00CF,
+  '\u0049\u0309': 0x1EC8,
+  '\u0049\u030C': 0x01CF,
+  '\u0049\u030F': 0x0208,
+  '\u0049\u0311': 0x020A,
+  '\u0049\u0323': 0x1ECA,
+  '\u0049\u0328': 0x012E,
+  '\u0049\u0330': 0x1E2C,
+  '\u004A': 0xFF2A,
+  '\u004A\u0302': 0x0134,
+  '\u004B': 0xFF2B,
+  '\u004B\u0042': 0x3385,
+  '\u004B\u004B': 0x33CD,
+  '\u004B\u004D': 0x33CE,
+  '\u004B\u0301': 0x1E30,
+  '\u004B\u030C': 0x01E8,
+  '\u004B\u0323': 0x1E32,
+  '\u004B\u0327': 0x0136,
+  '\u004B\u0331': 0x1E34,
+  '\u004C': 0xFF2C,
+  '\u004C\u004A': 0x01C7,
+  '\u004C\u0054\u0044': 0x32CF,
+  '\u004C\u006A': 0x01C8,
+  '\u004C\u00B7': 0x013F,
+  '\u004C\u0301': 0x0139,
+  '\u004C\u030C': 0x013D,
+  '\u004C\u0323': 0x1E36,
+  '\u004C\u0327': 0x013B,
+  '\u004C\u032D': 0x1E3C,
+  '\u004C\u0331': 0x1E3A,
+  '\u004D': 0xFF2D,
+  '\u004D\u0042': 0x3386,
+  '\u004D\u0048\u007A': 0x3392,
+  '\u004D\u0050\u0061': 0x33AB,
+  '\u004D\u0056': 0x33B9,
+  '\u004D\u0057': 0x33BF,
+  '\u004D\u0301': 0x1E3E,
+  '\u004D\u0307': 0x1E40,
+  '\u004D\u0323': 0x1E42,
+  '\u004D\u03A9': 0x33C1,
+  '\u004E': 0xFF2E,
+  '\u004E\u004A': 0x01CA,
+  '\u004E\u006A': 0x01CB,
+  '\u004E\u006F': 0x2116,
+  '\u004E\u0300': 0x01F8,
+  '\u004E\u0301': 0x0143,
+  '\u004E\u0303': 0x00D1,
+  '\u004E\u0307': 0x1E44,
+  '\u004E\u030C': 0x0147,
+  '\u004E\u0323': 0x1E46,
+  '\u004E\u0327': 0x0145,
+  '\u004E\u032D': 0x1E4A,
+  '\u004E\u0331': 0x1E48,
+  '\u004F': 0xFF2F,
+  '\u004F\u0300': 0x00D2,
+  '\u004F\u0301': 0x00D3,
+  '\u004F\u0302': 0x00D4,
+  '\u004F\u0303': 0x00D5,
+  '\u004F\u0304': 0x014C,
+  '\u004F\u0306': 0x014E,
+  '\u004F\u0307': 0x022E,
+  '\u004F\u0308': 0x00D6,
+  '\u004F\u0309': 0x1ECE,
+  '\u004F\u030B': 0x0150,
+  '\u004F\u030C': 0x01D1,
+  '\u004F\u030F': 0x020C,
+  '\u004F\u0311': 0x020E,
+  '\u004F\u031B': 0x01A0,
+  '\u004F\u0323': 0x1ECC,
+  '\u004F\u0328': 0x01EA,
+  '\u0050': 0xFF30,
+  '\u0050\u0048': 0x33D7,
+  '\u0050\u0050\u004D': 0x33D9,
+  '\u0050\u0052': 0x33DA,
+  '\u0050\u0054\u0045': 0x3250,
+  '\u0050\u0061': 0x33A9,
+  '\u0050\u0301': 0x1E54,
+  '\u0050\u0307': 0x1E56,
+  '\u0051': 0xFF31,
+  '\u0052': 0xFF32,
+  '\u0052\u0073': 0x20A8,
+  '\u0052\u0301': 0x0154,
+  '\u0052\u0307': 0x1E58,
+  '\u0052\u030C': 0x0158,
+  '\u0052\u030F': 0x0210,
+  '\u0052\u0311': 0x0212,
+  '\u0052\u0323': 0x1E5A,
+  '\u0052\u0327': 0x0156,
+  '\u0052\u0331': 0x1E5E,
+  '\u0053': 0xFF33,
+  '\u0053\u004D': 0x2120,
+  '\u0053\u0076': 0x33DC,
+  '\u0053\u0301': 0x015A,
+  '\u0053\u0302': 0x015C,
+  '\u0053\u0307': 0x1E60,
+  '\u0053\u030C': 0x0160,
+  '\u0053\u0323': 0x1E62,
+  '\u0053\u0326': 0x0218,
+  '\u0053\u0327': 0x015E,
+  '\u0054': 0xFF34,
+  '\u0054\u0045\u004C': 0x2121,
+  '\u0054\u0048\u007A': 0x3394,
+  '\u0054\u004D': 0x2122,
+  '\u0054\u0307': 0x1E6A,
+  '\u0054\u030C': 0x0164,
+  '\u0054\u0323': 0x1E6C,
+  '\u0054\u0326': 0x021A,
+  '\u0054\u0327': 0x0162,
+  '\u0054\u032D': 0x1E70,
+  '\u0054\u0331': 0x1E6E,
+  '\u0055': 0xFF35,
+  '\u0055\u0300': 0x00D9,
+  '\u0055\u0301': 0x00DA,
+  '\u0055\u0302': 0x00DB,
+  '\u0055\u0303': 0x0168,
+  '\u0055\u0304': 0x016A,
+  '\u0055\u0306': 0x016C,
+  '\u0055\u0308': 0x00DC,
+  '\u0055\u0309': 0x1EE6,
+  '\u0055\u030A': 0x016E,
+  '\u0055\u030B': 0x0170,
+  '\u0055\u030C': 0x01D3,
+  '\u0055\u030F': 0x0214,
+  '\u0055\u0311': 0x0216,
+  '\u0055\u031B': 0x01AF,
+  '\u0055\u0323': 0x1EE4,
+  '\u0055\u0324': 0x1E72,
+  '\u0055\u0328': 0x0172,
+  '\u0055\u032D': 0x1E76,
+  '\u0055\u0330': 0x1E74,
+  '\u0056': 0xFF36,
+  '\u0056\u0049': 0x2165,
+  '\u0056\u0049\u0049': 0x2166,
+  '\u0056\u0049\u0049\u0049': 0x2167,
+  '\u0056\u0303': 0x1E7C,
+  '\u0056\u0323': 0x1E7E,
+  '\u0056\u2215\u006D': 0x33DE,
+  '\u0057': 0xFF37,
+  '\u0057\u0062': 0x33DD,
+  '\u0057\u0300': 0x1E80,
+  '\u0057\u0301': 0x1E82,
+  '\u0057\u0302': 0x0174,
+  '\u0057\u0307': 0x1E86,
+  '\u0057\u0308': 0x1E84,
+  '\u0057\u0323': 0x1E88,
+  '\u0058': 0xFF38,
+  '\u0058\u0049': 0x216A,
+  '\u0058\u0049\u0049': 0x216B,
+  '\u0058\u0307': 0x1E8A,
+  '\u0058\u0308': 0x1E8C,
+  '\u0059': 0xFF39,
+  '\u0059\u0300': 0x1EF2,
+  '\u0059\u0301': 0x00DD,
+  '\u0059\u0302': 0x0176,
+  '\u0059\u0303': 0x1EF8,
+  '\u0059\u0304': 0x0232,
+  '\u0059\u0307': 0x1E8E,
+  '\u0059\u0308': 0x0178,
+  '\u0059\u0309': 0x1EF6,
+  '\u0059\u0323': 0x1EF4,
+  '\u005A': 0xFF3A,
+  '\u005A\u0301': 0x0179,
+  '\u005A\u0302': 0x1E90,
+  '\u005A\u0307': 0x017B,
+  '\u005A\u030C': 0x017D,
+  '\u005A\u0323': 0x1E92,
+  '\u005A\u0331': 0x1E94,
+  '\u005B': 0xFF3B,
+  '\u005C': 0xFF3C,
+  '\u005D': 0xFF3D,
+  '\u005E': 0xFF3E,
+  '\u005F': 0xFF3F,
+  '\u0060': 0xFF40,
+  '\u0061': 0xFF41,
+  '\u0061\u002E\u006D\u002E': 0x33C2,
+  '\u0061\u002F\u0063': 0x2100,
+  '\u0061\u002F\u0073': 0x2101,
+  '\u0061\u02BE': 0x1E9A,
+  '\u0061\u0300': 0x00E0,
+  '\u0061\u0301': 0x00E1,
+  '\u0061\u0302': 0x00E2,
+  '\u0061\u0303': 0x00E3,
+  '\u0061\u0304': 0x0101,
+  '\u0061\u0306': 0x0103,
+  '\u0061\u0307': 0x0227,
+  '\u0061\u0308': 0x00E4,
+  '\u0061\u0309': 0x1EA3,
+  '\u0061\u030A': 0x00E5,
+  '\u0061\u030C': 0x01CE,
+  '\u0061\u030F': 0x0201,
+  '\u0061\u0311': 0x0203,
+  '\u0061\u0323': 0x1EA1,
+  '\u0061\u0325': 0x1E01,
+  '\u0061\u0328': 0x0105,
+  '\u0062': 0xFF42,
+  '\u0062\u0061\u0072': 0x3374,
+  '\u0062\u0307': 0x1E03,
+  '\u0062\u0323': 0x1E05,
+  '\u0062\u0331': 0x1E07,
+  '\u0063': 0xFF43,
+  '\u0063\u002F\u006F': 0x2105,
+  '\u0063\u002F\u0075': 0x2106,
+  '\u0063\u0061\u006C': 0x3388,
+  '\u0063\u0063': 0x33C4,
+  '\u0063\u0064': 0x33C5,
+  '\u0063\u006D': 0x339D,
+  '\u0063\u006D\u00B2': 0x33A0,
+  '\u0063\u006D\u00B3': 0x33A4,
+  '\u0063\u0301': 0x0107,
+  '\u0063\u0302': 0x0109,
+  '\u0063\u0307': 0x010B,
+  '\u0063\u030C': 0x010D,
+  '\u0063\u0327': 0x00E7,
+  '\u0064': 0xFF44,
+  '\u0064\u0042': 0x33C8,
+  '\u0064\u0061': 0x3372,
+  '\u0064\u006D': 0x3377,
+  '\u0064\u006D\u00B2': 0x3378,
+  '\u0064\u006D\u00B3': 0x3379,
+  '\u0064\u007A': 0x01F3,
+  '\u0064\u017E': 0x01C6,
+  '\u0064\u0307': 0x1E0B,
+  '\u0064\u030C': 0x010F,
+  '\u0064\u0323': 0x1E0D,
+  '\u0064\u0327': 0x1E11,
+  '\u0064\u032D': 0x1E13,
+  '\u0064\u0331': 0x1E0F,
+  '\u0064\u2113': 0x3397,
+  '\u0065': 0xFF45,
+  '\u0065\u0056': 0x32CE,
+  '\u0065\u0072\u0067': 0x32CD,
+  '\u0065\u0300': 0x00E8,
+  '\u0065\u0301': 0x00E9,
+  '\u0065\u0302': 0x00EA,
+  '\u0065\u0303': 0x1EBD,
+  '\u0065\u0304': 0x0113,
+  '\u0065\u0306': 0x0115,
+  '\u0065\u0307': 0x0117,
+  '\u0065\u0308': 0x00EB,
+  '\u0065\u0309': 0x1EBB,
+  '\u0065\u030C': 0x011B,
+  '\u0065\u030F': 0x0205,
+  '\u0065\u0311': 0x0207,
+  '\u0065\u0323': 0x1EB9,
+  '\u0065\u0327': 0x0229,
+  '\u0065\u0328': 0x0119,
+  '\u0065\u032D': 0x1E19,
+  '\u0065\u0330': 0x1E1B,
+  '\u0066': 0xFF46,
+  '\u0066\u0066': 0xFB00,
+  '\u0066\u0066\u0069': 0xFB03,
+  '\u0066\u0066\u006C': 0xFB04,
+  '\u0066\u0069': 0xFB01,
+  '\u0066\u006C': 0xFB02,
+  '\u0066\u006D': 0x3399,
+  '\u0066\u0307': 0x1E1F,
+  '\u0067': 0xFF47,
+  '\u0067\u0061\u006C': 0x33FF,
+  '\u0067\u0301': 0x01F5,
+  '\u0067\u0302': 0x011D,
+  '\u0067\u0304': 0x1E21,
+  '\u0067\u0306': 0x011F,
+  '\u0067\u0307': 0x0121,
+  '\u0067\u030C': 0x01E7,
+  '\u0067\u0327': 0x0123,
+  '\u0068': 0xFF48,
+  '\u0068\u0050\u0061': 0x3371,
+  '\u0068\u0061': 0x33CA,
+  '\u0068\u0302': 0x0125,
+  '\u0068\u0307': 0x1E23,
+  '\u0068\u0308': 0x1E27,
+  '\u0068\u030C': 0x021F,
+  '\u0068\u0323': 0x1E25,
+  '\u0068\u0327': 0x1E29,
+  '\u0068\u032E': 0x1E2B,
+  '\u0068\u0331': 0x1E96,
+  '\u0069': 0xFF49,
+  '\u0069\u0069': 0x2171,
+  '\u0069\u0069\u0069': 0x2172,
+  '\u0069\u006A': 0x0133,
+  '\u0069\u006E': 0x33CC,
+  '\u0069\u0076': 0x2173,
+  '\u0069\u0078': 0x2178,
+  '\u0069\u0300': 0x00EC,
+  '\u0069\u0301': 0x00ED,
+  '\u0069\u0302': 0x00EE,
+  '\u0069\u0303': 0x0129,
+  '\u0069\u0304': 0x012B,
+  '\u0069\u0306': 0x012D,
+  '\u0069\u0308': 0x00EF,
+  '\u0069\u0309': 0x1EC9,
+  '\u0069\u030C': 0x01D0,
+  '\u0069\u030F': 0x0209,
+  '\u0069\u0311': 0x020B,
+  '\u0069\u0323': 0x1ECB,
+  '\u0069\u0328': 0x012F,
+  '\u0069\u0330': 0x1E2D,
+  '\u006A': 0xFF4A,
+  '\u006A\u0302': 0x0135,
+  '\u006A\u030C': 0x01F0,
+  '\u006B': 0xFF4B,
+  '\u006B\u0041': 0x3384,
+  '\u006B\u0048\u007A': 0x3391,
+  '\u006B\u0050\u0061': 0x33AA,
+  '\u006B\u0056': 0x33B8,
+  '\u006B\u0057': 0x33BE,
+  '\u006B\u0063\u0061\u006C': 0x3389,
+  '\u006B\u0067': 0x338F,
+  '\u006B\u006D': 0x339E,
+  '\u006B\u006D\u00B2': 0x33A2,
+  '\u006B\u006D\u00B3': 0x33A6,
+  '\u006B\u0074': 0x33CF,
+  '\u006B\u0301': 0x1E31,
+  '\u006B\u030C': 0x01E9,
+  '\u006B\u0323': 0x1E33,
+  '\u006B\u0327': 0x0137,
+  '\u006B\u0331': 0x1E35,
+  '\u006B\u03A9': 0x33C0,
+  '\u006B\u2113': 0x3398,
+  '\u006C': 0xFF4C,
+  '\u006C\u006A': 0x01C9,
+  '\u006C\u006D': 0x33D0,
+  '\u006C\u006E': 0x33D1,
+  '\u006C\u006F\u0067': 0x33D2,
+  '\u006C\u0078': 0x33D3,
+  '\u006C\u00B7': 0x0140,
+  '\u006C\u0301': 0x013A,
+  '\u006C\u030C': 0x013E,
+  '\u006C\u0323': 0x1E37,
+  '\u006C\u0327': 0x013C,
+  '\u006C\u032D': 0x1E3D,
+  '\u006C\u0331': 0x1E3B,
+  '\u006D': 0xFF4D,
+  '\u006D\u0041': 0x3383,
+  '\u006D\u0056': 0x33B7,
+  '\u006D\u0057': 0x33BD,
+  '\u006D\u0062': 0x33D4,
+  '\u006D\u0067': 0x338E,
+  '\u006D\u0069\u006C': 0x33D5,
+  '\u006D\u006D': 0x339C,
+  '\u006D\u006D\u00B2': 0x339F,
+  '\u006D\u006D\u00B3': 0x33A3,
+  '\u006D\u006F\u006C': 0x33D6,
+  '\u006D\u0073': 0x33B3,
+  '\u006D\u00B2': 0x33A1,
+  '\u006D\u00B3': 0x33A5,
+  '\u006D\u0301': 0x1E3F,
+  '\u006D\u0307': 0x1E41,
+  '\u006D\u0323': 0x1E43,
+  '\u006D\u2113': 0x3396,
+  '\u006D\u2215\u0073': 0x33A7,
+  '\u006D\u2215\u0073\u00B2': 0x33A8,
+  '\u006E': 0xFF4E,
+  '\u006E\u0041': 0x3381,
+  '\u006E\u0046': 0x338B,
+  '\u006E\u0056': 0x33B5,
+  '\u006E\u0057': 0x33BB,
+  '\u006E\u006A': 0x01CC,
+  '\u006E\u006D': 0x339A,
+  '\u006E\u0073': 0x33B1,
+  '\u006E\u0300': 0x01F9,
+  '\u006E\u0301': 0x0144,
+  '\u006E\u0303': 0x00F1,
+  '\u006E\u0307': 0x1E45,
+  '\u006E\u030C': 0x0148,
+  '\u006E\u0323': 0x1E47,
+  '\u006E\u0327': 0x0146,
+  '\u006E\u032D': 0x1E4B,
+  '\u006E\u0331': 0x1E49,
+  '\u006F': 0xFF4F,
+  '\u006F\u0056': 0x3375,
+  '\u006F\u0300': 0x00F2,
+  '\u006F\u0301': 0x00F3,
+  '\u006F\u0302': 0x00F4,
+  '\u006F\u0303': 0x00F5,
+  '\u006F\u0304': 0x014D,
+  '\u006F\u0306': 0x014F,
+  '\u006F\u0307': 0x022F,
+  '\u006F\u0308': 0x00F6,
+  '\u006F\u0309': 0x1ECF,
+  '\u006F\u030B': 0x0151,
+  '\u006F\u030C': 0x01D2,
+  '\u006F\u030F': 0x020D,
+  '\u006F\u0311': 0x020F,
+  '\u006F\u031B': 0x01A1,
+  '\u006F\u0323': 0x1ECD,
+  '\u006F\u0328': 0x01EB,
+  '\u0070': 0xFF50,
+  '\u0070\u002E\u006D\u002E': 0x33D8,
+  '\u0070\u0041': 0x3380,
+  '\u0070\u0046': 0x338A,
+  '\u0070\u0056': 0x33B4,
+  '\u0070\u0057': 0x33BA,
+  '\u0070\u0063': 0x3376,
+  '\u0070\u0073': 0x33B0,
+  '\u0070\u0301': 0x1E55,
+  '\u0070\u0307': 0x1E57,
+  '\u0071': 0xFF51,
+  '\u0072': 0xFF52,
+  '\u0072\u0061\u0064': 0x33AD,
+  '\u0072\u0061\u0064\u2215\u0073': 0x33AE,
+  '\u0072\u0061\u0064\u2215\u0073\u00B2': 0x33AF,
+  '\u0072\u0301': 0x0155,
+  '\u0072\u0307': 0x1E59,
+  '\u0072\u030C': 0x0159,
+  '\u0072\u030F': 0x0211,
+  '\u0072\u0311': 0x0213,
+  '\u0072\u0323': 0x1E5B,
+  '\u0072\u0327': 0x0157,
+  '\u0072\u0331': 0x1E5F,
+  '\u0073': 0xFF53,
+  '\u0073\u0072': 0x33DB,
+  '\u0073\u0074': 0xFB06,
+  '\u0073\u0301': 0x015B,
+  '\u0073\u0302': 0x015D,
+  '\u0073\u0307': 0x1E61,
+  '\u0073\u030C': 0x0161,
+  '\u0073\u0323': 0x1E63,
+  '\u0073\u0326': 0x0219,
+  '\u0073\u0327': 0x015F,
+  '\u0074': 0xFF54,
+  '\u0074\u0307': 0x1E6B,
+  '\u0074\u0308': 0x1E97,
+  '\u0074\u030C': 0x0165,
+  '\u0074\u0323': 0x1E6D,
+  '\u0074\u0326': 0x021B,
+  '\u0074\u0327': 0x0163,
+  '\u0074\u032D': 0x1E71,
+  '\u0074\u0331': 0x1E6F,
+  '\u0075': 0xFF55,
+  '\u0075\u0300': 0x00F9,
+  '\u0075\u0301': 0x00FA,
+  '\u0075\u0302': 0x00FB,
+  '\u0075\u0303': 0x0169,
+  '\u0075\u0304': 0x016B,
+  '\u0075\u0306': 0x016D,
+  '\u0075\u0308': 0x00FC,
+  '\u0075\u0309': 0x1EE7,
+  '\u0075\u030A': 0x016F,
+  '\u0075\u030B': 0x0171,
+  '\u0075\u030C': 0x01D4,
+  '\u0075\u030F': 0x0215,
+  '\u0075\u0311': 0x0217,
+  '\u0075\u031B': 0x01B0,
+  '\u0075\u0323': 0x1EE5,
+  '\u0075\u0324': 0x1E73,
+  '\u0075\u0328': 0x0173,
+  '\u0075\u032D': 0x1E77,
+  '\u0075\u0330': 0x1E75,
+  '\u0076': 0xFF56,
+  '\u0076\u0069': 0x2175,
+  '\u0076\u0069\u0069': 0x2176,
+  '\u0076\u0069\u0069\u0069': 0x2177,
+  '\u0076\u0303': 0x1E7D,
+  '\u0076\u0323': 0x1E7F,
+  '\u0077': 0xFF57,
+  '\u0077\u0300': 0x1E81,
+  '\u0077\u0301': 0x1E83,
+  '\u0077\u0302': 0x0175,
+  '\u0077\u0307': 0x1E87,
+  '\u0077\u0308': 0x1E85,
+  '\u0077\u030A': 0x1E98,
+  '\u0077\u0323': 0x1E89,
+  '\u0078': 0xFF58,
+  '\u0078\u0069': 0x217A,
+  '\u0078\u0069\u0069': 0x217B,
+  '\u0078\u0307': 0x1E8B,
+  '\u0078\u0308': 0x1E8D,
+  '\u0079': 0xFF59,
+  '\u0079\u0300': 0x1EF3,
+  '\u0079\u0301': 0x00FD,
+  '\u0079\u0302': 0x0177,
+  '\u0079\u0303': 0x1EF9,
+  '\u0079\u0304': 0x0233,
+  '\u0079\u0307': 0x1E8F,
+  '\u0079\u0308': 0x00FF,
+  '\u0079\u0309': 0x1EF7,
+  '\u0079\u030A': 0x1E99,
+  '\u0079\u0323': 0x1EF5,
+  '\u007A': 0xFF5A,
+  '\u007A\u0301': 0x017A,
+  '\u007A\u0302': 0x1E91,
+  '\u007A\u0307': 0x017C,
+  '\u007A\u030C': 0x017E,
+  '\u007A\u0323': 0x1E93,
+  '\u007A\u0331': 0x1E95,
+  '\u007B': 0xFF5B,
+  '\u007C': 0xFF5C,
+  '\u007D': 0xFF5D,
+  '\u007E': 0xFF5E,
+  '\u00A2': 0xFFE0,
+  '\u00A3': 0xFFE1,
+  '\u00A5': 0xFFE5,
+  '\u00A6': 0xFFE4,
+  '\u00A8\u0300': 0x1FED,
+  '\u00A8\u0301': 0x0385,
+  '\u00A8\u0342': 0x1FC1,
+  '\u00AC': 0xFFE2,
+  '\u00AF': 0xFFE3,
+  '\u00B0\u0043': 0x2103,
+  '\u00B0\u0046': 0x2109,
+  '\u00B4': 0x1FFD,
+  '\u00B7': 0x0387,
+  '\u00C2\u0300': 0x1EA6,
+  '\u00C2\u0301': 0x1EA4,
+  '\u00C2\u0303': 0x1EAA,
+  '\u00C2\u0309': 0x1EA8,
+  '\u00C4\u0304': 0x01DE,
+  '\u00C5': 0x212B,
+  '\u00C5\u0301': 0x01FA,
+  '\u00C6': 0x1D2D,
+  '\u00C6\u0301': 0x01FC,
+  '\u00C6\u0304': 0x01E2,
+  '\u00C7\u0301': 0x1E08,
+  '\u00CA\u0300': 0x1EC0,
+  '\u00CA\u0301': 0x1EBE,
+  '\u00CA\u0303': 0x1EC4,
+  '\u00CA\u0309': 0x1EC2,
+  '\u00CF\u0301': 0x1E2E,
+  '\u00D4\u0300': 0x1ED2,
+  '\u00D4\u0301': 0x1ED0,
+  '\u00D4\u0303': 0x1ED6,
+  '\u00D4\u0309': 0x1ED4,
+  '\u00D5\u0301': 0x1E4C,
+  '\u00D5\u0304': 0x022C,
+  '\u00D5\u0308': 0x1E4E,
+  '\u00D6\u0304': 0x022A,
+  '\u00D8\u0301': 0x01FE,
+  '\u00DC\u0300': 0x01DB,
+  '\u00DC\u0301': 0x01D7,
+  '\u00DC\u0304': 0x01D5,
+  '\u00DC\u030C': 0x01D9,
+  '\u00E2\u0300': 0x1EA7,
+  '\u00E2\u0301': 0x1EA5,
+  '\u00E2\u0303': 0x1EAB,
+  '\u00E2\u0309': 0x1EA9,
+  '\u00E4\u0304': 0x01DF,
+  '\u00E5\u0301': 0x01FB,
+  '\u00E6\u0301': 0x01FD,
+  '\u00E6\u0304': 0x01E3,
+  '\u00E7\u0301': 0x1E09,
+  '\u00EA\u0300': 0x1EC1,
+  '\u00EA\u0301': 0x1EBF,
+  '\u00EA\u0303': 0x1EC5,
+  '\u00EA\u0309': 0x1EC3,
+  '\u00EF\u0301': 0x1E2F,
+  '\u00F0': 0x1D9E,
+  '\u00F4\u0300': 0x1ED3,
+  '\u00F4\u0301': 0x1ED1,
+  '\u00F4\u0303': 0x1ED7,
+  '\u00F4\u0309': 0x1ED5,
+  '\u00F5\u0301': 0x1E4D,
+  '\u00F5\u0304': 0x022D,
+  '\u00F5\u0308': 0x1E4F,
+  '\u00F6\u0304': 0x022B,
+  '\u00F8\u0301': 0x01FF,
+  '\u00FC\u0300': 0x01DC,
+  '\u00FC\u0301': 0x01D8,
+  '\u00FC\u0304': 0x01D6,
+  '\u00FC\u030C': 0x01DA,
+  '\u0102\u0300': 0x1EB0,
+  '\u0102\u0301': 0x1EAE,
+  '\u0102\u0303': 0x1EB4,
+  '\u0102\u0309': 0x1EB2,
+  '\u0103\u0300': 0x1EB1,
+  '\u0103\u0301': 0x1EAF,
+  '\u0103\u0303': 0x1EB5,
+  '\u0103\u0309': 0x1EB3,
+  '\u0112\u0300': 0x1E14,
+  '\u0112\u0301': 0x1E16,
+  '\u0113\u0300': 0x1E15,
+  '\u0113\u0301': 0x1E17,
+  '\u0126': 0xA7F8,
+  '\u0127': 0x210F,
+  '\u014B': 0x1D51,
+  '\u014C\u0300': 0x1E50,
+  '\u014C\u0301': 0x1E52,
+  '\u014D\u0300': 0x1E51,
+  '\u014D\u0301': 0x1E53,
+  '\u0153': 0xA7F9,
+  '\u015A\u0307': 0x1E64,
+  '\u015B\u0307': 0x1E65,
+  '\u0160\u0307': 0x1E66,
+  '\u0161\u0307': 0x1E67,
+  '\u0168\u0301': 0x1E78,
+  '\u0169\u0301': 0x1E79,
+  '\u016A\u0308': 0x1E7A,
+  '\u016B\u0308': 0x1E7B,
+  '\u017F\u0074': 0xFB05,
+  '\u017F\u0307': 0x1E9B,
+  '\u018E': 0x1D32,
+  '\u0190': 0x2107,
+  '\u01A0\u0300': 0x1EDC,
+  '\u01A0\u0301': 0x1EDA,
+  '\u01A0\u0303': 0x1EE0,
+  '\u01A0\u0309': 0x1EDE,
+  '\u01A0\u0323': 0x1EE2,
+  '\u01A1\u0300': 0x1EDD,
+  '\u01A1\u0301': 0x1EDB,
+  '\u01A1\u0303': 0x1EE1,
+  '\u01A1\u0309': 0x1EDF,
+  '\u01A1\u0323': 0x1EE3,
+  '\u01AB': 0x1DB5,
+  '\u01AF\u0300': 0x1EEA,
+  '\u01AF\u0301': 0x1EE8,
+  '\u01AF\u0303': 0x1EEE,
+  '\u01AF\u0309': 0x1EEC,
+  '\u01AF\u0323': 0x1EF0,
+  '\u01B0\u0300': 0x1EEB,
+  '\u01B0\u0301': 0x1EE9,
+  '\u01B0\u0303': 0x1EEF,
+  '\u01B0\u0309': 0x1EED,
+  '\u01B0\u0323': 0x1EF1,
+  '\u01B7\u030C': 0x01EE,
+  '\u01EA\u0304': 0x01EC,
+  '\u01EB\u0304': 0x01ED,
+  '\u0222': 0x1D3D,
+  '\u0226\u0304': 0x01E0,
+  '\u0227\u0304': 0x01E1,
+  '\u0228\u0306': 0x1E1C,
+  '\u0229\u0306': 0x1E1D,
+  '\u022E\u0304': 0x0230,
+  '\u022F\u0304': 0x0231,
+  '\u0250': 0x1D44,
+  '\u0251': 0x1D45,
+  '\u0252': 0x1D9B,
+  '\u0254': 0x1D53,
+  '\u0255': 0x1D9D,
+  '\u0259': 0x2094,
+  '\u025B': 0x1D4B,
+  '\u025C': 0x1D9F,
+  '\u025F': 0x1DA1,
+  '\u0261': 0x1DA2,
+  '\u0263': 0x02E0,
+  '\u0265': 0x1DA3,
+  '\u0266': 0x02B1,
+  '\u0268': 0x1DA4,
+  '\u0269': 0x1DA5,
+  '\u026A': 0x1DA6,
+  '\u026B': 0xAB5E,
+  '\u026D': 0x1DA9,
+  '\u026F': 0x1D5A,
+  '\u0270': 0x1DAD,
+  '\u0271': 0x1DAC,
+  '\u0272': 0x1DAE,
+  '\u0273': 0x1DAF,
+  '\u0274': 0x1DB0,
+  '\u0275': 0x1DB1,
+  '\u0278': 0x1DB2,
+  '\u0279': 0x02B4,
+  '\u027B': 0x02B5,
+  '\u0281': 0x02B6,
+  '\u0282': 0x1DB3,
+  '\u0283': 0x1DB4,
+  '\u0289': 0x1DB6,
+  '\u028A': 0x1DB7,
+  '\u028B': 0x1DB9,
+  '\u028C': 0x1DBA,
+  '\u0290': 0x1DBC,
+  '\u0291': 0x1DBD,
+  '\u0292': 0x1DBE,
+  '\u0292\u030C': 0x01EF,
+  '\u0295': 0x02E4,
+  '\u029D': 0x1DA8,
+  '\u029F': 0x1DAB,
+  '\u02B9': 0x0374,
+  '\u02BC\u006E': 0x0149,
+  '\u0300': 0x0340,
+  '\u0301': 0x0341,
+  '\u0308\u0301': 0x0344,
+  '\u0313': 0x0343,
+  '\u0385': 0x1FEE,
+  '\u0386': 0x1FBB,
+  '\u0388': 0x1FC9,
+  '\u0389': 0x1FCB,
+  '\u038A': 0x1FDB,
+  '\u038C': 0x1FF9,
+  '\u038E': 0x1FEB,
+  '\u038F': 0x1FFB,
+  '\u0390': 0x1FD3,
+  '\u0391\u0300': 0x1FBA,
+  '\u0391\u0301': 0x0386,
+  '\u0391\u0304': 0x1FB9,
+  '\u0391\u0306': 0x1FB8,
+  '\u0391\u0313': 0x1F08,
+  '\u0391\u0314': 0x1F09,
+  '\u0391\u0345': 0x1FBC,
+  '\u0393': 0x213E,
+  '\u0395\u0300': 0x1FC8,
+  '\u0395\u0301': 0x0388,
+  '\u0395\u0313': 0x1F18,
+  '\u0395\u0314': 0x1F19,
+  '\u0397\u0300': 0x1FCA,
+  '\u0397\u0301': 0x0389,
+  '\u0397\u0313': 0x1F28,
+  '\u0397\u0314': 0x1F29,
+  '\u0397\u0345': 0x1FCC,
+  '\u0398': 0x03F4,
+  '\u0399\u0300': 0x1FDA,
+  '\u0399\u0301': 0x038A,
+  '\u0399\u0304': 0x1FD9,
+  '\u0399\u0306': 0x1FD8,
+  '\u0399\u0308': 0x03AA,
+  '\u0399\u0313': 0x1F38,
+  '\u0399\u0314': 0x1F39,
+  '\u039F\u0300': 0x1FF8,
+  '\u039F\u0301': 0x038C,
+  '\u039F\u0313': 0x1F48,
+  '\u039F\u0314': 0x1F49,
+  '\u03A0': 0x213F,
+  '\u03A1\u0314': 0x1FEC,
+  '\u03A3': 0x03F9,
+  '\u03A5': 0x03D2,
+  '\u03A5\u0300': 0x1FEA,
+  '\u03A5\u0301': 0x038E,
+  '\u03A5\u0304': 0x1FE9,
+  '\u03A5\u0306': 0x1FE8,
+  '\u03A5\u0308': 0x03AB,
+  '\u03A5\u0314': 0x1F59,
+  '\u03A9': 0x2126,
+  '\u03A9\u0300': 0x1FFA,
+  '\u03A9\u0301': 0x038F,
+  '\u03A9\u0313': 0x1F68,
+  '\u03A9\u0314': 0x1F69,
+  '\u03A9\u0345': 0x1FFC,
+  '\u03AC': 0x1F71,
+  '\u03AC\u0345': 0x1FB4,
+  '\u03AD': 0x1F73,
+  '\u03AE': 0x1F75,
+  '\u03AE\u0345': 0x1FC4,
+  '\u03AF': 0x1F77,
+  '\u03B0': 0x1FE3,
+  '\u03B1\u0300': 0x1F70,
+  '\u03B1\u0301': 0x03AC,
+  '\u03B1\u0304': 0x1FB1,
+  '\u03B1\u0306': 0x1FB0,
+  '\u03B1\u0313': 0x1F00,
+  '\u03B1\u0314': 0x1F01,
+  '\u03B1\u0342': 0x1FB6,
+  '\u03B1\u0345': 0x1FB3,
+  '\u03B2': 0x1D66,
+  '\u03B3': 0x213D,
+  '\u03B4': 0x1D5F,
+  '\u03B5': 0x03F5,
+  '\u03B5\u0300': 0x1F72,
+  '\u03B5\u0301': 0x03AD,
+  '\u03B5\u0313': 0x1F10,
+  '\u03B5\u0314': 0x1F11,
+  '\u03B7\u0300': 0x1F74,
+  '\u03B7\u0301': 0x03AE,
+  '\u03B7\u0313': 0x1F20,
+  '\u03B7\u0314': 0x1F21,
+  '\u03B7\u0342': 0x1FC6,
+  '\u03B7\u0345': 0x1FC3,
+  '\u03B8': 0x1DBF,
+  '\u03B9': 0x1FBE,
+  '\u03B9\u0300': 0x1F76,
+  '\u03B9\u0301': 0x03AF,
+  '\u03B9\u0304': 0x1FD1,
+  '\u03B9\u0306': 0x1FD0,
+  '\u03B9\u0308': 0x03CA,
+  '\u03B9\u0313': 0x1F30,
+  '\u03B9\u0314': 0x1F31,
+  '\u03B9\u0342': 0x1FD6,
+  '\u03BA': 0x03F0,
+  '\u03BC': 0x00B5,
+  '\u03BC\u0041': 0x3382,
+  '\u03BC\u0046': 0x338C,
+  '\u03BC\u0056': 0x33B6,
+  '\u03BC\u0057': 0x33BC,
+  '\u03BC\u0067': 0x338D,
+  '\u03BC\u006D': 0x339B,
+  '\u03BC\u0073': 0x33B2,
+  '\u03BC\u2113': 0x3395,
+  '\u03BF\u0300': 0x1F78,
+  '\u03BF\u0301': 0x03CC,
+  '\u03BF\u0313': 0x1F40,
+  '\u03BF\u0314': 0x1F41,
+  '\u03C0': 0x213C,
+  '\u03C1': 0x1D68,
+  '\u03C1\u0313': 0x1FE4,
+  '\u03C1\u0314': 0x1FE5,
+  '\u03C2': 0x03F2,
+  '\u03C5\u0300': 0x1F7A,
+  '\u03C5\u0301': 0x03CD,
+  '\u03C5\u0304': 0x1FE1,
+  '\u03C5\u0306': 0x1FE0,
+  '\u03C5\u0308': 0x03CB,
+  '\u03C5\u0313': 0x1F50,
+  '\u03C5\u0314': 0x1F51,
+  '\u03C5\u0342': 0x1FE6,
+  '\u03C6': 0x1D69,
+  '\u03C7': 0x1D6A,
+  '\u03C9\u0300': 0x1F7C,
+  '\u03C9\u0301': 0x03CE,
+  '\u03C9\u0313': 0x1F60,
+  '\u03C9\u0314': 0x1F61,
+  '\u03C9\u0342': 0x1FF6,
+  '\u03C9\u0345': 0x1FF3,
+  '\u03CA\u0300': 0x1FD2,
+  '\u03CA\u0301': 0x0390,
+  '\u03CA\u0342': 0x1FD7,
+  '\u03CB\u0300': 0x1FE2,
+  '\u03CB\u0301': 0x03B0,
+  '\u03CB\u0342': 0x1FE7,
+  '\u03CC': 0x1F79,
+  '\u03CD': 0x1F7B,
+  '\u03CE': 0x1F7D,
+  '\u03CE\u0345': 0x1FF4,
+  '\u03D2\u0301': 0x03D3,
+  '\u03D2\u0308': 0x03D4,
+  '\u0406\u0308': 0x0407,
+  '\u0410\u0306': 0x04D0,
+  '\u0410\u0308': 0x04D2,
+  '\u0413\u0301': 0x0403,
+  '\u0415\u0300': 0x0400,
+  '\u0415\u0306': 0x04D6,
+  '\u0415\u0308': 0x0401,
+  '\u0416\u0306': 0x04C1,
+  '\u0416\u0308': 0x04DC,
+  '\u0417\u0308': 0x04DE,
+  '\u0418\u0300': 0x040D,
+  '\u0418\u0304': 0x04E2,
+  '\u0418\u0306': 0x0419,
+  '\u0418\u0308': 0x04E4,
+  '\u041A\u0301': 0x040C,
+  '\u041E\u0308': 0x04E6,
+  '\u0423\u0304': 0x04EE,
+  '\u0423\u0306': 0x040E,
+  '\u0423\u0308': 0x04F0,
+  '\u0423\u030B': 0x04F2,
+  '\u0427\u0308': 0x04F4,
+  '\u042B\u0308': 0x04F8,
+  '\u042D\u0308': 0x04EC,
+  '\u0430\u0306': 0x04D1,
+  '\u0430\u0308': 0x04D3,
+  '\u0433\u0301': 0x0453,
+  '\u0435\u0300': 0x0450,
+  '\u0435\u0306': 0x04D7,
+  '\u0435\u0308': 0x0451,
+  '\u0436\u0306': 0x04C2,
+  '\u0436\u0308': 0x04DD,
+  '\u0437\u0308': 0x04DF,
+  '\u0438\u0300': 0x045D,
+  '\u0438\u0304': 0x04E3,
+  '\u0438\u0306': 0x0439,
+  '\u0438\u0308': 0x04E5,
+  '\u043A\u0301': 0x045C,
+  '\u043D': 0x1D78,
+  '\u043E\u0308': 0x04E7,
+  '\u0443\u0304': 0x04EF,
+  '\u0443\u0306': 0x045E,
+  '\u0443\u0308': 0x04F1,
+  '\u0443\u030B': 0x04F3,
+  '\u0447\u0308': 0x04F5,
+  '\u044A': 0xA69C,
+  '\u044B\u0308': 0x04F9,
+  '\u044C': 0xA69D,
+  '\u044D\u0308': 0x04ED,
+  '\u0456\u0308': 0x0457,
+  '\u0474\u030F': 0x0476,
+  '\u0475\u030F': 0x0477,
+  '\u04D8\u0308': 0x04DA,
+  '\u04D9\u0308': 0x04DB,
+  '\u04E8\u0308': 0x04EA,
+  '\u04E9\u0308': 0x04EB,
+  '\u0565\u0582': 0x0587,
+  '\u0574\u0565': 0xFB14,
+  '\u0574\u056B': 0xFB15,
+  '\u0574\u056D': 0xFB17,
+  '\u0574\u0576': 0xFB13,
+  '\u057E\u0576': 0xFB16,
+  '\u05D0': 0xFB21,
+  '\u05D0\u05B7': 0xFB2E,
+  '\u05D0\u05B8': 0xFB2F,
+  '\u05D0\u05BC': 0xFB30,
+  '\u05D0\u05DC': 0xFB4F,
+  '\u05D1': 0x2136,
+  '\u05D1\u05BC': 0xFB31,
+  '\u05D1\u05BF': 0xFB4C,
+  '\u05D2': 0x2137,
+  '\u05D2\u05BC': 0xFB32,
+  '\u05D3': 0xFB22,
+  '\u05D3\u05BC': 0xFB33,
+  '\u05D4': 0xFB23,
+  '\u05D4\u05BC': 0xFB34,
+  '\u05D5\u05B9': 0xFB4B,
+  '\u05D5\u05BC': 0xFB35,
+  '\u05D6\u05BC': 0xFB36,
+  '\u05D8\u05BC': 0xFB38,
+  '\u05D9\u05B4': 0xFB1D,
+  '\u05D9\u05BC': 0xFB39,
+  '\u05DA\u05BC': 0xFB3A,
+  '\u05DB': 0xFB24,
+  '\u05DB\u05BC': 0xFB3B,
+  '\u05DB\u05BF': 0xFB4D,
+  '\u05DC': 0xFB25,
+  '\u05DC\u05BC': 0xFB3C,
+  '\u05DD': 0xFB26,
+  '\u05DE\u05BC': 0xFB3E,
+  '\u05E0\u05BC': 0xFB40,
+  '\u05E1\u05BC': 0xFB41,
+  '\u05E2': 0xFB20,
+  '\u05E3\u05BC': 0xFB43,
+  '\u05E4\u05BC': 0xFB44,
+  '\u05E4\u05BF': 0xFB4E,
+  '\u05E6\u05BC': 0xFB46,
+  '\u05E7\u05BC': 0xFB47,
+  '\u05E8': 0xFB27,
+  '\u05E8\u05BC': 0xFB48,
+  '\u05E9\u05BC': 0xFB49,
+  '\u05E9\u05C1': 0xFB2A,
+  '\u05E9\u05C2': 0xFB2B,
+  '\u05EA': 0xFB28,
+  '\u05EA\u05BC': 0xFB4A,
+  '\u05F2\u05B7': 0xFB1F,
+  '\u0621': 0xFE80,
+  '\u0622': 0xFE82,
+  '\u0623': 0xFE84,
+  '\u0624': 0xFE86,
+  '\u0625': 0xFE88,
+  '\u0626': 0xFE8C,
+  '\u0626\u0627': 0xFBEB,
+  '\u0626\u062C': 0xFC97,
+  '\u0626\u062D': 0xFC98,
+  '\u0626\u062E': 0xFC99,
+  '\u0626\u0631': 0xFC64,
+  '\u0626\u0632': 0xFC65,
+  '\u0626\u0645': 0xFCDF,
+  '\u0626\u0646': 0xFC67,
+  '\u0626\u0647': 0xFCE0,
+  '\u0626\u0648': 0xFBEF,
+  '\u0626\u0649': 0xFC68,
+  '\u0626\u064A': 0xFC69,
+  '\u0626\u06C6': 0xFBF3,
+  '\u0626\u06C7': 0xFBF1,
+  '\u0626\u06C8': 0xFBF5,
+  '\u0626\u06D0': 0xFBF8,
+  '\u0626\u06D5': 0xFBED,
+  '\u0627': 0xFE8E,
+  '\u0627\u0643\u0628\u0631': 0xFDF3,
+  '\u0627\u0644\u0644\u0647': 0xFDF2,
+  '\u0627\u064B': 0xFD3D,
+  '\u0627\u0653': 0x0622,
+  '\u0627\u0654': 0x0623,
+  '\u0627\u0655': 0x0625,
+  '\u0627\u0674': 0x0675,
+  '\u0628': 0xFE92,
+  '\u0628\u062C': 0xFC9C,
+  '\u0628\u062D': 0xFC9D,
+  '\u0628\u062D\u064A': 0xFDC2,
+  '\u0628\u062E': 0xFC9E,
+  '\u0628\u062E\u064A': 0xFD9E,
+  '\u0628\u0631': 0xFC6A,
+  '\u0628\u0632': 0xFC6B,
+  '\u0628\u0645': 0xFCE1,
+  '\u0628\u0646': 0xFC6D,
+  '\u0628\u0647': 0xFCE2,
+  '\u0628\u0649': 0xFC6E,
+  '\u0628\u064A': 0xFC6F,
+  '\u0629': 0xFE94,
+  '\u062A': 0xFE98,
+  '\u062A\u062C': 0xFCA1,
+  '\u062A\u062C\u0645': 0xFD50,
+  '\u062A\u062C\u0649': 0xFDA0,
+  '\u062A\u062C\u064A': 0xFD9F,
+  '\u062A\u062D': 0xFCA2,
+  '\u062A\u062D\u062C': 0xFD52,
+  '\u062A\u062D\u0645': 0xFD53,
+  '\u062A\u062E': 0xFCA3,
+  '\u062A\u062E\u0645': 0xFD54,
+  '\u062A\u062E\u0649': 0xFDA2,
+  '\u062A\u062E\u064A': 0xFDA1,
+  '\u062A\u0631': 0xFC70,
+  '\u062A\u0632': 0xFC71,
+  '\u062A\u0645': 0xFCE3,
+  '\u062A\u0645\u062C': 0xFD55,
+  '\u062A\u0645\u062D': 0xFD56,
+  '\u062A\u0645\u062E': 0xFD57,
+  '\u062A\u0645\u0649': 0xFDA4,
+  '\u062A\u0645\u064A': 0xFDA3,
+  '\u062A\u0646': 0xFC73,
+  '\u062A\u0647': 0xFCE4,
+  '\u062A\u0649': 0xFC74,
+  '\u062A\u064A': 0xFC75,
+  '\u062B': 0xFE9C,
+  '\u062B\u062C': 0xFC11,
+  '\u062B\u0631': 0xFC76,
+  '\u062B\u0632': 0xFC77,
+  '\u062B\u0645': 0xFCE5,
+  '\u062B\u0646': 0xFC79,
+  '\u062B\u0647': 0xFCE6,
+  '\u062B\u0649': 0xFC7A,
+  '\u062B\u064A': 0xFC7B,
+  '\u062C': 0xFEA0,
+  '\u062C\u062D': 0xFCA7,
+  '\u062C\u062D\u0649': 0xFDA6,
+  '\u062C\u062D\u064A': 0xFDBE,
+  '\u062C\u0644\u0020\u062C\u0644\u0627\u0644\u0647': 0xFDFB,
+  '\u062C\u0645': 0xFCA8,
+  '\u062C\u0645\u062D': 0xFD59,
+  '\u062C\u0645\u0649': 0xFDA7,
+  '\u062C\u0645\u064A': 0xFDA5,
+  '\u062C\u0649': 0xFD1D,
+  '\u062C\u064A': 0xFD1E,
+  '\u062D': 0xFEA4,
+  '\u062D\u062C': 0xFCA9,
+  '\u062D\u062C\u064A': 0xFDBF,
+  '\u062D\u0645': 0xFCAA,
+  '\u062D\u0645\u0649': 0xFD5B,
+  '\u062D\u0645\u064A': 0xFD5A,
+  '\u062D\u0649': 0xFD1B,
+  '\u062D\u064A': 0xFD1C,
+  '\u062E': 0xFEA8,
+  '\u062E\u062C': 0xFCAB,
+  '\u062E\u062D': 0xFC1A,
+  '\u062E\u0645': 0xFCAC,
+  '\u062E\u0649': 0xFD1F,
+  '\u062E\u064A': 0xFD20,
+  '\u062F': 0xFEAA,
+  '\u0630': 0xFEAC,
+  '\u0630\u0670': 0xFC5B,
+  '\u0631': 0xFEAE,
+  '\u0631\u0633\u0648\u0644': 0xFDF6,
+  '\u0631\u0670': 0xFC5C,
+  '\u0631\u06CC\u0627\u0644': 0xFDFC,
+  '\u0632': 0xFEB0,
+  '\u0633': 0xFEB4,
+  '\u0633\u062C': 0xFD34,
+  '\u0633\u062C\u062D': 0xFD5D,
+  '\u0633\u062C\u0649': 0xFD5E,
+  '\u0633\u062D': 0xFD35,
+  '\u0633\u062D\u062C': 0xFD5C,
+  '\u0633\u062E': 0xFD36,
+  '\u0633\u062E\u0649': 0xFDA8,
+  '\u0633\u062E\u064A': 0xFDC6,
+  '\u0633\u0631': 0xFD2A,
+  '\u0633\u0645': 0xFCE7,
+  '\u0633\u0645\u062C': 0xFD61,
+  '\u0633\u0645\u062D': 0xFD60,
+  '\u0633\u0645\u0645': 0xFD63,
+  '\u0633\u0647': 0xFD31,
+  '\u0633\u0649': 0xFD17,
+  '\u0633\u064A': 0xFD18,
+  '\u0634': 0xFEB8,
+  '\u0634\u062C': 0xFD37,
+  '\u0634\u062C\u064A': 0xFD69,
+  '\u0634\u062D': 0xFD38,
+  '\u0634\u062D\u0645': 0xFD68,
+  '\u0634\u062D\u064A': 0xFDAA,
+  '\u0634\u062E': 0xFD39,
+  '\u0634\u0631': 0xFD29,
+  '\u0634\u0645': 0xFD30,
+  '\u0634\u0645\u062E': 0xFD6B,
+  '\u0634\u0645\u0645': 0xFD6D,
+  '\u0634\u0647': 0xFD32,
+  '\u0634\u0649': 0xFD19,
+  '\u0634\u064A': 0xFD1A,
+  '\u0635': 0xFEBC,
+  '\u0635\u062D': 0xFCB1,
+  '\u0635\u062D\u062D': 0xFD65,
+  '\u0635\u062D\u064A': 0xFDA9,
+  '\u0635\u062E': 0xFCB2,
+  '\u0635\u0631': 0xFD2B,
+  '\u0635\u0644\u0639\u0645': 0xFDF5,
+  '\u0635\u0644\u0649': 0xFDF9,
+  '\u0635\u0644\u06D2': 0xFDF0,
+  '\u0635\u0645': 0xFCB3,
+  '\u0635\u0645\u0645': 0xFDC5,
+  '\u0635\u0649': 0xFD21,
+  '\u0635\u064A': 0xFD22,
+  '\u0636': 0xFEC0,
+  '\u0636\u062C': 0xFCB4,
+  '\u0636\u062D': 0xFCB5,
+  '\u0636\u062D\u0649': 0xFD6E,
+  '\u0636\u062D\u064A': 0xFDAB,
+  '\u0636\u062E': 0xFCB6,
+  '\u0636\u062E\u0645': 0xFD70,
+  '\u0636\u0631': 0xFD2C,
+  '\u0636\u0645': 0xFCB7,
+  '\u0636\u0649': 0xFD23,
+  '\u0636\u064A': 0xFD24,
+  '\u0637': 0xFEC4,
+  '\u0637\u062D': 0xFCB8,
+  '\u0637\u0645': 0xFD3A,
+  '\u0637\u0645\u062D': 0xFD72,
+  '\u0637\u0645\u0645': 0xFD73,
+  '\u0637\u0645\u064A': 0xFD74,
+  '\u0637\u0649': 0xFD11,
+  '\u0637\u064A': 0xFD12,
+  '\u0638': 0xFEC8,
+  '\u0638\u0645': 0xFD3B,
+  '\u0639': 0xFECC,
+  '\u0639\u062C': 0xFCBA,
+  '\u0639\u062C\u0645': 0xFDC4,
+  '\u0639\u0644\u064A\u0647': 0xFDF7,
+  '\u0639\u0645': 0xFCBB,
+  '\u0639\u0645\u0645': 0xFD77,
+  '\u0639\u0645\u0649': 0xFD78,
+  '\u0639\u0645\u064A': 0xFDB6,
+  '\u0639\u0649': 0xFD13,
+  '\u0639\u064A': 0xFD14,
+  '\u063A': 0xFED0,
+  '\u063A\u062C': 0xFCBC,
+  '\u063A\u0645': 0xFCBD,
+  '\u063A\u0645\u0645': 0xFD79,
+  '\u063A\u0645\u0649': 0xFD7B,
+  '\u063A\u0645\u064A': 0xFD7A,
+  '\u063A\u0649': 0xFD15,
+  '\u063A\u064A': 0xFD16,
+  '\u0640\u064B': 0xFE71,
+  '\u0640\u064E': 0xFE77,
+  '\u0640\u064E\u0651': 0xFCF2,
+  '\u0640\u064F': 0xFE79,
+  '\u0640\u064F\u0651': 0xFCF3,
+  '\u0640\u0650': 0xFE7B,
+  '\u0640\u0650\u0651': 0xFCF4,
+  '\u0640\u0651': 0xFE7D,
+  '\u0640\u0652': 0xFE7F,
+  '\u0641': 0xFED4,
+  '\u0641\u062C': 0xFCBE,
+  '\u0641\u062D': 0xFCBF,
+  '\u0641\u062E': 0xFCC0,
+  '\u0641\u062E\u0645': 0xFD7D,
+  '\u0641\u0645': 0xFCC1,
+  '\u0641\u0645\u064A': 0xFDC1,
+  '\u0641\u0649': 0xFC7C,
+  '\u0641\u064A': 0xFC7D,
+  '\u0642': 0xFED8,
+  '\u0642\u062D': 0xFCC2,
+  '\u0642\u0644\u06D2': 0xFDF1,
+  '\u0642\u0645': 0xFCC3,
+  '\u0642\u0645\u062D': 0xFDB4,
+  '\u0642\u0645\u0645': 0xFD7F,
+  '\u0642\u0645\u064A': 0xFDB2,
+  '\u0642\u0649': 0xFC7E,
+  '\u0642\u064A': 0xFC7F,
+  '\u0643': 0xFEDC,
+  '\u0643\u0627': 0xFC80,
+  '\u0643\u062C': 0xFCC4,
+  '\u0643\u062D': 0xFCC5,
+  '\u0643\u062E': 0xFCC6,
+  '\u0643\u0644': 0xFCEB,
+  '\u0643\u0645': 0xFCEC,
+  '\u0643\u0645\u0645': 0xFDC3,
+  '\u0643\u0645\u064A': 0xFDB7,
+  '\u0643\u0649': 0xFC83,
+  '\u0643\u064A': 0xFC84,
+  '\u0644': 0xFEE0,
+  '\u0644\u0622': 0xFEF6,
+  '\u0644\u0623': 0xFEF8,
+  '\u0644\u0625': 0xFEFA,
+  '\u0644\u0627': 0xFEFC,
+  '\u0644\u062C': 0xFCC9,
+  '\u0644\u062C\u062C': 0xFD84,
+  '\u0644\u062C\u0645': 0xFDBC,
+  '\u0644\u062C\u064A': 0xFDAC,
+  '\u0644\u062D': 0xFCCA,
+  '\u0644\u062D\u0645': 0xFDB5,
+  '\u0644\u062D\u0649': 0xFD82,
+  '\u0644\u062D\u064A': 0xFD81,
+  '\u0644\u062E': 0xFCCB,
+  '\u0644\u062E\u0645': 0xFD86,
+  '\u0644\u0645': 0xFCED,
+  '\u0644\u0645\u062D': 0xFD88,
+  '\u0644\u0645\u064A': 0xFDAD,
+  '\u0644\u0647': 0xFCCD,
+  '\u0644\u0649': 0xFC86,
+  '\u0644\u064A': 0xFC87,
+  '\u0645': 0xFEE4,
+  '\u0645\u0627': 0xFC88,
+  '\u0645\u062C': 0xFCCE,
+  '\u0645\u062C\u062D': 0xFD8C,
+  '\u0645\u062C\u062E': 0xFD92,
+  '\u0645\u062C\u0645': 0xFD8D,
+  '\u0645\u062C\u064A': 0xFDC0,
+  '\u0645\u062D': 0xFCCF,
+  '\u0645\u062D\u062C': 0xFD89,
+  '\u0645\u062D\u0645': 0xFD8A,
+  '\u0645\u062D\u0645\u062F': 0xFDF4,
+  '\u0645\u062D\u064A': 0xFD8B,
+  '\u0645\u062E': 0xFCD0,
+  '\u0645\u062E\u062C': 0xFD8E,
+  '\u0645\u062E\u0645': 0xFD8F,
+  '\u0645\u062E\u064A': 0xFDB9,
+  '\u0645\u0645': 0xFCD1,
+  '\u0645\u0645\u064A': 0xFDB1,
+  '\u0645\u0649': 0xFC49,
+  '\u0645\u064A': 0xFC4A,
+  '\u0646': 0xFEE8,
+  '\u0646\u062C': 0xFCD2,
+  '\u0646\u062C\u062D': 0xFDBD,
+  '\u0646\u062C\u0645': 0xFD98,
+  '\u0646\u062C\u0649': 0xFD99,
+  '\u0646\u062C\u064A': 0xFDC7,
+  '\u0646\u062D': 0xFCD3,
+  '\u0646\u062D\u0645': 0xFD95,
+  '\u0646\u062D\u0649': 0xFD96,
+  '\u0646\u062D\u064A': 0xFDB3,
+  '\u0646\u062E': 0xFCD4,
+  '\u0646\u0631': 0xFC8A,
+  '\u0646\u0632': 0xFC8B,
+  '\u0646\u0645': 0xFCEE,
+  '\u0646\u0645\u0649': 0xFD9B,
+  '\u0646\u0645\u064A': 0xFD9A,
+  '\u0646\u0646': 0xFC8D,
+  '\u0646\u0647': 0xFCEF,
+  '\u0646\u0649': 0xFC8E,
+  '\u0646\u064A': 0xFC8F,
+  '\u0647': 0xFEEC,
+  '\u0647\u062C': 0xFCD7,
+  '\u0647\u0645': 0xFCD8,
+  '\u0647\u0645\u062C': 0xFD93,
+  '\u0647\u0645\u0645': 0xFD94,
+  '\u0647\u0649': 0xFC53,
+  '\u0647\u064A': 0xFC54,
+  '\u0647\u0670': 0xFCD9,
+  '\u0648': 0xFEEE,
+  '\u0648\u0633\u0644\u0645': 0xFDF8,
+  '\u0648\u0654': 0x0624,
+  '\u0648\u0674': 0x0676,
+  '\u0649': 0xFEF0,
+  '\u0649\u0670': 0xFC90,
+  '\u064A': 0xFEF4,
+  '\u064A\u062C': 0xFCDA,
+  '\u064A\u062C\u064A': 0xFDAF,
+  '\u064A\u062D': 0xFCDB,
+  '\u064A\u062D\u064A': 0xFDAE,
+  '\u064A\u062E': 0xFCDC,
+  '\u064A\u0631': 0xFC91,
+  '\u064A\u0632': 0xFC92,
+  '\u064A\u0645': 0xFCF0,
+  '\u064A\u0645\u0645': 0xFD9D,
+  '\u064A\u0645\u064A': 0xFDB0,
+  '\u064A\u0646': 0xFC94,
+  '\u064A\u0647': 0xFCF1,
+  '\u064A\u0649': 0xFC95,
+  '\u064A\u064A': 0xFC96,
+  '\u064A\u0654': 0x0626,
+  '\u064A\u0674': 0x0678,
+  '\u0671': 0xFB51,
+  '\u0677': 0xFBDD,
+  '\u0679': 0xFB69,
+  '\u067A': 0xFB61,
+  '\u067B': 0xFB55,
+  '\u067E': 0xFB59,
+  '\u067F': 0xFB65,
+  '\u0680': 0xFB5D,
+  '\u0683': 0xFB79,
+  '\u0684': 0xFB75,
+  '\u0686': 0xFB7D,
+  '\u0687': 0xFB81,
+  '\u0688': 0xFB89,
+  '\u068C': 0xFB85,
+  '\u068D': 0xFB83,
+  '\u068E': 0xFB87,
+  '\u0691': 0xFB8D,
+  '\u0698': 0xFB8B,
+  '\u06A4': 0xFB6D,
+  '\u06A6': 0xFB71,
+  '\u06A9': 0xFB91,
+  '\u06AD': 0xFBD6,
+  '\u06AF': 0xFB95,
+  '\u06B1': 0xFB9D,
+  '\u06B3': 0xFB99,
+  '\u06BA': 0xFB9F,
+  '\u06BB': 0xFBA3,
+  '\u06BE': 0xFBAD,
+  '\u06C0': 0xFBA5,
+  '\u06C1': 0xFBA9,
+  '\u06C1\u0654': 0x06C2,
+  '\u06C5': 0xFBE1,
+  '\u06C6': 0xFBDA,
+  '\u06C7': 0xFBD8,
+  '\u06C7\u0674': 0x0677,
+  '\u06C8': 0xFBDC,
+  '\u06C9': 0xFBE3,
+  '\u06CB': 0xFBDF,
+  '\u06CC': 0xFBFF,
+  '\u06D0': 0xFBE7,
+  '\u06D2': 0xFBAF,
+  '\u06D2\u0654': 0x06D3,
+  '\u06D3': 0xFBB1,
+  '\u06D5\u0654': 0x06C0,
+  '\u0915\u093C': 0x0958,
+  '\u0916\u093C': 0x0959,
+  '\u0917\u093C': 0x095A,
+  '\u091C\u093C': 0x095B,
+  '\u0921\u093C': 0x095C,
+  '\u0922\u093C': 0x095D,
+  '\u0928\u093C': 0x0929,
+  '\u092B\u093C': 0x095E,
+  '\u092F\u093C': 0x095F,
+  '\u0930\u093C': 0x0931,
+  '\u0933\u093C': 0x0934,
+  '\u09A1\u09BC': 0x09DC,
+  '\u09A2\u09BC': 0x09DD,
+  '\u09AF\u09BC': 0x09DF,
+  '\u09C7\u09BE': 0x09CB,
+  '\u09C7\u09D7': 0x09CC,
+  '\u0A16\u0A3C': 0x0A59,
+  '\u0A17\u0A3C': 0x0A5A,
+  '\u0A1C\u0A3C': 0x0A5B,
+  '\u0A2B\u0A3C': 0x0A5E,
+  '\u0A32\u0A3C': 0x0A33,
+  '\u0A38\u0A3C': 0x0A36,
+  '\u0B21\u0B3C': 0x0B5C,
+  '\u0B22\u0B3C': 0x0B5D,
+  '\u0B47\u0B3E': 0x0B4B,
+  '\u0B47\u0B56': 0x0B48,
+  '\u0B47\u0B57': 0x0B4C,
+  '\u0B92\u0BD7': 0x0B94,
+  '\u0BC6\u0BBE': 0x0BCA,
+  '\u0BC6\u0BD7': 0x0BCC,
+  '\u0BC7\u0BBE': 0x0BCB,
+  '\u0C46\u0C56': 0x0C48,
+  '\u0CBF\u0CD5': 0x0CC0,
+  '\u0CC6\u0CC2': 0x0CCA,
+  '\u0CC6\u0CD5': 0x0CC7,
+  '\u0CC6\u0CD6': 0x0CC8,
+  '\u0CCA\u0CD5': 0x0CCB,
+  '\u0D46\u0D3E': 0x0D4A,
+  '\u0D46\u0D57': 0x0D4C,
+  '\u0D47\u0D3E': 0x0D4B,
+  '\u0DD9\u0DCA': 0x0DDA,
+  '\u0DD9\u0DCF': 0x0DDC,
+  '\u0DD9\u0DDF': 0x0DDE,
+  '\u0DDC\u0DCA': 0x0DDD,
+  '\u0E4D\u0E32': 0x0E33,
+  '\u0EAB\u0E99': 0x0EDC,
+  '\u0EAB\u0EA1': 0x0EDD,
+  '\u0ECD\u0EB2': 0x0EB3,
+  '\u0F0B': 0x0F0C,
+  '\u0F40\u0FB5': 0x0F69,
+  '\u0F42\u0FB7': 0x0F43,
+  '\u0F4C\u0FB7': 0x0F4D,
+  '\u0F51\u0FB7': 0x0F52,
+  '\u0F56\u0FB7': 0x0F57,
+  '\u0F5B\u0FB7': 0x0F5C,
+  '\u0F71\u0F72': 0x0F73,
+  '\u0F71\u0F74': 0x0F75,
+  '\u0F71\u0F80': 0x0F81,
+  '\u0F90\u0FB5': 0x0FB9,
+  '\u0F92\u0FB7': 0x0F93,
+  '\u0F9C\u0FB7': 0x0F9D,
+  '\u0FA1\u0FB7': 0x0FA2,
+  '\u0FA6\u0FB7': 0x0FA7,
+  '\u0FAB\u0FB7': 0x0FAC,
+  '\u0FB2\u0F80': 0x0F76,
+  '\u0FB2\u0F81': 0x0F77,
+  '\u0FB3\u0F80': 0x0F78,
+  '\u0FB3\u0F81': 0x0F79,
+  '\u1025\u102E': 0x1026,
+  '\u10DC': 0x10FC,
+  '\u1100': 0x3260,
+  '\u1100\u1161': 0x326E,
+  '\u1101': 0x3132,
+  '\u1102': 0x3261,
+  '\u1102\u1161': 0x326F,
+  '\u1103': 0x3262,
+  '\u1103\u1161': 0x3270,
+  '\u1104': 0x3138,
+  '\u1105': 0x3263,
+  '\u1105\u1161': 0x3271,
+  '\u1106': 0x3264,
+  '\u1106\u1161': 0x3272,
+  '\u1107': 0x3265,
+  '\u1107\u1161': 0x3273,
+  '\u1108': 0x3143,
+  '\u1109': 0x3266,
+  '\u1109\u1161': 0x3274,
+  '\u110A': 0x3146,
+  '\u110B': 0x3267,
+  '\u110B\u1161': 0x3275,
+  '\u110B\u116E': 0x327E,
+  '\u110C': 0x3268,
+  '\u110C\u1161': 0x3276,
+  '\u110C\u116E\u110B\u1174': 0x327D,
+  '\u110D': 0x3149,
+  '\u110E': 0x3269,
+  '\u110E\u1161': 0x3277,
+  '\u110E\u1161\u11B7\u1100\u1169': 0x327C,
+  '\u110F': 0x326A,
+  '\u110F\u1161': 0x3278,
+  '\u1110': 0x326B,
+  '\u1110\u1161': 0x3279,
+  '\u1111': 0x326C,
+  '\u1111\u1161': 0x327A,
+  '\u1112': 0x326D,
+  '\u1112\u1161': 0x327B,
+  '\u1114': 0x3165,
+  '\u1115': 0x3166,
+  '\u111A': 0x3140,
+  '\u111C': 0x316E,
+  '\u111D': 0x3171,
+  '\u111E': 0x3172,
+  '\u1120': 0x3173,
+  '\u1121': 0x3144,
+  '\u1122': 0x3174,
+  '\u1123': 0x3175,
+  '\u1127': 0x3176,
+  '\u1129': 0x3177,
+  '\u112B': 0x3178,
+  '\u112C': 0x3179,
+  '\u112D': 0x317A,
+  '\u112E': 0x317B,
+  '\u112F': 0x317C,
+  '\u1132': 0x317D,
+  '\u1136': 0x317E,
+  '\u1140': 0x317F,
+  '\u1147': 0x3180,
+  '\u114C': 0x3181,
+  '\u1157': 0x3184,
+  '\u1158': 0x3185,
+  '\u1159': 0x3186,
+  '\u1160': 0x3164,
+  '\u1161': 0x314F,
+  '\u1162': 0x3150,
+  '\u1163': 0x3151,
+  '\u1164': 0x3152,
+  '\u1165': 0x3153,
+  '\u1166': 0x3154,
+  '\u1167': 0x3155,
+  '\u1168': 0x3156,
+  '\u1169': 0x3157,
+  '\u116A': 0x3158,
+  '\u116B': 0x3159,
+  '\u116C': 0x315A,
+  '\u116D': 0x315B,
+  '\u116E': 0x315C,
+  '\u116F': 0x315D,
+  '\u1170': 0x315E,
+  '\u1171': 0x315F,
+  '\u1172': 0x3160,
+  '\u1173': 0x3161,
+  '\u1174': 0x3162,
+  '\u1175': 0x3163,
+  '\u1184': 0x3187,
+  '\u1185': 0x3188,
+  '\u1188': 0x3189,
+  '\u1191': 0x318A,
+  '\u1192': 0x318B,
+  '\u1194': 0x318C,
+  '\u119E': 0x318D,
+  '\u11A1': 0x318E,
+  '\u11AA': 0x3133,
+  '\u11AC': 0x3135,
+  '\u11AD': 0x3136,
+  '\u11B0': 0x313A,
+  '\u11B1': 0x313B,
+  '\u11B2': 0x313C,
+  '\u11B3': 0x313D,
+  '\u11B4': 0x313E,
+  '\u11B5': 0x313F,
+  '\u11C7': 0x3167,
+  '\u11C8': 0x3168,
+  '\u11CC': 0x3169,
+  '\u11CE': 0x316A,
+  '\u11D3': 0x316B,
+  '\u11D7': 0x316C,
+  '\u11D9': 0x316D,
+  '\u11DD': 0x316F,
+  '\u11DF': 0x3170,
+  '\u11F1': 0x3182,
+  '\u11F2': 0x3183,
+  '\u1B05\u1B35': 0x1B06,
+  '\u1B07\u1B35': 0x1B08,
+  '\u1B09\u1B35': 0x1B0A,
+  '\u1B0B\u1B35': 0x1B0C,
+  '\u1B0D\u1B35': 0x1B0E,
+  '\u1B11\u1B35': 0x1B12,
+  '\u1B3A\u1B35': 0x1B3B,
+  '\u1B3C\u1B35': 0x1B3D,
+  '\u1B3E\u1B35': 0x1B40,
+  '\u1B3F\u1B35': 0x1B41,
+  '\u1B42\u1B35': 0x1B43,
+  '\u1D02': 0x1D46,
+  '\u1D16': 0x1D54,
+  '\u1D17': 0x1D55,
+  '\u1D1C': 0x1DB8,
+  '\u1D1D': 0x1D59,
+  '\u1D25': 0x1D5C,
+  '\u1D7B': 0x1DA7,
+  '\u1D85': 0x1DAA,
+  '\u1E36\u0304': 0x1E38,
+  '\u1E37\u0304': 0x1E39,
+  '\u1E5A\u0304': 0x1E5C,
+  '\u1E5B\u0304': 0x1E5D,
+  '\u1E62\u0307': 0x1E68,
+  '\u1E63\u0307': 0x1E69,
+  '\u1EA0\u0302': 0x1EAC,
+  '\u1EA0\u0306': 0x1EB6,
+  '\u1EA1\u0302': 0x1EAD,
+  '\u1EA1\u0306': 0x1EB7,
+  '\u1EB8\u0302': 0x1EC6,
+  '\u1EB9\u0302': 0x1EC7,
+  '\u1ECC\u0302': 0x1ED8,
+  '\u1ECD\u0302': 0x1ED9,
+  '\u1F00\u0300': 0x1F02,
+  '\u1F00\u0301': 0x1F04,
+  '\u1F00\u0342': 0x1F06,
+  '\u1F00\u0345': 0x1F80,
+  '\u1F01\u0300': 0x1F03,
+  '\u1F01\u0301': 0x1F05,
+  '\u1F01\u0342': 0x1F07,
+  '\u1F01\u0345': 0x1F81,
+  '\u1F02\u0345': 0x1F82,
+  '\u1F03\u0345': 0x1F83,
+  '\u1F04\u0345': 0x1F84,
+  '\u1F05\u0345': 0x1F85,
+  '\u1F06\u0345': 0x1F86,
+  '\u1F07\u0345': 0x1F87,
+  '\u1F08\u0300': 0x1F0A,
+  '\u1F08\u0301': 0x1F0C,
+  '\u1F08\u0342': 0x1F0E,
+  '\u1F08\u0345': 0x1F88,
+  '\u1F09\u0300': 0x1F0B,
+  '\u1F09\u0301': 0x1F0D,
+  '\u1F09\u0342': 0x1F0F,
+  '\u1F09\u0345': 0x1F89,
+  '\u1F0A\u0345': 0x1F8A,
+  '\u1F0B\u0345': 0x1F8B,
+  '\u1F0C\u0345': 0x1F8C,
+  '\u1F0D\u0345': 0x1F8D,
+  '\u1F0E\u0345': 0x1F8E,
+  '\u1F0F\u0345': 0x1F8F,
+  '\u1F10\u0300': 0x1F12,
+  '\u1F10\u0301': 0x1F14,
+  '\u1F11\u0300': 0x1F13,
+  '\u1F11\u0301': 0x1F15,
+  '\u1F18\u0300': 0x1F1A,
+  '\u1F18\u0301': 0x1F1C,
+  '\u1F19\u0300': 0x1F1B,
+  '\u1F19\u0301': 0x1F1D,
+  '\u1F20\u0300': 0x1F22,
+  '\u1F20\u0301': 0x1F24,
+  '\u1F20\u0342': 0x1F26,
+  '\u1F20\u0345': 0x1F90,
+  '\u1F21\u0300': 0x1F23,
+  '\u1F21\u0301': 0x1F25,
+  '\u1F21\u0342': 0x1F27,
+  '\u1F21\u0345': 0x1F91,
+  '\u1F22\u0345': 0x1F92,
+  '\u1F23\u0345': 0x1F93,
+  '\u1F24\u0345': 0x1F94,
+  '\u1F25\u0345': 0x1F95,
+  '\u1F26\u0345': 0x1F96,
+  '\u1F27\u0345': 0x1F97,
+  '\u1F28\u0300': 0x1F2A,
+  '\u1F28\u0301': 0x1F2C,
+  '\u1F28\u0342': 0x1F2E,
+  '\u1F28\u0345': 0x1F98,
+  '\u1F29\u0300': 0x1F2B,
+  '\u1F29\u0301': 0x1F2D,
+  '\u1F29\u0342': 0x1F2F,
+  '\u1F29\u0345': 0x1F99,
+  '\u1F2A\u0345': 0x1F9A,
+  '\u1F2B\u0345': 0x1F9B,
+  '\u1F2C\u0345': 0x1F9C,
+  '\u1F2D\u0345': 0x1F9D,
+  '\u1F2E\u0345': 0x1F9E,
+  '\u1F2F\u0345': 0x1F9F,
+  '\u1F30\u0300': 0x1F32,
+  '\u1F30\u0301': 0x1F34,
+  '\u1F30\u0342': 0x1F36,
+  '\u1F31\u0300': 0x1F33,
+  '\u1F31\u0301': 0x1F35,
+  '\u1F31\u0342': 0x1F37,
+  '\u1F38\u0300': 0x1F3A,
+  '\u1F38\u0301': 0x1F3C,
+  '\u1F38\u0342': 0x1F3E,
+  '\u1F39\u0300': 0x1F3B,
+  '\u1F39\u0301': 0x1F3D,
+  '\u1F39\u0342': 0x1F3F,
+  '\u1F40\u0300': 0x1F42,
+  '\u1F40\u0301': 0x1F44,
+  '\u1F41\u0300': 0x1F43,
+  '\u1F41\u0301': 0x1F45,
+  '\u1F48\u0300': 0x1F4A,
+  '\u1F48\u0301': 0x1F4C,
+  '\u1F49\u0300': 0x1F4B,
+  '\u1F49\u0301': 0x1F4D,
+  '\u1F50\u0300': 0x1F52,
+  '\u1F50\u0301': 0x1F54,
+  '\u1F50\u0342': 0x1F56,
+  '\u1F51\u0300': 0x1F53,
+  '\u1F51\u0301': 0x1F55,
+  '\u1F51\u0342': 0x1F57,
+  '\u1F59\u0300': 0x1F5B,
+  '\u1F59\u0301': 0x1F5D,
+  '\u1F59\u0342': 0x1F5F,
+  '\u1F60\u0300': 0x1F62,
+  '\u1F60\u0301': 0x1F64,
+  '\u1F60\u0342': 0x1F66,
+  '\u1F60\u0345': 0x1FA0,
+  '\u1F61\u0300': 0x1F63,
+  '\u1F61\u0301': 0x1F65,
+  '\u1F61\u0342': 0x1F67,
+  '\u1F61\u0345': 0x1FA1,
+  '\u1F62\u0345': 0x1FA2,
+  '\u1F63\u0345': 0x1FA3,
+  '\u1F64\u0345': 0x1FA4,
+  '\u1F65\u0345': 0x1FA5,
+  '\u1F66\u0345': 0x1FA6,
+  '\u1F67\u0345': 0x1FA7,
+  '\u1F68\u0300': 0x1F6A,
+  '\u1F68\u0301': 0x1F6C,
+  '\u1F68\u0342': 0x1F6E,
+  '\u1F68\u0345': 0x1FA8,
+  '\u1F69\u0300': 0x1F6B,
+  '\u1F69\u0301': 0x1F6D,
+  '\u1F69\u0342': 0x1F6F,
+  '\u1F69\u0345': 0x1FA9,
+  '\u1F6A\u0345': 0x1FAA,
+  '\u1F6B\u0345': 0x1FAB,
+  '\u1F6C\u0345': 0x1FAC,
+  '\u1F6D\u0345': 0x1FAD,
+  '\u1F6E\u0345': 0x1FAE,
+  '\u1F6F\u0345': 0x1FAF,
+  '\u1F70\u0345': 0x1FB2,
+  '\u1F74\u0345': 0x1FC2,
+  '\u1F7C\u0345': 0x1FF2,
+  '\u1FB6\u0345': 0x1FB7,
+  '\u1FBF\u0300': 0x1FCD,
+  '\u1FBF\u0301': 0x1FCE,
+  '\u1FBF\u0342': 0x1FCF,
+  '\u1FC6\u0345': 0x1FC7,
+  '\u1FF6\u0345': 0x1FF7,
+  '\u1FFE\u0300': 0x1FDD,
+  '\u1FFE\u0301': 0x1FDE,
+  '\u1FFE\u0342': 0x1FDF,
+  '\u2002': 0x2000,
+  '\u2003': 0x2001,
+  '\u2010': 0x2011,
+  '\u2013': 0xFE32,
+  '\u2014': 0xFE58,
+  '\u2025': 0xFE30,
+  '\u2026': 0xFE19,
+  '\u2032\u2032': 0x2033,
+  '\u2032\u2032\u2032': 0x2034,
+  '\u2032\u2032\u2032\u2032': 0x2057,
+  '\u2035\u2035': 0x2036,
+  '\u2035\u2035\u2035': 0x2037,
+  '\u203E': 0xFE4C,
+  '\u20A9': 0xFFE6,
+  '\u2190': 0xFFE9,
+  '\u2190\u0338': 0x219A,
+  '\u2191': 0xFFEA,
+  '\u2192': 0xFFEB,
+  '\u2192\u0338': 0x219B,
+  '\u2193': 0xFFEC,
+  '\u2194\u0338': 0x21AE,
+  '\u21D0\u0338': 0x21CD,
+  '\u21D2\u0338': 0x21CF,
+  '\u21D4\u0338': 0x21CE,
+  '\u2203\u0338': 0x2204,
+  '\u2208\u0338': 0x2209,
+  '\u220B\u0338': 0x220C,
+  '\u2211': 0x2140,
+  '\u2212': 0x208B,
+  '\u2223\u0338': 0x2224,
+  '\u2225\u0338': 0x2226,
+  '\u222B\u222B': 0x222C,
+  '\u222B\u222B\u222B': 0x222D,
+  '\u222B\u222B\u222B\u222B': 0x2A0C,
+  '\u222E\u222E': 0x222F,
+  '\u222E\u222E\u222E': 0x2230,
+  '\u223C\u0338': 0x2241,
+  '\u2243\u0338': 0x2244,
+  '\u2245\u0338': 0x2247,
+  '\u2248\u0338': 0x2249,
+  '\u224D\u0338': 0x226D,
+  '\u2261\u0338': 0x2262,
+  '\u2264\u0338': 0x2270,
+  '\u2265\u0338': 0x2271,
+  '\u2272\u0338': 0x2274,
+  '\u2273\u0338': 0x2275,
+  '\u2276\u0338': 0x2278,
+  '\u2277\u0338': 0x2279,
+  '\u227A\u0338': 0x2280,
+  '\u227B\u0338': 0x2281,
+  '\u227C\u0338': 0x22E0,
+  '\u227D\u0338': 0x22E1,
+  '\u2282\u0338': 0x2284,
+  '\u2283\u0338': 0x2285,
+  '\u22844': 0xFAD0,
+  '\u2284A': 0xFACF,
+  '\u2286\u0338': 0x2288,
+  '\u2287\u0338': 0x2289,
+  '\u2291\u0338': 0x22E2,
+  '\u2292\u0338': 0x22E3,
+  '\u22A2\u0338': 0x22AC,
+  '\u22A8\u0338': 0x22AD,
+  '\u22A9\u0338': 0x22AE,
+  '\u22AB\u0338': 0x22AF,
+  '\u22B2\u0338': 0x22EA,
+  '\u22B3\u0338': 0x22EB,
+  '\u22B4\u0338': 0x22EC,
+  '\u22B5\u0338': 0x22ED,
+  '\u233D5': 0xFAD1,
+  '\u242EE': 0xFA6C,
+  '\u2502': 0xFFE8,
+  '\u25249': 0xFAD5,
+  '\u25A0': 0xFFED,
+  '\u25CB': 0xFFEE,
+  '\u25CD0': 0xFAD6,
+  '\u27ED3': 0xFAD7,
+  '\u2985': 0xFF5F,
+  '\u2986': 0xFF60,
+  '\u2ADD\u0338': 0x2ADC,
+  '\u2D61': 0x2D6F,
+  '\u3001': 0xFF64,
+  '\u3002': 0xFF61,
+  '\u3008': 0xFE3F,
+  '\u3009': 0xFE40,
+  '\u300A': 0xFE3D,
+  '\u300B': 0xFE3E,
+  '\u300C': 0xFF62,
+  '\u300D': 0xFF63,
+  '\u300E': 0xFE43,
+  '\u300F': 0xFE44,
+  '\u3010': 0xFE3B,
+  '\u3011': 0xFE3C,
+  '\u3012': 0x3036,
+  '\u3014': 0xFE5D,
+  '\u3015': 0xFE5E,
+  '\u3016': 0xFE17,
+  '\u3017': 0xFE18,
+  '\u3046\u3099': 0x3094,
+  '\u304B\u3099': 0x304C,
+  '\u304D\u3099': 0x304E,
+  '\u304F\u3099': 0x3050,
+  '\u3051\u3099': 0x3052,
+  '\u3053\u3099': 0x3054,
+  '\u3055\u3099': 0x3056,
+  '\u3057\u3099': 0x3058,
+  '\u3059\u3099': 0x305A,
+  '\u305B\u3099': 0x305C,
+  '\u305D\u3099': 0x305E,
+  '\u305F\u3099': 0x3060,
+  '\u3061\u3099': 0x3062,
+  '\u3064\u3099': 0x3065,
+  '\u3066\u3099': 0x3067,
+  '\u3068\u3099': 0x3069,
+  '\u306F\u3099': 0x3070,
+  '\u306F\u309A': 0x3071,
+  '\u3072\u3099': 0x3073,
+  '\u3072\u309A': 0x3074,
+  '\u3075\u3099': 0x3076,
+  '\u3075\u309A': 0x3077,
+  '\u3078\u3099': 0x3079,
+  '\u3078\u309A': 0x307A,
+  '\u307B\u3099': 0x307C,
+  '\u307B\u309A': 0x307D,
+  '\u3088\u308A': 0x309F,
+  '\u3099': 0xFF9E,
+  '\u309A': 0xFF9F,
+  '\u309D\u3099': 0x309E,
+  '\u30A1': 0xFF67,
+  '\u30A2': 0xFF71,
+  '\u30A2\u30D1\u30FC\u30C8': 0x3300,
+  '\u30A2\u30EB\u30D5\u30A1': 0x3301,
+  '\u30A2\u30F3\u30DA\u30A2': 0x3302,
+  '\u30A2\u30FC\u30EB': 0x3303,
+  '\u30A3': 0xFF68,
+  '\u30A4': 0xFF72,
+  '\u30A4\u30CB\u30F3\u30B0': 0x3304,
+  '\u30A4\u30F3\u30C1': 0x3305,
+  '\u30A5': 0xFF69,
+  '\u30A6': 0xFF73,
+  '\u30A6\u3099': 0x30F4,
+  '\u30A6\u30A9\u30F3': 0x3306,
+  '\u30A7': 0xFF6A,
+  '\u30A8': 0xFF74,
+  '\u30A8\u30B9\u30AF\u30FC\u30C9': 0x3307,
+  '\u30A8\u30FC\u30AB\u30FC': 0x3308,
+  '\u30A9': 0xFF6B,
+  '\u30AA': 0xFF75,
+  '\u30AA\u30F3\u30B9': 0x3309,
+  '\u30AA\u30FC\u30E0': 0x330A,
+  '\u30AB': 0xFF76,
+  '\u30AB\u3099': 0x30AC,
+  '\u30AB\u30A4\u30EA': 0x330B,
+  '\u30AB\u30E9\u30C3\u30C8': 0x330C,
+  '\u30AB\u30ED\u30EA\u30FC': 0x330D,
+  '\u30AC\u30ED\u30F3': 0x330E,
+  '\u30AC\u30F3\u30DE': 0x330F,
+  '\u30AD': 0xFF77,
+  '\u30AD\u3099': 0x30AE,
+  '\u30AD\u30E5\u30EA\u30FC': 0x3312,
+  '\u30AD\u30ED': 0x3314,
+  '\u30AD\u30ED\u30B0\u30E9\u30E0': 0x3315,
+  '\u30AD\u30ED\u30E1\u30FC\u30C8\u30EB': 0x3316,
+  '\u30AD\u30ED\u30EF\u30C3\u30C8': 0x3317,
+  '\u30AE\u30AC': 0x3310,
+  '\u30AE\u30CB\u30FC': 0x3311,
+  '\u30AE\u30EB\u30C0\u30FC': 0x3313,
+  '\u30AF': 0xFF78,
+  '\u30AF\u3099': 0x30B0,
+  '\u30AF\u30EB\u30BC\u30A4\u30ED': 0x331A,
+  '\u30AF\u30ED\u30FC\u30CD': 0x331B,
+  '\u30B0\u30E9\u30E0': 0x3318,
+  '\u30B0\u30E9\u30E0\u30C8\u30F3': 0x3319,
+  '\u30B1': 0xFF79,
+  '\u30B1\u3099': 0x30B2,
+  '\u30B1\u30FC\u30B9': 0x331C,
+  '\u30B3': 0xFF7A,
+  '\u30B3\u3099': 0x30B4,
+  '\u30B3\u30C8': 0x30FF,
+  '\u30B3\u30EB\u30CA': 0x331D,
+  '\u30B3\u30FC\u30DD': 0x331E,
+  '\u30B5': 0xFF7B,
+  '\u30B5\u3099': 0x30B6,
+  '\u30B5\u30A4\u30AF\u30EB': 0x331F,
+  '\u30B5\u30F3\u30C1\u30FC\u30E0': 0x3320,
+  '\u30B7': 0xFF7C,
+  '\u30B7\u3099': 0x30B8,
+  '\u30B7\u30EA\u30F3\u30B0': 0x3321,
+  '\u30B9': 0xFF7D,
+  '\u30B9\u3099': 0x30BA,
+  '\u30BB': 0xFF7E,
+  '\u30BB\u3099': 0x30BC,
+  '\u30BB\u30F3\u30C1': 0x3322,
+  '\u30BB\u30F3\u30C8': 0x3323,
+  '\u30BD': 0xFF7F,
+  '\u30BD\u3099': 0x30BE,
+  '\u30BF': 0xFF80,
+  '\u30BF\u3099': 0x30C0,
+  '\u30C0\u30FC\u30B9': 0x3324,
+  '\u30C1': 0xFF81,
+  '\u30C1\u3099': 0x30C2,
+  '\u30C3': 0xFF6F,
+  '\u30C4': 0xFF82,
+  '\u30C4\u3099': 0x30C5,
+  '\u30C6': 0xFF83,
+  '\u30C6\u3099': 0x30C7,
+  '\u30C7\u30B7': 0x3325,
+  '\u30C8': 0xFF84,
+  '\u30C8\u3099': 0x30C9,
+  '\u30C8\u30F3': 0x3327,
+  '\u30C9\u30EB': 0x3326,
+  '\u30CA': 0xFF85,
+  '\u30CA\u30CE': 0x3328,
+  '\u30CB': 0xFF86,
+  '\u30CC': 0xFF87,
+  '\u30CD': 0xFF88,
+  '\u30CE': 0xFF89,
+  '\u30CE\u30C3\u30C8': 0x3329,
+  '\u30CF': 0xFF8A,
+  '\u30CF\u3099': 0x30D0,
+  '\u30CF\u309A': 0x30D1,
+  '\u30CF\u30A4\u30C4': 0x332A,
+  '\u30D0\u30FC\u30EC\u30EB': 0x332D,
+  '\u30D1\u30FC\u30BB\u30F3\u30C8': 0x332B,
+  '\u30D1\u30FC\u30C4': 0x332C,
+  '\u30D2': 0xFF8B,
+  '\u30D2\u3099': 0x30D3,
+  '\u30D2\u309A': 0x30D4,
+  '\u30D3\u30EB': 0x3331,
+  '\u30D4\u30A2\u30B9\u30C8\u30EB': 0x332E,
+  '\u30D4\u30AF\u30EB': 0x332F,
+  '\u30D4\u30B3': 0x3330,
+  '\u30D5': 0xFF8C,
+  '\u30D5\u3099': 0x30D6,
+  '\u30D5\u309A': 0x30D7,
+  '\u30D5\u30A1\u30E9\u30C3\u30C9': 0x3332,
+  '\u30D5\u30A3\u30FC\u30C8': 0x3333,
+  '\u30D5\u30E9\u30F3': 0x3335,
+  '\u30D6\u30C3\u30B7\u30A7\u30EB': 0x3334,
+  '\u30D8': 0xFF8D,
+  '\u30D8\u3099': 0x30D9,
+  '\u30D8\u309A': 0x30DA,
+  '\u30D8\u30AF\u30BF\u30FC\u30EB': 0x3336,
+  '\u30D8\u30EB\u30C4': 0x3339,
+  '\u30D9\u30FC\u30BF': 0x333C,
+  '\u30DA\u30BD': 0x3337,
+  '\u30DA\u30CB\u30D2': 0x3338,
+  '\u30DA\u30F3\u30B9': 0x333A,
+  '\u30DA\u30FC\u30B8': 0x333B,
+  '\u30DB': 0xFF8E,
+  '\u30DB\u3099': 0x30DC,
+  '\u30DB\u309A': 0x30DD,
+  '\u30DB\u30F3': 0x333F,
+  '\u30DB\u30FC\u30EB': 0x3341,
+  '\u30DB\u30FC\u30F3': 0x3342,
+  '\u30DC\u30EB\u30C8': 0x333E,
+  '\u30DD\u30A4\u30F3\u30C8': 0x333D,
+  '\u30DD\u30F3\u30C9': 0x3340,
+  '\u30DE': 0xFF8F,
+  '\u30DE\u30A4\u30AF\u30ED': 0x3343,
+  '\u30DE\u30A4\u30EB': 0x3344,
+  '\u30DE\u30C3\u30CF': 0x3345,
+  '\u30DE\u30EB\u30AF': 0x3346,
+  '\u30DE\u30F3\u30B7\u30E7\u30F3': 0x3347,
+  '\u30DF': 0xFF90,
+  '\u30DF\u30AF\u30ED\u30F3': 0x3348,
+  '\u30DF\u30EA': 0x3349,
+  '\u30DF\u30EA\u30D0\u30FC\u30EB': 0x334A,
+  '\u30E0': 0xFF91,
+  '\u30E1': 0xFF92,
+  '\u30E1\u30AC': 0x334B,
+  '\u30E1\u30AC\u30C8\u30F3': 0x334C,
+  '\u30E1\u30FC\u30C8\u30EB': 0x334D,
+  '\u30E2': 0xFF93,
+  '\u30E3': 0xFF6C,
+  '\u30E4': 0xFF94,
+  '\u30E4\u30FC\u30C9': 0x334E,
+  '\u30E4\u30FC\u30EB': 0x334F,
+  '\u30E5': 0xFF6D,
+  '\u30E6': 0xFF95,
+  '\u30E6\u30A2\u30F3': 0x3350,
+  '\u30E7': 0xFF6E,
+  '\u30E8': 0xFF96,
+  '\u30E9': 0xFF97,
+  '\u30EA': 0xFF98,
+  '\u30EA\u30C3\u30C8\u30EB': 0x3351,
+  '\u30EA\u30E9': 0x3352,
+  '\u30EB': 0xFF99,
+  '\u30EB\u30D4\u30FC': 0x3353,
+  '\u30EB\u30FC\u30D6\u30EB': 0x3354,
+  '\u30EC': 0xFF9A,
+  '\u30EC\u30E0': 0x3355,
+  '\u30EC\u30F3\u30C8\u30B2\u30F3': 0x3356,
+  '\u30ED': 0xFF9B,
+  '\u30EF': 0xFF9C,
+  '\u30EF\u3099': 0x30F7,
+  '\u30EF\u30C3\u30C8': 0x3357,
+  '\u30F0': 0x32FC,
+  '\u30F0\u3099': 0x30F8,
+  '\u30F1': 0x32FD,
+  '\u30F1\u3099': 0x30F9,
+  '\u30F2': 0xFF66,
+  '\u30F2\u3099': 0x30FA,
+  '\u30F3': 0xFF9D,
+  '\u30FB': 0xFF65,
+  '\u30FC': 0xFF70,
+  '\u30FD\u3099': 0x30FE,
+  '\u3131': 0xFFA1,
+  '\u3132': 0xFFA2,
+  '\u3133': 0xFFA3,
+  '\u3134': 0xFFA4,
+  '\u3135': 0xFFA5,
+  '\u3136': 0xFFA6,
+  '\u3137': 0xFFA7,
+  '\u3138': 0xFFA8,
+  '\u3139': 0xFFA9,
+  '\u313A': 0xFFAA,
+  '\u313B': 0xFFAB,
+  '\u313C': 0xFFAC,
+  '\u313D': 0xFFAD,
+  '\u313E': 0xFFAE,
+  '\u313F': 0xFFAF,
+  '\u3140': 0xFFB0,
+  '\u3141': 0xFFB1,
+  '\u3142': 0xFFB2,
+  '\u3143': 0xFFB3,
+  '\u3144': 0xFFB4,
+  '\u3145': 0xFFB5,
+  '\u3146': 0xFFB6,
+  '\u3147': 0xFFB7,
+  '\u3148': 0xFFB8,
+  '\u3149': 0xFFB9,
+  '\u314A': 0xFFBA,
+  '\u314B': 0xFFBB,
+  '\u314C': 0xFFBC,
+  '\u314D': 0xFFBD,
+  '\u314E': 0xFFBE,
+  '\u314F': 0xFFC2,
+  '\u3150': 0xFFC3,
+  '\u3151': 0xFFC4,
+  '\u3152': 0xFFC5,
+  '\u3153': 0xFFC6,
+  '\u3154': 0xFFC7,
+  '\u3155': 0xFFCA,
+  '\u3156': 0xFFCB,
+  '\u3157': 0xFFCC,
+  '\u3158': 0xFFCD,
+  '\u3159': 0xFFCE,
+  '\u315A': 0xFFCF,
+  '\u315B': 0xFFD2,
+  '\u315C': 0xFFD3,
+  '\u315D': 0xFFD4,
+  '\u315E': 0xFFD5,
+  '\u315F': 0xFFD6,
+  '\u3160': 0xFFD7,
+  '\u3161': 0xFFDA,
+  '\u3162': 0xFFDB,
+  '\u3163': 0xFFDC,
+  '\u3164': 0xFFA0,
+  '\u3B9D': 0xFAD2,
+  '\u4018': 0xFAD3,
+  '\u4039': 0xFAD4,
+  '\u4E00': 0x3280,
+  '\u4E01': 0x319C,
+  '\u4E03': 0x3286,
+  '\u4E09': 0x3282,
+  '\u4E0A': 0x32A4,
+  '\u4E0B': 0x32A6,
+  '\u4E0D': 0xF967,
+  '\u4E19': 0x319B,
+  '\u4E26': 0xFA70,
+  '\u4E28': 0x2F01,
+  '\u4E2D': 0x32A5,
+  '\u4E32': 0xF905,
+  '\u4E36': 0x2F02,
+  '\u4E39': 0xF95E,
+  '\u4E3F': 0x2F03,
+  '\u4E59': 0x319A,
+  '\u4E5D': 0x3288,
+  '\u4E82': 0xF91B,
+  '\u4E85': 0x2F05,
+  '\u4E86': 0xF9BA,
+  '\u4E8C': 0x3281,
+  '\u4E94': 0x3284,
+  '\u4EA0': 0x2F07,
+  '\u4EAE': 0xF977,
+  '\u4EBA': 0x319F,
+  '\u4EC0': 0xF9FD,
+  '\u4EE4': 0xF9A8,
+  '\u4F01': 0x32AD,
+  '\u4F11': 0x32A1,
+  '\u4F80': 0xFA73,
+  '\u4F86': 0xF92D,
+  '\u4F8B': 0xF9B5,
+  '\u4FAE': 0xFA30,
+  '\u4FBF': 0xF965,
+  '\u502B': 0xF9D4,
+  '\u50DA': 0xF9BB,
+  '\u50E7': 0xFA31,
+  '\u512A': 0x329D,
+  '\u513F': 0x2F09,
+  '\u5140': 0xFA0C,
+  '\u5145': 0xFA74,
+  '\u514D': 0xFA32,
+  '\u5165': 0x2F0A,
+  '\u5168': 0xFA72,
+  '\u5169': 0xF978,
+  '\u516B': 0x3287,
+  '\u516D': 0xF9D1,
+  '\u5180': 0xFA75,
+  '\u5182': 0x2F0C,
+  '\u5196': 0x2F0D,
+  '\u5199': 0x32A2,
+  '\u51AB': 0x2F0E,
+  '\u51B5': 0xFA71,
+  '\u51B7': 0xF92E,
+  '\u51C9': 0xF979,
+  '\u51CC': 0xF955,
+  '\u51DC': 0xF954,
+  '\u51DE': 0xFA15,
+  '\u51E0': 0x2F0F,
+  '\u51F5': 0x2F10,
+  '\u5200': 0x2F11,
+  '\u5207': 0xFA00,
+  '\u5217': 0xF99C,
+  '\u5229': 0xF9DD,
+  '\u523A': 0xF9FF,
+  '\u5289': 0xF9C7,
+  '\u529B': 0xF98A,
+  '\u52A3': 0xF99D,
+  '\u52B4': 0x3298,
+  '\u52C7': 0xFA76,
+  '\u52C9': 0xFA33,
+  '\u52D2': 0xF952,
+  '\u52DE': 0xF92F,
+  '\u52E4': 0xFA34,
+  '\u52F5': 0xF97F,
+  '\u52F9': 0x2F13,
+  '\u52FA': 0xFA77,
+  '\u5315': 0x2F14,
+  '\u5317': 0xF963,
+  '\u531A': 0x2F15,
+  '\u5338': 0x2F16,
+  '\u533B': 0x32A9,
+  '\u533F': 0xF9EB,
+  '\u5341': 0x3289,
+  '\u5344': 0x3039,
+  '\u5345': 0x303A,
+  '\u5351': 0xFA35,
+  '\u5354': 0x32AF,
+  '\u535C': 0x2F18,
+  '\u5369': 0x2F19,
+  '\u5370': 0x329E,
+  '\u5375': 0xF91C,
+  '\u5382': 0x2F1A,
+  '\u53B6': 0x2F1B,
+  '\u53C3': 0xF96B,
+  '\u53C8': 0x2F1C,
+  '\u53E3': 0x2F1D,
+  '\u53E5': 0xF906,
+  '\u53F3': 0x32A8,
+  '\u540D': 0x3294,
+  '\u540F': 0xF9DE,
+  '\u541D': 0xF9ED,
+  '\u5442': 0xF980,
+  '\u54BD': 0xF99E,
+  '\u554F': 0x3244,
+  '\u5555': 0xFA79,
+  '\u5587': 0xF90B,
+  '\u5599': 0xFA7A,
+  '\u559D': 0xFA78,
+  '\u55C0': 0xFA0D,
+  '\u55E2': 0xFA7B,
+  '\u5606': 0xFA37,
+  '\u5668': 0xFA38,
+  '\u56D7': 0x2F1E,
+  '\u56DB': 0x3283,
+  '\u56F9': 0xF9A9,
+  '\u571F': 0x328F,
+  '\u5730': 0x319E,
+  '\u5840': 0xFA39,
+  '\u585A': 0xFA7C,
+  '\u585E': 0xF96C,
+  '\u58A8': 0xFA3A,
+  '\u58B3': 0xFA7D,
+  '\u58D8': 0xF94A,
+  '\u58DF': 0xF942,
+  '\u58EB': 0x2F20,
+  '\u5902': 0x2F21,
+  '\u590A': 0x2F22,
+  '\u5915': 0x2F23,
+  '\u591C': 0x32B0,
+  '\u5927': 0x2F24,
+  '\u5927\u6B63': 0x337D,
+  '\u5929': 0x319D,
+  '\u5944': 0xFA7E,
+  '\u5948': 0xF90C,
+  '\u5951': 0xF909,
+  '\u5954': 0xFA7F,
+  '\u5973': 0xF981,
+  '\u5A62': 0xFA80,
+  '\u5B28': 0xFA81,
+  '\u5B50': 0x2F26,
+  '\u5B66': 0x32AB,
+  '\u5B80': 0x2F27,
+  '\u5B85': 0xFA04,
+  '\u5B97': 0x32AA,
+  '\u5BE7': 0xF9AA,
+  '\u5BEE': 0xF9BC,
+  '\u5BF8': 0x2F28,
+  '\u5C0F': 0x2F29,
+  '\u5C22': 0x2F2A,
+  '\u5C38': 0x2F2B,
+  '\u5C3F': 0xF9BD,
+  '\u5C62': 0xF94B,
+  '\u5C64': 0xFA3B,
+  '\u5C65': 0xF9DF,
+  '\u5C6E': 0xFA3C,
+  '\u5C71': 0x2F2D,
+  '\u5D19': 0xF9D5,
+  '\u5D50': 0xF921,
+  '\u5DBA': 0xF9AB,
+  '\u5DDB': 0x2F2E,
+  '\u5DE5': 0x2F2F,
+  '\u5DE6': 0x32A7,
+  '\u5DF1': 0x2F30,
+  '\u5DFE': 0x2F31,
+  '\u5E72': 0x2F32,
+  '\u5E73\u6210': 0x337B,
+  '\u5E74': 0xF98E,
+  '\u5E7A': 0x2F33,
+  '\u5E7C': 0x3245,
+  '\u5E7F': 0x2F34,
+  '\u5EA6': 0xFA01,
+  '\u5EC9': 0xF9A2,
+  '\u5ECA': 0xF928,
+  '\u5ED2': 0xFA82,
+  '\u5ED3': 0xFA0B,
+  '\u5ED9': 0xFA83,
+  '\u5EEC': 0xF982,
+  '\u5EF4': 0x2F35,
+  '\u5EFE': 0x2F36,
+  '\u5F04': 0xF943,
+  '\u5F0B': 0x2F37,
+  '\u5F13': 0x2F38,
+  '\u5F50': 0x2F39,
+  '\u5F61': 0x2F3A,
+  '\u5F69': 0xFA84,
+  '\u5F73': 0x2F3B,
+  '\u5F8B': 0xF9D8,
+  '\u5FA9': 0xF966,
+  '\u5FAD': 0xFA85,
+  '\u5FC3': 0x2F3C,
+  '\u5FF5': 0xF9A3,
+  '\u6012': 0xF960,
+  '\u601C': 0xF9AC,
+  '\u6075': 0xFA6B,
+  '\u6094': 0xFA3D,
+  '\u60D8': 0xFA86,
+  '\u60E1': 0xF9B9,
+  '\u6108': 0xFA88,
+  '\u6144': 0xF9D9,
+  '\u614E': 0xFA87,
+  '\u6160': 0xFA8A,
+  '\u6168': 0xFA3E,
+  '\u618E': 0xFA89,
+  '\u6190': 0xF98F,
+  '\u61F2': 0xFA8B,
+  '\u61F6': 0xF90D,
+  '\u6200': 0xF990,
+  '\u6208': 0x2F3D,
+  '\u622E': 0xF9D2,
+  '\u6234': 0xFA8C,
+  '\u6236': 0x2F3E,
+  '\u624B': 0x2F3F,
+  '\u62C9': 0xF925,
+  '\u62CF': 0xF95B,
+  '\u62D3': 0xFA02,
+  '\u62FE': 0xF973,
+  '\u637B': 0xF9A4,
+  '\u63A0': 0xF975,
+  '\u63C4': 0xFA8D,
+  '\u641C': 0xFA8E,
+  '\u6452': 0xFA8F,
+  '\u649A': 0xF991,
+  '\u64C4': 0xF930,
+  '\u652F': 0x2F40,
+  '\u6534': 0x2F41,
+  '\u654F': 0xFA41,
+  '\u6556': 0xFA90,
+  '\u6578': 0xF969,
+  '\u6587': 0x3246,
+  '\u6597': 0x2F43,
+  '\u6599': 0xF9BE,
+  '\u65A4': 0x2F44,
+  '\u65B9': 0x2F45,
+  '\u65C5': 0xF983,
+  '\u65E0': 0x2F46,
+  '\u65E2': 0xFA42,
+  '\u65E5': 0x3290,
+  '\u660E\u6CBB': 0x337E,
+  '\u6613': 0xF9E0,
+  '\u662D\u548C': 0x337C,
+  '\u6674': 0xFA91,
+  '\u6688': 0xF9C5,
+  '\u6691': 0xFA43,
+  '\u66B4': 0xFA06,
+  '\u66C6': 0xF98B,
+  '\u66F0': 0x2F48,
+  '\u66F4': 0xF901,
+  '\u6708': 0x328A,
+  '\u6709': 0x3292,
+  '\u6717': 0xFA92,
+  '\u671B': 0xFA93,
+  '\u6728': 0x328D,
+  '\u674E': 0xF9E1,
+  '\u6756': 0xFA94,
+  '\u677B': 0xF9C8,
+  '\u6797': 0xF9F4,
+  '\u67F3': 0xF9C9,
+  '\u6817': 0xF9DA,
+  '\u682A': 0x3291,
+  '\u682A\u5F0F\u4F1A\u793E': 0x337F,
+  '\u6881': 0xF97A,
+  '\u6885': 0xFA44,
+  '\u68A8': 0xF9E2,
+  '\u6A02': 0xF9BF,
+  '\u6A13': 0xF94C,
+  '\u6AD3': 0xF931,
+  '\u6B04': 0xF91D,
+  '\u6B20': 0x2F4B,
+  '\u6B62': 0x2F4C,
+  '\u6B63': 0x32A3,
+  '\u6B77': 0xF98C,
+  '\u6B79': 0xFA95,
+  '\u6BAE': 0xF9A5,
+  '\u6BB3': 0x2F4E,
+  '\u6BBA': 0xFA96,
+  '\u6BCB': 0x2F4F,
+  '\u6BCD': 0x2E9F,
+  '\u6BD4': 0x2F50,
+  '\u6BDB': 0x2F51,
+  '\u6C0F': 0x2F52,
+  '\u6C14': 0x2F53,
+  '\u6C34': 0x328C,
+  '\u6C88': 0xF972,
+  '\u6CCC': 0xF968,
+  '\u6CE5': 0xF9E3,
+  '\u6CE8': 0x329F,
+  '\u6D1B': 0xF915,
+  '\u6D1E': 0xFA05,
+  '\u6D41': 0xFA97,
+  '\u6D6A': 0xF92A,
+  '\u6D77': 0xFA45,
+  '\u6DCB': 0xF9F5,
+  '\u6DDA': 0xF94D,
+  '\u6DEA': 0xF9D6,
+  '\u6E1A': 0xFA46,
+  '\u6E9C': 0xF9CB,
+  '\u6EBA': 0xF9EC,
+  '\u6ECB': 0xFA99,
+  '\u6ED1': 0xF904,
+  '\u6EDB': 0xFA98,
+  '\u6F0F': 0xF94E,
+  '\u6F22': 0xFA9A,
+  '\u6F23': 0xF992,
+  '\u6FEB': 0xF922,
+  '\u6FFE': 0xF984,
+  '\u701E': 0xFA9B,
+  '\u706B': 0x328B,
+  '\u7099': 0xF9FB,
+  '\u70C8': 0xF99F,
+  '\u70D9': 0xF916,
+  '\u7149': 0xF993,
+  '\u716E': 0xFA9C,
+  '\u71CE': 0xF9C0,
+  '\u71D0': 0xF9EE,
+  '\u7210': 0xF932,
+  '\u721B': 0xF91E,
+  '\u722A': 0x2F56,
+  '\u722B': 0xFA49,
+  '\u7235': 0xFA9E,
+  '\u7236': 0x2F57,
+  '\u723B': 0x2F58,
+  '\u723F': 0x2F59,
+  '\u7247': 0x2F5A,
+  '\u7259': 0x2F5B,
+  '\u725B': 0x2F5C,
+  '\u7262': 0xF946,
+  '\u7279': 0x3295,
+  '\u72AC': 0x2F5D,
+  '\u72AF': 0xFA9F,
+  '\u72C0': 0xF9FA,
+  '\u72FC': 0xF92B,
+  '\u732A': 0xFAA0,
+  '\u7375': 0xF9A7,
+  '\u7384': 0x2F5E,
+  '\u7387': 0xF9DB,
+  '\u7389': 0x2F5F,
+  '\u73B2': 0xF9AD,
+  '\u73DE': 0xF917,
+  '\u7406': 0xF9E4,
+  '\u7409': 0xF9CC,
+  '\u7422': 0xFA4A,
+  '\u7469': 0xF9AE,
+  '\u7471': 0xFAA1,
+  '\u7489': 0xF994,
+  '\u7498': 0xF9EF,
+  '\u74DC': 0x2F60,
+  '\u74E6': 0x2F61,
+  '\u7506': 0xFAA2,
+  '\u7518': 0x2F62,
+  '\u751F': 0x2F63,
+  '\u7528': 0x2F64,
+  '\u7530': 0x2F65,
+  '\u7532': 0x3199,
+  '\u7537': 0x329A,
+  '\u753B': 0xFAA3,
+  '\u7559': 0xF9CD,
+  '\u7565': 0xF976,
+  '\u7570': 0xF962,
+  '\u758B': 0x2F66,
+  '\u7592': 0x2F67,
+  '\u75E2': 0xF9E5,
+  '\u761D': 0xFAA4,
+  '\u761F': 0xFAA5,
+  '\u7642': 0xF9C1,
+  '\u7669': 0xF90E,
+  '\u7676': 0x2F68,
+  '\u767D': 0x2F69,
+  '\u76AE': 0x2F6A,
+  '\u76BF': 0x2F6B,
+  '\u76CA': 0xFAA6,
+  '\u76DB': 0xFAA7,
+  '\u76E3': 0x32AC,
+  '\u76E7': 0xF933,
+  '\u76EE': 0x2F6C,
+  '\u76F4': 0xFAA8,
+  '\u7701': 0xF96D,
+  '\u7740': 0xFAAA,
+  '\u774A': 0xFAA9,
+  '\u77A7': 0xFA9D,
+  '\u77DB': 0x2F6D,
+  '\u77E2': 0x2F6E,
+  '\u77F3': 0x2F6F,
+  '\u786B': 0xF9CE,
+  '\u788C': 0xF93B,
+  '\u7891': 0xFA4B,
+  '\u78CA': 0xF947,
+  '\u78CC': 0xFAAB,
+  '\u78FB': 0xF964,
+  '\u792A': 0xF985,
+  '\u793A': 0x2F70,
+  '\u793C': 0xFA18,
+  '\u793E': 0xFA4C,
+  '\u7948': 0xFA4E,
+  '\u7949': 0xFA4D,
+  '\u7950': 0xFA4F,
+  '\u7956': 0xFA50,
+  '\u795D': 0xFA51,
+  '\u795E': 0xFA19,
+  '\u7965': 0xFA1A,
+  '\u797F': 0xF93C,
+  '\u798D': 0xFA52,
+  '\u798E': 0xFA53,
+  '\u798F': 0xFA1B,
+  '\u79AE': 0xF9B6,
+  '\u79B8': 0x2F71,
+  '\u79BE': 0x2F72,
+  '\u79CA': 0xF995,
+  '\u79D8': 0x3299,
+  '\u7A1C': 0xF956,
+  '\u7A40': 0xFA54,
+  '\u7A74': 0x2F73,
+  '\u7A81': 0xFA55,
+  '\u7AB1': 0xFAAC,
+  '\u7ACB': 0xF9F7,
+  '\u7AF9': 0x2F75,
+  '\u7B20': 0xF9F8,
+  '\u7B8F': 0x3247,
+  '\u7BC0': 0xFAAD,
+  '\u7C3E': 0xF9A6,
+  '\u7C60': 0xF944,
+  '\u7C73': 0x2F76,
+  '\u7C7B': 0xFAAE,
+  '\u7C92': 0xF9F9,
+  '\u7CBE': 0xFA1D,
+  '\u7CD6': 0xFA03,
+  '\u7CE7': 0xF97B,
+  '\u7CF8': 0x2F77,
+  '\u7D10': 0xF9CF,
+  '\u7D22': 0xF96A,
+  '\u7D2F': 0xF94F,
+  '\u7D5B': 0xFAAF,
+  '\u7DA0': 0xF93D,
+  '\u7DBE': 0xF957,
+  '\u7DF4': 0xFAB0,
+  '\u7E09': 0xFA58,
+  '\u7E37': 0xF950,
+  '\u7E41': 0xFA59,
+  '\u7F36': 0x2F78,
+  '\u7F3E': 0xFAB1,
+  '\u7F51': 0x2F79,
+  '\u7F72': 0xFA5A,
+  '\u7F79': 0xF9E6,
+  '\u7F85': 0xF90F,
+  '\u7F8A': 0x2F7A,
+  '\u7F9A': 0xF9AF,
+  '\u7FBD': 0xFA1E,
+  '\u8001': 0xF934,
+  '\u8005': 0xFAB2,
+  '\u800C': 0x2F7D,
+  '\u8012': 0x2F7E,
+  '\u8033': 0x2F7F,
+  '\u8046': 0xF9B0,
+  '\u806F': 0xF997,
+  '\u807E': 0xF945,
+  '\u807F': 0x2F80,
+  '\u8089': 0x2F81,
+  '\u808B': 0xF953,
+  '\u81D8': 0xF926,
+  '\u81E3': 0x2F82,
+  '\u81E8': 0xF9F6,
+  '\u81EA': 0x2F83,
+  '\u81ED': 0xFA5C,
+  '\u81F3': 0x2F84,
+  '\u81FC': 0x2F85,
+  '\u820C': 0x2F86,
+  '\u8218': 0xFA6D,
+  '\u821B': 0x2F87,
+  '\u821F': 0x2F88,
+  '\u826E': 0x2F89,
+  '\u826F': 0xF97C,
+  '\u8272': 0x2F8A,
+  '\u8278': 0x2F8B,
+  '\u8279': 0xFA5E,
+  '\u82E5': 0xF974,
+  '\u8336': 0xF9FE,
+  '\u8352': 0xFAB3,
+  '\u83C9': 0xF93E,
+  '\u83EF': 0xFAB4,
+  '\u83F1': 0xF958,
+  '\u843D': 0xF918,
+  '\u8449': 0xF96E,
+  '\u8457': 0xFA5F,
+  '\u84EE': 0xF999,
+  '\u84FC': 0xF9C2,
+  '\u85CD': 0xF923,
+  '\u85FA': 0xF9F0,
+  '\u8606': 0xF935,
+  '\u8612': 0xFA20,
+  '\u862D': 0xF91F,
+  '\u863F': 0xF910,
+  '\u864D': 0x2F8C,
+  '\u865C': 0xF936,
+  '\u866B': 0x2F8D,
+  '\u8779': 0xFAB5,
+  '\u87BA': 0xF911,
+  '\u881F': 0xF927,
+  '\u8840': 0x2F8E,
+  '\u884C': 0xFA08,
+  '\u8863': 0x2F90,
+  '\u88C2': 0xF9A0,
+  '\u88CF': 0xF9E7,
+  '\u88E1': 0xF9E8,
+  '\u88F8': 0xF912,
+  '\u8910': 0xFA60,
+  '\u8941': 0xFAB6,
+  '\u8964': 0xF924,
+  '\u897E': 0x2F91,
+  '\u8986': 0xFAB7,
+  '\u898B': 0xFA0A,
+  '\u8996': 0xFAB8,
+  '\u89D2': 0x2F93,
+  '\u8A00': 0x2F94,
+  '\u8AAA': 0xF9A1,
+  '\u8ABF': 0xFAB9,
+  '\u8ACB': 0xFABB,
+  '\u8AD2': 0xF97D,
+  '\u8AD6': 0xF941,
+  '\u8AED': 0xFABE,
+  '\u8AF8': 0xFABA,
+  '\u8AFE': 0xFABD,
+  '\u8B01': 0xFABC,
+  '\u8B39': 0xFABF,
+  '\u8B58': 0xF9FC,
+  '\u8B80': 0xF95A,
+  '\u8B8A': 0xFAC0,
+  '\u8C37': 0x2F95,
+  '\u8C46': 0x2F96,
+  '\u8C48': 0xF900,
+  '\u8C55': 0x2F97,
+  '\u8C78': 0x2F98,
+  '\u8C9D': 0x2F99,
+  '\u8CA1': 0x3296,
+  '\u8CC2': 0xF948,
+  '\u8CC7': 0x32AE,
+  '\u8CC8': 0xF903,
+  '\u8CD3': 0xFA64,
+  '\u8D08': 0xFAC1,
+  '\u8D64': 0x2F9A,
+  '\u8D70': 0x2F9B,
+  '\u8DB3': 0x2F9C,
+  '\u8DEF': 0xF937,
+  '\u8EAB': 0x2F9D,
+  '\u8ECA': 0xF902,
+  '\u8F26': 0xF998,
+  '\u8F2A': 0xF9D7,
+  '\u8F38': 0xFAC2,
+  '\u8F3B': 0xFA07,
+  '\u8F62': 0xF98D,
+  '\u8F9B': 0x2F9F,
+  '\u8FB0': 0xF971,
+  '\u8FB5': 0x2FA1,
+  '\u8FB6': 0xFA66,
+  '\u9023': 0xF99A,
+  '\u9038': 0xFA67,
+  '\u9069': 0x329C,
+  '\u9072': 0xFAC3,
+  '\u907C': 0xF9C3,
+  '\u908F': 0xF913,
+  '\u9091': 0x2FA2,
+  '\u90CE': 0xF92C,
+  '\u90DE': 0xFA2E,
+  '\u90FD': 0xFA26,
+  '\u9149': 0x2FA3,
+  '\u916A': 0xF919,
+  '\u9199': 0xFAC4,
+  '\u91B4': 0xF9B7,
+  '\u91C6': 0x2FA4,
+  '\u91CC': 0xF9E9,
+  '\u91CF': 0xF97E,
+  '\u91D1': 0xF90A,
+  '\u9234': 0xF9B1,
+  '\u9276': 0xFAC5,
+  '\u9304': 0xF93F,
+  '\u934A': 0xF99B,
+  '\u9577': 0x2FA7,
+  '\u9580': 0x2FA8,
+  '\u95AD': 0xF986,
+  '\u961C': 0x2FA9,
+  '\u962E': 0xF9C6,
+  '\u964B': 0xF951,
+  '\u964D': 0xFA09,
+  '\u9675': 0xF959,
+  '\u9678': 0xF9D3,
+  '\u967C': 0xFAC6,
+  '\u9686': 0xF9DC,
+  '\u96A3': 0xF9F1,
+  '\u96B6': 0x2FAA,
+  '\u96B7': 0xFA2F,
+  '\u96B8': 0xF9B8,
+  '\u96B9': 0x2FAB,
+  '\u96E2': 0xF9EA,
+  '\u96E3': 0xFAC7,
+  '\u96E8': 0x2FAC,
+  '\u96F6': 0xF9B2,
+  '\u96F7': 0xF949,
+  '\u9732': 0xF938,
+  '\u9748': 0xF9B3,
+  '\u9751': 0x2FAD,
+  '\u9756': 0xFAC8,
+  '\u975E': 0x2FAE,
+  '\u9762': 0x2FAF,
+  '\u9769': 0x2FB0,
+  '\u97CB': 0x2FB1,
+  '\u97DB': 0xFAC9,
+  '\u97ED': 0x2FB2,
+  '\u97F3': 0x2FB3,
+  '\u97FF': 0xFACA,
+  '\u9801': 0x2FB4,
+  '\u9805': 0x32A0,
+  '\u980B': 0xFACB,
+  '\u9818': 0xF9B4,
+  '\u983B': 0xFACC,
+  '\u985E': 0xF9D0,
+  '\u98A8': 0x2FB5,
+  '\u98DB': 0x2FB6,
+  '\u98DF': 0x2FB7,
+  '\u98EF': 0xFA2A,
+  '\u98FC': 0xFA2B,
+  '\u9928': 0xFA2C,
+  '\u9996': 0x2FB8,
+  '\u9999': 0x2FB9,
+  '\u99AC': 0x2FBA,
+  '\u99F1': 0xF91A,
+  '\u9A6A': 0xF987,
+  '\u9AA8': 0x2FBB,
+  '\u9AD8': 0x2FBC,
+  '\u9ADF': 0x2FBD,
+  '\u9B12': 0xFACD,
+  '\u9B25': 0x2FBE,
+  '\u9B2F': 0x2FBF,
+  '\u9B32': 0x2FC0,
+  '\u9B3C': 0x2FC1,
+  '\u9B5A': 0x2FC2,
+  '\u9B6F': 0xF939,
+  '\u9C57': 0xF9F2,
+  '\u9CE5': 0x2FC3,
+  '\u9DB4': 0xFA2D,
+  '\u9DFA': 0xF93A,
+  '\u9E1E': 0xF920,
+  '\u9E75': 0x2FC4,
+  '\u9E7F': 0xF940,
+  '\u9E97': 0xF988,
+  '\u9E9F': 0xF9F3,
+  '\u9EA5': 0x2FC6,
+  '\u9EBB': 0x2FC7,
+  '\u9EC3': 0x2FC8,
+  '\u9ECD': 0x2FC9,
+  '\u9ECE': 0xF989,
+  '\u9ED1': 0x2FCA,
+  '\u9EF9': 0x2FCB,
+  '\u9EFD': 0x2FCC,
+  '\u9F0E': 0x2FCD,
+  '\u9F13': 0x2FCE,
+  '\u9F20': 0x2FCF,
+  '\u9F3B': 0x2FD0,
+  '\u9F43': 0xFAD8,
+  '\u9F4A': 0x2FD1,
+  '\u9F52': 0x2FD2,
+  '\u9F8D': 0xF9C4,
+  '\u9F8E': 0xFAD9,
+  '\u9F9C': 0xFACE,
+  '\u9F9F': 0x2EF3,
+  '\u9FA0': 0x2FD5,
+  '\uA727': 0xAB5C,
+  '\uA76F': 0xA770,
+  '\uAB37': 0xAB5D,
+  '\uAB52': 0xAB5F,
+  '\uFB49\u05C1': 0xFB2C,
+  '\uFB49\u05C2': 0xFB2D,
+  'صلى الله عليه وسلم': 0xFDFA
+};
+
+const List<int> BctList_LRE = [0x202A, 1];
+const List<int> BctList_LRO = [0x202D, 1];
+const List<int> BctList_LRI = [0x2066, 1];
+const List<int> BctList_R = [
   0x05BE,
   1,
   0x05C0,
@@ -64,7 +7715,7 @@ List<int> BctList_R = [
   0xFB46,
   10
 ];
-List<int> BctList_AL = [
+const List<int> BctList_AL = [
   0x0608,
   1,
   0x060B,
@@ -110,13 +7761,13 @@ List<int> BctList_AL = [
   0xFE76,
   135
 ];
-List<int> BctList_RLE = [0x202B, 1];
-List<int> BctList_RLO = [0x202E, 1];
-List<int> BctList_RLI = [0x2067, 1];
-List<int> BctList_FSI = [0x2068, 1];
-List<int> BctList_PDF = [0x202C, 1];
-List<int> BctList_PDI = [0x2069, 1];
-List<int> BctList_EN = [
+const List<int> BctList_RLE = [0x202B, 1];
+const List<int> BctList_RLO = [0x202E, 1];
+const List<int> BctList_RLI = [0x2067, 1];
+const List<int> BctList_FSI = [0x2068, 1];
+const List<int> BctList_PDF = [0x202C, 1];
+const List<int> BctList_PDI = [0x2069, 1];
+const List<int> BctList_EN = [
   0x0030,
   10,
   0x00B2,
@@ -136,7 +7787,7 @@ List<int> BctList_EN = [
   0xFF10,
   10
 ];
-List<int> BctList_ES = [
+const List<int> BctList_ES = [
   0x002B,
   1,
   0x002D,
@@ -156,7 +7807,7 @@ List<int> BctList_ES = [
   0xFF0D,
   1
 ];
-List<int> BctList_ET = [
+const List<int> BctList_ET = [
   0x0023,
   3,
   0x00A2,
@@ -202,8 +7853,8 @@ List<int> BctList_ET = [
   0xFFE5,
   2
 ];
-List<int> BctList_AN = [0x0600, 6, 0x0660, 10, 0x066B, 2, 0x06DD, 1];
-List<int> BctList_CS = [
+const List<int> BctList_AN = [0x0600, 6, 0x0660, 10, 0x066B, 2, 0x06DD, 1];
+const List<int> BctList_CS = [
   0x002C,
   1,
   0x002E,
@@ -231,7 +7882,7 @@ List<int> BctList_CS = [
   0xFF1A,
   1
 ];
-List<int> BctList_NSM = [
+const List<int> BctList_NSM = [
   0x0300,
   112,
   0x0483,
@@ -625,7 +8276,7 @@ List<int> BctList_NSM = [
   0xFE20,
   14
 ];
-List<int> BctList_BN = [
+const List<int> BctList_BN = [
   0x0000,
   9,
   0x000E,
@@ -647,9 +8298,20 @@ List<int> BctList_BN = [
   0xFEFF,
   1
 ];
-List<int> BctList_B = [0x000A, 1, 0x000D, 1, 0x001C, 3, 0x0085, 1, 0x2029, 1];
-List<int> BctList_S = [0x0009, 1, 0x000B, 1, 0x001F, 1];
-List<int> BctList_WS = [
+const List<int> BctList_B = [
+  0x000A,
+  1,
+  0x000D,
+  1,
+  0x001C,
+  3,
+  0x0085,
+  1,
+  0x2029,
+  1
+];
+const List<int> BctList_S = [0x0009, 1, 0x000B, 1, 0x001F, 1];
+const List<int> BctList_WS = [
   0x000C,
   1,
   0x0020,
@@ -665,7 +8327,7 @@ List<int> BctList_WS = [
   0x3000,
   1
 ];
-List<int> BctList_ON = [
+const List<int> BctList_ON = [
   0x0021,
   2,
   0x0026,
@@ -935,7 +8597,7 @@ List<int> BctList_ON = [
   0xFFF9,
   5
 ];
-List<int> UgcList_Lu = [
+const List<int> UgcList_Lu = [
   0x0041,
   26,
   0x00C0,
@@ -2115,7 +9777,7 @@ List<int> UgcList_Lu = [
   0xFF21,
   26
 ];
-List<int> UgcList_Ll = [
+const List<int> UgcList_Ll = [
   0x0061,
   26,
   0x00B5,
@@ -3307,7 +10969,7 @@ List<int> UgcList_Ll = [
   0xFF41,
   26
 ];
-List<int> UgcList_Lt = [
+const List<int> UgcList_Lt = [
   0x01C5,
   1,
   0x01C8,
@@ -3329,7 +10991,7 @@ List<int> UgcList_Lt = [
   0x1FFC,
   1
 ];
-List<int> UgcList_Lm = [
+const List<int> UgcList_Lm = [
   0x02B0,
   18,
   0x02C6,
@@ -3439,7 +11101,7 @@ List<int> UgcList_Lm = [
   0xFF9E,
   2
 ];
-List<int> UgcList_Lo = [
+const List<int> UgcList_Lo = [
   0x00AA,
   1,
   0x00BA,
@@ -4023,7 +11685,7 @@ List<int> UgcList_Lo = [
   0xFFDA,
   3
 ];
-List<int> UgcList_Mn = [
+const List<int> UgcList_Mn = [
   0x0300,
   112,
   0x0483,
@@ -7184,8419 +14846,6 @@ void _init() {
     for (int j = UdtList_Compat[i];
         j < UdtList_Compat[i] + UdtList_Compat[i + 1];
         ++j) decomType[j] = UnicodeDecompositionType.Compat;
-
-  canonClass[0300] = UnicodeCanonicalClass.A;
-  canonClass[0300] = UnicodeCanonicalClass.A;
-  canonClass[0x0300] = UnicodeCanonicalClass.A;
-  canonClass[0x0301] = UnicodeCanonicalClass.A;
-  canonClass[0x0302] = UnicodeCanonicalClass.A;
-  canonClass[0x0303] = UnicodeCanonicalClass.A;
-  canonClass[0x0304] = UnicodeCanonicalClass.A;
-  canonClass[0x0305] = UnicodeCanonicalClass.A;
-  canonClass[0x0306] = UnicodeCanonicalClass.A;
-  canonClass[0x0307] = UnicodeCanonicalClass.A;
-  canonClass[0x0308] = UnicodeCanonicalClass.A;
-  canonClass[0x0309] = UnicodeCanonicalClass.A;
-  canonClass[0x030A] = UnicodeCanonicalClass.A;
-  canonClass[0x030B] = UnicodeCanonicalClass.A;
-  canonClass[0x030C] = UnicodeCanonicalClass.A;
-  canonClass[0x030D] = UnicodeCanonicalClass.A;
-  canonClass[0x030E] = UnicodeCanonicalClass.A;
-  canonClass[0x030F] = UnicodeCanonicalClass.A;
-  canonClass[0x0310] = UnicodeCanonicalClass.A;
-  canonClass[0x0311] = UnicodeCanonicalClass.A;
-  canonClass[0x0312] = UnicodeCanonicalClass.A;
-  canonClass[0x0313] = UnicodeCanonicalClass.A;
-  canonClass[0x0314] = UnicodeCanonicalClass.A;
-  canonClass[0x0315] = UnicodeCanonicalClass.AR;
-  canonClass[0x0316] = UnicodeCanonicalClass.B;
-  canonClass[0x0317] = UnicodeCanonicalClass.B;
-  canonClass[0x0318] = UnicodeCanonicalClass.B;
-  canonClass[0x0319] = UnicodeCanonicalClass.B;
-  canonClass[0x031A] = UnicodeCanonicalClass.AR;
-  canonClass[0x031B] = UnicodeCanonicalClass.ATAR;
-  canonClass[0x031C] = UnicodeCanonicalClass.B;
-  canonClass[0x031D] = UnicodeCanonicalClass.B;
-  canonClass[0x031E] = UnicodeCanonicalClass.B;
-  canonClass[0x031F] = UnicodeCanonicalClass.B;
-  canonClass[0x0320] = UnicodeCanonicalClass.B;
-  canonClass[0x0321] = UnicodeCanonicalClass.ATB;
-  canonClass[0x0322] = UnicodeCanonicalClass.ATB;
-  canonClass[0x0323] = UnicodeCanonicalClass.B;
-  canonClass[0x0324] = UnicodeCanonicalClass.B;
-  canonClass[0x0325] = UnicodeCanonicalClass.B;
-  canonClass[0x0326] = UnicodeCanonicalClass.B;
-  canonClass[0x0327] = UnicodeCanonicalClass.ATB;
-  canonClass[0x0328] = UnicodeCanonicalClass.ATB;
-  canonClass[0x0329] = UnicodeCanonicalClass.B;
-  canonClass[0x032A] = UnicodeCanonicalClass.B;
-  canonClass[0x032B] = UnicodeCanonicalClass.B;
-  canonClass[0x032C] = UnicodeCanonicalClass.B;
-  canonClass[0x032D] = UnicodeCanonicalClass.B;
-  canonClass[0x032E] = UnicodeCanonicalClass.B;
-  canonClass[0x032F] = UnicodeCanonicalClass.B;
-  canonClass[0x0330] = UnicodeCanonicalClass.B;
-  canonClass[0x0331] = UnicodeCanonicalClass.B;
-  canonClass[0x0332] = UnicodeCanonicalClass.B;
-  canonClass[0x0333] = UnicodeCanonicalClass.B;
-  canonClass[0x0334] = UnicodeCanonicalClass.OV;
-  canonClass[0x0335] = UnicodeCanonicalClass.OV;
-  canonClass[0x0336] = UnicodeCanonicalClass.OV;
-  canonClass[0x0337] = UnicodeCanonicalClass.OV;
-  canonClass[0x0338] = UnicodeCanonicalClass.OV;
-  canonClass[0x0339] = UnicodeCanonicalClass.B;
-  canonClass[0x033A] = UnicodeCanonicalClass.B;
-  canonClass[0x033B] = UnicodeCanonicalClass.B;
-  canonClass[0x033C] = UnicodeCanonicalClass.B;
-  canonClass[0x033D] = UnicodeCanonicalClass.A;
-  canonClass[0x033E] = UnicodeCanonicalClass.A;
-  canonClass[0x033F] = UnicodeCanonicalClass.A;
-  canonClass[0x0340] = UnicodeCanonicalClass.A;
-  canonClass[0x0341] = UnicodeCanonicalClass.A;
-  canonClass[0x0342] = UnicodeCanonicalClass.A;
-  canonClass[0x0343] = UnicodeCanonicalClass.A;
-  canonClass[0x0344] = UnicodeCanonicalClass.A;
-  canonClass[0x0345] = UnicodeCanonicalClass.IS;
-  canonClass[0x0346] = UnicodeCanonicalClass.A;
-  canonClass[0x0347] = UnicodeCanonicalClass.B;
-  canonClass[0x0348] = UnicodeCanonicalClass.B;
-  canonClass[0x0349] = UnicodeCanonicalClass.B;
-  canonClass[0x034A] = UnicodeCanonicalClass.A;
-  canonClass[0x034B] = UnicodeCanonicalClass.A;
-  canonClass[0x034C] = UnicodeCanonicalClass.A;
-  canonClass[0x034D] = UnicodeCanonicalClass.B;
-  canonClass[0x034E] = UnicodeCanonicalClass.B;
-  canonClass[0x0350] = UnicodeCanonicalClass.A;
-  canonClass[0x0351] = UnicodeCanonicalClass.A;
-  canonClass[0x0352] = UnicodeCanonicalClass.A;
-  canonClass[0x0353] = UnicodeCanonicalClass.B;
-  canonClass[0x0354] = UnicodeCanonicalClass.B;
-  canonClass[0x0355] = UnicodeCanonicalClass.B;
-  canonClass[0x0356] = UnicodeCanonicalClass.B;
-  canonClass[0x0357] = UnicodeCanonicalClass.A;
-  canonClass[0x0358] = UnicodeCanonicalClass.AR;
-  canonClass[0x0359] = UnicodeCanonicalClass.B;
-  canonClass[0x035A] = UnicodeCanonicalClass.B;
-  canonClass[0x035B] = UnicodeCanonicalClass.A;
-  canonClass[0x035C] = UnicodeCanonicalClass.DB;
-  canonClass[0x035D] = UnicodeCanonicalClass.DA;
-  canonClass[0x035E] = UnicodeCanonicalClass.DA;
-  canonClass[0x035F] = UnicodeCanonicalClass.DB;
-  canonClass[0x0360] = UnicodeCanonicalClass.DA;
-  canonClass[0x0361] = UnicodeCanonicalClass.DA;
-  canonClass[0x0362] = UnicodeCanonicalClass.DB;
-  canonClass[0x0363] = UnicodeCanonicalClass.A;
-  canonClass[0x0364] = UnicodeCanonicalClass.A;
-  canonClass[0x0365] = UnicodeCanonicalClass.A;
-  canonClass[0x0366] = UnicodeCanonicalClass.A;
-  canonClass[0x0367] = UnicodeCanonicalClass.A;
-  canonClass[0x0368] = UnicodeCanonicalClass.A;
-  canonClass[0x0369] = UnicodeCanonicalClass.A;
-  canonClass[0x036A] = UnicodeCanonicalClass.A;
-  canonClass[0x036B] = UnicodeCanonicalClass.A;
-  canonClass[0x036C] = UnicodeCanonicalClass.A;
-  canonClass[0x036D] = UnicodeCanonicalClass.A;
-  canonClass[0x036E] = UnicodeCanonicalClass.A;
-  canonClass[0x036F] = UnicodeCanonicalClass.A;
-  canonClass[0x0483] = UnicodeCanonicalClass.A;
-  canonClass[0x0484] = UnicodeCanonicalClass.A;
-  canonClass[0x0485] = UnicodeCanonicalClass.A;
-  canonClass[0x0486] = UnicodeCanonicalClass.A;
-  canonClass[0x0487] = UnicodeCanonicalClass.A;
-  canonClass[0x0591] = UnicodeCanonicalClass.B;
-  canonClass[0x0592] = UnicodeCanonicalClass.A;
-  canonClass[0x0593] = UnicodeCanonicalClass.A;
-  canonClass[0x0594] = UnicodeCanonicalClass.A;
-  canonClass[0x0595] = UnicodeCanonicalClass.A;
-  canonClass[0x0596] = UnicodeCanonicalClass.B;
-  canonClass[0x0597] = UnicodeCanonicalClass.A;
-  canonClass[0x0598] = UnicodeCanonicalClass.A;
-  canonClass[0x0599] = UnicodeCanonicalClass.A;
-  canonClass[0x059A] = UnicodeCanonicalClass.BR;
-  canonClass[0x059B] = UnicodeCanonicalClass.B;
-  canonClass[0x059C] = UnicodeCanonicalClass.A;
-  canonClass[0x059D] = UnicodeCanonicalClass.A;
-  canonClass[0x059E] = UnicodeCanonicalClass.A;
-  canonClass[0x059F] = UnicodeCanonicalClass.A;
-  canonClass[0x05A0] = UnicodeCanonicalClass.A;
-  canonClass[0x05A1] = UnicodeCanonicalClass.A;
-  canonClass[0x05A2] = UnicodeCanonicalClass.B;
-  canonClass[0x05A3] = UnicodeCanonicalClass.B;
-  canonClass[0x05A4] = UnicodeCanonicalClass.B;
-  canonClass[0x05A5] = UnicodeCanonicalClass.B;
-  canonClass[0x05A6] = UnicodeCanonicalClass.B;
-  canonClass[0x05A7] = UnicodeCanonicalClass.B;
-  canonClass[0x05A8] = UnicodeCanonicalClass.A;
-  canonClass[0x05A9] = UnicodeCanonicalClass.A;
-  canonClass[0x05AA] = UnicodeCanonicalClass.B;
-  canonClass[0x05AB] = UnicodeCanonicalClass.A;
-  canonClass[0x05AC] = UnicodeCanonicalClass.A;
-  canonClass[0x05AD] = UnicodeCanonicalClass.BR;
-  canonClass[0x05AE] = UnicodeCanonicalClass.AL;
-  canonClass[0x05AF] = UnicodeCanonicalClass.A;
-  canonClass[0x05B0] = UnicodeCanonicalClass.CLASS_10;
-  canonClass[0x05B1] = UnicodeCanonicalClass.CLASS_11;
-  canonClass[0x05B2] = UnicodeCanonicalClass.CLASS_12;
-  canonClass[0x05B3] = UnicodeCanonicalClass.CLASS_13;
-  canonClass[0x05B4] = UnicodeCanonicalClass.CLASS_14;
-  canonClass[0x05B5] = UnicodeCanonicalClass.CLASS_15;
-  canonClass[0x05B6] = UnicodeCanonicalClass.CLASS_16;
-  canonClass[0x05B7] = UnicodeCanonicalClass.CLASS_17;
-  canonClass[0x05B8] = UnicodeCanonicalClass.CLASS_18;
-  canonClass[0x05B9] = UnicodeCanonicalClass.CLASS_19;
-  canonClass[0x05BA] = UnicodeCanonicalClass.CLASS_19;
-  canonClass[0x05BB] = UnicodeCanonicalClass.CLASS_20;
-  canonClass[0x05BC] = UnicodeCanonicalClass.CLASS_21;
-  canonClass[0x05BD] = UnicodeCanonicalClass.CLASS_22;
-  canonClass[0x05BF] = UnicodeCanonicalClass.CLASS_23;
-  canonClass[0x05C1] = UnicodeCanonicalClass.CLASS_24;
-  canonClass[0x05C2] = UnicodeCanonicalClass.CLASS_25;
-  canonClass[0x05C4] = UnicodeCanonicalClass.A;
-  canonClass[0x05C5] = UnicodeCanonicalClass.B;
-  canonClass[0x05C7] = UnicodeCanonicalClass.CLASS_18;
-  canonClass[0x0610] = UnicodeCanonicalClass.A;
-  canonClass[0x0611] = UnicodeCanonicalClass.A;
-  canonClass[0x0612] = UnicodeCanonicalClass.A;
-  canonClass[0x0613] = UnicodeCanonicalClass.A;
-  canonClass[0x0614] = UnicodeCanonicalClass.A;
-  canonClass[0x0615] = UnicodeCanonicalClass.A;
-  canonClass[0x0616] = UnicodeCanonicalClass.A;
-  canonClass[0x0617] = UnicodeCanonicalClass.A;
-  canonClass[0x0618] = UnicodeCanonicalClass.CLASS_30;
-  canonClass[0x0619] = UnicodeCanonicalClass.CLASS_31;
-  canonClass[0x061A] = UnicodeCanonicalClass.CLASS_32;
-  canonClass[0x064B] = UnicodeCanonicalClass.CLASS_27;
-  canonClass[0x064C] = UnicodeCanonicalClass.CLASS_28;
-  canonClass[0x064D] = UnicodeCanonicalClass.CLASS_29;
-  canonClass[0x064E] = UnicodeCanonicalClass.CLASS_30;
-  canonClass[0x064F] = UnicodeCanonicalClass.CLASS_31;
-  canonClass[0x0650] = UnicodeCanonicalClass.CLASS_32;
-  canonClass[0x0651] = UnicodeCanonicalClass.CLASS_33;
-  canonClass[0x0652] = UnicodeCanonicalClass.CLASS_34;
-  canonClass[0x0653] = UnicodeCanonicalClass.A;
-  canonClass[0x0654] = UnicodeCanonicalClass.A;
-  canonClass[0x0655] = UnicodeCanonicalClass.B;
-  canonClass[0x0656] = UnicodeCanonicalClass.B;
-  canonClass[0x0657] = UnicodeCanonicalClass.A;
-  canonClass[0x0658] = UnicodeCanonicalClass.A;
-  canonClass[0x0659] = UnicodeCanonicalClass.A;
-  canonClass[0x065A] = UnicodeCanonicalClass.A;
-  canonClass[0x065B] = UnicodeCanonicalClass.A;
-  canonClass[0x065C] = UnicodeCanonicalClass.B;
-  canonClass[0x065D] = UnicodeCanonicalClass.A;
-  canonClass[0x065E] = UnicodeCanonicalClass.A;
-  canonClass[0x065F] = UnicodeCanonicalClass.B;
-  canonClass[0x0670] = UnicodeCanonicalClass.CLASS_35;
-  canonClass[0x06D6] = UnicodeCanonicalClass.A;
-  canonClass[0x06D7] = UnicodeCanonicalClass.A;
-  canonClass[0x06D8] = UnicodeCanonicalClass.A;
-  canonClass[0x06D9] = UnicodeCanonicalClass.A;
-  canonClass[0x06DA] = UnicodeCanonicalClass.A;
-  canonClass[0x06DB] = UnicodeCanonicalClass.A;
-  canonClass[0x06DC] = UnicodeCanonicalClass.A;
-  canonClass[0x06DF] = UnicodeCanonicalClass.A;
-  canonClass[0x06E0] = UnicodeCanonicalClass.A;
-  canonClass[0x06E1] = UnicodeCanonicalClass.A;
-  canonClass[0x06E2] = UnicodeCanonicalClass.A;
-  canonClass[0x06E3] = UnicodeCanonicalClass.B;
-  canonClass[0x06E4] = UnicodeCanonicalClass.A;
-  canonClass[0x06E7] = UnicodeCanonicalClass.A;
-  canonClass[0x06E8] = UnicodeCanonicalClass.A;
-  canonClass[0x06EA] = UnicodeCanonicalClass.B;
-  canonClass[0x06EB] = UnicodeCanonicalClass.A;
-  canonClass[0x06EC] = UnicodeCanonicalClass.A;
-  canonClass[0x06ED] = UnicodeCanonicalClass.B;
-  canonClass[0x0711] = UnicodeCanonicalClass.CLASS_36;
-  canonClass[0x0730] = UnicodeCanonicalClass.A;
-  canonClass[0x0731] = UnicodeCanonicalClass.B;
-  canonClass[0x0732] = UnicodeCanonicalClass.A;
-  canonClass[0x0733] = UnicodeCanonicalClass.A;
-  canonClass[0x0734] = UnicodeCanonicalClass.B;
-  canonClass[0x0735] = UnicodeCanonicalClass.A;
-  canonClass[0x0736] = UnicodeCanonicalClass.A;
-  canonClass[0x0737] = UnicodeCanonicalClass.B;
-  canonClass[0x0738] = UnicodeCanonicalClass.B;
-  canonClass[0x0739] = UnicodeCanonicalClass.B;
-  canonClass[0x073A] = UnicodeCanonicalClass.A;
-  canonClass[0x073B] = UnicodeCanonicalClass.B;
-  canonClass[0x073C] = UnicodeCanonicalClass.B;
-  canonClass[0x073D] = UnicodeCanonicalClass.A;
-  canonClass[0x073E] = UnicodeCanonicalClass.B;
-  canonClass[0x073F] = UnicodeCanonicalClass.A;
-  canonClass[0x0740] = UnicodeCanonicalClass.A;
-  canonClass[0x0741] = UnicodeCanonicalClass.A;
-  canonClass[0x0742] = UnicodeCanonicalClass.B;
-  canonClass[0x0743] = UnicodeCanonicalClass.A;
-  canonClass[0x0744] = UnicodeCanonicalClass.B;
-  canonClass[0x0745] = UnicodeCanonicalClass.A;
-  canonClass[0x0746] = UnicodeCanonicalClass.B;
-  canonClass[0x0747] = UnicodeCanonicalClass.A;
-  canonClass[0x0748] = UnicodeCanonicalClass.B;
-  canonClass[0x0749] = UnicodeCanonicalClass.A;
-  canonClass[0x074A] = UnicodeCanonicalClass.A;
-  canonClass[0x07EB] = UnicodeCanonicalClass.A;
-  canonClass[0x07EC] = UnicodeCanonicalClass.A;
-  canonClass[0x07ED] = UnicodeCanonicalClass.A;
-  canonClass[0x07EE] = UnicodeCanonicalClass.A;
-  canonClass[0x07EF] = UnicodeCanonicalClass.A;
-  canonClass[0x07F0] = UnicodeCanonicalClass.A;
-  canonClass[0x07F1] = UnicodeCanonicalClass.A;
-  canonClass[0x07F2] = UnicodeCanonicalClass.B;
-  canonClass[0x07F3] = UnicodeCanonicalClass.A;
-  canonClass[0x0816] = UnicodeCanonicalClass.A;
-  canonClass[0x0817] = UnicodeCanonicalClass.A;
-  canonClass[0x0818] = UnicodeCanonicalClass.A;
-  canonClass[0x0819] = UnicodeCanonicalClass.A;
-  canonClass[0x081B] = UnicodeCanonicalClass.A;
-  canonClass[0x081C] = UnicodeCanonicalClass.A;
-  canonClass[0x081D] = UnicodeCanonicalClass.A;
-  canonClass[0x081E] = UnicodeCanonicalClass.A;
-  canonClass[0x081F] = UnicodeCanonicalClass.A;
-  canonClass[0x0820] = UnicodeCanonicalClass.A;
-  canonClass[0x0821] = UnicodeCanonicalClass.A;
-  canonClass[0x0822] = UnicodeCanonicalClass.A;
-  canonClass[0x0823] = UnicodeCanonicalClass.A;
-  canonClass[0x0825] = UnicodeCanonicalClass.A;
-  canonClass[0x0826] = UnicodeCanonicalClass.A;
-  canonClass[0x0827] = UnicodeCanonicalClass.A;
-  canonClass[0x0829] = UnicodeCanonicalClass.A;
-  canonClass[0x082A] = UnicodeCanonicalClass.A;
-  canonClass[0x082B] = UnicodeCanonicalClass.A;
-  canonClass[0x082C] = UnicodeCanonicalClass.A;
-  canonClass[0x082D] = UnicodeCanonicalClass.A;
-  canonClass[0x0859] = UnicodeCanonicalClass.B;
-  canonClass[0x085A] = UnicodeCanonicalClass.B;
-  canonClass[0x085B] = UnicodeCanonicalClass.B;
-  canonClass[0x08E4] = UnicodeCanonicalClass.A;
-  canonClass[0x08E5] = UnicodeCanonicalClass.A;
-  canonClass[0x08E6] = UnicodeCanonicalClass.B;
-  canonClass[0x08E7] = UnicodeCanonicalClass.A;
-  canonClass[0x08E8] = UnicodeCanonicalClass.A;
-  canonClass[0x08E9] = UnicodeCanonicalClass.B;
-  canonClass[0x08EA] = UnicodeCanonicalClass.A;
-  canonClass[0x08EB] = UnicodeCanonicalClass.A;
-  canonClass[0x08EC] = UnicodeCanonicalClass.A;
-  canonClass[0x08ED] = UnicodeCanonicalClass.B;
-  canonClass[0x08EE] = UnicodeCanonicalClass.B;
-  canonClass[0x08EF] = UnicodeCanonicalClass.B;
-  canonClass[0x08F0] = UnicodeCanonicalClass.CLASS_27;
-  canonClass[0x08F1] = UnicodeCanonicalClass.CLASS_28;
-  canonClass[0x08F2] = UnicodeCanonicalClass.CLASS_29;
-  canonClass[0x08F3] = UnicodeCanonicalClass.A;
-  canonClass[0x08F4] = UnicodeCanonicalClass.A;
-  canonClass[0x08F5] = UnicodeCanonicalClass.A;
-  canonClass[0x08F6] = UnicodeCanonicalClass.B;
-  canonClass[0x08F7] = UnicodeCanonicalClass.A;
-  canonClass[0x08F8] = UnicodeCanonicalClass.A;
-  canonClass[0x08F9] = UnicodeCanonicalClass.B;
-  canonClass[0x08FA] = UnicodeCanonicalClass.B;
-  canonClass[0x08FB] = UnicodeCanonicalClass.A;
-  canonClass[0x08FC] = UnicodeCanonicalClass.A;
-  canonClass[0x08FD] = UnicodeCanonicalClass.A;
-  canonClass[0x08FE] = UnicodeCanonicalClass.A;
-  canonClass[0x08FF] = UnicodeCanonicalClass.A;
-  canonClass[0x093C] = UnicodeCanonicalClass.NK;
-  canonClass[0x094D] = UnicodeCanonicalClass.VR;
-  canonClass[0x0951] = UnicodeCanonicalClass.A;
-  canonClass[0x0952] = UnicodeCanonicalClass.B;
-  canonClass[0x0953] = UnicodeCanonicalClass.A;
-  canonClass[0x0954] = UnicodeCanonicalClass.A;
-  canonClass[0x09BC] = UnicodeCanonicalClass.NK;
-  canonClass[0x09CD] = UnicodeCanonicalClass.VR;
-  canonClass[0x0A3C] = UnicodeCanonicalClass.NK;
-  canonClass[0x0A4D] = UnicodeCanonicalClass.VR;
-  canonClass[0x0ABC] = UnicodeCanonicalClass.NK;
-  canonClass[0x0ACD] = UnicodeCanonicalClass.VR;
-  canonClass[0x0B3C] = UnicodeCanonicalClass.NK;
-  canonClass[0x0B4D] = UnicodeCanonicalClass.VR;
-  canonClass[0x0BCD] = UnicodeCanonicalClass.VR;
-  canonClass[0x0C4D] = UnicodeCanonicalClass.VR;
-  canonClass[0x0C55] = UnicodeCanonicalClass.CLASS_84;
-  canonClass[0x0C56] = UnicodeCanonicalClass.CLASS_91;
-  canonClass[0x0CBC] = UnicodeCanonicalClass.NK;
-  canonClass[0x0CCD] = UnicodeCanonicalClass.VR;
-  canonClass[0x0D4D] = UnicodeCanonicalClass.VR;
-  canonClass[0x0DCA] = UnicodeCanonicalClass.VR;
-  canonClass[0x0E38] = UnicodeCanonicalClass.CLASS_103;
-  canonClass[0x0E39] = UnicodeCanonicalClass.CLASS_103;
-  canonClass[0x0E3A] = UnicodeCanonicalClass.VR;
-  canonClass[0x0E48] = UnicodeCanonicalClass.CLASS_107;
-  canonClass[0x0E49] = UnicodeCanonicalClass.CLASS_107;
-  canonClass[0x0E4A] = UnicodeCanonicalClass.CLASS_107;
-  canonClass[0x0E4B] = UnicodeCanonicalClass.CLASS_107;
-  canonClass[0x0EB8] = UnicodeCanonicalClass.CLASS_118;
-  canonClass[0x0EB9] = UnicodeCanonicalClass.CLASS_118;
-  canonClass[0x0EC8] = UnicodeCanonicalClass.CLASS_162;
-  canonClass[0x0EC9] = UnicodeCanonicalClass.CLASS_162;
-  canonClass[0x0ECA] = UnicodeCanonicalClass.CLASS_162;
-  canonClass[0x0ECB] = UnicodeCanonicalClass.CLASS_162;
-  canonClass[0x0F18] = UnicodeCanonicalClass.B;
-  canonClass[0x0F19] = UnicodeCanonicalClass.B;
-  canonClass[0x0F35] = UnicodeCanonicalClass.B;
-  canonClass[0x0F37] = UnicodeCanonicalClass.B;
-  canonClass[0x0F39] = UnicodeCanonicalClass.ATAR;
-  canonClass[0x0F71] = UnicodeCanonicalClass.CLASS_129;
-  canonClass[0x0F72] = UnicodeCanonicalClass.CLASS_130;
-  canonClass[0x0F74] = UnicodeCanonicalClass.CLASS_132;
-  canonClass[0x0F7A] = UnicodeCanonicalClass.CLASS_130;
-  canonClass[0x0F7B] = UnicodeCanonicalClass.CLASS_130;
-  canonClass[0x0F7C] = UnicodeCanonicalClass.CLASS_130;
-  canonClass[0x0F7D] = UnicodeCanonicalClass.CLASS_130;
-  canonClass[0x0F80] = UnicodeCanonicalClass.CLASS_130;
-  canonClass[0x0F82] = UnicodeCanonicalClass.A;
-  canonClass[0x0F83] = UnicodeCanonicalClass.A;
-  canonClass[0x0F84] = UnicodeCanonicalClass.VR;
-  canonClass[0x0F86] = UnicodeCanonicalClass.A;
-  canonClass[0x0F87] = UnicodeCanonicalClass.A;
-  canonClass[0x0FC6] = UnicodeCanonicalClass.B;
-  canonClass[0x1037] = UnicodeCanonicalClass.NK;
-  canonClass[0x1039] = UnicodeCanonicalClass.VR;
-  canonClass[0x103A] = UnicodeCanonicalClass.VR;
-  canonClass[0x108D] = UnicodeCanonicalClass.B;
-  canonClass[0x135D] = UnicodeCanonicalClass.A;
-  canonClass[0x135E] = UnicodeCanonicalClass.A;
-  canonClass[0x135F] = UnicodeCanonicalClass.A;
-  canonClass[0x1714] = UnicodeCanonicalClass.VR;
-  canonClass[0x1734] = UnicodeCanonicalClass.VR;
-  canonClass[0x17D2] = UnicodeCanonicalClass.VR;
-  canonClass[0x17DD] = UnicodeCanonicalClass.A;
-  canonClass[0x18A9] = UnicodeCanonicalClass.AL;
-  canonClass[0x1939] = UnicodeCanonicalClass.BR;
-  canonClass[0x193A] = UnicodeCanonicalClass.A;
-  canonClass[0x193B] = UnicodeCanonicalClass.B;
-  canonClass[0x1A17] = UnicodeCanonicalClass.A;
-  canonClass[0x1A18] = UnicodeCanonicalClass.B;
-  canonClass[0x1A60] = UnicodeCanonicalClass.VR;
-  canonClass[0x1A75] = UnicodeCanonicalClass.A;
-  canonClass[0x1A76] = UnicodeCanonicalClass.A;
-  canonClass[0x1A77] = UnicodeCanonicalClass.A;
-  canonClass[0x1A78] = UnicodeCanonicalClass.A;
-  canonClass[0x1A79] = UnicodeCanonicalClass.A;
-  canonClass[0x1A7A] = UnicodeCanonicalClass.A;
-  canonClass[0x1A7B] = UnicodeCanonicalClass.A;
-  canonClass[0x1A7C] = UnicodeCanonicalClass.A;
-  canonClass[0x1A7F] = UnicodeCanonicalClass.B;
-  canonClass[0x1AB0] = UnicodeCanonicalClass.A;
-  canonClass[0x1AB1] = UnicodeCanonicalClass.A;
-  canonClass[0x1AB2] = UnicodeCanonicalClass.A;
-  canonClass[0x1AB3] = UnicodeCanonicalClass.A;
-  canonClass[0x1AB4] = UnicodeCanonicalClass.A;
-  canonClass[0x1AB5] = UnicodeCanonicalClass.B;
-  canonClass[0x1AB6] = UnicodeCanonicalClass.B;
-  canonClass[0x1AB7] = UnicodeCanonicalClass.B;
-  canonClass[0x1AB8] = UnicodeCanonicalClass.B;
-  canonClass[0x1AB9] = UnicodeCanonicalClass.B;
-  canonClass[0x1ABA] = UnicodeCanonicalClass.B;
-  canonClass[0x1ABB] = UnicodeCanonicalClass.A;
-  canonClass[0x1ABC] = UnicodeCanonicalClass.A;
-  canonClass[0x1ABD] = UnicodeCanonicalClass.B;
-  canonClass[0x1B34] = UnicodeCanonicalClass.NK;
-  canonClass[0x1B44] = UnicodeCanonicalClass.VR;
-  canonClass[0x1B6B] = UnicodeCanonicalClass.A;
-  canonClass[0x1B6C] = UnicodeCanonicalClass.B;
-  canonClass[0x1B6D] = UnicodeCanonicalClass.A;
-  canonClass[0x1B6E] = UnicodeCanonicalClass.A;
-  canonClass[0x1B6F] = UnicodeCanonicalClass.A;
-  canonClass[0x1B70] = UnicodeCanonicalClass.A;
-  canonClass[0x1B71] = UnicodeCanonicalClass.A;
-  canonClass[0x1B72] = UnicodeCanonicalClass.A;
-  canonClass[0x1B73] = UnicodeCanonicalClass.A;
-  canonClass[0x1BAA] = UnicodeCanonicalClass.VR;
-  canonClass[0x1BAB] = UnicodeCanonicalClass.VR;
-  canonClass[0x1BE6] = UnicodeCanonicalClass.NK;
-  canonClass[0x1BF2] = UnicodeCanonicalClass.VR;
-  canonClass[0x1BF3] = UnicodeCanonicalClass.VR;
-  canonClass[0x1C37] = UnicodeCanonicalClass.NK;
-  canonClass[0x1CD0] = UnicodeCanonicalClass.A;
-  canonClass[0x1CD1] = UnicodeCanonicalClass.A;
-  canonClass[0x1CD2] = UnicodeCanonicalClass.A;
-  canonClass[0x1CD4] = UnicodeCanonicalClass.OV;
-  canonClass[0x1CD5] = UnicodeCanonicalClass.B;
-  canonClass[0x1CD6] = UnicodeCanonicalClass.B;
-  canonClass[0x1CD7] = UnicodeCanonicalClass.B;
-  canonClass[0x1CD8] = UnicodeCanonicalClass.B;
-  canonClass[0x1CD9] = UnicodeCanonicalClass.B;
-  canonClass[0x1CDA] = UnicodeCanonicalClass.A;
-  canonClass[0x1CDB] = UnicodeCanonicalClass.A;
-  canonClass[0x1CDC] = UnicodeCanonicalClass.B;
-  canonClass[0x1CDD] = UnicodeCanonicalClass.B;
-  canonClass[0x1CDE] = UnicodeCanonicalClass.B;
-  canonClass[0x1CDF] = UnicodeCanonicalClass.B;
-  canonClass[0x1CE0] = UnicodeCanonicalClass.A;
-  canonClass[0x1CE2] = UnicodeCanonicalClass.OV;
-  canonClass[0x1CE3] = UnicodeCanonicalClass.OV;
-  canonClass[0x1CE4] = UnicodeCanonicalClass.OV;
-  canonClass[0x1CE5] = UnicodeCanonicalClass.OV;
-  canonClass[0x1CE6] = UnicodeCanonicalClass.OV;
-  canonClass[0x1CE7] = UnicodeCanonicalClass.OV;
-  canonClass[0x1CE8] = UnicodeCanonicalClass.OV;
-  canonClass[0x1CED] = UnicodeCanonicalClass.B;
-  canonClass[0x1CF4] = UnicodeCanonicalClass.A;
-  canonClass[0x1CF8] = UnicodeCanonicalClass.A;
-  canonClass[0x1CF9] = UnicodeCanonicalClass.A;
-  canonClass[0x1DC0] = UnicodeCanonicalClass.A;
-  canonClass[0x1DC1] = UnicodeCanonicalClass.A;
-  canonClass[0x1DC2] = UnicodeCanonicalClass.B;
-  canonClass[0x1DC3] = UnicodeCanonicalClass.A;
-  canonClass[0x1DC4] = UnicodeCanonicalClass.A;
-  canonClass[0x1DC5] = UnicodeCanonicalClass.A;
-  canonClass[0x1DC6] = UnicodeCanonicalClass.A;
-  canonClass[0x1DC7] = UnicodeCanonicalClass.A;
-  canonClass[0x1DC8] = UnicodeCanonicalClass.A;
-  canonClass[0x1DC9] = UnicodeCanonicalClass.A;
-  canonClass[0x1DCA] = UnicodeCanonicalClass.B;
-  canonClass[0x1DCB] = UnicodeCanonicalClass.A;
-  canonClass[0x1DCC] = UnicodeCanonicalClass.A;
-  canonClass[0x1DCD] = UnicodeCanonicalClass.DA;
-  canonClass[0x1DCE] = UnicodeCanonicalClass.ATA;
-  canonClass[0x1DCF] = UnicodeCanonicalClass.B;
-  canonClass[0x1DD0] = UnicodeCanonicalClass.ATB;
-  canonClass[0x1DD1] = UnicodeCanonicalClass.A;
-  canonClass[0x1DD2] = UnicodeCanonicalClass.A;
-  canonClass[0x1DD3] = UnicodeCanonicalClass.A;
-  canonClass[0x1DD4] = UnicodeCanonicalClass.A;
-  canonClass[0x1DD5] = UnicodeCanonicalClass.A;
-  canonClass[0x1DD6] = UnicodeCanonicalClass.A;
-  canonClass[0x1DD7] = UnicodeCanonicalClass.A;
-  canonClass[0x1DD8] = UnicodeCanonicalClass.A;
-  canonClass[0x1DD9] = UnicodeCanonicalClass.A;
-  canonClass[0x1DDA] = UnicodeCanonicalClass.A;
-  canonClass[0x1DDB] = UnicodeCanonicalClass.A;
-  canonClass[0x1DDC] = UnicodeCanonicalClass.A;
-  canonClass[0x1DDD] = UnicodeCanonicalClass.A;
-  canonClass[0x1DDE] = UnicodeCanonicalClass.A;
-  canonClass[0x1DDF] = UnicodeCanonicalClass.A;
-  canonClass[0x1DE0] = UnicodeCanonicalClass.A;
-  canonClass[0x1DE1] = UnicodeCanonicalClass.A;
-  canonClass[0x1DE2] = UnicodeCanonicalClass.A;
-  canonClass[0x1DE3] = UnicodeCanonicalClass.A;
-  canonClass[0x1DE4] = UnicodeCanonicalClass.A;
-  canonClass[0x1DE5] = UnicodeCanonicalClass.A;
-  canonClass[0x1DE6] = UnicodeCanonicalClass.A;
-  canonClass[0x1DE7] = UnicodeCanonicalClass.A;
-  canonClass[0x1DE8] = UnicodeCanonicalClass.A;
-  canonClass[0x1DE9] = UnicodeCanonicalClass.A;
-  canonClass[0x1DEA] = UnicodeCanonicalClass.A;
-  canonClass[0x1DEB] = UnicodeCanonicalClass.A;
-  canonClass[0x1DEC] = UnicodeCanonicalClass.A;
-  canonClass[0x1DED] = UnicodeCanonicalClass.A;
-  canonClass[0x1DEE] = UnicodeCanonicalClass.A;
-  canonClass[0x1DEF] = UnicodeCanonicalClass.A;
-  canonClass[0x1DF0] = UnicodeCanonicalClass.A;
-  canonClass[0x1DF1] = UnicodeCanonicalClass.A;
-  canonClass[0x1DF2] = UnicodeCanonicalClass.A;
-  canonClass[0x1DF3] = UnicodeCanonicalClass.A;
-  canonClass[0x1DF4] = UnicodeCanonicalClass.A;
-  canonClass[0x1DF5] = UnicodeCanonicalClass.A;
-  canonClass[0x1DFC] = UnicodeCanonicalClass.DB;
-  canonClass[0x1DFD] = UnicodeCanonicalClass.B;
-  canonClass[0x1DFE] = UnicodeCanonicalClass.A;
-  canonClass[0x1DFF] = UnicodeCanonicalClass.B;
-  canonClass[0x20D0] = UnicodeCanonicalClass.A;
-  canonClass[0x20D1] = UnicodeCanonicalClass.A;
-  canonClass[0x20D2] = UnicodeCanonicalClass.OV;
-  canonClass[0x20D3] = UnicodeCanonicalClass.OV;
-  canonClass[0x20D4] = UnicodeCanonicalClass.A;
-  canonClass[0x20D5] = UnicodeCanonicalClass.A;
-  canonClass[0x20D6] = UnicodeCanonicalClass.A;
-  canonClass[0x20D7] = UnicodeCanonicalClass.A;
-  canonClass[0x20D8] = UnicodeCanonicalClass.OV;
-  canonClass[0x20D9] = UnicodeCanonicalClass.OV;
-  canonClass[0x20DA] = UnicodeCanonicalClass.OV;
-  canonClass[0x20DB] = UnicodeCanonicalClass.A;
-  canonClass[0x20DC] = UnicodeCanonicalClass.A;
-  canonClass[0x20E1] = UnicodeCanonicalClass.A;
-  canonClass[0x20E5] = UnicodeCanonicalClass.OV;
-  canonClass[0x20E6] = UnicodeCanonicalClass.OV;
-  canonClass[0x20E7] = UnicodeCanonicalClass.A;
-  canonClass[0x20E8] = UnicodeCanonicalClass.B;
-  canonClass[0x20E9] = UnicodeCanonicalClass.A;
-  canonClass[0x20EA] = UnicodeCanonicalClass.OV;
-  canonClass[0x20EB] = UnicodeCanonicalClass.OV;
-  canonClass[0x20EC] = UnicodeCanonicalClass.B;
-  canonClass[0x20ED] = UnicodeCanonicalClass.B;
-  canonClass[0x20EE] = UnicodeCanonicalClass.B;
-  canonClass[0x20EF] = UnicodeCanonicalClass.B;
-  canonClass[0x20F0] = UnicodeCanonicalClass.A;
-  canonClass[0x2CEF] = UnicodeCanonicalClass.A;
-  canonClass[0x2CF0] = UnicodeCanonicalClass.A;
-  canonClass[0x2CF1] = UnicodeCanonicalClass.A;
-  canonClass[0x2D7F] = UnicodeCanonicalClass.VR;
-  canonClass[0x2DE0] = UnicodeCanonicalClass.A;
-  canonClass[0x2DE1] = UnicodeCanonicalClass.A;
-  canonClass[0x2DE2] = UnicodeCanonicalClass.A;
-  canonClass[0x2DE3] = UnicodeCanonicalClass.A;
-  canonClass[0x2DE4] = UnicodeCanonicalClass.A;
-  canonClass[0x2DE5] = UnicodeCanonicalClass.A;
-  canonClass[0x2DE6] = UnicodeCanonicalClass.A;
-  canonClass[0x2DE7] = UnicodeCanonicalClass.A;
-  canonClass[0x2DE8] = UnicodeCanonicalClass.A;
-  canonClass[0x2DE9] = UnicodeCanonicalClass.A;
-  canonClass[0x2DEA] = UnicodeCanonicalClass.A;
-  canonClass[0x2DEB] = UnicodeCanonicalClass.A;
-  canonClass[0x2DEC] = UnicodeCanonicalClass.A;
-  canonClass[0x2DED] = UnicodeCanonicalClass.A;
-  canonClass[0x2DEE] = UnicodeCanonicalClass.A;
-  canonClass[0x2DEF] = UnicodeCanonicalClass.A;
-  canonClass[0x2DF0] = UnicodeCanonicalClass.A;
-  canonClass[0x2DF1] = UnicodeCanonicalClass.A;
-  canonClass[0x2DF2] = UnicodeCanonicalClass.A;
-  canonClass[0x2DF3] = UnicodeCanonicalClass.A;
-  canonClass[0x2DF4] = UnicodeCanonicalClass.A;
-  canonClass[0x2DF5] = UnicodeCanonicalClass.A;
-  canonClass[0x2DF6] = UnicodeCanonicalClass.A;
-  canonClass[0x2DF7] = UnicodeCanonicalClass.A;
-  canonClass[0x2DF8] = UnicodeCanonicalClass.A;
-  canonClass[0x2DF9] = UnicodeCanonicalClass.A;
-  canonClass[0x2DFA] = UnicodeCanonicalClass.A;
-  canonClass[0x2DFB] = UnicodeCanonicalClass.A;
-  canonClass[0x2DFC] = UnicodeCanonicalClass.A;
-  canonClass[0x2DFD] = UnicodeCanonicalClass.A;
-  canonClass[0x2DFE] = UnicodeCanonicalClass.A;
-  canonClass[0x2DFF] = UnicodeCanonicalClass.A;
-  canonClass[0x302A] = UnicodeCanonicalClass.BL;
-  canonClass[0x302B] = UnicodeCanonicalClass.AL;
-  canonClass[0x302C] = UnicodeCanonicalClass.AR;
-  canonClass[0x302D] = UnicodeCanonicalClass.BR;
-  canonClass[0x302E] = UnicodeCanonicalClass.L;
-  canonClass[0x302F] = UnicodeCanonicalClass.L;
-  canonClass[0x3099] = UnicodeCanonicalClass.KV;
-  canonClass[0x309A] = UnicodeCanonicalClass.KV;
-  canonClass[0xA66F] = UnicodeCanonicalClass.A;
-  canonClass[0xA674] = UnicodeCanonicalClass.A;
-  canonClass[0xA675] = UnicodeCanonicalClass.A;
-  canonClass[0xA676] = UnicodeCanonicalClass.A;
-  canonClass[0xA677] = UnicodeCanonicalClass.A;
-  canonClass[0xA678] = UnicodeCanonicalClass.A;
-  canonClass[0xA679] = UnicodeCanonicalClass.A;
-  canonClass[0xA67A] = UnicodeCanonicalClass.A;
-  canonClass[0xA67B] = UnicodeCanonicalClass.A;
-  canonClass[0xA67C] = UnicodeCanonicalClass.A;
-  canonClass[0xA67D] = UnicodeCanonicalClass.A;
-  canonClass[0xA69F] = UnicodeCanonicalClass.A;
-  canonClass[0xA6F0] = UnicodeCanonicalClass.A;
-  canonClass[0xA6F1] = UnicodeCanonicalClass.A;
-  canonClass[0xA806] = UnicodeCanonicalClass.VR;
-  canonClass[0xA8C4] = UnicodeCanonicalClass.VR;
-  canonClass[0xA8E0] = UnicodeCanonicalClass.A;
-  canonClass[0xA8E1] = UnicodeCanonicalClass.A;
-  canonClass[0xA8E2] = UnicodeCanonicalClass.A;
-  canonClass[0xA8E3] = UnicodeCanonicalClass.A;
-  canonClass[0xA8E4] = UnicodeCanonicalClass.A;
-  canonClass[0xA8E5] = UnicodeCanonicalClass.A;
-  canonClass[0xA8E6] = UnicodeCanonicalClass.A;
-  canonClass[0xA8E7] = UnicodeCanonicalClass.A;
-  canonClass[0xA8E8] = UnicodeCanonicalClass.A;
-  canonClass[0xA8E9] = UnicodeCanonicalClass.A;
-  canonClass[0xA8EA] = UnicodeCanonicalClass.A;
-  canonClass[0xA8EB] = UnicodeCanonicalClass.A;
-  canonClass[0xA8EC] = UnicodeCanonicalClass.A;
-  canonClass[0xA8ED] = UnicodeCanonicalClass.A;
-  canonClass[0xA8EE] = UnicodeCanonicalClass.A;
-  canonClass[0xA8EF] = UnicodeCanonicalClass.A;
-  canonClass[0xA8F0] = UnicodeCanonicalClass.A;
-  canonClass[0xA8F1] = UnicodeCanonicalClass.A;
-  canonClass[0xA92B] = UnicodeCanonicalClass.B;
-  canonClass[0xA92C] = UnicodeCanonicalClass.B;
-  canonClass[0xA92D] = UnicodeCanonicalClass.B;
-  canonClass[0xA953] = UnicodeCanonicalClass.VR;
-  canonClass[0xA9B3] = UnicodeCanonicalClass.NK;
-  canonClass[0xA9C0] = UnicodeCanonicalClass.VR;
-  canonClass[0xAAB0] = UnicodeCanonicalClass.A;
-  canonClass[0xAAB2] = UnicodeCanonicalClass.A;
-  canonClass[0xAAB3] = UnicodeCanonicalClass.A;
-  canonClass[0xAAB4] = UnicodeCanonicalClass.B;
-  canonClass[0xAAB7] = UnicodeCanonicalClass.A;
-  canonClass[0xAAB8] = UnicodeCanonicalClass.A;
-  canonClass[0xAABE] = UnicodeCanonicalClass.A;
-  canonClass[0xAABF] = UnicodeCanonicalClass.A;
-  canonClass[0xAAC1] = UnicodeCanonicalClass.A;
-  canonClass[0xAAF6] = UnicodeCanonicalClass.VR;
-  canonClass[0xABED] = UnicodeCanonicalClass.VR;
-  canonClass[0xFB1E] = UnicodeCanonicalClass.CLASS_26;
-  canonClass[0xFE20] = UnicodeCanonicalClass.A;
-  canonClass[0xFE21] = UnicodeCanonicalClass.A;
-  canonClass[0xFE22] = UnicodeCanonicalClass.A;
-  canonClass[0xFE23] = UnicodeCanonicalClass.A;
-  canonClass[0xFE24] = UnicodeCanonicalClass.A;
-  canonClass[0xFE25] = UnicodeCanonicalClass.A;
-  canonClass[0xFE26] = UnicodeCanonicalClass.A;
-  canonClass[0xFE27] = UnicodeCanonicalClass.B;
-  canonClass[0xFE28] = UnicodeCanonicalClass.B;
-  canonClass[0xFE29] = UnicodeCanonicalClass.B;
-  canonClass[0xFE2A] = UnicodeCanonicalClass.B;
-  canonClass[0xFE2B] = UnicodeCanonicalClass.B;
-  canonClass[0xFE2C] = UnicodeCanonicalClass.B;
-  canonClass[0xFE2D] = UnicodeCanonicalClass.B;
-  decomMapping[0x00A0] = "\u0020";
-  decomMapping[0x00A8] = "\u0020\u0308";
-  decomMapping[0x00AA] = "\u0061";
-  decomMapping[0x00AF] = "\u0020\u0304";
-  decomMapping[0x00B2] = "\u0032";
-  decomMapping[0x00B3] = "\u0033";
-  decomMapping[0x00B4] = "\u0020\u0301";
-  decomMapping[0x00B5] = "\u03BC";
-  decomMapping[0x00B8] = "\u0020\u0327";
-  decomMapping[0x00B9] = "\u0031";
-  decomMapping[0x00BA] = "\u006F";
-  decomMapping[0x00BC] = "\u0031\u2044\u0034";
-  decomMapping[0x00BD] = "\u0031\u2044\u0032";
-  decomMapping[0x00BE] = "\u0033\u2044\u0034";
-  decomMapping[0x00C0] = "\u0041\u0300";
-  decomMapping[0x00C1] = "\u0041\u0301";
-  decomMapping[0x00C2] = "\u0041\u0302";
-  decomMapping[0x00C3] = "\u0041\u0303";
-  decomMapping[0x00C4] = "\u0041\u0308";
-  decomMapping[0x00C5] = "\u0041\u030A";
-  decomMapping[0x00C7] = "\u0043\u0327";
-  decomMapping[0x00C8] = "\u0045\u0300";
-  decomMapping[0x00C9] = "\u0045\u0301";
-  decomMapping[0x00CA] = "\u0045\u0302";
-  decomMapping[0x00CB] = "\u0045\u0308";
-  decomMapping[0x00CC] = "\u0049\u0300";
-  decomMapping[0x00CD] = "\u0049\u0301";
-  decomMapping[0x00CE] = "\u0049\u0302";
-  decomMapping[0x00CF] = "\u0049\u0308";
-  decomMapping[0x00D1] = "\u004E\u0303";
-  decomMapping[0x00D2] = "\u004F\u0300";
-  decomMapping[0x00D3] = "\u004F\u0301";
-  decomMapping[0x00D4] = "\u004F\u0302";
-  decomMapping[0x00D5] = "\u004F\u0303";
-  decomMapping[0x00D6] = "\u004F\u0308";
-  decomMapping[0x00D9] = "\u0055\u0300";
-  decomMapping[0x00DA] = "\u0055\u0301";
-  decomMapping[0x00DB] = "\u0055\u0302";
-  decomMapping[0x00DC] = "\u0055\u0308";
-  decomMapping[0x00DD] = "\u0059\u0301";
-  decomMapping[0x00E0] = "\u0061\u0300";
-  decomMapping[0x00E1] = "\u0061\u0301";
-  decomMapping[0x00E2] = "\u0061\u0302";
-  decomMapping[0x00E3] = "\u0061\u0303";
-  decomMapping[0x00E4] = "\u0061\u0308";
-  decomMapping[0x00E5] = "\u0061\u030A";
-  decomMapping[0x00E7] = "\u0063\u0327";
-  decomMapping[0x00E8] = "\u0065\u0300";
-  decomMapping[0x00E9] = "\u0065\u0301";
-  decomMapping[0x00EA] = "\u0065\u0302";
-  decomMapping[0x00EB] = "\u0065\u0308";
-  decomMapping[0x00EC] = "\u0069\u0300";
-  decomMapping[0x00ED] = "\u0069\u0301";
-  decomMapping[0x00EE] = "\u0069\u0302";
-  decomMapping[0x00EF] = "\u0069\u0308";
-  decomMapping[0x00F1] = "\u006E\u0303";
-  decomMapping[0x00F2] = "\u006F\u0300";
-  decomMapping[0x00F3] = "\u006F\u0301";
-  decomMapping[0x00F4] = "\u006F\u0302";
-  decomMapping[0x00F5] = "\u006F\u0303";
-  decomMapping[0x00F6] = "\u006F\u0308";
-  decomMapping[0x00F9] = "\u0075\u0300";
-  decomMapping[0x00FA] = "\u0075\u0301";
-  decomMapping[0x00FB] = "\u0075\u0302";
-  decomMapping[0x00FC] = "\u0075\u0308";
-  decomMapping[0x00FD] = "\u0079\u0301";
-  decomMapping[0x00FF] = "\u0079\u0308";
-  decomMapping[0x0100] = "\u0041\u0304";
-  decomMapping[0x0101] = "\u0061\u0304";
-  decomMapping[0x0102] = "\u0041\u0306";
-  decomMapping[0x0103] = "\u0061\u0306";
-  decomMapping[0x0104] = "\u0041\u0328";
-  decomMapping[0x0105] = "\u0061\u0328";
-  decomMapping[0x0106] = "\u0043\u0301";
-  decomMapping[0x0107] = "\u0063\u0301";
-  decomMapping[0x0108] = "\u0043\u0302";
-  decomMapping[0x0109] = "\u0063\u0302";
-  decomMapping[0x010A] = "\u0043\u0307";
-  decomMapping[0x010B] = "\u0063\u0307";
-  decomMapping[0x010C] = "\u0043\u030C";
-  decomMapping[0x010D] = "\u0063\u030C";
-  decomMapping[0x010E] = "\u0044\u030C";
-  decomMapping[0x010F] = "\u0064\u030C";
-  decomMapping[0x0112] = "\u0045\u0304";
-  decomMapping[0x0113] = "\u0065\u0304";
-  decomMapping[0x0114] = "\u0045\u0306";
-  decomMapping[0x0115] = "\u0065\u0306";
-  decomMapping[0x0116] = "\u0045\u0307";
-  decomMapping[0x0117] = "\u0065\u0307";
-  decomMapping[0x0118] = "\u0045\u0328";
-  decomMapping[0x0119] = "\u0065\u0328";
-  decomMapping[0x011A] = "\u0045\u030C";
-  decomMapping[0x011B] = "\u0065\u030C";
-  decomMapping[0x011C] = "\u0047\u0302";
-  decomMapping[0x011D] = "\u0067\u0302";
-  decomMapping[0x011E] = "\u0047\u0306";
-  decomMapping[0x011F] = "\u0067\u0306";
-  decomMapping[0x0120] = "\u0047\u0307";
-  decomMapping[0x0121] = "\u0067\u0307";
-  decomMapping[0x0122] = "\u0047\u0327";
-  decomMapping[0x0123] = "\u0067\u0327";
-  decomMapping[0x0124] = "\u0048\u0302";
-  decomMapping[0x0125] = "\u0068\u0302";
-  decomMapping[0x0128] = "\u0049\u0303";
-  decomMapping[0x0129] = "\u0069\u0303";
-  decomMapping[0x012A] = "\u0049\u0304";
-  decomMapping[0x012B] = "\u0069\u0304";
-  decomMapping[0x012C] = "\u0049\u0306";
-  decomMapping[0x012D] = "\u0069\u0306";
-  decomMapping[0x012E] = "\u0049\u0328";
-  decomMapping[0x012F] = "\u0069\u0328";
-  decomMapping[0x0130] = "\u0049\u0307";
-  decomMapping[0x0132] = "\u0049\u004A";
-  decomMapping[0x0133] = "\u0069\u006A";
-  decomMapping[0x0134] = "\u004A\u0302";
-  decomMapping[0x0135] = "\u006A\u0302";
-  decomMapping[0x0136] = "\u004B\u0327";
-  decomMapping[0x0137] = "\u006B\u0327";
-  decomMapping[0x0139] = "\u004C\u0301";
-  decomMapping[0x013A] = "\u006C\u0301";
-  decomMapping[0x013B] = "\u004C\u0327";
-  decomMapping[0x013C] = "\u006C\u0327";
-  decomMapping[0x013D] = "\u004C\u030C";
-  decomMapping[0x013E] = "\u006C\u030C";
-  decomMapping[0x013F] = "\u004C\u00B7";
-  decomMapping[0x0140] = "\u006C\u00B7";
-  decomMapping[0x0143] = "\u004E\u0301";
-  decomMapping[0x0144] = "\u006E\u0301";
-  decomMapping[0x0145] = "\u004E\u0327";
-  decomMapping[0x0146] = "\u006E\u0327";
-  decomMapping[0x0147] = "\u004E\u030C";
-  decomMapping[0x0148] = "\u006E\u030C";
-  decomMapping[0x0149] = "\u02BC\u006E";
-  decomMapping[0x014C] = "\u004F\u0304";
-  decomMapping[0x014D] = "\u006F\u0304";
-  decomMapping[0x014E] = "\u004F\u0306";
-  decomMapping[0x014F] = "\u006F\u0306";
-  decomMapping[0x0150] = "\u004F\u030B";
-  decomMapping[0x0151] = "\u006F\u030B";
-  decomMapping[0x0154] = "\u0052\u0301";
-  decomMapping[0x0155] = "\u0072\u0301";
-  decomMapping[0x0156] = "\u0052\u0327";
-  decomMapping[0x0157] = "\u0072\u0327";
-  decomMapping[0x0158] = "\u0052\u030C";
-  decomMapping[0x0159] = "\u0072\u030C";
-  decomMapping[0x015A] = "\u0053\u0301";
-  decomMapping[0x015B] = "\u0073\u0301";
-  decomMapping[0x015C] = "\u0053\u0302";
-  decomMapping[0x015D] = "\u0073\u0302";
-  decomMapping[0x015E] = "\u0053\u0327";
-  decomMapping[0x015F] = "\u0073\u0327";
-  decomMapping[0x0160] = "\u0053\u030C";
-  decomMapping[0x0161] = "\u0073\u030C";
-  decomMapping[0x0162] = "\u0054\u0327";
-  decomMapping[0x0163] = "\u0074\u0327";
-  decomMapping[0x0164] = "\u0054\u030C";
-  decomMapping[0x0165] = "\u0074\u030C";
-  decomMapping[0x0168] = "\u0055\u0303";
-  decomMapping[0x0169] = "\u0075\u0303";
-  decomMapping[0x016A] = "\u0055\u0304";
-  decomMapping[0x016B] = "\u0075\u0304";
-  decomMapping[0x016C] = "\u0055\u0306";
-  decomMapping[0x016D] = "\u0075\u0306";
-  decomMapping[0x016E] = "\u0055\u030A";
-  decomMapping[0x016F] = "\u0075\u030A";
-  decomMapping[0x0170] = "\u0055\u030B";
-  decomMapping[0x0171] = "\u0075\u030B";
-  decomMapping[0x0172] = "\u0055\u0328";
-  decomMapping[0x0173] = "\u0075\u0328";
-  decomMapping[0x0174] = "\u0057\u0302";
-  decomMapping[0x0175] = "\u0077\u0302";
-  decomMapping[0x0176] = "\u0059\u0302";
-  decomMapping[0x0177] = "\u0079\u0302";
-  decomMapping[0x0178] = "\u0059\u0308";
-  decomMapping[0x0179] = "\u005A\u0301";
-  decomMapping[0x017A] = "\u007A\u0301";
-  decomMapping[0x017B] = "\u005A\u0307";
-  decomMapping[0x017C] = "\u007A\u0307";
-  decomMapping[0x017D] = "\u005A\u030C";
-  decomMapping[0x017E] = "\u007A\u030C";
-  decomMapping[0x017F] = "\u0073";
-  decomMapping[0x01A0] = "\u004F\u031B";
-  decomMapping[0x01A1] = "\u006F\u031B";
-  decomMapping[0x01AF] = "\u0055\u031B";
-  decomMapping[0x01B0] = "\u0075\u031B";
-  decomMapping[0x01C4] = "\u0044\u017D";
-  decomMapping[0x01C5] = "\u0044\u017E";
-  decomMapping[0x01C6] = "\u0064\u017E";
-  decomMapping[0x01C7] = "\u004C\u004A";
-  decomMapping[0x01C8] = "\u004C\u006A";
-  decomMapping[0x01C9] = "\u006C\u006A";
-  decomMapping[0x01CA] = "\u004E\u004A";
-  decomMapping[0x01CB] = "\u004E\u006A";
-  decomMapping[0x01CC] = "\u006E\u006A";
-  decomMapping[0x01CD] = "\u0041\u030C";
-  decomMapping[0x01CE] = "\u0061\u030C";
-  decomMapping[0x01CF] = "\u0049\u030C";
-  decomMapping[0x01D0] = "\u0069\u030C";
-  decomMapping[0x01D1] = "\u004F\u030C";
-  decomMapping[0x01D2] = "\u006F\u030C";
-  decomMapping[0x01D3] = "\u0055\u030C";
-  decomMapping[0x01D4] = "\u0075\u030C";
-  decomMapping[0x01D5] = "\u00DC\u0304";
-  decomMapping[0x01D6] = "\u00FC\u0304";
-  decomMapping[0x01D7] = "\u00DC\u0301";
-  decomMapping[0x01D8] = "\u00FC\u0301";
-  decomMapping[0x01D9] = "\u00DC\u030C";
-  decomMapping[0x01DA] = "\u00FC\u030C";
-  decomMapping[0x01DB] = "\u00DC\u0300";
-  decomMapping[0x01DC] = "\u00FC\u0300";
-  decomMapping[0x01DE] = "\u00C4\u0304";
-  decomMapping[0x01DF] = "\u00E4\u0304";
-  decomMapping[0x01E0] = "\u0226\u0304";
-  decomMapping[0x01E1] = "\u0227\u0304";
-  decomMapping[0x01E2] = "\u00C6\u0304";
-  decomMapping[0x01E3] = "\u00E6\u0304";
-  decomMapping[0x01E6] = "\u0047\u030C";
-  decomMapping[0x01E7] = "\u0067\u030C";
-  decomMapping[0x01E8] = "\u004B\u030C";
-  decomMapping[0x01E9] = "\u006B\u030C";
-  decomMapping[0x01EA] = "\u004F\u0328";
-  decomMapping[0x01EB] = "\u006F\u0328";
-  decomMapping[0x01EC] = "\u01EA\u0304";
-  decomMapping[0x01ED] = "\u01EB\u0304";
-  decomMapping[0x01EE] = "\u01B7\u030C";
-  decomMapping[0x01EF] = "\u0292\u030C";
-  decomMapping[0x01F0] = "\u006A\u030C";
-  decomMapping[0x01F1] = "\u0044\u005A";
-  decomMapping[0x01F2] = "\u0044\u007A";
-  decomMapping[0x01F3] = "\u0064\u007A";
-  decomMapping[0x01F4] = "\u0047\u0301";
-  decomMapping[0x01F5] = "\u0067\u0301";
-  decomMapping[0x01F8] = "\u004E\u0300";
-  decomMapping[0x01F9] = "\u006E\u0300";
-  decomMapping[0x01FA] = "\u00C5\u0301";
-  decomMapping[0x01FB] = "\u00E5\u0301";
-  decomMapping[0x01FC] = "\u00C6\u0301";
-  decomMapping[0x01FD] = "\u00E6\u0301";
-  decomMapping[0x01FE] = "\u00D8\u0301";
-  decomMapping[0x01FF] = "\u00F8\u0301";
-  decomMapping[0x0200] = "\u0041\u030F";
-  decomMapping[0x0201] = "\u0061\u030F";
-  decomMapping[0x0202] = "\u0041\u0311";
-  decomMapping[0x0203] = "\u0061\u0311";
-  decomMapping[0x0204] = "\u0045\u030F";
-  decomMapping[0x0205] = "\u0065\u030F";
-  decomMapping[0x0206] = "\u0045\u0311";
-  decomMapping[0x0207] = "\u0065\u0311";
-  decomMapping[0x0208] = "\u0049\u030F";
-  decomMapping[0x0209] = "\u0069\u030F";
-  decomMapping[0x020A] = "\u0049\u0311";
-  decomMapping[0x020B] = "\u0069\u0311";
-  decomMapping[0x020C] = "\u004F\u030F";
-  decomMapping[0x020D] = "\u006F\u030F";
-  decomMapping[0x020E] = "\u004F\u0311";
-  decomMapping[0x020F] = "\u006F\u0311";
-  decomMapping[0x0210] = "\u0052\u030F";
-  decomMapping[0x0211] = "\u0072\u030F";
-  decomMapping[0x0212] = "\u0052\u0311";
-  decomMapping[0x0213] = "\u0072\u0311";
-  decomMapping[0x0214] = "\u0055\u030F";
-  decomMapping[0x0215] = "\u0075\u030F";
-  decomMapping[0x0216] = "\u0055\u0311";
-  decomMapping[0x0217] = "\u0075\u0311";
-  decomMapping[0x0218] = "\u0053\u0326";
-  decomMapping[0x0219] = "\u0073\u0326";
-  decomMapping[0x021A] = "\u0054\u0326";
-  decomMapping[0x021B] = "\u0074\u0326";
-  decomMapping[0x021E] = "\u0048\u030C";
-  decomMapping[0x021F] = "\u0068\u030C";
-  decomMapping[0x0226] = "\u0041\u0307";
-  decomMapping[0x0227] = "\u0061\u0307";
-  decomMapping[0x0228] = "\u0045\u0327";
-  decomMapping[0x0229] = "\u0065\u0327";
-  decomMapping[0x022A] = "\u00D6\u0304";
-  decomMapping[0x022B] = "\u00F6\u0304";
-  decomMapping[0x022C] = "\u00D5\u0304";
-  decomMapping[0x022D] = "\u00F5\u0304";
-  decomMapping[0x022E] = "\u004F\u0307";
-  decomMapping[0x022F] = "\u006F\u0307";
-  decomMapping[0x0230] = "\u022E\u0304";
-  decomMapping[0x0231] = "\u022F\u0304";
-  decomMapping[0x0232] = "\u0059\u0304";
-  decomMapping[0x0233] = "\u0079\u0304";
-  decomMapping[0x02B0] = "\u0068";
-  decomMapping[0x02B1] = "\u0266";
-  decomMapping[0x02B2] = "\u006A";
-  decomMapping[0x02B3] = "\u0072";
-  decomMapping[0x02B4] = "\u0279";
-  decomMapping[0x02B5] = "\u027B";
-  decomMapping[0x02B6] = "\u0281";
-  decomMapping[0x02B7] = "\u0077";
-  decomMapping[0x02B8] = "\u0079";
-  decomMapping[0x02D8] = "\u0020\u0306";
-  decomMapping[0x02D9] = "\u0020\u0307";
-  decomMapping[0x02DA] = "\u0020\u030A";
-  decomMapping[0x02DB] = "\u0020\u0328";
-  decomMapping[0x02DC] = "\u0020\u0303";
-  decomMapping[0x02DD] = "\u0020\u030B";
-  decomMapping[0x02E0] = "\u0263";
-  decomMapping[0x02E1] = "\u006C";
-  decomMapping[0x02E2] = "\u0073";
-  decomMapping[0x02E3] = "\u0078";
-  decomMapping[0x02E4] = "\u0295";
-  decomMapping[0x0340] = "\u0300";
-  decomMapping[0x0341] = "\u0301";
-  decomMapping[0x0343] = "\u0313";
-  decomMapping[0x0344] = "\u0308\u0301";
-  decomMapping[0x0374] = "\u02B9";
-  decomMapping[0x037A] = "\u0020\u0345";
-  decomMapping[0x037E] = "\u003B";
-  decomMapping[0x0384] = "\u0020\u0301";
-  decomMapping[0x0385] = "\u00A8\u0301";
-  decomMapping[0x0386] = "\u0391\u0301";
-  decomMapping[0x0387] = "\u00B7";
-  decomMapping[0x0388] = "\u0395\u0301";
-  decomMapping[0x0389] = "\u0397\u0301";
-  decomMapping[0x038A] = "\u0399\u0301";
-  decomMapping[0x038C] = "\u039F\u0301";
-  decomMapping[0x038E] = "\u03A5\u0301";
-  decomMapping[0x038F] = "\u03A9\u0301";
-  decomMapping[0x0390] = "\u03CA\u0301";
-  decomMapping[0x03AA] = "\u0399\u0308";
-  decomMapping[0x03AB] = "\u03A5\u0308";
-  decomMapping[0x03AC] = "\u03B1\u0301";
-  decomMapping[0x03AD] = "\u03B5\u0301";
-  decomMapping[0x03AE] = "\u03B7\u0301";
-  decomMapping[0x03AF] = "\u03B9\u0301";
-  decomMapping[0x03B0] = "\u03CB\u0301";
-  decomMapping[0x03CA] = "\u03B9\u0308";
-  decomMapping[0x03CB] = "\u03C5\u0308";
-  decomMapping[0x03CC] = "\u03BF\u0301";
-  decomMapping[0x03CD] = "\u03C5\u0301";
-  decomMapping[0x03CE] = "\u03C9\u0301";
-  decomMapping[0x03D0] = "\u03B2";
-  decomMapping[0x03D1] = "\u03B8";
-  decomMapping[0x03D2] = "\u03A5";
-  decomMapping[0x03D3] = "\u03D2\u0301";
-  decomMapping[0x03D4] = "\u03D2\u0308";
-  decomMapping[0x03D5] = "\u03C6";
-  decomMapping[0x03D6] = "\u03C0";
-  decomMapping[0x03F0] = "\u03BA";
-  decomMapping[0x03F1] = "\u03C1";
-  decomMapping[0x03F2] = "\u03C2";
-  decomMapping[0x03F4] = "\u0398";
-  decomMapping[0x03F5] = "\u03B5";
-  decomMapping[0x03F9] = "\u03A3";
-  decomMapping[0x0400] = "\u0415\u0300";
-  decomMapping[0x0401] = "\u0415\u0308";
-  decomMapping[0x0403] = "\u0413\u0301";
-  decomMapping[0x0407] = "\u0406\u0308";
-  decomMapping[0x040C] = "\u041A\u0301";
-  decomMapping[0x040D] = "\u0418\u0300";
-  decomMapping[0x040E] = "\u0423\u0306";
-  decomMapping[0x0419] = "\u0418\u0306";
-  decomMapping[0x0439] = "\u0438\u0306";
-  decomMapping[0x0450] = "\u0435\u0300";
-  decomMapping[0x0451] = "\u0435\u0308";
-  decomMapping[0x0453] = "\u0433\u0301";
-  decomMapping[0x0457] = "\u0456\u0308";
-  decomMapping[0x045C] = "\u043A\u0301";
-  decomMapping[0x045D] = "\u0438\u0300";
-  decomMapping[0x045E] = "\u0443\u0306";
-  decomMapping[0x0476] = "\u0474\u030F";
-  decomMapping[0x0477] = "\u0475\u030F";
-  decomMapping[0x04C1] = "\u0416\u0306";
-  decomMapping[0x04C2] = "\u0436\u0306";
-  decomMapping[0x04D0] = "\u0410\u0306";
-  decomMapping[0x04D1] = "\u0430\u0306";
-  decomMapping[0x04D2] = "\u0410\u0308";
-  decomMapping[0x04D3] = "\u0430\u0308";
-  decomMapping[0x04D6] = "\u0415\u0306";
-  decomMapping[0x04D7] = "\u0435\u0306";
-  decomMapping[0x04DA] = "\u04D8\u0308";
-  decomMapping[0x04DB] = "\u04D9\u0308";
-  decomMapping[0x04DC] = "\u0416\u0308";
-  decomMapping[0x04DD] = "\u0436\u0308";
-  decomMapping[0x04DE] = "\u0417\u0308";
-  decomMapping[0x04DF] = "\u0437\u0308";
-  decomMapping[0x04E2] = "\u0418\u0304";
-  decomMapping[0x04E3] = "\u0438\u0304";
-  decomMapping[0x04E4] = "\u0418\u0308";
-  decomMapping[0x04E5] = "\u0438\u0308";
-  decomMapping[0x04E6] = "\u041E\u0308";
-  decomMapping[0x04E7] = "\u043E\u0308";
-  decomMapping[0x04EA] = "\u04E8\u0308";
-  decomMapping[0x04EB] = "\u04E9\u0308";
-  decomMapping[0x04EC] = "\u042D\u0308";
-  decomMapping[0x04ED] = "\u044D\u0308";
-  decomMapping[0x04EE] = "\u0423\u0304";
-  decomMapping[0x04EF] = "\u0443\u0304";
-  decomMapping[0x04F0] = "\u0423\u0308";
-  decomMapping[0x04F1] = "\u0443\u0308";
-  decomMapping[0x04F2] = "\u0423\u030B";
-  decomMapping[0x04F3] = "\u0443\u030B";
-  decomMapping[0x04F4] = "\u0427\u0308";
-  decomMapping[0x04F5] = "\u0447\u0308";
-  decomMapping[0x04F8] = "\u042B\u0308";
-  decomMapping[0x04F9] = "\u044B\u0308";
-  decomMapping[0x0587] = "\u0565\u0582";
-  decomMapping[0x0622] = "\u0627\u0653";
-  decomMapping[0x0623] = "\u0627\u0654";
-  decomMapping[0x0624] = "\u0648\u0654";
-  decomMapping[0x0625] = "\u0627\u0655";
-  decomMapping[0x0626] = "\u064A\u0654";
-  decomMapping[0x0675] = "\u0627\u0674";
-  decomMapping[0x0676] = "\u0648\u0674";
-  decomMapping[0x0677] = "\u06C7\u0674";
-  decomMapping[0x0678] = "\u064A\u0674";
-  decomMapping[0x06C0] = "\u06D5\u0654";
-  decomMapping[0x06C2] = "\u06C1\u0654";
-  decomMapping[0x06D3] = "\u06D2\u0654";
-  decomMapping[0x0929] = "\u0928\u093C";
-  decomMapping[0x0931] = "\u0930\u093C";
-  decomMapping[0x0934] = "\u0933\u093C";
-  decomMapping[0x0958] = "\u0915\u093C";
-  decomMapping[0x0959] = "\u0916\u093C";
-  decomMapping[0x095A] = "\u0917\u093C";
-  decomMapping[0x095B] = "\u091C\u093C";
-  decomMapping[0x095C] = "\u0921\u093C";
-  decomMapping[0x095D] = "\u0922\u093C";
-  decomMapping[0x095E] = "\u092B\u093C";
-  decomMapping[0x095F] = "\u092F\u093C";
-  decomMapping[0x09CB] = "\u09C7\u09BE";
-  decomMapping[0x09CC] = "\u09C7\u09D7";
-  decomMapping[0x09DC] = "\u09A1\u09BC";
-  decomMapping[0x09DD] = "\u09A2\u09BC";
-  decomMapping[0x09DF] = "\u09AF\u09BC";
-  decomMapping[0x0A33] = "\u0A32\u0A3C";
-  decomMapping[0x0A36] = "\u0A38\u0A3C";
-  decomMapping[0x0A59] = "\u0A16\u0A3C";
-  decomMapping[0x0A5A] = "\u0A17\u0A3C";
-  decomMapping[0x0A5B] = "\u0A1C\u0A3C";
-  decomMapping[0x0A5E] = "\u0A2B\u0A3C";
-  decomMapping[0x0B48] = "\u0B47\u0B56";
-  decomMapping[0x0B4B] = "\u0B47\u0B3E";
-  decomMapping[0x0B4C] = "\u0B47\u0B57";
-  decomMapping[0x0B5C] = "\u0B21\u0B3C";
-  decomMapping[0x0B5D] = "\u0B22\u0B3C";
-  decomMapping[0x0B94] = "\u0B92\u0BD7";
-  decomMapping[0x0BCA] = "\u0BC6\u0BBE";
-  decomMapping[0x0BCB] = "\u0BC7\u0BBE";
-  decomMapping[0x0BCC] = "\u0BC6\u0BD7";
-  decomMapping[0x0C48] = "\u0C46\u0C56";
-  decomMapping[0x0CC0] = "\u0CBF\u0CD5";
-  decomMapping[0x0CC7] = "\u0CC6\u0CD5";
-  decomMapping[0x0CC8] = "\u0CC6\u0CD6";
-  decomMapping[0x0CCA] = "\u0CC6\u0CC2";
-  decomMapping[0x0CCB] = "\u0CCA\u0CD5";
-  decomMapping[0x0D4A] = "\u0D46\u0D3E";
-  decomMapping[0x0D4B] = "\u0D47\u0D3E";
-  decomMapping[0x0D4C] = "\u0D46\u0D57";
-  decomMapping[0x0DDA] = "\u0DD9\u0DCA";
-  decomMapping[0x0DDC] = "\u0DD9\u0DCF";
-  decomMapping[0x0DDD] = "\u0DDC\u0DCA";
-  decomMapping[0x0DDE] = "\u0DD9\u0DDF";
-  decomMapping[0x0E33] = "\u0E4D\u0E32";
-  decomMapping[0x0EB3] = "\u0ECD\u0EB2";
-  decomMapping[0x0EDC] = "\u0EAB\u0E99";
-  decomMapping[0x0EDD] = "\u0EAB\u0EA1";
-  decomMapping[0x0F0C] = "\u0F0B";
-  decomMapping[0x0F43] = "\u0F42\u0FB7";
-  decomMapping[0x0F4D] = "\u0F4C\u0FB7";
-  decomMapping[0x0F52] = "\u0F51\u0FB7";
-  decomMapping[0x0F57] = "\u0F56\u0FB7";
-  decomMapping[0x0F5C] = "\u0F5B\u0FB7";
-  decomMapping[0x0F69] = "\u0F40\u0FB5";
-  decomMapping[0x0F73] = "\u0F71\u0F72";
-  decomMapping[0x0F75] = "\u0F71\u0F74";
-  decomMapping[0x0F76] = "\u0FB2\u0F80";
-  decomMapping[0x0F77] = "\u0FB2\u0F81";
-  decomMapping[0x0F78] = "\u0FB3\u0F80";
-  decomMapping[0x0F79] = "\u0FB3\u0F81";
-  decomMapping[0x0F81] = "\u0F71\u0F80";
-  decomMapping[0x0F93] = "\u0F92\u0FB7";
-  decomMapping[0x0F9D] = "\u0F9C\u0FB7";
-  decomMapping[0x0FA2] = "\u0FA1\u0FB7";
-  decomMapping[0x0FA7] = "\u0FA6\u0FB7";
-  decomMapping[0x0FAC] = "\u0FAB\u0FB7";
-  decomMapping[0x0FB9] = "\u0F90\u0FB5";
-  decomMapping[0x1026] = "\u1025\u102E";
-  decomMapping[0x10FC] = "\u10DC";
-  decomMapping[0x1B06] = "\u1B05\u1B35";
-  decomMapping[0x1B08] = "\u1B07\u1B35";
-  decomMapping[0x1B0A] = "\u1B09\u1B35";
-  decomMapping[0x1B0C] = "\u1B0B\u1B35";
-  decomMapping[0x1B0E] = "\u1B0D\u1B35";
-  decomMapping[0x1B12] = "\u1B11\u1B35";
-  decomMapping[0x1B3B] = "\u1B3A\u1B35";
-  decomMapping[0x1B3D] = "\u1B3C\u1B35";
-  decomMapping[0x1B40] = "\u1B3E\u1B35";
-  decomMapping[0x1B41] = "\u1B3F\u1B35";
-  decomMapping[0x1B43] = "\u1B42\u1B35";
-  decomMapping[0x1D2C] = "\u0041";
-  decomMapping[0x1D2D] = "\u00C6";
-  decomMapping[0x1D2E] = "\u0042";
-  decomMapping[0x1D30] = "\u0044";
-  decomMapping[0x1D31] = "\u0045";
-  decomMapping[0x1D32] = "\u018E";
-  decomMapping[0x1D33] = "\u0047";
-  decomMapping[0x1D34] = "\u0048";
-  decomMapping[0x1D35] = "\u0049";
-  decomMapping[0x1D36] = "\u004A";
-  decomMapping[0x1D37] = "\u004B";
-  decomMapping[0x1D38] = "\u004C";
-  decomMapping[0x1D39] = "\u004D";
-  decomMapping[0x1D3A] = "\u004E";
-  decomMapping[0x1D3C] = "\u004F";
-  decomMapping[0x1D3D] = "\u0222";
-  decomMapping[0x1D3E] = "\u0050";
-  decomMapping[0x1D3F] = "\u0052";
-  decomMapping[0x1D40] = "\u0054";
-  decomMapping[0x1D41] = "\u0055";
-  decomMapping[0x1D42] = "\u0057";
-  decomMapping[0x1D43] = "\u0061";
-  decomMapping[0x1D44] = "\u0250";
-  decomMapping[0x1D45] = "\u0251";
-  decomMapping[0x1D46] = "\u1D02";
-  decomMapping[0x1D47] = "\u0062";
-  decomMapping[0x1D48] = "\u0064";
-  decomMapping[0x1D49] = "\u0065";
-  decomMapping[0x1D4A] = "\u0259";
-  decomMapping[0x1D4B] = "\u025B";
-  decomMapping[0x1D4C] = "\u025C";
-  decomMapping[0x1D4D] = "\u0067";
-  decomMapping[0x1D4F] = "\u006B";
-  decomMapping[0x1D50] = "\u006D";
-  decomMapping[0x1D51] = "\u014B";
-  decomMapping[0x1D52] = "\u006F";
-  decomMapping[0x1D53] = "\u0254";
-  decomMapping[0x1D54] = "\u1D16";
-  decomMapping[0x1D55] = "\u1D17";
-  decomMapping[0x1D56] = "\u0070";
-  decomMapping[0x1D57] = "\u0074";
-  decomMapping[0x1D58] = "\u0075";
-  decomMapping[0x1D59] = "\u1D1D";
-  decomMapping[0x1D5A] = "\u026F";
-  decomMapping[0x1D5B] = "\u0076";
-  decomMapping[0x1D5C] = "\u1D25";
-  decomMapping[0x1D5D] = "\u03B2";
-  decomMapping[0x1D5E] = "\u03B3";
-  decomMapping[0x1D5F] = "\u03B4";
-  decomMapping[0x1D60] = "\u03C6";
-  decomMapping[0x1D61] = "\u03C7";
-  decomMapping[0x1D62] = "\u0069";
-  decomMapping[0x1D63] = "\u0072";
-  decomMapping[0x1D64] = "\u0075";
-  decomMapping[0x1D65] = "\u0076";
-  decomMapping[0x1D66] = "\u03B2";
-  decomMapping[0x1D67] = "\u03B3";
-  decomMapping[0x1D68] = "\u03C1";
-  decomMapping[0x1D69] = "\u03C6";
-  decomMapping[0x1D6A] = "\u03C7";
-  decomMapping[0x1D78] = "\u043D";
-  decomMapping[0x1D9B] = "\u0252";
-  decomMapping[0x1D9C] = "\u0063";
-  decomMapping[0x1D9D] = "\u0255";
-  decomMapping[0x1D9E] = "\u00F0";
-  decomMapping[0x1D9F] = "\u025C";
-  decomMapping[0x1DA0] = "\u0066";
-  decomMapping[0x1DA1] = "\u025F";
-  decomMapping[0x1DA2] = "\u0261";
-  decomMapping[0x1DA3] = "\u0265";
-  decomMapping[0x1DA4] = "\u0268";
-  decomMapping[0x1DA5] = "\u0269";
-  decomMapping[0x1DA6] = "\u026A";
-  decomMapping[0x1DA7] = "\u1D7B";
-  decomMapping[0x1DA8] = "\u029D";
-  decomMapping[0x1DA9] = "\u026D";
-  decomMapping[0x1DAA] = "\u1D85";
-  decomMapping[0x1DAB] = "\u029F";
-  decomMapping[0x1DAC] = "\u0271";
-  decomMapping[0x1DAD] = "\u0270";
-  decomMapping[0x1DAE] = "\u0272";
-  decomMapping[0x1DAF] = "\u0273";
-  decomMapping[0x1DB0] = "\u0274";
-  decomMapping[0x1DB1] = "\u0275";
-  decomMapping[0x1DB2] = "\u0278";
-  decomMapping[0x1DB3] = "\u0282";
-  decomMapping[0x1DB4] = "\u0283";
-  decomMapping[0x1DB5] = "\u01AB";
-  decomMapping[0x1DB6] = "\u0289";
-  decomMapping[0x1DB7] = "\u028A";
-  decomMapping[0x1DB8] = "\u1D1C";
-  decomMapping[0x1DB9] = "\u028B";
-  decomMapping[0x1DBA] = "\u028C";
-  decomMapping[0x1DBB] = "\u007A";
-  decomMapping[0x1DBC] = "\u0290";
-  decomMapping[0x1DBD] = "\u0291";
-  decomMapping[0x1DBE] = "\u0292";
-  decomMapping[0x1DBF] = "\u03B8";
-  decomMapping[0x1E00] = "\u0041\u0325";
-  decomMapping[0x1E01] = "\u0061\u0325";
-  decomMapping[0x1E02] = "\u0042\u0307";
-  decomMapping[0x1E03] = "\u0062\u0307";
-  decomMapping[0x1E04] = "\u0042\u0323";
-  decomMapping[0x1E05] = "\u0062\u0323";
-  decomMapping[0x1E06] = "\u0042\u0331";
-  decomMapping[0x1E07] = "\u0062\u0331";
-  decomMapping[0x1E08] = "\u00C7\u0301";
-  decomMapping[0x1E09] = "\u00E7\u0301";
-  decomMapping[0x1E0A] = "\u0044\u0307";
-  decomMapping[0x1E0B] = "\u0064\u0307";
-  decomMapping[0x1E0C] = "\u0044\u0323";
-  decomMapping[0x1E0D] = "\u0064\u0323";
-  decomMapping[0x1E0E] = "\u0044\u0331";
-  decomMapping[0x1E0F] = "\u0064\u0331";
-  decomMapping[0x1E10] = "\u0044\u0327";
-  decomMapping[0x1E11] = "\u0064\u0327";
-  decomMapping[0x1E12] = "\u0044\u032D";
-  decomMapping[0x1E13] = "\u0064\u032D";
-  decomMapping[0x1E14] = "\u0112\u0300";
-  decomMapping[0x1E15] = "\u0113\u0300";
-  decomMapping[0x1E16] = "\u0112\u0301";
-  decomMapping[0x1E17] = "\u0113\u0301";
-  decomMapping[0x1E18] = "\u0045\u032D";
-  decomMapping[0x1E19] = "\u0065\u032D";
-  decomMapping[0x1E1A] = "\u0045\u0330";
-  decomMapping[0x1E1B] = "\u0065\u0330";
-  decomMapping[0x1E1C] = "\u0228\u0306";
-  decomMapping[0x1E1D] = "\u0229\u0306";
-  decomMapping[0x1E1E] = "\u0046\u0307";
-  decomMapping[0x1E1F] = "\u0066\u0307";
-  decomMapping[0x1E20] = "\u0047\u0304";
-  decomMapping[0x1E21] = "\u0067\u0304";
-  decomMapping[0x1E22] = "\u0048\u0307";
-  decomMapping[0x1E23] = "\u0068\u0307";
-  decomMapping[0x1E24] = "\u0048\u0323";
-  decomMapping[0x1E25] = "\u0068\u0323";
-  decomMapping[0x1E26] = "\u0048\u0308";
-  decomMapping[0x1E27] = "\u0068\u0308";
-  decomMapping[0x1E28] = "\u0048\u0327";
-  decomMapping[0x1E29] = "\u0068\u0327";
-  decomMapping[0x1E2A] = "\u0048\u032E";
-  decomMapping[0x1E2B] = "\u0068\u032E";
-  decomMapping[0x1E2C] = "\u0049\u0330";
-  decomMapping[0x1E2D] = "\u0069\u0330";
-  decomMapping[0x1E2E] = "\u00CF\u0301";
-  decomMapping[0x1E2F] = "\u00EF\u0301";
-  decomMapping[0x1E30] = "\u004B\u0301";
-  decomMapping[0x1E31] = "\u006B\u0301";
-  decomMapping[0x1E32] = "\u004B\u0323";
-  decomMapping[0x1E33] = "\u006B\u0323";
-  decomMapping[0x1E34] = "\u004B\u0331";
-  decomMapping[0x1E35] = "\u006B\u0331";
-  decomMapping[0x1E36] = "\u004C\u0323";
-  decomMapping[0x1E37] = "\u006C\u0323";
-  decomMapping[0x1E38] = "\u1E36\u0304";
-  decomMapping[0x1E39] = "\u1E37\u0304";
-  decomMapping[0x1E3A] = "\u004C\u0331";
-  decomMapping[0x1E3B] = "\u006C\u0331";
-  decomMapping[0x1E3C] = "\u004C\u032D";
-  decomMapping[0x1E3D] = "\u006C\u032D";
-  decomMapping[0x1E3E] = "\u004D\u0301";
-  decomMapping[0x1E3F] = "\u006D\u0301";
-  decomMapping[0x1E40] = "\u004D\u0307";
-  decomMapping[0x1E41] = "\u006D\u0307";
-  decomMapping[0x1E42] = "\u004D\u0323";
-  decomMapping[0x1E43] = "\u006D\u0323";
-  decomMapping[0x1E44] = "\u004E\u0307";
-  decomMapping[0x1E45] = "\u006E\u0307";
-  decomMapping[0x1E46] = "\u004E\u0323";
-  decomMapping[0x1E47] = "\u006E\u0323";
-  decomMapping[0x1E48] = "\u004E\u0331";
-  decomMapping[0x1E49] = "\u006E\u0331";
-  decomMapping[0x1E4A] = "\u004E\u032D";
-  decomMapping[0x1E4B] = "\u006E\u032D";
-  decomMapping[0x1E4C] = "\u00D5\u0301";
-  decomMapping[0x1E4D] = "\u00F5\u0301";
-  decomMapping[0x1E4E] = "\u00D5\u0308";
-  decomMapping[0x1E4F] = "\u00F5\u0308";
-  decomMapping[0x1E50] = "\u014C\u0300";
-  decomMapping[0x1E51] = "\u014D\u0300";
-  decomMapping[0x1E52] = "\u014C\u0301";
-  decomMapping[0x1E53] = "\u014D\u0301";
-  decomMapping[0x1E54] = "\u0050\u0301";
-  decomMapping[0x1E55] = "\u0070\u0301";
-  decomMapping[0x1E56] = "\u0050\u0307";
-  decomMapping[0x1E57] = "\u0070\u0307";
-  decomMapping[0x1E58] = "\u0052\u0307";
-  decomMapping[0x1E59] = "\u0072\u0307";
-  decomMapping[0x1E5A] = "\u0052\u0323";
-  decomMapping[0x1E5B] = "\u0072\u0323";
-  decomMapping[0x1E5C] = "\u1E5A\u0304";
-  decomMapping[0x1E5D] = "\u1E5B\u0304";
-  decomMapping[0x1E5E] = "\u0052\u0331";
-  decomMapping[0x1E5F] = "\u0072\u0331";
-  decomMapping[0x1E60] = "\u0053\u0307";
-  decomMapping[0x1E61] = "\u0073\u0307";
-  decomMapping[0x1E62] = "\u0053\u0323";
-  decomMapping[0x1E63] = "\u0073\u0323";
-  decomMapping[0x1E64] = "\u015A\u0307";
-  decomMapping[0x1E65] = "\u015B\u0307";
-  decomMapping[0x1E66] = "\u0160\u0307";
-  decomMapping[0x1E67] = "\u0161\u0307";
-  decomMapping[0x1E68] = "\u1E62\u0307";
-  decomMapping[0x1E69] = "\u1E63\u0307";
-  decomMapping[0x1E6A] = "\u0054\u0307";
-  decomMapping[0x1E6B] = "\u0074\u0307";
-  decomMapping[0x1E6C] = "\u0054\u0323";
-  decomMapping[0x1E6D] = "\u0074\u0323";
-  decomMapping[0x1E6E] = "\u0054\u0331";
-  decomMapping[0x1E6F] = "\u0074\u0331";
-  decomMapping[0x1E70] = "\u0054\u032D";
-  decomMapping[0x1E71] = "\u0074\u032D";
-  decomMapping[0x1E72] = "\u0055\u0324";
-  decomMapping[0x1E73] = "\u0075\u0324";
-  decomMapping[0x1E74] = "\u0055\u0330";
-  decomMapping[0x1E75] = "\u0075\u0330";
-  decomMapping[0x1E76] = "\u0055\u032D";
-  decomMapping[0x1E77] = "\u0075\u032D";
-  decomMapping[0x1E78] = "\u0168\u0301";
-  decomMapping[0x1E79] = "\u0169\u0301";
-  decomMapping[0x1E7A] = "\u016A\u0308";
-  decomMapping[0x1E7B] = "\u016B\u0308";
-  decomMapping[0x1E7C] = "\u0056\u0303";
-  decomMapping[0x1E7D] = "\u0076\u0303";
-  decomMapping[0x1E7E] = "\u0056\u0323";
-  decomMapping[0x1E7F] = "\u0076\u0323";
-  decomMapping[0x1E80] = "\u0057\u0300";
-  decomMapping[0x1E81] = "\u0077\u0300";
-  decomMapping[0x1E82] = "\u0057\u0301";
-  decomMapping[0x1E83] = "\u0077\u0301";
-  decomMapping[0x1E84] = "\u0057\u0308";
-  decomMapping[0x1E85] = "\u0077\u0308";
-  decomMapping[0x1E86] = "\u0057\u0307";
-  decomMapping[0x1E87] = "\u0077\u0307";
-  decomMapping[0x1E88] = "\u0057\u0323";
-  decomMapping[0x1E89] = "\u0077\u0323";
-  decomMapping[0x1E8A] = "\u0058\u0307";
-  decomMapping[0x1E8B] = "\u0078\u0307";
-  decomMapping[0x1E8C] = "\u0058\u0308";
-  decomMapping[0x1E8D] = "\u0078\u0308";
-  decomMapping[0x1E8E] = "\u0059\u0307";
-  decomMapping[0x1E8F] = "\u0079\u0307";
-  decomMapping[0x1E90] = "\u005A\u0302";
-  decomMapping[0x1E91] = "\u007A\u0302";
-  decomMapping[0x1E92] = "\u005A\u0323";
-  decomMapping[0x1E93] = "\u007A\u0323";
-  decomMapping[0x1E94] = "\u005A\u0331";
-  decomMapping[0x1E95] = "\u007A\u0331";
-  decomMapping[0x1E96] = "\u0068\u0331";
-  decomMapping[0x1E97] = "\u0074\u0308";
-  decomMapping[0x1E98] = "\u0077\u030A";
-  decomMapping[0x1E99] = "\u0079\u030A";
-  decomMapping[0x1E9A] = "\u0061\u02BE";
-  decomMapping[0x1E9B] = "\u017F\u0307";
-  decomMapping[0x1EA0] = "\u0041\u0323";
-  decomMapping[0x1EA1] = "\u0061\u0323";
-  decomMapping[0x1EA2] = "\u0041\u0309";
-  decomMapping[0x1EA3] = "\u0061\u0309";
-  decomMapping[0x1EA4] = "\u00C2\u0301";
-  decomMapping[0x1EA5] = "\u00E2\u0301";
-  decomMapping[0x1EA6] = "\u00C2\u0300";
-  decomMapping[0x1EA7] = "\u00E2\u0300";
-  decomMapping[0x1EA8] = "\u00C2\u0309";
-  decomMapping[0x1EA9] = "\u00E2\u0309";
-  decomMapping[0x1EAA] = "\u00C2\u0303";
-  decomMapping[0x1EAB] = "\u00E2\u0303";
-  decomMapping[0x1EAC] = "\u1EA0\u0302";
-  decomMapping[0x1EAD] = "\u1EA1\u0302";
-  decomMapping[0x1EAE] = "\u0102\u0301";
-  decomMapping[0x1EAF] = "\u0103\u0301";
-  decomMapping[0x1EB0] = "\u0102\u0300";
-  decomMapping[0x1EB1] = "\u0103\u0300";
-  decomMapping[0x1EB2] = "\u0102\u0309";
-  decomMapping[0x1EB3] = "\u0103\u0309";
-  decomMapping[0x1EB4] = "\u0102\u0303";
-  decomMapping[0x1EB5] = "\u0103\u0303";
-  decomMapping[0x1EB6] = "\u1EA0\u0306";
-  decomMapping[0x1EB7] = "\u1EA1\u0306";
-  decomMapping[0x1EB8] = "\u0045\u0323";
-  decomMapping[0x1EB9] = "\u0065\u0323";
-  decomMapping[0x1EBA] = "\u0045\u0309";
-  decomMapping[0x1EBB] = "\u0065\u0309";
-  decomMapping[0x1EBC] = "\u0045\u0303";
-  decomMapping[0x1EBD] = "\u0065\u0303";
-  decomMapping[0x1EBE] = "\u00CA\u0301";
-  decomMapping[0x1EBF] = "\u00EA\u0301";
-  decomMapping[0x1EC0] = "\u00CA\u0300";
-  decomMapping[0x1EC1] = "\u00EA\u0300";
-  decomMapping[0x1EC2] = "\u00CA\u0309";
-  decomMapping[0x1EC3] = "\u00EA\u0309";
-  decomMapping[0x1EC4] = "\u00CA\u0303";
-  decomMapping[0x1EC5] = "\u00EA\u0303";
-  decomMapping[0x1EC6] = "\u1EB8\u0302";
-  decomMapping[0x1EC7] = "\u1EB9\u0302";
-  decomMapping[0x1EC8] = "\u0049\u0309";
-  decomMapping[0x1EC9] = "\u0069\u0309";
-  decomMapping[0x1ECA] = "\u0049\u0323";
-  decomMapping[0x1ECB] = "\u0069\u0323";
-  decomMapping[0x1ECC] = "\u004F\u0323";
-  decomMapping[0x1ECD] = "\u006F\u0323";
-  decomMapping[0x1ECE] = "\u004F\u0309";
-  decomMapping[0x1ECF] = "\u006F\u0309";
-  decomMapping[0x1ED0] = "\u00D4\u0301";
-  decomMapping[0x1ED1] = "\u00F4\u0301";
-  decomMapping[0x1ED2] = "\u00D4\u0300";
-  decomMapping[0x1ED3] = "\u00F4\u0300";
-  decomMapping[0x1ED4] = "\u00D4\u0309";
-  decomMapping[0x1ED5] = "\u00F4\u0309";
-  decomMapping[0x1ED6] = "\u00D4\u0303";
-  decomMapping[0x1ED7] = "\u00F4\u0303";
-  decomMapping[0x1ED8] = "\u1ECC\u0302";
-  decomMapping[0x1ED9] = "\u1ECD\u0302";
-  decomMapping[0x1EDA] = "\u01A0\u0301";
-  decomMapping[0x1EDB] = "\u01A1\u0301";
-  decomMapping[0x1EDC] = "\u01A0\u0300";
-  decomMapping[0x1EDD] = "\u01A1\u0300";
-  decomMapping[0x1EDE] = "\u01A0\u0309";
-  decomMapping[0x1EDF] = "\u01A1\u0309";
-  decomMapping[0x1EE0] = "\u01A0\u0303";
-  decomMapping[0x1EE1] = "\u01A1\u0303";
-  decomMapping[0x1EE2] = "\u01A0\u0323";
-  decomMapping[0x1EE3] = "\u01A1\u0323";
-  decomMapping[0x1EE4] = "\u0055\u0323";
-  decomMapping[0x1EE5] = "\u0075\u0323";
-  decomMapping[0x1EE6] = "\u0055\u0309";
-  decomMapping[0x1EE7] = "\u0075\u0309";
-  decomMapping[0x1EE8] = "\u01AF\u0301";
-  decomMapping[0x1EE9] = "\u01B0\u0301";
-  decomMapping[0x1EEA] = "\u01AF\u0300";
-  decomMapping[0x1EEB] = "\u01B0\u0300";
-  decomMapping[0x1EEC] = "\u01AF\u0309";
-  decomMapping[0x1EED] = "\u01B0\u0309";
-  decomMapping[0x1EEE] = "\u01AF\u0303";
-  decomMapping[0x1EEF] = "\u01B0\u0303";
-  decomMapping[0x1EF0] = "\u01AF\u0323";
-  decomMapping[0x1EF1] = "\u01B0\u0323";
-  decomMapping[0x1EF2] = "\u0059\u0300";
-  decomMapping[0x1EF3] = "\u0079\u0300";
-  decomMapping[0x1EF4] = "\u0059\u0323";
-  decomMapping[0x1EF5] = "\u0079\u0323";
-  decomMapping[0x1EF6] = "\u0059\u0309";
-  decomMapping[0x1EF7] = "\u0079\u0309";
-  decomMapping[0x1EF8] = "\u0059\u0303";
-  decomMapping[0x1EF9] = "\u0079\u0303";
-  decomMapping[0x1F00] = "\u03B1\u0313";
-  decomMapping[0x1F01] = "\u03B1\u0314";
-  decomMapping[0x1F02] = "\u1F00\u0300";
-  decomMapping[0x1F03] = "\u1F01\u0300";
-  decomMapping[0x1F04] = "\u1F00\u0301";
-  decomMapping[0x1F05] = "\u1F01\u0301";
-  decomMapping[0x1F06] = "\u1F00\u0342";
-  decomMapping[0x1F07] = "\u1F01\u0342";
-  decomMapping[0x1F08] = "\u0391\u0313";
-  decomMapping[0x1F09] = "\u0391\u0314";
-  decomMapping[0x1F0A] = "\u1F08\u0300";
-  decomMapping[0x1F0B] = "\u1F09\u0300";
-  decomMapping[0x1F0C] = "\u1F08\u0301";
-  decomMapping[0x1F0D] = "\u1F09\u0301";
-  decomMapping[0x1F0E] = "\u1F08\u0342";
-  decomMapping[0x1F0F] = "\u1F09\u0342";
-  decomMapping[0x1F10] = "\u03B5\u0313";
-  decomMapping[0x1F11] = "\u03B5\u0314";
-  decomMapping[0x1F12] = "\u1F10\u0300";
-  decomMapping[0x1F13] = "\u1F11\u0300";
-  decomMapping[0x1F14] = "\u1F10\u0301";
-  decomMapping[0x1F15] = "\u1F11\u0301";
-  decomMapping[0x1F18] = "\u0395\u0313";
-  decomMapping[0x1F19] = "\u0395\u0314";
-  decomMapping[0x1F1A] = "\u1F18\u0300";
-  decomMapping[0x1F1B] = "\u1F19\u0300";
-  decomMapping[0x1F1C] = "\u1F18\u0301";
-  decomMapping[0x1F1D] = "\u1F19\u0301";
-  decomMapping[0x1F20] = "\u03B7\u0313";
-  decomMapping[0x1F21] = "\u03B7\u0314";
-  decomMapping[0x1F22] = "\u1F20\u0300";
-  decomMapping[0x1F23] = "\u1F21\u0300";
-  decomMapping[0x1F24] = "\u1F20\u0301";
-  decomMapping[0x1F25] = "\u1F21\u0301";
-  decomMapping[0x1F26] = "\u1F20\u0342";
-  decomMapping[0x1F27] = "\u1F21\u0342";
-  decomMapping[0x1F28] = "\u0397\u0313";
-  decomMapping[0x1F29] = "\u0397\u0314";
-  decomMapping[0x1F2A] = "\u1F28\u0300";
-  decomMapping[0x1F2B] = "\u1F29\u0300";
-  decomMapping[0x1F2C] = "\u1F28\u0301";
-  decomMapping[0x1F2D] = "\u1F29\u0301";
-  decomMapping[0x1F2E] = "\u1F28\u0342";
-  decomMapping[0x1F2F] = "\u1F29\u0342";
-  decomMapping[0x1F30] = "\u03B9\u0313";
-  decomMapping[0x1F31] = "\u03B9\u0314";
-  decomMapping[0x1F32] = "\u1F30\u0300";
-  decomMapping[0x1F33] = "\u1F31\u0300";
-  decomMapping[0x1F34] = "\u1F30\u0301";
-  decomMapping[0x1F35] = "\u1F31\u0301";
-  decomMapping[0x1F36] = "\u1F30\u0342";
-  decomMapping[0x1F37] = "\u1F31\u0342";
-  decomMapping[0x1F38] = "\u0399\u0313";
-  decomMapping[0x1F39] = "\u0399\u0314";
-  decomMapping[0x1F3A] = "\u1F38\u0300";
-  decomMapping[0x1F3B] = "\u1F39\u0300";
-  decomMapping[0x1F3C] = "\u1F38\u0301";
-  decomMapping[0x1F3D] = "\u1F39\u0301";
-  decomMapping[0x1F3E] = "\u1F38\u0342";
-  decomMapping[0x1F3F] = "\u1F39\u0342";
-  decomMapping[0x1F40] = "\u03BF\u0313";
-  decomMapping[0x1F41] = "\u03BF\u0314";
-  decomMapping[0x1F42] = "\u1F40\u0300";
-  decomMapping[0x1F43] = "\u1F41\u0300";
-  decomMapping[0x1F44] = "\u1F40\u0301";
-  decomMapping[0x1F45] = "\u1F41\u0301";
-  decomMapping[0x1F48] = "\u039F\u0313";
-  decomMapping[0x1F49] = "\u039F\u0314";
-  decomMapping[0x1F4A] = "\u1F48\u0300";
-  decomMapping[0x1F4B] = "\u1F49\u0300";
-  decomMapping[0x1F4C] = "\u1F48\u0301";
-  decomMapping[0x1F4D] = "\u1F49\u0301";
-  decomMapping[0x1F50] = "\u03C5\u0313";
-  decomMapping[0x1F51] = "\u03C5\u0314";
-  decomMapping[0x1F52] = "\u1F50\u0300";
-  decomMapping[0x1F53] = "\u1F51\u0300";
-  decomMapping[0x1F54] = "\u1F50\u0301";
-  decomMapping[0x1F55] = "\u1F51\u0301";
-  decomMapping[0x1F56] = "\u1F50\u0342";
-  decomMapping[0x1F57] = "\u1F51\u0342";
-  decomMapping[0x1F59] = "\u03A5\u0314";
-  decomMapping[0x1F5B] = "\u1F59\u0300";
-  decomMapping[0x1F5D] = "\u1F59\u0301";
-  decomMapping[0x1F5F] = "\u1F59\u0342";
-  decomMapping[0x1F60] = "\u03C9\u0313";
-  decomMapping[0x1F61] = "\u03C9\u0314";
-  decomMapping[0x1F62] = "\u1F60\u0300";
-  decomMapping[0x1F63] = "\u1F61\u0300";
-  decomMapping[0x1F64] = "\u1F60\u0301";
-  decomMapping[0x1F65] = "\u1F61\u0301";
-  decomMapping[0x1F66] = "\u1F60\u0342";
-  decomMapping[0x1F67] = "\u1F61\u0342";
-  decomMapping[0x1F68] = "\u03A9\u0313";
-  decomMapping[0x1F69] = "\u03A9\u0314";
-  decomMapping[0x1F6A] = "\u1F68\u0300";
-  decomMapping[0x1F6B] = "\u1F69\u0300";
-  decomMapping[0x1F6C] = "\u1F68\u0301";
-  decomMapping[0x1F6D] = "\u1F69\u0301";
-  decomMapping[0x1F6E] = "\u1F68\u0342";
-  decomMapping[0x1F6F] = "\u1F69\u0342";
-  decomMapping[0x1F70] = "\u03B1\u0300";
-  decomMapping[0x1F71] = "\u03AC";
-  decomMapping[0x1F72] = "\u03B5\u0300";
-  decomMapping[0x1F73] = "\u03AD";
-  decomMapping[0x1F74] = "\u03B7\u0300";
-  decomMapping[0x1F75] = "\u03AE";
-  decomMapping[0x1F76] = "\u03B9\u0300";
-  decomMapping[0x1F77] = "\u03AF";
-  decomMapping[0x1F78] = "\u03BF\u0300";
-  decomMapping[0x1F79] = "\u03CC";
-  decomMapping[0x1F7A] = "\u03C5\u0300";
-  decomMapping[0x1F7B] = "\u03CD";
-  decomMapping[0x1F7C] = "\u03C9\u0300";
-  decomMapping[0x1F7D] = "\u03CE";
-  decomMapping[0x1F80] = "\u1F00\u0345";
-  decomMapping[0x1F81] = "\u1F01\u0345";
-  decomMapping[0x1F82] = "\u1F02\u0345";
-  decomMapping[0x1F83] = "\u1F03\u0345";
-  decomMapping[0x1F84] = "\u1F04\u0345";
-  decomMapping[0x1F85] = "\u1F05\u0345";
-  decomMapping[0x1F86] = "\u1F06\u0345";
-  decomMapping[0x1F87] = "\u1F07\u0345";
-  decomMapping[0x1F88] = "\u1F08\u0345";
-  decomMapping[0x1F89] = "\u1F09\u0345";
-  decomMapping[0x1F8A] = "\u1F0A\u0345";
-  decomMapping[0x1F8B] = "\u1F0B\u0345";
-  decomMapping[0x1F8C] = "\u1F0C\u0345";
-  decomMapping[0x1F8D] = "\u1F0D\u0345";
-  decomMapping[0x1F8E] = "\u1F0E\u0345";
-  decomMapping[0x1F8F] = "\u1F0F\u0345";
-  decomMapping[0x1F90] = "\u1F20\u0345";
-  decomMapping[0x1F91] = "\u1F21\u0345";
-  decomMapping[0x1F92] = "\u1F22\u0345";
-  decomMapping[0x1F93] = "\u1F23\u0345";
-  decomMapping[0x1F94] = "\u1F24\u0345";
-  decomMapping[0x1F95] = "\u1F25\u0345";
-  decomMapping[0x1F96] = "\u1F26\u0345";
-  decomMapping[0x1F97] = "\u1F27\u0345";
-  decomMapping[0x1F98] = "\u1F28\u0345";
-  decomMapping[0x1F99] = "\u1F29\u0345";
-  decomMapping[0x1F9A] = "\u1F2A\u0345";
-  decomMapping[0x1F9B] = "\u1F2B\u0345";
-  decomMapping[0x1F9C] = "\u1F2C\u0345";
-  decomMapping[0x1F9D] = "\u1F2D\u0345";
-  decomMapping[0x1F9E] = "\u1F2E\u0345";
-  decomMapping[0x1F9F] = "\u1F2F\u0345";
-  decomMapping[0x1FA0] = "\u1F60\u0345";
-  decomMapping[0x1FA1] = "\u1F61\u0345";
-  decomMapping[0x1FA2] = "\u1F62\u0345";
-  decomMapping[0x1FA3] = "\u1F63\u0345";
-  decomMapping[0x1FA4] = "\u1F64\u0345";
-  decomMapping[0x1FA5] = "\u1F65\u0345";
-  decomMapping[0x1FA6] = "\u1F66\u0345";
-  decomMapping[0x1FA7] = "\u1F67\u0345";
-  decomMapping[0x1FA8] = "\u1F68\u0345";
-  decomMapping[0x1FA9] = "\u1F69\u0345";
-  decomMapping[0x1FAA] = "\u1F6A\u0345";
-  decomMapping[0x1FAB] = "\u1F6B\u0345";
-  decomMapping[0x1FAC] = "\u1F6C\u0345";
-  decomMapping[0x1FAD] = "\u1F6D\u0345";
-  decomMapping[0x1FAE] = "\u1F6E\u0345";
-  decomMapping[0x1FAF] = "\u1F6F\u0345";
-  decomMapping[0x1FB0] = "\u03B1\u0306";
-  decomMapping[0x1FB1] = "\u03B1\u0304";
-  decomMapping[0x1FB2] = "\u1F70\u0345";
-  decomMapping[0x1FB3] = "\u03B1\u0345";
-  decomMapping[0x1FB4] = "\u03AC\u0345";
-  decomMapping[0x1FB6] = "\u03B1\u0342";
-  decomMapping[0x1FB7] = "\u1FB6\u0345";
-  decomMapping[0x1FB8] = "\u0391\u0306";
-  decomMapping[0x1FB9] = "\u0391\u0304";
-  decomMapping[0x1FBA] = "\u0391\u0300";
-  decomMapping[0x1FBB] = "\u0386";
-  decomMapping[0x1FBC] = "\u0391\u0345";
-  decomMapping[0x1FBD] = "\u0020\u0313";
-  decomMapping[0x1FBE] = "\u03B9";
-  decomMapping[0x1FBF] = "\u0020\u0313";
-  decomMapping[0x1FC0] = "\u0020\u0342";
-  decomMapping[0x1FC1] = "\u00A8\u0342";
-  decomMapping[0x1FC2] = "\u1F74\u0345";
-  decomMapping[0x1FC3] = "\u03B7\u0345";
-  decomMapping[0x1FC4] = "\u03AE\u0345";
-  decomMapping[0x1FC6] = "\u03B7\u0342";
-  decomMapping[0x1FC7] = "\u1FC6\u0345";
-  decomMapping[0x1FC8] = "\u0395\u0300";
-  decomMapping[0x1FC9] = "\u0388";
-  decomMapping[0x1FCA] = "\u0397\u0300";
-  decomMapping[0x1FCB] = "\u0389";
-  decomMapping[0x1FCC] = "\u0397\u0345";
-  decomMapping[0x1FCD] = "\u1FBF\u0300";
-  decomMapping[0x1FCE] = "\u1FBF\u0301";
-  decomMapping[0x1FCF] = "\u1FBF\u0342";
-  decomMapping[0x1FD0] = "\u03B9\u0306";
-  decomMapping[0x1FD1] = "\u03B9\u0304";
-  decomMapping[0x1FD2] = "\u03CA\u0300";
-  decomMapping[0x1FD3] = "\u0390";
-  decomMapping[0x1FD6] = "\u03B9\u0342";
-  decomMapping[0x1FD7] = "\u03CA\u0342";
-  decomMapping[0x1FD8] = "\u0399\u0306";
-  decomMapping[0x1FD9] = "\u0399\u0304";
-  decomMapping[0x1FDA] = "\u0399\u0300";
-  decomMapping[0x1FDB] = "\u038A";
-  decomMapping[0x1FDD] = "\u1FFE\u0300";
-  decomMapping[0x1FDE] = "\u1FFE\u0301";
-  decomMapping[0x1FDF] = "\u1FFE\u0342";
-  decomMapping[0x1FE0] = "\u03C5\u0306";
-  decomMapping[0x1FE1] = "\u03C5\u0304";
-  decomMapping[0x1FE2] = "\u03CB\u0300";
-  decomMapping[0x1FE3] = "\u03B0";
-  decomMapping[0x1FE4] = "\u03C1\u0313";
-  decomMapping[0x1FE5] = "\u03C1\u0314";
-  decomMapping[0x1FE6] = "\u03C5\u0342";
-  decomMapping[0x1FE7] = "\u03CB\u0342";
-  decomMapping[0x1FE8] = "\u03A5\u0306";
-  decomMapping[0x1FE9] = "\u03A5\u0304";
-  decomMapping[0x1FEA] = "\u03A5\u0300";
-  decomMapping[0x1FEB] = "\u038E";
-  decomMapping[0x1FEC] = "\u03A1\u0314";
-  decomMapping[0x1FED] = "\u00A8\u0300";
-  decomMapping[0x1FEE] = "\u0385";
-  decomMapping[0x1FEF] = "\u0060";
-  decomMapping[0x1FF2] = "\u1F7C\u0345";
-  decomMapping[0x1FF3] = "\u03C9\u0345";
-  decomMapping[0x1FF4] = "\u03CE\u0345";
-  decomMapping[0x1FF6] = "\u03C9\u0342";
-  decomMapping[0x1FF7] = "\u1FF6\u0345";
-  decomMapping[0x1FF8] = "\u039F\u0300";
-  decomMapping[0x1FF9] = "\u038C";
-  decomMapping[0x1FFA] = "\u03A9\u0300";
-  decomMapping[0x1FFB] = "\u038F";
-  decomMapping[0x1FFC] = "\u03A9\u0345";
-  decomMapping[0x1FFD] = "\u00B4";
-  decomMapping[0x1FFE] = "\u0020\u0314";
-  decomMapping[0x2000] = "\u2002";
-  decomMapping[0x2001] = "\u2003";
-  decomMapping[0x2002] = "\u0020";
-  decomMapping[0x2003] = "\u0020";
-  decomMapping[0x2004] = "\u0020";
-  decomMapping[0x2005] = "\u0020";
-  decomMapping[0x2006] = "\u0020";
-  decomMapping[0x2007] = "\u0020";
-  decomMapping[0x2008] = "\u0020";
-  decomMapping[0x2009] = "\u0020";
-  decomMapping[0x200A] = "\u0020";
-  decomMapping[0x2011] = "\u2010";
-  decomMapping[0x2017] = "\u0020\u0333";
-  decomMapping[0x2024] = "\u002E";
-  decomMapping[0x2025] = "\u002E\u002E";
-  decomMapping[0x2026] = "\u002E\u002E\u002E";
-  decomMapping[0x202F] = "\u0020";
-  decomMapping[0x2033] = "\u2032\u2032";
-  decomMapping[0x2034] = "\u2032\u2032\u2032";
-  decomMapping[0x2036] = "\u2035\u2035";
-  decomMapping[0x2037] = "\u2035\u2035\u2035";
-  decomMapping[0x203C] = "\u0021\u0021";
-  decomMapping[0x203E] = "\u0020\u0305";
-  decomMapping[0x2047] = "\u003F\u003F";
-  decomMapping[0x2048] = "\u003F\u0021";
-  decomMapping[0x2049] = "\u0021\u003F";
-  decomMapping[0x2057] = "\u2032\u2032\u2032\u2032";
-  decomMapping[0x205F] = "\u0020";
-  decomMapping[0x2070] = "\u0030";
-  decomMapping[0x2071] = "\u0069";
-  decomMapping[0x2074] = "\u0034";
-  decomMapping[0x2075] = "\u0035";
-  decomMapping[0x2076] = "\u0036";
-  decomMapping[0x2077] = "\u0037";
-  decomMapping[0x2078] = "\u0038";
-  decomMapping[0x2079] = "\u0039";
-  decomMapping[0x207A] = "\u002B";
-  decomMapping[0x207B] = "\u2212";
-  decomMapping[0x207C] = "\u003D";
-  decomMapping[0x207D] = "\u0028";
-  decomMapping[0x207E] = "\u0029";
-  decomMapping[0x207F] = "\u006E";
-  decomMapping[0x2080] = "\u0030";
-  decomMapping[0x2081] = "\u0031";
-  decomMapping[0x2082] = "\u0032";
-  decomMapping[0x2083] = "\u0033";
-  decomMapping[0x2084] = "\u0034";
-  decomMapping[0x2085] = "\u0035";
-  decomMapping[0x2086] = "\u0036";
-  decomMapping[0x2087] = "\u0037";
-  decomMapping[0x2088] = "\u0038";
-  decomMapping[0x2089] = "\u0039";
-  decomMapping[0x208A] = "\u002B";
-  decomMapping[0x208B] = "\u2212";
-  decomMapping[0x208C] = "\u003D";
-  decomMapping[0x208D] = "\u0028";
-  decomMapping[0x208E] = "\u0029";
-  decomMapping[0x2090] = "\u0061";
-  decomMapping[0x2091] = "\u0065";
-  decomMapping[0x2092] = "\u006F";
-  decomMapping[0x2093] = "\u0078";
-  decomMapping[0x2094] = "\u0259";
-  decomMapping[0x2095] = "\u0068";
-  decomMapping[0x2096] = "\u006B";
-  decomMapping[0x2097] = "\u006C";
-  decomMapping[0x2098] = "\u006D";
-  decomMapping[0x2099] = "\u006E";
-  decomMapping[0x209A] = "\u0070";
-  decomMapping[0x209B] = "\u0073";
-  decomMapping[0x209C] = "\u0074";
-  decomMapping[0x20A8] = "\u0052\u0073";
-  decomMapping[0x2100] = "\u0061\u002F\u0063";
-  decomMapping[0x2101] = "\u0061\u002F\u0073";
-  decomMapping[0x2102] = "\u0043";
-  decomMapping[0x2103] = "\u00B0\u0043";
-  decomMapping[0x2105] = "\u0063\u002F\u006F";
-  decomMapping[0x2106] = "\u0063\u002F\u0075";
-  decomMapping[0x2107] = "\u0190";
-  decomMapping[0x2109] = "\u00B0\u0046";
-  decomMapping[0x210A] = "\u0067";
-  decomMapping[0x210B] = "\u0048";
-  decomMapping[0x210C] = "\u0048";
-  decomMapping[0x210D] = "\u0048";
-  decomMapping[0x210E] = "\u0068";
-  decomMapping[0x210F] = "\u0127";
-  decomMapping[0x2110] = "\u0049";
-  decomMapping[0x2111] = "\u0049";
-  decomMapping[0x2112] = "\u004C";
-  decomMapping[0x2113] = "\u006C";
-  decomMapping[0x2115] = "\u004E";
-  decomMapping[0x2116] = "\u004E\u006F";
-  decomMapping[0x2119] = "\u0050";
-  decomMapping[0x211A] = "\u0051";
-  decomMapping[0x211B] = "\u0052";
-  decomMapping[0x211C] = "\u0052";
-  decomMapping[0x211D] = "\u0052";
-  decomMapping[0x2120] = "\u0053\u004D";
-  decomMapping[0x2121] = "\u0054\u0045\u004C";
-  decomMapping[0x2122] = "\u0054\u004D";
-  decomMapping[0x2124] = "\u005A";
-  decomMapping[0x2126] = "\u03A9";
-  decomMapping[0x2128] = "\u005A";
-  decomMapping[0x212A] = "\u004B";
-  decomMapping[0x212B] = "\u00C5";
-  decomMapping[0x212C] = "\u0042";
-  decomMapping[0x212D] = "\u0043";
-  decomMapping[0x212F] = "\u0065";
-  decomMapping[0x2130] = "\u0045";
-  decomMapping[0x2131] = "\u0046";
-  decomMapping[0x2133] = "\u004D";
-  decomMapping[0x2134] = "\u006F";
-  decomMapping[0x2135] = "\u05D0";
-  decomMapping[0x2136] = "\u05D1";
-  decomMapping[0x2137] = "\u05D2";
-  decomMapping[0x2138] = "\u05D3";
-  decomMapping[0x2139] = "\u0069";
-  decomMapping[0x213B] = "\u0046\u0041\u0058";
-  decomMapping[0x213C] = "\u03C0";
-  decomMapping[0x213D] = "\u03B3";
-  decomMapping[0x213E] = "\u0393";
-  decomMapping[0x213F] = "\u03A0";
-  decomMapping[0x2140] = "\u2211";
-  decomMapping[0x2145] = "\u0044";
-  decomMapping[0x2146] = "\u0064";
-  decomMapping[0x2147] = "\u0065";
-  decomMapping[0x2148] = "\u0069";
-  decomMapping[0x2149] = "\u006A";
-  decomMapping[0x2150] = "\u0031\u2044\u0037";
-  decomMapping[0x2151] = "\u0031\u2044\u0039";
-  decomMapping[0x2152] = "\u0031\u2044\u0031\u0030";
-  decomMapping[0x2153] = "\u0031\u2044\u0033";
-  decomMapping[0x2154] = "\u0032\u2044\u0033";
-  decomMapping[0x2155] = "\u0031\u2044\u0035";
-  decomMapping[0x2156] = "\u0032\u2044\u0035";
-  decomMapping[0x2157] = "\u0033\u2044\u0035";
-  decomMapping[0x2158] = "\u0034\u2044\u0035";
-  decomMapping[0x2159] = "\u0031\u2044\u0036";
-  decomMapping[0x215A] = "\u0035\u2044\u0036";
-  decomMapping[0x215B] = "\u0031\u2044\u0038";
-  decomMapping[0x215C] = "\u0033\u2044\u0038";
-  decomMapping[0x215D] = "\u0035\u2044\u0038";
-  decomMapping[0x215E] = "\u0037\u2044\u0038";
-  decomMapping[0x215F] = "\u0031\u2044";
-  decomMapping[0x2160] = "\u0049";
-  decomMapping[0x2161] = "\u0049\u0049";
-  decomMapping[0x2162] = "\u0049\u0049\u0049";
-  decomMapping[0x2163] = "\u0049\u0056";
-  decomMapping[0x2164] = "\u0056";
-  decomMapping[0x2165] = "\u0056\u0049";
-  decomMapping[0x2166] = "\u0056\u0049\u0049";
-  decomMapping[0x2167] = "\u0056\u0049\u0049\u0049";
-  decomMapping[0x2168] = "\u0049\u0058";
-  decomMapping[0x2169] = "\u0058";
-  decomMapping[0x216A] = "\u0058\u0049";
-  decomMapping[0x216B] = "\u0058\u0049\u0049";
-  decomMapping[0x216C] = "\u004C";
-  decomMapping[0x216D] = "\u0043";
-  decomMapping[0x216E] = "\u0044";
-  decomMapping[0x216F] = "\u004D";
-  decomMapping[0x2170] = "\u0069";
-  decomMapping[0x2171] = "\u0069\u0069";
-  decomMapping[0x2172] = "\u0069\u0069\u0069";
-  decomMapping[0x2173] = "\u0069\u0076";
-  decomMapping[0x2174] = "\u0076";
-  decomMapping[0x2175] = "\u0076\u0069";
-  decomMapping[0x2176] = "\u0076\u0069\u0069";
-  decomMapping[0x2177] = "\u0076\u0069\u0069\u0069";
-  decomMapping[0x2178] = "\u0069\u0078";
-  decomMapping[0x2179] = "\u0078";
-  decomMapping[0x217A] = "\u0078\u0069";
-  decomMapping[0x217B] = "\u0078\u0069\u0069";
-  decomMapping[0x217C] = "\u006C";
-  decomMapping[0x217D] = "\u0063";
-  decomMapping[0x217E] = "\u0064";
-  decomMapping[0x217F] = "\u006D";
-  decomMapping[0x2189] = "\u0030\u2044\u0033";
-  decomMapping[0x219A] = "\u2190\u0338";
-  decomMapping[0x219B] = "\u2192\u0338";
-  decomMapping[0x21AE] = "\u2194\u0338";
-  decomMapping[0x21CD] = "\u21D0\u0338";
-  decomMapping[0x21CE] = "\u21D4\u0338";
-  decomMapping[0x21CF] = "\u21D2\u0338";
-  decomMapping[0x2204] = "\u2203\u0338";
-  decomMapping[0x2209] = "\u2208\u0338";
-  decomMapping[0x220C] = "\u220B\u0338";
-  decomMapping[0x2224] = "\u2223\u0338";
-  decomMapping[0x2226] = "\u2225\u0338";
-  decomMapping[0x222C] = "\u222B\u222B";
-  decomMapping[0x222D] = "\u222B\u222B\u222B";
-  decomMapping[0x222F] = "\u222E\u222E";
-  decomMapping[0x2230] = "\u222E\u222E\u222E";
-  decomMapping[0x2241] = "\u223C\u0338";
-  decomMapping[0x2244] = "\u2243\u0338";
-  decomMapping[0x2247] = "\u2245\u0338";
-  decomMapping[0x2249] = "\u2248\u0338";
-  decomMapping[0x2260] = "\u003D\u0338";
-  decomMapping[0x2262] = "\u2261\u0338";
-  decomMapping[0x226D] = "\u224D\u0338";
-  decomMapping[0x226E] = "\u003C\u0338";
-  decomMapping[0x226F] = "\u003E\u0338";
-  decomMapping[0x2270] = "\u2264\u0338";
-  decomMapping[0x2271] = "\u2265\u0338";
-  decomMapping[0x2274] = "\u2272\u0338";
-  decomMapping[0x2275] = "\u2273\u0338";
-  decomMapping[0x2278] = "\u2276\u0338";
-  decomMapping[0x2279] = "\u2277\u0338";
-  decomMapping[0x2280] = "\u227A\u0338";
-  decomMapping[0x2281] = "\u227B\u0338";
-  decomMapping[0x2284] = "\u2282\u0338";
-  decomMapping[0x2285] = "\u2283\u0338";
-  decomMapping[0x2288] = "\u2286\u0338";
-  decomMapping[0x2289] = "\u2287\u0338";
-  decomMapping[0x22AC] = "\u22A2\u0338";
-  decomMapping[0x22AD] = "\u22A8\u0338";
-  decomMapping[0x22AE] = "\u22A9\u0338";
-  decomMapping[0x22AF] = "\u22AB\u0338";
-  decomMapping[0x22E0] = "\u227C\u0338";
-  decomMapping[0x22E1] = "\u227D\u0338";
-  decomMapping[0x22E2] = "\u2291\u0338";
-  decomMapping[0x22E3] = "\u2292\u0338";
-  decomMapping[0x22EA] = "\u22B2\u0338";
-  decomMapping[0x22EB] = "\u22B3\u0338";
-  decomMapping[0x22EC] = "\u22B4\u0338";
-  decomMapping[0x22ED] = "\u22B5\u0338";
-  decomMapping[0x2329] = "\u3008";
-  decomMapping[0x232A] = "\u3009";
-  decomMapping[0x2460] = "\u0031";
-  decomMapping[0x2461] = "\u0032";
-  decomMapping[0x2462] = "\u0033";
-  decomMapping[0x2463] = "\u0034";
-  decomMapping[0x2464] = "\u0035";
-  decomMapping[0x2465] = "\u0036";
-  decomMapping[0x2466] = "\u0037";
-  decomMapping[0x2467] = "\u0038";
-  decomMapping[0x2468] = "\u0039";
-  decomMapping[0x2469] = "\u0031\u0030";
-  decomMapping[0x246A] = "\u0031\u0031";
-  decomMapping[0x246B] = "\u0031\u0032";
-  decomMapping[0x246C] = "\u0031\u0033";
-  decomMapping[0x246D] = "\u0031\u0034";
-  decomMapping[0x246E] = "\u0031\u0035";
-  decomMapping[0x246F] = "\u0031\u0036";
-  decomMapping[0x2470] = "\u0031\u0037";
-  decomMapping[0x2471] = "\u0031\u0038";
-  decomMapping[0x2472] = "\u0031\u0039";
-  decomMapping[0x2473] = "\u0032\u0030";
-  decomMapping[0x2474] = "\u0028\u0031\u0029";
-  decomMapping[0x2475] = "\u0028\u0032\u0029";
-  decomMapping[0x2476] = "\u0028\u0033\u0029";
-  decomMapping[0x2477] = "\u0028\u0034\u0029";
-  decomMapping[0x2478] = "\u0028\u0035\u0029";
-  decomMapping[0x2479] = "\u0028\u0036\u0029";
-  decomMapping[0x247A] = "\u0028\u0037\u0029";
-  decomMapping[0x247B] = "\u0028\u0038\u0029";
-  decomMapping[0x247C] = "\u0028\u0039\u0029";
-  decomMapping[0x247D] = "\u0028\u0031\u0030\u0029";
-  decomMapping[0x247E] = "\u0028\u0031\u0031\u0029";
-  decomMapping[0x247F] = "\u0028\u0031\u0032\u0029";
-  decomMapping[0x2480] = "\u0028\u0031\u0033\u0029";
-  decomMapping[0x2481] = "\u0028\u0031\u0034\u0029";
-  decomMapping[0x2482] = "\u0028\u0031\u0035\u0029";
-  decomMapping[0x2483] = "\u0028\u0031\u0036\u0029";
-  decomMapping[0x2484] = "\u0028\u0031\u0037\u0029";
-  decomMapping[0x2485] = "\u0028\u0031\u0038\u0029";
-  decomMapping[0x2486] = "\u0028\u0031\u0039\u0029";
-  decomMapping[0x2487] = "\u0028\u0032\u0030\u0029";
-  decomMapping[0x2488] = "\u0031\u002E";
-  decomMapping[0x2489] = "\u0032\u002E";
-  decomMapping[0x248A] = "\u0033\u002E";
-  decomMapping[0x248B] = "\u0034\u002E";
-  decomMapping[0x248C] = "\u0035\u002E";
-  decomMapping[0x248D] = "\u0036\u002E";
-  decomMapping[0x248E] = "\u0037\u002E";
-  decomMapping[0x248F] = "\u0038\u002E";
-  decomMapping[0x2490] = "\u0039\u002E";
-  decomMapping[0x2491] = "\u0031\u0030\u002E";
-  decomMapping[0x2492] = "\u0031\u0031\u002E";
-  decomMapping[0x2493] = "\u0031\u0032\u002E";
-  decomMapping[0x2494] = "\u0031\u0033\u002E";
-  decomMapping[0x2495] = "\u0031\u0034\u002E";
-  decomMapping[0x2496] = "\u0031\u0035\u002E";
-  decomMapping[0x2497] = "\u0031\u0036\u002E";
-  decomMapping[0x2498] = "\u0031\u0037\u002E";
-  decomMapping[0x2499] = "\u0031\u0038\u002E";
-  decomMapping[0x249A] = "\u0031\u0039\u002E";
-  decomMapping[0x249B] = "\u0032\u0030\u002E";
-  decomMapping[0x249C] = "\u0028\u0061\u0029";
-  decomMapping[0x249D] = "\u0028\u0062\u0029";
-  decomMapping[0x249E] = "\u0028\u0063\u0029";
-  decomMapping[0x249F] = "\u0028\u0064\u0029";
-  decomMapping[0x24A0] = "\u0028\u0065\u0029";
-  decomMapping[0x24A1] = "\u0028\u0066\u0029";
-  decomMapping[0x24A2] = "\u0028\u0067\u0029";
-  decomMapping[0x24A3] = "\u0028\u0068\u0029";
-  decomMapping[0x24A4] = "\u0028\u0069\u0029";
-  decomMapping[0x24A5] = "\u0028\u006A\u0029";
-  decomMapping[0x24A6] = "\u0028\u006B\u0029";
-  decomMapping[0x24A7] = "\u0028\u006C\u0029";
-  decomMapping[0x24A8] = "\u0028\u006D\u0029";
-  decomMapping[0x24A9] = "\u0028\u006E\u0029";
-  decomMapping[0x24AA] = "\u0028\u006F\u0029";
-  decomMapping[0x24AB] = "\u0028\u0070\u0029";
-  decomMapping[0x24AC] = "\u0028\u0071\u0029";
-  decomMapping[0x24AD] = "\u0028\u0072\u0029";
-  decomMapping[0x24AE] = "\u0028\u0073\u0029";
-  decomMapping[0x24AF] = "\u0028\u0074\u0029";
-  decomMapping[0x24B0] = "\u0028\u0075\u0029";
-  decomMapping[0x24B1] = "\u0028\u0076\u0029";
-  decomMapping[0x24B2] = "\u0028\u0077\u0029";
-  decomMapping[0x24B3] = "\u0028\u0078\u0029";
-  decomMapping[0x24B4] = "\u0028\u0079\u0029";
-  decomMapping[0x24B5] = "\u0028\u007A\u0029";
-  decomMapping[0x24B6] = "\u0041";
-  decomMapping[0x24B7] = "\u0042";
-  decomMapping[0x24B8] = "\u0043";
-  decomMapping[0x24B9] = "\u0044";
-  decomMapping[0x24BA] = "\u0045";
-  decomMapping[0x24BB] = "\u0046";
-  decomMapping[0x24BC] = "\u0047";
-  decomMapping[0x24BD] = "\u0048";
-  decomMapping[0x24BE] = "\u0049";
-  decomMapping[0x24BF] = "\u004A";
-  decomMapping[0x24C0] = "\u004B";
-  decomMapping[0x24C1] = "\u004C";
-  decomMapping[0x24C2] = "\u004D";
-  decomMapping[0x24C3] = "\u004E";
-  decomMapping[0x24C4] = "\u004F";
-  decomMapping[0x24C5] = "\u0050";
-  decomMapping[0x24C6] = "\u0051";
-  decomMapping[0x24C7] = "\u0052";
-  decomMapping[0x24C8] = "\u0053";
-  decomMapping[0x24C9] = "\u0054";
-  decomMapping[0x24CA] = "\u0055";
-  decomMapping[0x24CB] = "\u0056";
-  decomMapping[0x24CC] = "\u0057";
-  decomMapping[0x24CD] = "\u0058";
-  decomMapping[0x24CE] = "\u0059";
-  decomMapping[0x24CF] = "\u005A";
-  decomMapping[0x24D0] = "\u0061";
-  decomMapping[0x24D1] = "\u0062";
-  decomMapping[0x24D2] = "\u0063";
-  decomMapping[0x24D3] = "\u0064";
-  decomMapping[0x24D4] = "\u0065";
-  decomMapping[0x24D5] = "\u0066";
-  decomMapping[0x24D6] = "\u0067";
-  decomMapping[0x24D7] = "\u0068";
-  decomMapping[0x24D8] = "\u0069";
-  decomMapping[0x24D9] = "\u006A";
-  decomMapping[0x24DA] = "\u006B";
-  decomMapping[0x24DB] = "\u006C";
-  decomMapping[0x24DC] = "\u006D";
-  decomMapping[0x24DD] = "\u006E";
-  decomMapping[0x24DE] = "\u006F";
-  decomMapping[0x24DF] = "\u0070";
-  decomMapping[0x24E0] = "\u0071";
-  decomMapping[0x24E1] = "\u0072";
-  decomMapping[0x24E2] = "\u0073";
-  decomMapping[0x24E3] = "\u0074";
-  decomMapping[0x24E4] = "\u0075";
-  decomMapping[0x24E5] = "\u0076";
-  decomMapping[0x24E6] = "\u0077";
-  decomMapping[0x24E7] = "\u0078";
-  decomMapping[0x24E8] = "\u0079";
-  decomMapping[0x24E9] = "\u007A";
-  decomMapping[0x24EA] = "\u0030";
-  decomMapping[0x2A0C] = "\u222B\u222B\u222B\u222B";
-  decomMapping[0x2A74] = "\u003A\u003A\u003D";
-  decomMapping[0x2A75] = "\u003D\u003D";
-  decomMapping[0x2A76] = "\u003D\u003D\u003D";
-  decomMapping[0x2ADC] = "\u2ADD\u0338";
-  decomMapping[0x2C7C] = "\u006A";
-  decomMapping[0x2C7D] = "\u0056";
-  decomMapping[0x2D6F] = "\u2D61";
-  decomMapping[0x2E9F] = "\u6BCD";
-  decomMapping[0x2EF3] = "\u9F9F";
-  decomMapping[0x2F00] = "\u4E00";
-  decomMapping[0x2F01] = "\u4E28";
-  decomMapping[0x2F02] = "\u4E36";
-  decomMapping[0x2F03] = "\u4E3F";
-  decomMapping[0x2F04] = "\u4E59";
-  decomMapping[0x2F05] = "\u4E85";
-  decomMapping[0x2F06] = "\u4E8C";
-  decomMapping[0x2F07] = "\u4EA0";
-  decomMapping[0x2F08] = "\u4EBA";
-  decomMapping[0x2F09] = "\u513F";
-  decomMapping[0x2F0A] = "\u5165";
-  decomMapping[0x2F0B] = "\u516B";
-  decomMapping[0x2F0C] = "\u5182";
-  decomMapping[0x2F0D] = "\u5196";
-  decomMapping[0x2F0E] = "\u51AB";
-  decomMapping[0x2F0F] = "\u51E0";
-  decomMapping[0x2F10] = "\u51F5";
-  decomMapping[0x2F11] = "\u5200";
-  decomMapping[0x2F12] = "\u529B";
-  decomMapping[0x2F13] = "\u52F9";
-  decomMapping[0x2F14] = "\u5315";
-  decomMapping[0x2F15] = "\u531A";
-  decomMapping[0x2F16] = "\u5338";
-  decomMapping[0x2F17] = "\u5341";
-  decomMapping[0x2F18] = "\u535C";
-  decomMapping[0x2F19] = "\u5369";
-  decomMapping[0x2F1A] = "\u5382";
-  decomMapping[0x2F1B] = "\u53B6";
-  decomMapping[0x2F1C] = "\u53C8";
-  decomMapping[0x2F1D] = "\u53E3";
-  decomMapping[0x2F1E] = "\u56D7";
-  decomMapping[0x2F1F] = "\u571F";
-  decomMapping[0x2F20] = "\u58EB";
-  decomMapping[0x2F21] = "\u5902";
-  decomMapping[0x2F22] = "\u590A";
-  decomMapping[0x2F23] = "\u5915";
-  decomMapping[0x2F24] = "\u5927";
-  decomMapping[0x2F25] = "\u5973";
-  decomMapping[0x2F26] = "\u5B50";
-  decomMapping[0x2F27] = "\u5B80";
-  decomMapping[0x2F28] = "\u5BF8";
-  decomMapping[0x2F29] = "\u5C0F";
-  decomMapping[0x2F2A] = "\u5C22";
-  decomMapping[0x2F2B] = "\u5C38";
-  decomMapping[0x2F2C] = "\u5C6E";
-  decomMapping[0x2F2D] = "\u5C71";
-  decomMapping[0x2F2E] = "\u5DDB";
-  decomMapping[0x2F2F] = "\u5DE5";
-  decomMapping[0x2F30] = "\u5DF1";
-  decomMapping[0x2F31] = "\u5DFE";
-  decomMapping[0x2F32] = "\u5E72";
-  decomMapping[0x2F33] = "\u5E7A";
-  decomMapping[0x2F34] = "\u5E7F";
-  decomMapping[0x2F35] = "\u5EF4";
-  decomMapping[0x2F36] = "\u5EFE";
-  decomMapping[0x2F37] = "\u5F0B";
-  decomMapping[0x2F38] = "\u5F13";
-  decomMapping[0x2F39] = "\u5F50";
-  decomMapping[0x2F3A] = "\u5F61";
-  decomMapping[0x2F3B] = "\u5F73";
-  decomMapping[0x2F3C] = "\u5FC3";
-  decomMapping[0x2F3D] = "\u6208";
-  decomMapping[0x2F3E] = "\u6236";
-  decomMapping[0x2F3F] = "\u624B";
-  decomMapping[0x2F40] = "\u652F";
-  decomMapping[0x2F41] = "\u6534";
-  decomMapping[0x2F42] = "\u6587";
-  decomMapping[0x2F43] = "\u6597";
-  decomMapping[0x2F44] = "\u65A4";
-  decomMapping[0x2F45] = "\u65B9";
-  decomMapping[0x2F46] = "\u65E0";
-  decomMapping[0x2F47] = "\u65E5";
-  decomMapping[0x2F48] = "\u66F0";
-  decomMapping[0x2F49] = "\u6708";
-  decomMapping[0x2F4A] = "\u6728";
-  decomMapping[0x2F4B] = "\u6B20";
-  decomMapping[0x2F4C] = "\u6B62";
-  decomMapping[0x2F4D] = "\u6B79";
-  decomMapping[0x2F4E] = "\u6BB3";
-  decomMapping[0x2F4F] = "\u6BCB";
-  decomMapping[0x2F50] = "\u6BD4";
-  decomMapping[0x2F51] = "\u6BDB";
-  decomMapping[0x2F52] = "\u6C0F";
-  decomMapping[0x2F53] = "\u6C14";
-  decomMapping[0x2F54] = "\u6C34";
-  decomMapping[0x2F55] = "\u706B";
-  decomMapping[0x2F56] = "\u722A";
-  decomMapping[0x2F57] = "\u7236";
-  decomMapping[0x2F58] = "\u723B";
-  decomMapping[0x2F59] = "\u723F";
-  decomMapping[0x2F5A] = "\u7247";
-  decomMapping[0x2F5B] = "\u7259";
-  decomMapping[0x2F5C] = "\u725B";
-  decomMapping[0x2F5D] = "\u72AC";
-  decomMapping[0x2F5E] = "\u7384";
-  decomMapping[0x2F5F] = "\u7389";
-  decomMapping[0x2F60] = "\u74DC";
-  decomMapping[0x2F61] = "\u74E6";
-  decomMapping[0x2F62] = "\u7518";
-  decomMapping[0x2F63] = "\u751F";
-  decomMapping[0x2F64] = "\u7528";
-  decomMapping[0x2F65] = "\u7530";
-  decomMapping[0x2F66] = "\u758B";
-  decomMapping[0x2F67] = "\u7592";
-  decomMapping[0x2F68] = "\u7676";
-  decomMapping[0x2F69] = "\u767D";
-  decomMapping[0x2F6A] = "\u76AE";
-  decomMapping[0x2F6B] = "\u76BF";
-  decomMapping[0x2F6C] = "\u76EE";
-  decomMapping[0x2F6D] = "\u77DB";
-  decomMapping[0x2F6E] = "\u77E2";
-  decomMapping[0x2F6F] = "\u77F3";
-  decomMapping[0x2F70] = "\u793A";
-  decomMapping[0x2F71] = "\u79B8";
-  decomMapping[0x2F72] = "\u79BE";
-  decomMapping[0x2F73] = "\u7A74";
-  decomMapping[0x2F74] = "\u7ACB";
-  decomMapping[0x2F75] = "\u7AF9";
-  decomMapping[0x2F76] = "\u7C73";
-  decomMapping[0x2F77] = "\u7CF8";
-  decomMapping[0x2F78] = "\u7F36";
-  decomMapping[0x2F79] = "\u7F51";
-  decomMapping[0x2F7A] = "\u7F8A";
-  decomMapping[0x2F7B] = "\u7FBD";
-  decomMapping[0x2F7C] = "\u8001";
-  decomMapping[0x2F7D] = "\u800C";
-  decomMapping[0x2F7E] = "\u8012";
-  decomMapping[0x2F7F] = "\u8033";
-  decomMapping[0x2F80] = "\u807F";
-  decomMapping[0x2F81] = "\u8089";
-  decomMapping[0x2F82] = "\u81E3";
-  decomMapping[0x2F83] = "\u81EA";
-  decomMapping[0x2F84] = "\u81F3";
-  decomMapping[0x2F85] = "\u81FC";
-  decomMapping[0x2F86] = "\u820C";
-  decomMapping[0x2F87] = "\u821B";
-  decomMapping[0x2F88] = "\u821F";
-  decomMapping[0x2F89] = "\u826E";
-  decomMapping[0x2F8A] = "\u8272";
-  decomMapping[0x2F8B] = "\u8278";
-  decomMapping[0x2F8C] = "\u864D";
-  decomMapping[0x2F8D] = "\u866B";
-  decomMapping[0x2F8E] = "\u8840";
-  decomMapping[0x2F8F] = "\u884C";
-  decomMapping[0x2F90] = "\u8863";
-  decomMapping[0x2F91] = "\u897E";
-  decomMapping[0x2F92] = "\u898B";
-  decomMapping[0x2F93] = "\u89D2";
-  decomMapping[0x2F94] = "\u8A00";
-  decomMapping[0x2F95] = "\u8C37";
-  decomMapping[0x2F96] = "\u8C46";
-  decomMapping[0x2F97] = "\u8C55";
-  decomMapping[0x2F98] = "\u8C78";
-  decomMapping[0x2F99] = "\u8C9D";
-  decomMapping[0x2F9A] = "\u8D64";
-  decomMapping[0x2F9B] = "\u8D70";
-  decomMapping[0x2F9C] = "\u8DB3";
-  decomMapping[0x2F9D] = "\u8EAB";
-  decomMapping[0x2F9E] = "\u8ECA";
-  decomMapping[0x2F9F] = "\u8F9B";
-  decomMapping[0x2FA0] = "\u8FB0";
-  decomMapping[0x2FA1] = "\u8FB5";
-  decomMapping[0x2FA2] = "\u9091";
-  decomMapping[0x2FA3] = "\u9149";
-  decomMapping[0x2FA4] = "\u91C6";
-  decomMapping[0x2FA5] = "\u91CC";
-  decomMapping[0x2FA6] = "\u91D1";
-  decomMapping[0x2FA7] = "\u9577";
-  decomMapping[0x2FA8] = "\u9580";
-  decomMapping[0x2FA9] = "\u961C";
-  decomMapping[0x2FAA] = "\u96B6";
-  decomMapping[0x2FAB] = "\u96B9";
-  decomMapping[0x2FAC] = "\u96E8";
-  decomMapping[0x2FAD] = "\u9751";
-  decomMapping[0x2FAE] = "\u975E";
-  decomMapping[0x2FAF] = "\u9762";
-  decomMapping[0x2FB0] = "\u9769";
-  decomMapping[0x2FB1] = "\u97CB";
-  decomMapping[0x2FB2] = "\u97ED";
-  decomMapping[0x2FB3] = "\u97F3";
-  decomMapping[0x2FB4] = "\u9801";
-  decomMapping[0x2FB5] = "\u98A8";
-  decomMapping[0x2FB6] = "\u98DB";
-  decomMapping[0x2FB7] = "\u98DF";
-  decomMapping[0x2FB8] = "\u9996";
-  decomMapping[0x2FB9] = "\u9999";
-  decomMapping[0x2FBA] = "\u99AC";
-  decomMapping[0x2FBB] = "\u9AA8";
-  decomMapping[0x2FBC] = "\u9AD8";
-  decomMapping[0x2FBD] = "\u9ADF";
-  decomMapping[0x2FBE] = "\u9B25";
-  decomMapping[0x2FBF] = "\u9B2F";
-  decomMapping[0x2FC0] = "\u9B32";
-  decomMapping[0x2FC1] = "\u9B3C";
-  decomMapping[0x2FC2] = "\u9B5A";
-  decomMapping[0x2FC3] = "\u9CE5";
-  decomMapping[0x2FC4] = "\u9E75";
-  decomMapping[0x2FC5] = "\u9E7F";
-  decomMapping[0x2FC6] = "\u9EA5";
-  decomMapping[0x2FC7] = "\u9EBB";
-  decomMapping[0x2FC8] = "\u9EC3";
-  decomMapping[0x2FC9] = "\u9ECD";
-  decomMapping[0x2FCA] = "\u9ED1";
-  decomMapping[0x2FCB] = "\u9EF9";
-  decomMapping[0x2FCC] = "\u9EFD";
-  decomMapping[0x2FCD] = "\u9F0E";
-  decomMapping[0x2FCE] = "\u9F13";
-  decomMapping[0x2FCF] = "\u9F20";
-  decomMapping[0x2FD0] = "\u9F3B";
-  decomMapping[0x2FD1] = "\u9F4A";
-  decomMapping[0x2FD2] = "\u9F52";
-  decomMapping[0x2FD3] = "\u9F8D";
-  decomMapping[0x2FD4] = "\u9F9C";
-  decomMapping[0x2FD5] = "\u9FA0";
-  decomMapping[0x3000] = "\u0020";
-  decomMapping[0x3036] = "\u3012";
-  decomMapping[0x3038] = "\u5341";
-  decomMapping[0x3039] = "\u5344";
-  decomMapping[0x303A] = "\u5345";
-  decomMapping[0x304C] = "\u304B\u3099";
-  decomMapping[0x304E] = "\u304D\u3099";
-  decomMapping[0x3050] = "\u304F\u3099";
-  decomMapping[0x3052] = "\u3051\u3099";
-  decomMapping[0x3054] = "\u3053\u3099";
-  decomMapping[0x3056] = "\u3055\u3099";
-  decomMapping[0x3058] = "\u3057\u3099";
-  decomMapping[0x305A] = "\u3059\u3099";
-  decomMapping[0x305C] = "\u305B\u3099";
-  decomMapping[0x305E] = "\u305D\u3099";
-  decomMapping[0x3060] = "\u305F\u3099";
-  decomMapping[0x3062] = "\u3061\u3099";
-  decomMapping[0x3065] = "\u3064\u3099";
-  decomMapping[0x3067] = "\u3066\u3099";
-  decomMapping[0x3069] = "\u3068\u3099";
-  decomMapping[0x3070] = "\u306F\u3099";
-  decomMapping[0x3071] = "\u306F\u309A";
-  decomMapping[0x3073] = "\u3072\u3099";
-  decomMapping[0x3074] = "\u3072\u309A";
-  decomMapping[0x3076] = "\u3075\u3099";
-  decomMapping[0x3077] = "\u3075\u309A";
-  decomMapping[0x3079] = "\u3078\u3099";
-  decomMapping[0x307A] = "\u3078\u309A";
-  decomMapping[0x307C] = "\u307B\u3099";
-  decomMapping[0x307D] = "\u307B\u309A";
-  decomMapping[0x3094] = "\u3046\u3099";
-  decomMapping[0x309B] = "\u0020\u3099";
-  decomMapping[0x309C] = "\u0020\u309A";
-  decomMapping[0x309E] = "\u309D\u3099";
-  decomMapping[0x309F] = "\u3088\u308A";
-  decomMapping[0x30AC] = "\u30AB\u3099";
-  decomMapping[0x30AE] = "\u30AD\u3099";
-  decomMapping[0x30B0] = "\u30AF\u3099";
-  decomMapping[0x30B2] = "\u30B1\u3099";
-  decomMapping[0x30B4] = "\u30B3\u3099";
-  decomMapping[0x30B6] = "\u30B5\u3099";
-  decomMapping[0x30B8] = "\u30B7\u3099";
-  decomMapping[0x30BA] = "\u30B9\u3099";
-  decomMapping[0x30BC] = "\u30BB\u3099";
-  decomMapping[0x30BE] = "\u30BD\u3099";
-  decomMapping[0x30C0] = "\u30BF\u3099";
-  decomMapping[0x30C2] = "\u30C1\u3099";
-  decomMapping[0x30C5] = "\u30C4\u3099";
-  decomMapping[0x30C7] = "\u30C6\u3099";
-  decomMapping[0x30C9] = "\u30C8\u3099";
-  decomMapping[0x30D0] = "\u30CF\u3099";
-  decomMapping[0x30D1] = "\u30CF\u309A";
-  decomMapping[0x30D3] = "\u30D2\u3099";
-  decomMapping[0x30D4] = "\u30D2\u309A";
-  decomMapping[0x30D6] = "\u30D5\u3099";
-  decomMapping[0x30D7] = "\u30D5\u309A";
-  decomMapping[0x30D9] = "\u30D8\u3099";
-  decomMapping[0x30DA] = "\u30D8\u309A";
-  decomMapping[0x30DC] = "\u30DB\u3099";
-  decomMapping[0x30DD] = "\u30DB\u309A";
-  decomMapping[0x30F4] = "\u30A6\u3099";
-  decomMapping[0x30F7] = "\u30EF\u3099";
-  decomMapping[0x30F8] = "\u30F0\u3099";
-  decomMapping[0x30F9] = "\u30F1\u3099";
-  decomMapping[0x30FA] = "\u30F2\u3099";
-  decomMapping[0x30FE] = "\u30FD\u3099";
-  decomMapping[0x30FF] = "\u30B3\u30C8";
-  decomMapping[0x3131] = "\u1100";
-  decomMapping[0x3132] = "\u1101";
-  decomMapping[0x3133] = "\u11AA";
-  decomMapping[0x3134] = "\u1102";
-  decomMapping[0x3135] = "\u11AC";
-  decomMapping[0x3136] = "\u11AD";
-  decomMapping[0x3137] = "\u1103";
-  decomMapping[0x3138] = "\u1104";
-  decomMapping[0x3139] = "\u1105";
-  decomMapping[0x313A] = "\u11B0";
-  decomMapping[0x313B] = "\u11B1";
-  decomMapping[0x313C] = "\u11B2";
-  decomMapping[0x313D] = "\u11B3";
-  decomMapping[0x313E] = "\u11B4";
-  decomMapping[0x313F] = "\u11B5";
-  decomMapping[0x3140] = "\u111A";
-  decomMapping[0x3141] = "\u1106";
-  decomMapping[0x3142] = "\u1107";
-  decomMapping[0x3143] = "\u1108";
-  decomMapping[0x3144] = "\u1121";
-  decomMapping[0x3145] = "\u1109";
-  decomMapping[0x3146] = "\u110A";
-  decomMapping[0x3147] = "\u110B";
-  decomMapping[0x3148] = "\u110C";
-  decomMapping[0x3149] = "\u110D";
-  decomMapping[0x314A] = "\u110E";
-  decomMapping[0x314B] = "\u110F";
-  decomMapping[0x314C] = "\u1110";
-  decomMapping[0x314D] = "\u1111";
-  decomMapping[0x314E] = "\u1112";
-  decomMapping[0x314F] = "\u1161";
-  decomMapping[0x3150] = "\u1162";
-  decomMapping[0x3151] = "\u1163";
-  decomMapping[0x3152] = "\u1164";
-  decomMapping[0x3153] = "\u1165";
-  decomMapping[0x3154] = "\u1166";
-  decomMapping[0x3155] = "\u1167";
-  decomMapping[0x3156] = "\u1168";
-  decomMapping[0x3157] = "\u1169";
-  decomMapping[0x3158] = "\u116A";
-  decomMapping[0x3159] = "\u116B";
-  decomMapping[0x315A] = "\u116C";
-  decomMapping[0x315B] = "\u116D";
-  decomMapping[0x315C] = "\u116E";
-  decomMapping[0x315D] = "\u116F";
-  decomMapping[0x315E] = "\u1170";
-  decomMapping[0x315F] = "\u1171";
-  decomMapping[0x3160] = "\u1172";
-  decomMapping[0x3161] = "\u1173";
-  decomMapping[0x3162] = "\u1174";
-  decomMapping[0x3163] = "\u1175";
-  decomMapping[0x3164] = "\u1160";
-  decomMapping[0x3165] = "\u1114";
-  decomMapping[0x3166] = "\u1115";
-  decomMapping[0x3167] = "\u11C7";
-  decomMapping[0x3168] = "\u11C8";
-  decomMapping[0x3169] = "\u11CC";
-  decomMapping[0x316A] = "\u11CE";
-  decomMapping[0x316B] = "\u11D3";
-  decomMapping[0x316C] = "\u11D7";
-  decomMapping[0x316D] = "\u11D9";
-  decomMapping[0x316E] = "\u111C";
-  decomMapping[0x316F] = "\u11DD";
-  decomMapping[0x3170] = "\u11DF";
-  decomMapping[0x3171] = "\u111D";
-  decomMapping[0x3172] = "\u111E";
-  decomMapping[0x3173] = "\u1120";
-  decomMapping[0x3174] = "\u1122";
-  decomMapping[0x3175] = "\u1123";
-  decomMapping[0x3176] = "\u1127";
-  decomMapping[0x3177] = "\u1129";
-  decomMapping[0x3178] = "\u112B";
-  decomMapping[0x3179] = "\u112C";
-  decomMapping[0x317A] = "\u112D";
-  decomMapping[0x317B] = "\u112E";
-  decomMapping[0x317C] = "\u112F";
-  decomMapping[0x317D] = "\u1132";
-  decomMapping[0x317E] = "\u1136";
-  decomMapping[0x317F] = "\u1140";
-  decomMapping[0x3180] = "\u1147";
-  decomMapping[0x3181] = "\u114C";
-  decomMapping[0x3182] = "\u11F1";
-  decomMapping[0x3183] = "\u11F2";
-  decomMapping[0x3184] = "\u1157";
-  decomMapping[0x3185] = "\u1158";
-  decomMapping[0x3186] = "\u1159";
-  decomMapping[0x3187] = "\u1184";
-  decomMapping[0x3188] = "\u1185";
-  decomMapping[0x3189] = "\u1188";
-  decomMapping[0x318A] = "\u1191";
-  decomMapping[0x318B] = "\u1192";
-  decomMapping[0x318C] = "\u1194";
-  decomMapping[0x318D] = "\u119E";
-  decomMapping[0x318E] = "\u11A1";
-  decomMapping[0x3192] = "\u4E00";
-  decomMapping[0x3193] = "\u4E8C";
-  decomMapping[0x3194] = "\u4E09";
-  decomMapping[0x3195] = "\u56DB";
-  decomMapping[0x3196] = "\u4E0A";
-  decomMapping[0x3197] = "\u4E2D";
-  decomMapping[0x3198] = "\u4E0B";
-  decomMapping[0x3199] = "\u7532";
-  decomMapping[0x319A] = "\u4E59";
-  decomMapping[0x319B] = "\u4E19";
-  decomMapping[0x319C] = "\u4E01";
-  decomMapping[0x319D] = "\u5929";
-  decomMapping[0x319E] = "\u5730";
-  decomMapping[0x319F] = "\u4EBA";
-  decomMapping[0x3200] = "\u0028\u1100\u0029";
-  decomMapping[0x3201] = "\u0028\u1102\u0029";
-  decomMapping[0x3202] = "\u0028\u1103\u0029";
-  decomMapping[0x3203] = "\u0028\u1105\u0029";
-  decomMapping[0x3204] = "\u0028\u1106\u0029";
-  decomMapping[0x3205] = "\u0028\u1107\u0029";
-  decomMapping[0x3206] = "\u0028\u1109\u0029";
-  decomMapping[0x3207] = "\u0028\u110B\u0029";
-  decomMapping[0x3208] = "\u0028\u110C\u0029";
-  decomMapping[0x3209] = "\u0028\u110E\u0029";
-  decomMapping[0x320A] = "\u0028\u110F\u0029";
-  decomMapping[0x320B] = "\u0028\u1110\u0029";
-  decomMapping[0x320C] = "\u0028\u1111\u0029";
-  decomMapping[0x320D] = "\u0028\u1112\u0029";
-  decomMapping[0x320E] = "\u0028\u1100\u1161\u0029";
-  decomMapping[0x320F] = "\u0028\u1102\u1161\u0029";
-  decomMapping[0x3210] = "\u0028\u1103\u1161\u0029";
-  decomMapping[0x3211] = "\u0028\u1105\u1161\u0029";
-  decomMapping[0x3212] = "\u0028\u1106\u1161\u0029";
-  decomMapping[0x3213] = "\u0028\u1107\u1161\u0029";
-  decomMapping[0x3214] = "\u0028\u1109\u1161\u0029";
-  decomMapping[0x3215] = "\u0028\u110B\u1161\u0029";
-  decomMapping[0x3216] = "\u0028\u110C\u1161\u0029";
-  decomMapping[0x3217] = "\u0028\u110E\u1161\u0029";
-  decomMapping[0x3218] = "\u0028\u110F\u1161\u0029";
-  decomMapping[0x3219] = "\u0028\u1110\u1161\u0029";
-  decomMapping[0x321A] = "\u0028\u1111\u1161\u0029";
-  decomMapping[0x321B] = "\u0028\u1112\u1161\u0029";
-  decomMapping[0x321C] = "\u0028\u110C\u116E\u0029";
-  decomMapping[0x321D] = "\u0028\u110B\u1169\u110C\u1165\u11AB\u0029";
-  decomMapping[0x321E] = "\u0028\u110B\u1169\u1112\u116E\u0029";
-  decomMapping[0x3220] = "\u0028\u4E00\u0029";
-  decomMapping[0x3221] = "\u0028\u4E8C\u0029";
-  decomMapping[0x3222] = "\u0028\u4E09\u0029";
-  decomMapping[0x3223] = "\u0028\u56DB\u0029";
-  decomMapping[0x3224] = "\u0028\u4E94\u0029";
-  decomMapping[0x3225] = "\u0028\u516D\u0029";
-  decomMapping[0x3226] = "\u0028\u4E03\u0029";
-  decomMapping[0x3227] = "\u0028\u516B\u0029";
-  decomMapping[0x3228] = "\u0028\u4E5D\u0029";
-  decomMapping[0x3229] = "\u0028\u5341\u0029";
-  decomMapping[0x322A] = "\u0028\u6708\u0029";
-  decomMapping[0x322B] = "\u0028\u706B\u0029";
-  decomMapping[0x322C] = "\u0028\u6C34\u0029";
-  decomMapping[0x322D] = "\u0028\u6728\u0029";
-  decomMapping[0x322E] = "\u0028\u91D1\u0029";
-  decomMapping[0x322F] = "\u0028\u571F\u0029";
-  decomMapping[0x3230] = "\u0028\u65E5\u0029";
-  decomMapping[0x3231] = "\u0028\u682A\u0029";
-  decomMapping[0x3232] = "\u0028\u6709\u0029";
-  decomMapping[0x3233] = "\u0028\u793E\u0029";
-  decomMapping[0x3234] = "\u0028\u540D\u0029";
-  decomMapping[0x3235] = "\u0028\u7279\u0029";
-  decomMapping[0x3236] = "\u0028\u8CA1\u0029";
-  decomMapping[0x3237] = "\u0028\u795D\u0029";
-  decomMapping[0x3238] = "\u0028\u52B4\u0029";
-  decomMapping[0x3239] = "\u0028\u4EE3\u0029";
-  decomMapping[0x323A] = "\u0028\u547C\u0029";
-  decomMapping[0x323B] = "\u0028\u5B66\u0029";
-  decomMapping[0x323C] = "\u0028\u76E3\u0029";
-  decomMapping[0x323D] = "\u0028\u4F01\u0029";
-  decomMapping[0x323E] = "\u0028\u8CC7\u0029";
-  decomMapping[0x323F] = "\u0028\u5354\u0029";
-  decomMapping[0x3240] = "\u0028\u796D\u0029";
-  decomMapping[0x3241] = "\u0028\u4F11\u0029";
-  decomMapping[0x3242] = "\u0028\u81EA\u0029";
-  decomMapping[0x3243] = "\u0028\u81F3\u0029";
-  decomMapping[0x3244] = "\u554F";
-  decomMapping[0x3245] = "\u5E7C";
-  decomMapping[0x3246] = "\u6587";
-  decomMapping[0x3247] = "\u7B8F";
-  decomMapping[0x3250] = "\u0050\u0054\u0045";
-  decomMapping[0x3251] = "\u0032\u0031";
-  decomMapping[0x3252] = "\u0032\u0032";
-  decomMapping[0x3253] = "\u0032\u0033";
-  decomMapping[0x3254] = "\u0032\u0034";
-  decomMapping[0x3255] = "\u0032\u0035";
-  decomMapping[0x3256] = "\u0032\u0036";
-  decomMapping[0x3257] = "\u0032\u0037";
-  decomMapping[0x3258] = "\u0032\u0038";
-  decomMapping[0x3259] = "\u0032\u0039";
-  decomMapping[0x325A] = "\u0033\u0030";
-  decomMapping[0x325B] = "\u0033\u0031";
-  decomMapping[0x325C] = "\u0033\u0032";
-  decomMapping[0x325D] = "\u0033\u0033";
-  decomMapping[0x325E] = "\u0033\u0034";
-  decomMapping[0x325F] = "\u0033\u0035";
-  decomMapping[0x3260] = "\u1100";
-  decomMapping[0x3261] = "\u1102";
-  decomMapping[0x3262] = "\u1103";
-  decomMapping[0x3263] = "\u1105";
-  decomMapping[0x3264] = "\u1106";
-  decomMapping[0x3265] = "\u1107";
-  decomMapping[0x3266] = "\u1109";
-  decomMapping[0x3267] = "\u110B";
-  decomMapping[0x3268] = "\u110C";
-  decomMapping[0x3269] = "\u110E";
-  decomMapping[0x326A] = "\u110F";
-  decomMapping[0x326B] = "\u1110";
-  decomMapping[0x326C] = "\u1111";
-  decomMapping[0x326D] = "\u1112";
-  decomMapping[0x326E] = "\u1100\u1161";
-  decomMapping[0x326F] = "\u1102\u1161";
-  decomMapping[0x3270] = "\u1103\u1161";
-  decomMapping[0x3271] = "\u1105\u1161";
-  decomMapping[0x3272] = "\u1106\u1161";
-  decomMapping[0x3273] = "\u1107\u1161";
-  decomMapping[0x3274] = "\u1109\u1161";
-  decomMapping[0x3275] = "\u110B\u1161";
-  decomMapping[0x3276] = "\u110C\u1161";
-  decomMapping[0x3277] = "\u110E\u1161";
-  decomMapping[0x3278] = "\u110F\u1161";
-  decomMapping[0x3279] = "\u1110\u1161";
-  decomMapping[0x327A] = "\u1111\u1161";
-  decomMapping[0x327B] = "\u1112\u1161";
-  decomMapping[0x327C] = "\u110E\u1161\u11B7\u1100\u1169";
-  decomMapping[0x327D] = "\u110C\u116E\u110B\u1174";
-  decomMapping[0x327E] = "\u110B\u116E";
-  decomMapping[0x3280] = "\u4E00";
-  decomMapping[0x3281] = "\u4E8C";
-  decomMapping[0x3282] = "\u4E09";
-  decomMapping[0x3283] = "\u56DB";
-  decomMapping[0x3284] = "\u4E94";
-  decomMapping[0x3285] = "\u516D";
-  decomMapping[0x3286] = "\u4E03";
-  decomMapping[0x3287] = "\u516B";
-  decomMapping[0x3288] = "\u4E5D";
-  decomMapping[0x3289] = "\u5341";
-  decomMapping[0x328A] = "\u6708";
-  decomMapping[0x328B] = "\u706B";
-  decomMapping[0x328C] = "\u6C34";
-  decomMapping[0x328D] = "\u6728";
-  decomMapping[0x328E] = "\u91D1";
-  decomMapping[0x328F] = "\u571F";
-  decomMapping[0x3290] = "\u65E5";
-  decomMapping[0x3291] = "\u682A";
-  decomMapping[0x3292] = "\u6709";
-  decomMapping[0x3293] = "\u793E";
-  decomMapping[0x3294] = "\u540D";
-  decomMapping[0x3295] = "\u7279";
-  decomMapping[0x3296] = "\u8CA1";
-  decomMapping[0x3297] = "\u795D";
-  decomMapping[0x3298] = "\u52B4";
-  decomMapping[0x3299] = "\u79D8";
-  decomMapping[0x329A] = "\u7537";
-  decomMapping[0x329B] = "\u5973";
-  decomMapping[0x329C] = "\u9069";
-  decomMapping[0x329D] = "\u512A";
-  decomMapping[0x329E] = "\u5370";
-  decomMapping[0x329F] = "\u6CE8";
-  decomMapping[0x32A0] = "\u9805";
-  decomMapping[0x32A1] = "\u4F11";
-  decomMapping[0x32A2] = "\u5199";
-  decomMapping[0x32A3] = "\u6B63";
-  decomMapping[0x32A4] = "\u4E0A";
-  decomMapping[0x32A5] = "\u4E2D";
-  decomMapping[0x32A6] = "\u4E0B";
-  decomMapping[0x32A7] = "\u5DE6";
-  decomMapping[0x32A8] = "\u53F3";
-  decomMapping[0x32A9] = "\u533B";
-  decomMapping[0x32AA] = "\u5B97";
-  decomMapping[0x32AB] = "\u5B66";
-  decomMapping[0x32AC] = "\u76E3";
-  decomMapping[0x32AD] = "\u4F01";
-  decomMapping[0x32AE] = "\u8CC7";
-  decomMapping[0x32AF] = "\u5354";
-  decomMapping[0x32B0] = "\u591C";
-  decomMapping[0x32B1] = "\u0033\u0036";
-  decomMapping[0x32B2] = "\u0033\u0037";
-  decomMapping[0x32B3] = "\u0033\u0038";
-  decomMapping[0x32B4] = "\u0033\u0039";
-  decomMapping[0x32B5] = "\u0034\u0030";
-  decomMapping[0x32B6] = "\u0034\u0031";
-  decomMapping[0x32B7] = "\u0034\u0032";
-  decomMapping[0x32B8] = "\u0034\u0033";
-  decomMapping[0x32B9] = "\u0034\u0034";
-  decomMapping[0x32BA] = "\u0034\u0035";
-  decomMapping[0x32BB] = "\u0034\u0036";
-  decomMapping[0x32BC] = "\u0034\u0037";
-  decomMapping[0x32BD] = "\u0034\u0038";
-  decomMapping[0x32BE] = "\u0034\u0039";
-  decomMapping[0x32BF] = "\u0035\u0030";
-  decomMapping[0x32C0] = "\u0031\u6708";
-  decomMapping[0x32C1] = "\u0032\u6708";
-  decomMapping[0x32C2] = "\u0033\u6708";
-  decomMapping[0x32C3] = "\u0034\u6708";
-  decomMapping[0x32C4] = "\u0035\u6708";
-  decomMapping[0x32C5] = "\u0036\u6708";
-  decomMapping[0x32C6] = "\u0037\u6708";
-  decomMapping[0x32C7] = "\u0038\u6708";
-  decomMapping[0x32C8] = "\u0039\u6708";
-  decomMapping[0x32C9] = "\u0031\u0030\u6708";
-  decomMapping[0x32CA] = "\u0031\u0031\u6708";
-  decomMapping[0x32CB] = "\u0031\u0032\u6708";
-  decomMapping[0x32CC] = "\u0048\u0067";
-  decomMapping[0x32CD] = "\u0065\u0072\u0067";
-  decomMapping[0x32CE] = "\u0065\u0056";
-  decomMapping[0x32CF] = "\u004C\u0054\u0044";
-  decomMapping[0x32D0] = "\u30A2";
-  decomMapping[0x32D1] = "\u30A4";
-  decomMapping[0x32D2] = "\u30A6";
-  decomMapping[0x32D3] = "\u30A8";
-  decomMapping[0x32D4] = "\u30AA";
-  decomMapping[0x32D5] = "\u30AB";
-  decomMapping[0x32D6] = "\u30AD";
-  decomMapping[0x32D7] = "\u30AF";
-  decomMapping[0x32D8] = "\u30B1";
-  decomMapping[0x32D9] = "\u30B3";
-  decomMapping[0x32DA] = "\u30B5";
-  decomMapping[0x32DB] = "\u30B7";
-  decomMapping[0x32DC] = "\u30B9";
-  decomMapping[0x32DD] = "\u30BB";
-  decomMapping[0x32DE] = "\u30BD";
-  decomMapping[0x32DF] = "\u30BF";
-  decomMapping[0x32E0] = "\u30C1";
-  decomMapping[0x32E1] = "\u30C4";
-  decomMapping[0x32E2] = "\u30C6";
-  decomMapping[0x32E3] = "\u30C8";
-  decomMapping[0x32E4] = "\u30CA";
-  decomMapping[0x32E5] = "\u30CB";
-  decomMapping[0x32E6] = "\u30CC";
-  decomMapping[0x32E7] = "\u30CD";
-  decomMapping[0x32E8] = "\u30CE";
-  decomMapping[0x32E9] = "\u30CF";
-  decomMapping[0x32EA] = "\u30D2";
-  decomMapping[0x32EB] = "\u30D5";
-  decomMapping[0x32EC] = "\u30D8";
-  decomMapping[0x32ED] = "\u30DB";
-  decomMapping[0x32EE] = "\u30DE";
-  decomMapping[0x32EF] = "\u30DF";
-  decomMapping[0x32F0] = "\u30E0";
-  decomMapping[0x32F1] = "\u30E1";
-  decomMapping[0x32F2] = "\u30E2";
-  decomMapping[0x32F3] = "\u30E4";
-  decomMapping[0x32F4] = "\u30E6";
-  decomMapping[0x32F5] = "\u30E8";
-  decomMapping[0x32F6] = "\u30E9";
-  decomMapping[0x32F7] = "\u30EA";
-  decomMapping[0x32F8] = "\u30EB";
-  decomMapping[0x32F9] = "\u30EC";
-  decomMapping[0x32FA] = "\u30ED";
-  decomMapping[0x32FB] = "\u30EF";
-  decomMapping[0x32FC] = "\u30F0";
-  decomMapping[0x32FD] = "\u30F1";
-  decomMapping[0x32FE] = "\u30F2";
-  decomMapping[0x3300] = "\u30A2\u30D1\u30FC\u30C8";
-  decomMapping[0x3301] = "\u30A2\u30EB\u30D5\u30A1";
-  decomMapping[0x3302] = "\u30A2\u30F3\u30DA\u30A2";
-  decomMapping[0x3303] = "\u30A2\u30FC\u30EB";
-  decomMapping[0x3304] = "\u30A4\u30CB\u30F3\u30B0";
-  decomMapping[0x3305] = "\u30A4\u30F3\u30C1";
-  decomMapping[0x3306] = "\u30A6\u30A9\u30F3";
-  decomMapping[0x3307] = "\u30A8\u30B9\u30AF\u30FC\u30C9";
-  decomMapping[0x3308] = "\u30A8\u30FC\u30AB\u30FC";
-  decomMapping[0x3309] = "\u30AA\u30F3\u30B9";
-  decomMapping[0x330A] = "\u30AA\u30FC\u30E0";
-  decomMapping[0x330B] = "\u30AB\u30A4\u30EA";
-  decomMapping[0x330C] = "\u30AB\u30E9\u30C3\u30C8";
-  decomMapping[0x330D] = "\u30AB\u30ED\u30EA\u30FC";
-  decomMapping[0x330E] = "\u30AC\u30ED\u30F3";
-  decomMapping[0x330F] = "\u30AC\u30F3\u30DE";
-  decomMapping[0x3310] = "\u30AE\u30AC";
-  decomMapping[0x3311] = "\u30AE\u30CB\u30FC";
-  decomMapping[0x3312] = "\u30AD\u30E5\u30EA\u30FC";
-  decomMapping[0x3313] = "\u30AE\u30EB\u30C0\u30FC";
-  decomMapping[0x3314] = "\u30AD\u30ED";
-  decomMapping[0x3315] = "\u30AD\u30ED\u30B0\u30E9\u30E0";
-  decomMapping[0x3316] = "\u30AD\u30ED\u30E1\u30FC\u30C8\u30EB";
-  decomMapping[0x3317] = "\u30AD\u30ED\u30EF\u30C3\u30C8";
-  decomMapping[0x3318] = "\u30B0\u30E9\u30E0";
-  decomMapping[0x3319] = "\u30B0\u30E9\u30E0\u30C8\u30F3";
-  decomMapping[0x331A] = "\u30AF\u30EB\u30BC\u30A4\u30ED";
-  decomMapping[0x331B] = "\u30AF\u30ED\u30FC\u30CD";
-  decomMapping[0x331C] = "\u30B1\u30FC\u30B9";
-  decomMapping[0x331D] = "\u30B3\u30EB\u30CA";
-  decomMapping[0x331E] = "\u30B3\u30FC\u30DD";
-  decomMapping[0x331F] = "\u30B5\u30A4\u30AF\u30EB";
-  decomMapping[0x3320] = "\u30B5\u30F3\u30C1\u30FC\u30E0";
-  decomMapping[0x3321] = "\u30B7\u30EA\u30F3\u30B0";
-  decomMapping[0x3322] = "\u30BB\u30F3\u30C1";
-  decomMapping[0x3323] = "\u30BB\u30F3\u30C8";
-  decomMapping[0x3324] = "\u30C0\u30FC\u30B9";
-  decomMapping[0x3325] = "\u30C7\u30B7";
-  decomMapping[0x3326] = "\u30C9\u30EB";
-  decomMapping[0x3327] = "\u30C8\u30F3";
-  decomMapping[0x3328] = "\u30CA\u30CE";
-  decomMapping[0x3329] = "\u30CE\u30C3\u30C8";
-  decomMapping[0x332A] = "\u30CF\u30A4\u30C4";
-  decomMapping[0x332B] = "\u30D1\u30FC\u30BB\u30F3\u30C8";
-  decomMapping[0x332C] = "\u30D1\u30FC\u30C4";
-  decomMapping[0x332D] = "\u30D0\u30FC\u30EC\u30EB";
-  decomMapping[0x332E] = "\u30D4\u30A2\u30B9\u30C8\u30EB";
-  decomMapping[0x332F] = "\u30D4\u30AF\u30EB";
-  decomMapping[0x3330] = "\u30D4\u30B3";
-  decomMapping[0x3331] = "\u30D3\u30EB";
-  decomMapping[0x3332] = "\u30D5\u30A1\u30E9\u30C3\u30C9";
-  decomMapping[0x3333] = "\u30D5\u30A3\u30FC\u30C8";
-  decomMapping[0x3334] = "\u30D6\u30C3\u30B7\u30A7\u30EB";
-  decomMapping[0x3335] = "\u30D5\u30E9\u30F3";
-  decomMapping[0x3336] = "\u30D8\u30AF\u30BF\u30FC\u30EB";
-  decomMapping[0x3337] = "\u30DA\u30BD";
-  decomMapping[0x3338] = "\u30DA\u30CB\u30D2";
-  decomMapping[0x3339] = "\u30D8\u30EB\u30C4";
-  decomMapping[0x333A] = "\u30DA\u30F3\u30B9";
-  decomMapping[0x333B] = "\u30DA\u30FC\u30B8";
-  decomMapping[0x333C] = "\u30D9\u30FC\u30BF";
-  decomMapping[0x333D] = "\u30DD\u30A4\u30F3\u30C8";
-  decomMapping[0x333E] = "\u30DC\u30EB\u30C8";
-  decomMapping[0x333F] = "\u30DB\u30F3";
-  decomMapping[0x3340] = "\u30DD\u30F3\u30C9";
-  decomMapping[0x3341] = "\u30DB\u30FC\u30EB";
-  decomMapping[0x3342] = "\u30DB\u30FC\u30F3";
-  decomMapping[0x3343] = "\u30DE\u30A4\u30AF\u30ED";
-  decomMapping[0x3344] = "\u30DE\u30A4\u30EB";
-  decomMapping[0x3345] = "\u30DE\u30C3\u30CF";
-  decomMapping[0x3346] = "\u30DE\u30EB\u30AF";
-  decomMapping[0x3347] = "\u30DE\u30F3\u30B7\u30E7\u30F3";
-  decomMapping[0x3348] = "\u30DF\u30AF\u30ED\u30F3";
-  decomMapping[0x3349] = "\u30DF\u30EA";
-  decomMapping[0x334A] = "\u30DF\u30EA\u30D0\u30FC\u30EB";
-  decomMapping[0x334B] = "\u30E1\u30AC";
-  decomMapping[0x334C] = "\u30E1\u30AC\u30C8\u30F3";
-  decomMapping[0x334D] = "\u30E1\u30FC\u30C8\u30EB";
-  decomMapping[0x334E] = "\u30E4\u30FC\u30C9";
-  decomMapping[0x334F] = "\u30E4\u30FC\u30EB";
-  decomMapping[0x3350] = "\u30E6\u30A2\u30F3";
-  decomMapping[0x3351] = "\u30EA\u30C3\u30C8\u30EB";
-  decomMapping[0x3352] = "\u30EA\u30E9";
-  decomMapping[0x3353] = "\u30EB\u30D4\u30FC";
-  decomMapping[0x3354] = "\u30EB\u30FC\u30D6\u30EB";
-  decomMapping[0x3355] = "\u30EC\u30E0";
-  decomMapping[0x3356] = "\u30EC\u30F3\u30C8\u30B2\u30F3";
-  decomMapping[0x3357] = "\u30EF\u30C3\u30C8";
-  decomMapping[0x3358] = "\u0030\u70B9";
-  decomMapping[0x3359] = "\u0031\u70B9";
-  decomMapping[0x335A] = "\u0032\u70B9";
-  decomMapping[0x335B] = "\u0033\u70B9";
-  decomMapping[0x335C] = "\u0034\u70B9";
-  decomMapping[0x335D] = "\u0035\u70B9";
-  decomMapping[0x335E] = "\u0036\u70B9";
-  decomMapping[0x335F] = "\u0037\u70B9";
-  decomMapping[0x3360] = "\u0038\u70B9";
-  decomMapping[0x3361] = "\u0039\u70B9";
-  decomMapping[0x3362] = "\u0031\u0030\u70B9";
-  decomMapping[0x3363] = "\u0031\u0031\u70B9";
-  decomMapping[0x3364] = "\u0031\u0032\u70B9";
-  decomMapping[0x3365] = "\u0031\u0033\u70B9";
-  decomMapping[0x3366] = "\u0031\u0034\u70B9";
-  decomMapping[0x3367] = "\u0031\u0035\u70B9";
-  decomMapping[0x3368] = "\u0031\u0036\u70B9";
-  decomMapping[0x3369] = "\u0031\u0037\u70B9";
-  decomMapping[0x336A] = "\u0031\u0038\u70B9";
-  decomMapping[0x336B] = "\u0031\u0039\u70B9";
-  decomMapping[0x336C] = "\u0032\u0030\u70B9";
-  decomMapping[0x336D] = "\u0032\u0031\u70B9";
-  decomMapping[0x336E] = "\u0032\u0032\u70B9";
-  decomMapping[0x336F] = "\u0032\u0033\u70B9";
-  decomMapping[0x3370] = "\u0032\u0034\u70B9";
-  decomMapping[0x3371] = "\u0068\u0050\u0061";
-  decomMapping[0x3372] = "\u0064\u0061";
-  decomMapping[0x3373] = "\u0041\u0055";
-  decomMapping[0x3374] = "\u0062\u0061\u0072";
-  decomMapping[0x3375] = "\u006F\u0056";
-  decomMapping[0x3376] = "\u0070\u0063";
-  decomMapping[0x3377] = "\u0064\u006D";
-  decomMapping[0x3378] = "\u0064\u006D\u00B2";
-  decomMapping[0x3379] = "\u0064\u006D\u00B3";
-  decomMapping[0x337A] = "\u0049\u0055";
-  decomMapping[0x337B] = "\u5E73\u6210";
-  decomMapping[0x337C] = "\u662D\u548C";
-  decomMapping[0x337D] = "\u5927\u6B63";
-  decomMapping[0x337E] = "\u660E\u6CBB";
-  decomMapping[0x337F] = "\u682A\u5F0F\u4F1A\u793E";
-  decomMapping[0x3380] = "\u0070\u0041";
-  decomMapping[0x3381] = "\u006E\u0041";
-  decomMapping[0x3382] = "\u03BC\u0041";
-  decomMapping[0x3383] = "\u006D\u0041";
-  decomMapping[0x3384] = "\u006B\u0041";
-  decomMapping[0x3385] = "\u004B\u0042";
-  decomMapping[0x3386] = "\u004D\u0042";
-  decomMapping[0x3387] = "\u0047\u0042";
-  decomMapping[0x3388] = "\u0063\u0061\u006C";
-  decomMapping[0x3389] = "\u006B\u0063\u0061\u006C";
-  decomMapping[0x338A] = "\u0070\u0046";
-  decomMapping[0x338B] = "\u006E\u0046";
-  decomMapping[0x338C] = "\u03BC\u0046";
-  decomMapping[0x338D] = "\u03BC\u0067";
-  decomMapping[0x338E] = "\u006D\u0067";
-  decomMapping[0x338F] = "\u006B\u0067";
-  decomMapping[0x3390] = "\u0048\u007A";
-  decomMapping[0x3391] = "\u006B\u0048\u007A";
-  decomMapping[0x3392] = "\u004D\u0048\u007A";
-  decomMapping[0x3393] = "\u0047\u0048\u007A";
-  decomMapping[0x3394] = "\u0054\u0048\u007A";
-  decomMapping[0x3395] = "\u03BC\u2113";
-  decomMapping[0x3396] = "\u006D\u2113";
-  decomMapping[0x3397] = "\u0064\u2113";
-  decomMapping[0x3398] = "\u006B\u2113";
-  decomMapping[0x3399] = "\u0066\u006D";
-  decomMapping[0x339A] = "\u006E\u006D";
-  decomMapping[0x339B] = "\u03BC\u006D";
-  decomMapping[0x339C] = "\u006D\u006D";
-  decomMapping[0x339D] = "\u0063\u006D";
-  decomMapping[0x339E] = "\u006B\u006D";
-  decomMapping[0x339F] = "\u006D\u006D\u00B2";
-  decomMapping[0x33A0] = "\u0063\u006D\u00B2";
-  decomMapping[0x33A1] = "\u006D\u00B2";
-  decomMapping[0x33A2] = "\u006B\u006D\u00B2";
-  decomMapping[0x33A3] = "\u006D\u006D\u00B3";
-  decomMapping[0x33A4] = "\u0063\u006D\u00B3";
-  decomMapping[0x33A5] = "\u006D\u00B3";
-  decomMapping[0x33A6] = "\u006B\u006D\u00B3";
-  decomMapping[0x33A7] = "\u006D\u2215\u0073";
-  decomMapping[0x33A8] = "\u006D\u2215\u0073\u00B2";
-  decomMapping[0x33A9] = "\u0050\u0061";
-  decomMapping[0x33AA] = "\u006B\u0050\u0061";
-  decomMapping[0x33AB] = "\u004D\u0050\u0061";
-  decomMapping[0x33AC] = "\u0047\u0050\u0061";
-  decomMapping[0x33AD] = "\u0072\u0061\u0064";
-  decomMapping[0x33AE] = "\u0072\u0061\u0064\u2215\u0073";
-  decomMapping[0x33AF] = "\u0072\u0061\u0064\u2215\u0073\u00B2";
-  decomMapping[0x33B0] = "\u0070\u0073";
-  decomMapping[0x33B1] = "\u006E\u0073";
-  decomMapping[0x33B2] = "\u03BC\u0073";
-  decomMapping[0x33B3] = "\u006D\u0073";
-  decomMapping[0x33B4] = "\u0070\u0056";
-  decomMapping[0x33B5] = "\u006E\u0056";
-  decomMapping[0x33B6] = "\u03BC\u0056";
-  decomMapping[0x33B7] = "\u006D\u0056";
-  decomMapping[0x33B8] = "\u006B\u0056";
-  decomMapping[0x33B9] = "\u004D\u0056";
-  decomMapping[0x33BA] = "\u0070\u0057";
-  decomMapping[0x33BB] = "\u006E\u0057";
-  decomMapping[0x33BC] = "\u03BC\u0057";
-  decomMapping[0x33BD] = "\u006D\u0057";
-  decomMapping[0x33BE] = "\u006B\u0057";
-  decomMapping[0x33BF] = "\u004D\u0057";
-  decomMapping[0x33C0] = "\u006B\u03A9";
-  decomMapping[0x33C1] = "\u004D\u03A9";
-  decomMapping[0x33C2] = "\u0061\u002E\u006D\u002E";
-  decomMapping[0x33C3] = "\u0042\u0071";
-  decomMapping[0x33C4] = "\u0063\u0063";
-  decomMapping[0x33C5] = "\u0063\u0064";
-  decomMapping[0x33C6] = "\u0043\u2215\u006B\u0067";
-  decomMapping[0x33C7] = "\u0043\u006F\u002E";
-  decomMapping[0x33C8] = "\u0064\u0042";
-  decomMapping[0x33C9] = "\u0047\u0079";
-  decomMapping[0x33CA] = "\u0068\u0061";
-  decomMapping[0x33CB] = "\u0048\u0050";
-  decomMapping[0x33CC] = "\u0069\u006E";
-  decomMapping[0x33CD] = "\u004B\u004B";
-  decomMapping[0x33CE] = "\u004B\u004D";
-  decomMapping[0x33CF] = "\u006B\u0074";
-  decomMapping[0x33D0] = "\u006C\u006D";
-  decomMapping[0x33D1] = "\u006C\u006E";
-  decomMapping[0x33D2] = "\u006C\u006F\u0067";
-  decomMapping[0x33D3] = "\u006C\u0078";
-  decomMapping[0x33D4] = "\u006D\u0062";
-  decomMapping[0x33D5] = "\u006D\u0069\u006C";
-  decomMapping[0x33D6] = "\u006D\u006F\u006C";
-  decomMapping[0x33D7] = "\u0050\u0048";
-  decomMapping[0x33D8] = "\u0070\u002E\u006D\u002E";
-  decomMapping[0x33D9] = "\u0050\u0050\u004D";
-  decomMapping[0x33DA] = "\u0050\u0052";
-  decomMapping[0x33DB] = "\u0073\u0072";
-  decomMapping[0x33DC] = "\u0053\u0076";
-  decomMapping[0x33DD] = "\u0057\u0062";
-  decomMapping[0x33DE] = "\u0056\u2215\u006D";
-  decomMapping[0x33DF] = "\u0041\u2215\u006D";
-  decomMapping[0x33E0] = "\u0031\u65E5";
-  decomMapping[0x33E1] = "\u0032\u65E5";
-  decomMapping[0x33E2] = "\u0033\u65E5";
-  decomMapping[0x33E3] = "\u0034\u65E5";
-  decomMapping[0x33E4] = "\u0035\u65E5";
-  decomMapping[0x33E5] = "\u0036\u65E5";
-  decomMapping[0x33E6] = "\u0037\u65E5";
-  decomMapping[0x33E7] = "\u0038\u65E5";
-  decomMapping[0x33E8] = "\u0039\u65E5";
-  decomMapping[0x33E9] = "\u0031\u0030\u65E5";
-  decomMapping[0x33EA] = "\u0031\u0031\u65E5";
-  decomMapping[0x33EB] = "\u0031\u0032\u65E5";
-  decomMapping[0x33EC] = "\u0031\u0033\u65E5";
-  decomMapping[0x33ED] = "\u0031\u0034\u65E5";
-  decomMapping[0x33EE] = "\u0031\u0035\u65E5";
-  decomMapping[0x33EF] = "\u0031\u0036\u65E5";
-  decomMapping[0x33F0] = "\u0031\u0037\u65E5";
-  decomMapping[0x33F1] = "\u0031\u0038\u65E5";
-  decomMapping[0x33F2] = "\u0031\u0039\u65E5";
-  decomMapping[0x33F3] = "\u0032\u0030\u65E5";
-  decomMapping[0x33F4] = "\u0032\u0031\u65E5";
-  decomMapping[0x33F5] = "\u0032\u0032\u65E5";
-  decomMapping[0x33F6] = "\u0032\u0033\u65E5";
-  decomMapping[0x33F7] = "\u0032\u0034\u65E5";
-  decomMapping[0x33F8] = "\u0032\u0035\u65E5";
-  decomMapping[0x33F9] = "\u0032\u0036\u65E5";
-  decomMapping[0x33FA] = "\u0032\u0037\u65E5";
-  decomMapping[0x33FB] = "\u0032\u0038\u65E5";
-  decomMapping[0x33FC] = "\u0032\u0039\u65E5";
-  decomMapping[0x33FD] = "\u0033\u0030\u65E5";
-  decomMapping[0x33FE] = "\u0033\u0031\u65E5";
-  decomMapping[0x33FF] = "\u0067\u0061\u006C";
-  decomMapping[0xA69C] = "\u044A";
-  decomMapping[0xA69D] = "\u044C";
-  decomMapping[0xA770] = "\uA76F";
-  decomMapping[0xA7F8] = "\u0126";
-  decomMapping[0xA7F9] = "\u0153";
-  decomMapping[0xAB5C] = "\uA727";
-  decomMapping[0xAB5D] = "\uAB37";
-  decomMapping[0xAB5E] = "\u026B";
-  decomMapping[0xAB5F] = "\uAB52";
-  decomMapping[0xF900] = "\u8C48";
-  decomMapping[0xF901] = "\u66F4";
-  decomMapping[0xF902] = "\u8ECA";
-  decomMapping[0xF903] = "\u8CC8";
-  decomMapping[0xF904] = "\u6ED1";
-  decomMapping[0xF905] = "\u4E32";
-  decomMapping[0xF906] = "\u53E5";
-  decomMapping[0xF907] = "\u9F9C";
-  decomMapping[0xF908] = "\u9F9C";
-  decomMapping[0xF909] = "\u5951";
-  decomMapping[0xF90A] = "\u91D1";
-  decomMapping[0xF90B] = "\u5587";
-  decomMapping[0xF90C] = "\u5948";
-  decomMapping[0xF90D] = "\u61F6";
-  decomMapping[0xF90E] = "\u7669";
-  decomMapping[0xF90F] = "\u7F85";
-  decomMapping[0xF910] = "\u863F";
-  decomMapping[0xF911] = "\u87BA";
-  decomMapping[0xF912] = "\u88F8";
-  decomMapping[0xF913] = "\u908F";
-  decomMapping[0xF914] = "\u6A02";
-  decomMapping[0xF915] = "\u6D1B";
-  decomMapping[0xF916] = "\u70D9";
-  decomMapping[0xF917] = "\u73DE";
-  decomMapping[0xF918] = "\u843D";
-  decomMapping[0xF919] = "\u916A";
-  decomMapping[0xF91A] = "\u99F1";
-  decomMapping[0xF91B] = "\u4E82";
-  decomMapping[0xF91C] = "\u5375";
-  decomMapping[0xF91D] = "\u6B04";
-  decomMapping[0xF91E] = "\u721B";
-  decomMapping[0xF91F] = "\u862D";
-  decomMapping[0xF920] = "\u9E1E";
-  decomMapping[0xF921] = "\u5D50";
-  decomMapping[0xF922] = "\u6FEB";
-  decomMapping[0xF923] = "\u85CD";
-  decomMapping[0xF924] = "\u8964";
-  decomMapping[0xF925] = "\u62C9";
-  decomMapping[0xF926] = "\u81D8";
-  decomMapping[0xF927] = "\u881F";
-  decomMapping[0xF928] = "\u5ECA";
-  decomMapping[0xF929] = "\u6717";
-  decomMapping[0xF92A] = "\u6D6A";
-  decomMapping[0xF92B] = "\u72FC";
-  decomMapping[0xF92C] = "\u90CE";
-  decomMapping[0xF92D] = "\u4F86";
-  decomMapping[0xF92E] = "\u51B7";
-  decomMapping[0xF92F] = "\u52DE";
-  decomMapping[0xF930] = "\u64C4";
-  decomMapping[0xF931] = "\u6AD3";
-  decomMapping[0xF932] = "\u7210";
-  decomMapping[0xF933] = "\u76E7";
-  decomMapping[0xF934] = "\u8001";
-  decomMapping[0xF935] = "\u8606";
-  decomMapping[0xF936] = "\u865C";
-  decomMapping[0xF937] = "\u8DEF";
-  decomMapping[0xF938] = "\u9732";
-  decomMapping[0xF939] = "\u9B6F";
-  decomMapping[0xF93A] = "\u9DFA";
-  decomMapping[0xF93B] = "\u788C";
-  decomMapping[0xF93C] = "\u797F";
-  decomMapping[0xF93D] = "\u7DA0";
-  decomMapping[0xF93E] = "\u83C9";
-  decomMapping[0xF93F] = "\u9304";
-  decomMapping[0xF940] = "\u9E7F";
-  decomMapping[0xF941] = "\u8AD6";
-  decomMapping[0xF942] = "\u58DF";
-  decomMapping[0xF943] = "\u5F04";
-  decomMapping[0xF944] = "\u7C60";
-  decomMapping[0xF945] = "\u807E";
-  decomMapping[0xF946] = "\u7262";
-  decomMapping[0xF947] = "\u78CA";
-  decomMapping[0xF948] = "\u8CC2";
-  decomMapping[0xF949] = "\u96F7";
-  decomMapping[0xF94A] = "\u58D8";
-  decomMapping[0xF94B] = "\u5C62";
-  decomMapping[0xF94C] = "\u6A13";
-  decomMapping[0xF94D] = "\u6DDA";
-  decomMapping[0xF94E] = "\u6F0F";
-  decomMapping[0xF94F] = "\u7D2F";
-  decomMapping[0xF950] = "\u7E37";
-  decomMapping[0xF951] = "\u964B";
-  decomMapping[0xF952] = "\u52D2";
-  decomMapping[0xF953] = "\u808B";
-  decomMapping[0xF954] = "\u51DC";
-  decomMapping[0xF955] = "\u51CC";
-  decomMapping[0xF956] = "\u7A1C";
-  decomMapping[0xF957] = "\u7DBE";
-  decomMapping[0xF958] = "\u83F1";
-  decomMapping[0xF959] = "\u9675";
-  decomMapping[0xF95A] = "\u8B80";
-  decomMapping[0xF95B] = "\u62CF";
-  decomMapping[0xF95C] = "\u6A02";
-  decomMapping[0xF95D] = "\u8AFE";
-  decomMapping[0xF95E] = "\u4E39";
-  decomMapping[0xF95F] = "\u5BE7";
-  decomMapping[0xF960] = "\u6012";
-  decomMapping[0xF961] = "\u7387";
-  decomMapping[0xF962] = "\u7570";
-  decomMapping[0xF963] = "\u5317";
-  decomMapping[0xF964] = "\u78FB";
-  decomMapping[0xF965] = "\u4FBF";
-  decomMapping[0xF966] = "\u5FA9";
-  decomMapping[0xF967] = "\u4E0D";
-  decomMapping[0xF968] = "\u6CCC";
-  decomMapping[0xF969] = "\u6578";
-  decomMapping[0xF96A] = "\u7D22";
-  decomMapping[0xF96B] = "\u53C3";
-  decomMapping[0xF96C] = "\u585E";
-  decomMapping[0xF96D] = "\u7701";
-  decomMapping[0xF96E] = "\u8449";
-  decomMapping[0xF96F] = "\u8AAA";
-  decomMapping[0xF970] = "\u6BBA";
-  decomMapping[0xF971] = "\u8FB0";
-  decomMapping[0xF972] = "\u6C88";
-  decomMapping[0xF973] = "\u62FE";
-  decomMapping[0xF974] = "\u82E5";
-  decomMapping[0xF975] = "\u63A0";
-  decomMapping[0xF976] = "\u7565";
-  decomMapping[0xF977] = "\u4EAE";
-  decomMapping[0xF978] = "\u5169";
-  decomMapping[0xF979] = "\u51C9";
-  decomMapping[0xF97A] = "\u6881";
-  decomMapping[0xF97B] = "\u7CE7";
-  decomMapping[0xF97C] = "\u826F";
-  decomMapping[0xF97D] = "\u8AD2";
-  decomMapping[0xF97E] = "\u91CF";
-  decomMapping[0xF97F] = "\u52F5";
-  decomMapping[0xF980] = "\u5442";
-  decomMapping[0xF981] = "\u5973";
-  decomMapping[0xF982] = "\u5EEC";
-  decomMapping[0xF983] = "\u65C5";
-  decomMapping[0xF984] = "\u6FFE";
-  decomMapping[0xF985] = "\u792A";
-  decomMapping[0xF986] = "\u95AD";
-  decomMapping[0xF987] = "\u9A6A";
-  decomMapping[0xF988] = "\u9E97";
-  decomMapping[0xF989] = "\u9ECE";
-  decomMapping[0xF98A] = "\u529B";
-  decomMapping[0xF98B] = "\u66C6";
-  decomMapping[0xF98C] = "\u6B77";
-  decomMapping[0xF98D] = "\u8F62";
-  decomMapping[0xF98E] = "\u5E74";
-  decomMapping[0xF98F] = "\u6190";
-  decomMapping[0xF990] = "\u6200";
-  decomMapping[0xF991] = "\u649A";
-  decomMapping[0xF992] = "\u6F23";
-  decomMapping[0xF993] = "\u7149";
-  decomMapping[0xF994] = "\u7489";
-  decomMapping[0xF995] = "\u79CA";
-  decomMapping[0xF996] = "\u7DF4";
-  decomMapping[0xF997] = "\u806F";
-  decomMapping[0xF998] = "\u8F26";
-  decomMapping[0xF999] = "\u84EE";
-  decomMapping[0xF99A] = "\u9023";
-  decomMapping[0xF99B] = "\u934A";
-  decomMapping[0xF99C] = "\u5217";
-  decomMapping[0xF99D] = "\u52A3";
-  decomMapping[0xF99E] = "\u54BD";
-  decomMapping[0xF99F] = "\u70C8";
-  decomMapping[0xF9A0] = "\u88C2";
-  decomMapping[0xF9A1] = "\u8AAA";
-  decomMapping[0xF9A2] = "\u5EC9";
-  decomMapping[0xF9A3] = "\u5FF5";
-  decomMapping[0xF9A4] = "\u637B";
-  decomMapping[0xF9A5] = "\u6BAE";
-  decomMapping[0xF9A6] = "\u7C3E";
-  decomMapping[0xF9A7] = "\u7375";
-  decomMapping[0xF9A8] = "\u4EE4";
-  decomMapping[0xF9A9] = "\u56F9";
-  decomMapping[0xF9AA] = "\u5BE7";
-  decomMapping[0xF9AB] = "\u5DBA";
-  decomMapping[0xF9AC] = "\u601C";
-  decomMapping[0xF9AD] = "\u73B2";
-  decomMapping[0xF9AE] = "\u7469";
-  decomMapping[0xF9AF] = "\u7F9A";
-  decomMapping[0xF9B0] = "\u8046";
-  decomMapping[0xF9B1] = "\u9234";
-  decomMapping[0xF9B2] = "\u96F6";
-  decomMapping[0xF9B3] = "\u9748";
-  decomMapping[0xF9B4] = "\u9818";
-  decomMapping[0xF9B5] = "\u4F8B";
-  decomMapping[0xF9B6] = "\u79AE";
-  decomMapping[0xF9B7] = "\u91B4";
-  decomMapping[0xF9B8] = "\u96B8";
-  decomMapping[0xF9B9] = "\u60E1";
-  decomMapping[0xF9BA] = "\u4E86";
-  decomMapping[0xF9BB] = "\u50DA";
-  decomMapping[0xF9BC] = "\u5BEE";
-  decomMapping[0xF9BD] = "\u5C3F";
-  decomMapping[0xF9BE] = "\u6599";
-  decomMapping[0xF9BF] = "\u6A02";
-  decomMapping[0xF9C0] = "\u71CE";
-  decomMapping[0xF9C1] = "\u7642";
-  decomMapping[0xF9C2] = "\u84FC";
-  decomMapping[0xF9C3] = "\u907C";
-  decomMapping[0xF9C4] = "\u9F8D";
-  decomMapping[0xF9C5] = "\u6688";
-  decomMapping[0xF9C6] = "\u962E";
-  decomMapping[0xF9C7] = "\u5289";
-  decomMapping[0xF9C8] = "\u677B";
-  decomMapping[0xF9C9] = "\u67F3";
-  decomMapping[0xF9CA] = "\u6D41";
-  decomMapping[0xF9CB] = "\u6E9C";
-  decomMapping[0xF9CC] = "\u7409";
-  decomMapping[0xF9CD] = "\u7559";
-  decomMapping[0xF9CE] = "\u786B";
-  decomMapping[0xF9CF] = "\u7D10";
-  decomMapping[0xF9D0] = "\u985E";
-  decomMapping[0xF9D1] = "\u516D";
-  decomMapping[0xF9D2] = "\u622E";
-  decomMapping[0xF9D3] = "\u9678";
-  decomMapping[0xF9D4] = "\u502B";
-  decomMapping[0xF9D5] = "\u5D19";
-  decomMapping[0xF9D6] = "\u6DEA";
-  decomMapping[0xF9D7] = "\u8F2A";
-  decomMapping[0xF9D8] = "\u5F8B";
-  decomMapping[0xF9D9] = "\u6144";
-  decomMapping[0xF9DA] = "\u6817";
-  decomMapping[0xF9DB] = "\u7387";
-  decomMapping[0xF9DC] = "\u9686";
-  decomMapping[0xF9DD] = "\u5229";
-  decomMapping[0xF9DE] = "\u540F";
-  decomMapping[0xF9DF] = "\u5C65";
-  decomMapping[0xF9E0] = "\u6613";
-  decomMapping[0xF9E1] = "\u674E";
-  decomMapping[0xF9E2] = "\u68A8";
-  decomMapping[0xF9E3] = "\u6CE5";
-  decomMapping[0xF9E4] = "\u7406";
-  decomMapping[0xF9E5] = "\u75E2";
-  decomMapping[0xF9E6] = "\u7F79";
-  decomMapping[0xF9E7] = "\u88CF";
-  decomMapping[0xF9E8] = "\u88E1";
-  decomMapping[0xF9E9] = "\u91CC";
-  decomMapping[0xF9EA] = "\u96E2";
-  decomMapping[0xF9EB] = "\u533F";
-  decomMapping[0xF9EC] = "\u6EBA";
-  decomMapping[0xF9ED] = "\u541D";
-  decomMapping[0xF9EE] = "\u71D0";
-  decomMapping[0xF9EF] = "\u7498";
-  decomMapping[0xF9F0] = "\u85FA";
-  decomMapping[0xF9F1] = "\u96A3";
-  decomMapping[0xF9F2] = "\u9C57";
-  decomMapping[0xF9F3] = "\u9E9F";
-  decomMapping[0xF9F4] = "\u6797";
-  decomMapping[0xF9F5] = "\u6DCB";
-  decomMapping[0xF9F6] = "\u81E8";
-  decomMapping[0xF9F7] = "\u7ACB";
-  decomMapping[0xF9F8] = "\u7B20";
-  decomMapping[0xF9F9] = "\u7C92";
-  decomMapping[0xF9FA] = "\u72C0";
-  decomMapping[0xF9FB] = "\u7099";
-  decomMapping[0xF9FC] = "\u8B58";
-  decomMapping[0xF9FD] = "\u4EC0";
-  decomMapping[0xF9FE] = "\u8336";
-  decomMapping[0xF9FF] = "\u523A";
-  decomMapping[0xFA00] = "\u5207";
-  decomMapping[0xFA01] = "\u5EA6";
-  decomMapping[0xFA02] = "\u62D3";
-  decomMapping[0xFA03] = "\u7CD6";
-  decomMapping[0xFA04] = "\u5B85";
-  decomMapping[0xFA05] = "\u6D1E";
-  decomMapping[0xFA06] = "\u66B4";
-  decomMapping[0xFA07] = "\u8F3B";
-  decomMapping[0xFA08] = "\u884C";
-  decomMapping[0xFA09] = "\u964D";
-  decomMapping[0xFA0A] = "\u898B";
-  decomMapping[0xFA0B] = "\u5ED3";
-  decomMapping[0xFA0C] = "\u5140";
-  decomMapping[0xFA0D] = "\u55C0";
-  decomMapping[0xFA10] = "\u585A";
-  decomMapping[0xFA12] = "\u6674";
-  decomMapping[0xFA15] = "\u51DE";
-  decomMapping[0xFA16] = "\u732A";
-  decomMapping[0xFA17] = "\u76CA";
-  decomMapping[0xFA18] = "\u793C";
-  decomMapping[0xFA19] = "\u795E";
-  decomMapping[0xFA1A] = "\u7965";
-  decomMapping[0xFA1B] = "\u798F";
-  decomMapping[0xFA1C] = "\u9756";
-  decomMapping[0xFA1D] = "\u7CBE";
-  decomMapping[0xFA1E] = "\u7FBD";
-  decomMapping[0xFA20] = "\u8612";
-  decomMapping[0xFA22] = "\u8AF8";
-  decomMapping[0xFA25] = "\u9038";
-  decomMapping[0xFA26] = "\u90FD";
-  decomMapping[0xFA2A] = "\u98EF";
-  decomMapping[0xFA2B] = "\u98FC";
-  decomMapping[0xFA2C] = "\u9928";
-  decomMapping[0xFA2D] = "\u9DB4";
-  decomMapping[0xFA2E] = "\u90DE";
-  decomMapping[0xFA2F] = "\u96B7";
-  decomMapping[0xFA30] = "\u4FAE";
-  decomMapping[0xFA31] = "\u50E7";
-  decomMapping[0xFA32] = "\u514D";
-  decomMapping[0xFA33] = "\u52C9";
-  decomMapping[0xFA34] = "\u52E4";
-  decomMapping[0xFA35] = "\u5351";
-  decomMapping[0xFA36] = "\u559D";
-  decomMapping[0xFA37] = "\u5606";
-  decomMapping[0xFA38] = "\u5668";
-  decomMapping[0xFA39] = "\u5840";
-  decomMapping[0xFA3A] = "\u58A8";
-  decomMapping[0xFA3B] = "\u5C64";
-  decomMapping[0xFA3C] = "\u5C6E";
-  decomMapping[0xFA3D] = "\u6094";
-  decomMapping[0xFA3E] = "\u6168";
-  decomMapping[0xFA3F] = "\u618E";
-  decomMapping[0xFA40] = "\u61F2";
-  decomMapping[0xFA41] = "\u654F";
-  decomMapping[0xFA42] = "\u65E2";
-  decomMapping[0xFA43] = "\u6691";
-  decomMapping[0xFA44] = "\u6885";
-  decomMapping[0xFA45] = "\u6D77";
-  decomMapping[0xFA46] = "\u6E1A";
-  decomMapping[0xFA47] = "\u6F22";
-  decomMapping[0xFA48] = "\u716E";
-  decomMapping[0xFA49] = "\u722B";
-  decomMapping[0xFA4A] = "\u7422";
-  decomMapping[0xFA4B] = "\u7891";
-  decomMapping[0xFA4C] = "\u793E";
-  decomMapping[0xFA4D] = "\u7949";
-  decomMapping[0xFA4E] = "\u7948";
-  decomMapping[0xFA4F] = "\u7950";
-  decomMapping[0xFA50] = "\u7956";
-  decomMapping[0xFA51] = "\u795D";
-  decomMapping[0xFA52] = "\u798D";
-  decomMapping[0xFA53] = "\u798E";
-  decomMapping[0xFA54] = "\u7A40";
-  decomMapping[0xFA55] = "\u7A81";
-  decomMapping[0xFA56] = "\u7BC0";
-  decomMapping[0xFA57] = "\u7DF4";
-  decomMapping[0xFA58] = "\u7E09";
-  decomMapping[0xFA59] = "\u7E41";
-  decomMapping[0xFA5A] = "\u7F72";
-  decomMapping[0xFA5B] = "\u8005";
-  decomMapping[0xFA5C] = "\u81ED";
-  decomMapping[0xFA5D] = "\u8279";
-  decomMapping[0xFA5E] = "\u8279";
-  decomMapping[0xFA5F] = "\u8457";
-  decomMapping[0xFA60] = "\u8910";
-  decomMapping[0xFA61] = "\u8996";
-  decomMapping[0xFA62] = "\u8B01";
-  decomMapping[0xFA63] = "\u8B39";
-  decomMapping[0xFA64] = "\u8CD3";
-  decomMapping[0xFA65] = "\u8D08";
-  decomMapping[0xFA66] = "\u8FB6";
-  decomMapping[0xFA67] = "\u9038";
-  decomMapping[0xFA68] = "\u96E3";
-  decomMapping[0xFA69] = "\u97FF";
-  decomMapping[0xFA6A] = "\u983B";
-  decomMapping[0xFA6B] = "\u6075";
-  decomMapping[0xFA6C] = "\u242EE";
-  decomMapping[0xFA6D] = "\u8218";
-  decomMapping[0xFA70] = "\u4E26";
-  decomMapping[0xFA71] = "\u51B5";
-  decomMapping[0xFA72] = "\u5168";
-  decomMapping[0xFA73] = "\u4F80";
-  decomMapping[0xFA74] = "\u5145";
-  decomMapping[0xFA75] = "\u5180";
-  decomMapping[0xFA76] = "\u52C7";
-  decomMapping[0xFA77] = "\u52FA";
-  decomMapping[0xFA78] = "\u559D";
-  decomMapping[0xFA79] = "\u5555";
-  decomMapping[0xFA7A] = "\u5599";
-  decomMapping[0xFA7B] = "\u55E2";
-  decomMapping[0xFA7C] = "\u585A";
-  decomMapping[0xFA7D] = "\u58B3";
-  decomMapping[0xFA7E] = "\u5944";
-  decomMapping[0xFA7F] = "\u5954";
-  decomMapping[0xFA80] = "\u5A62";
-  decomMapping[0xFA81] = "\u5B28";
-  decomMapping[0xFA82] = "\u5ED2";
-  decomMapping[0xFA83] = "\u5ED9";
-  decomMapping[0xFA84] = "\u5F69";
-  decomMapping[0xFA85] = "\u5FAD";
-  decomMapping[0xFA86] = "\u60D8";
-  decomMapping[0xFA87] = "\u614E";
-  decomMapping[0xFA88] = "\u6108";
-  decomMapping[0xFA89] = "\u618E";
-  decomMapping[0xFA8A] = "\u6160";
-  decomMapping[0xFA8B] = "\u61F2";
-  decomMapping[0xFA8C] = "\u6234";
-  decomMapping[0xFA8D] = "\u63C4";
-  decomMapping[0xFA8E] = "\u641C";
-  decomMapping[0xFA8F] = "\u6452";
-  decomMapping[0xFA90] = "\u6556";
-  decomMapping[0xFA91] = "\u6674";
-  decomMapping[0xFA92] = "\u6717";
-  decomMapping[0xFA93] = "\u671B";
-  decomMapping[0xFA94] = "\u6756";
-  decomMapping[0xFA95] = "\u6B79";
-  decomMapping[0xFA96] = "\u6BBA";
-  decomMapping[0xFA97] = "\u6D41";
-  decomMapping[0xFA98] = "\u6EDB";
-  decomMapping[0xFA99] = "\u6ECB";
-  decomMapping[0xFA9A] = "\u6F22";
-  decomMapping[0xFA9B] = "\u701E";
-  decomMapping[0xFA9C] = "\u716E";
-  decomMapping[0xFA9D] = "\u77A7";
-  decomMapping[0xFA9E] = "\u7235";
-  decomMapping[0xFA9F] = "\u72AF";
-  decomMapping[0xFAA0] = "\u732A";
-  decomMapping[0xFAA1] = "\u7471";
-  decomMapping[0xFAA2] = "\u7506";
-  decomMapping[0xFAA3] = "\u753B";
-  decomMapping[0xFAA4] = "\u761D";
-  decomMapping[0xFAA5] = "\u761F";
-  decomMapping[0xFAA6] = "\u76CA";
-  decomMapping[0xFAA7] = "\u76DB";
-  decomMapping[0xFAA8] = "\u76F4";
-  decomMapping[0xFAA9] = "\u774A";
-  decomMapping[0xFAAA] = "\u7740";
-  decomMapping[0xFAAB] = "\u78CC";
-  decomMapping[0xFAAC] = "\u7AB1";
-  decomMapping[0xFAAD] = "\u7BC0";
-  decomMapping[0xFAAE] = "\u7C7B";
-  decomMapping[0xFAAF] = "\u7D5B";
-  decomMapping[0xFAB0] = "\u7DF4";
-  decomMapping[0xFAB1] = "\u7F3E";
-  decomMapping[0xFAB2] = "\u8005";
-  decomMapping[0xFAB3] = "\u8352";
-  decomMapping[0xFAB4] = "\u83EF";
-  decomMapping[0xFAB5] = "\u8779";
-  decomMapping[0xFAB6] = "\u8941";
-  decomMapping[0xFAB7] = "\u8986";
-  decomMapping[0xFAB8] = "\u8996";
-  decomMapping[0xFAB9] = "\u8ABF";
-  decomMapping[0xFABA] = "\u8AF8";
-  decomMapping[0xFABB] = "\u8ACB";
-  decomMapping[0xFABC] = "\u8B01";
-  decomMapping[0xFABD] = "\u8AFE";
-  decomMapping[0xFABE] = "\u8AED";
-  decomMapping[0xFABF] = "\u8B39";
-  decomMapping[0xFAC0] = "\u8B8A";
-  decomMapping[0xFAC1] = "\u8D08";
-  decomMapping[0xFAC2] = "\u8F38";
-  decomMapping[0xFAC3] = "\u9072";
-  decomMapping[0xFAC4] = "\u9199";
-  decomMapping[0xFAC5] = "\u9276";
-  decomMapping[0xFAC6] = "\u967C";
-  decomMapping[0xFAC7] = "\u96E3";
-  decomMapping[0xFAC8] = "\u9756";
-  decomMapping[0xFAC9] = "\u97DB";
-  decomMapping[0xFACA] = "\u97FF";
-  decomMapping[0xFACB] = "\u980B";
-  decomMapping[0xFACC] = "\u983B";
-  decomMapping[0xFACD] = "\u9B12";
-  decomMapping[0xFACE] = "\u9F9C";
-  decomMapping[0xFACF] = "\u2284A";
-  decomMapping[0xFAD0] = "\u22844";
-  decomMapping[0xFAD1] = "\u233D5";
-  decomMapping[0xFAD2] = "\u3B9D";
-  decomMapping[0xFAD3] = "\u4018";
-  decomMapping[0xFAD4] = "\u4039";
-  decomMapping[0xFAD5] = "\u25249";
-  decomMapping[0xFAD6] = "\u25CD0";
-  decomMapping[0xFAD7] = "\u27ED3";
-  decomMapping[0xFAD8] = "\u9F43";
-  decomMapping[0xFAD9] = "\u9F8E";
-  decomMapping[0xFB00] = "\u0066\u0066";
-  decomMapping[0xFB01] = "\u0066\u0069";
-  decomMapping[0xFB02] = "\u0066\u006C";
-  decomMapping[0xFB03] = "\u0066\u0066\u0069";
-  decomMapping[0xFB04] = "\u0066\u0066\u006C";
-  decomMapping[0xFB05] = "\u017F\u0074";
-  decomMapping[0xFB06] = "\u0073\u0074";
-  decomMapping[0xFB13] = "\u0574\u0576";
-  decomMapping[0xFB14] = "\u0574\u0565";
-  decomMapping[0xFB15] = "\u0574\u056B";
-  decomMapping[0xFB16] = "\u057E\u0576";
-  decomMapping[0xFB17] = "\u0574\u056D";
-  decomMapping[0xFB1D] = "\u05D9\u05B4";
-  decomMapping[0xFB1F] = "\u05F2\u05B7";
-  decomMapping[0xFB20] = "\u05E2";
-  decomMapping[0xFB21] = "\u05D0";
-  decomMapping[0xFB22] = "\u05D3";
-  decomMapping[0xFB23] = "\u05D4";
-  decomMapping[0xFB24] = "\u05DB";
-  decomMapping[0xFB25] = "\u05DC";
-  decomMapping[0xFB26] = "\u05DD";
-  decomMapping[0xFB27] = "\u05E8";
-  decomMapping[0xFB28] = "\u05EA";
-  decomMapping[0xFB29] = "\u002B";
-  decomMapping[0xFB2A] = "\u05E9\u05C1";
-  decomMapping[0xFB2B] = "\u05E9\u05C2";
-  decomMapping[0xFB2C] = "\uFB49\u05C1";
-  decomMapping[0xFB2D] = "\uFB49\u05C2";
-  decomMapping[0xFB2E] = "\u05D0\u05B7";
-  decomMapping[0xFB2F] = "\u05D0\u05B8";
-  decomMapping[0xFB30] = "\u05D0\u05BC";
-  decomMapping[0xFB31] = "\u05D1\u05BC";
-  decomMapping[0xFB32] = "\u05D2\u05BC";
-  decomMapping[0xFB33] = "\u05D3\u05BC";
-  decomMapping[0xFB34] = "\u05D4\u05BC";
-  decomMapping[0xFB35] = "\u05D5\u05BC";
-  decomMapping[0xFB36] = "\u05D6\u05BC";
-  decomMapping[0xFB38] = "\u05D8\u05BC";
-  decomMapping[0xFB39] = "\u05D9\u05BC";
-  decomMapping[0xFB3A] = "\u05DA\u05BC";
-  decomMapping[0xFB3B] = "\u05DB\u05BC";
-  decomMapping[0xFB3C] = "\u05DC\u05BC";
-  decomMapping[0xFB3E] = "\u05DE\u05BC";
-  decomMapping[0xFB40] = "\u05E0\u05BC";
-  decomMapping[0xFB41] = "\u05E1\u05BC";
-  decomMapping[0xFB43] = "\u05E3\u05BC";
-  decomMapping[0xFB44] = "\u05E4\u05BC";
-  decomMapping[0xFB46] = "\u05E6\u05BC";
-  decomMapping[0xFB47] = "\u05E7\u05BC";
-  decomMapping[0xFB48] = "\u05E8\u05BC";
-  decomMapping[0xFB49] = "\u05E9\u05BC";
-  decomMapping[0xFB4A] = "\u05EA\u05BC";
-  decomMapping[0xFB4B] = "\u05D5\u05B9";
-  decomMapping[0xFB4C] = "\u05D1\u05BF";
-  decomMapping[0xFB4D] = "\u05DB\u05BF";
-  decomMapping[0xFB4E] = "\u05E4\u05BF";
-  decomMapping[0xFB4F] = "\u05D0\u05DC";
-  decomMapping[0xFB50] = "\u0671";
-  decomMapping[0xFB51] = "\u0671";
-  decomMapping[0xFB52] = "\u067B";
-  decomMapping[0xFB53] = "\u067B";
-  decomMapping[0xFB54] = "\u067B";
-  decomMapping[0xFB55] = "\u067B";
-  decomMapping[0xFB56] = "\u067E";
-  decomMapping[0xFB57] = "\u067E";
-  decomMapping[0xFB58] = "\u067E";
-  decomMapping[0xFB59] = "\u067E";
-  decomMapping[0xFB5A] = "\u0680";
-  decomMapping[0xFB5B] = "\u0680";
-  decomMapping[0xFB5C] = "\u0680";
-  decomMapping[0xFB5D] = "\u0680";
-  decomMapping[0xFB5E] = "\u067A";
-  decomMapping[0xFB5F] = "\u067A";
-  decomMapping[0xFB60] = "\u067A";
-  decomMapping[0xFB61] = "\u067A";
-  decomMapping[0xFB62] = "\u067F";
-  decomMapping[0xFB63] = "\u067F";
-  decomMapping[0xFB64] = "\u067F";
-  decomMapping[0xFB65] = "\u067F";
-  decomMapping[0xFB66] = "\u0679";
-  decomMapping[0xFB67] = "\u0679";
-  decomMapping[0xFB68] = "\u0679";
-  decomMapping[0xFB69] = "\u0679";
-  decomMapping[0xFB6A] = "\u06A4";
-  decomMapping[0xFB6B] = "\u06A4";
-  decomMapping[0xFB6C] = "\u06A4";
-  decomMapping[0xFB6D] = "\u06A4";
-  decomMapping[0xFB6E] = "\u06A6";
-  decomMapping[0xFB6F] = "\u06A6";
-  decomMapping[0xFB70] = "\u06A6";
-  decomMapping[0xFB71] = "\u06A6";
-  decomMapping[0xFB72] = "\u0684";
-  decomMapping[0xFB73] = "\u0684";
-  decomMapping[0xFB74] = "\u0684";
-  decomMapping[0xFB75] = "\u0684";
-  decomMapping[0xFB76] = "\u0683";
-  decomMapping[0xFB77] = "\u0683";
-  decomMapping[0xFB78] = "\u0683";
-  decomMapping[0xFB79] = "\u0683";
-  decomMapping[0xFB7A] = "\u0686";
-  decomMapping[0xFB7B] = "\u0686";
-  decomMapping[0xFB7C] = "\u0686";
-  decomMapping[0xFB7D] = "\u0686";
-  decomMapping[0xFB7E] = "\u0687";
-  decomMapping[0xFB7F] = "\u0687";
-  decomMapping[0xFB80] = "\u0687";
-  decomMapping[0xFB81] = "\u0687";
-  decomMapping[0xFB82] = "\u068D";
-  decomMapping[0xFB83] = "\u068D";
-  decomMapping[0xFB84] = "\u068C";
-  decomMapping[0xFB85] = "\u068C";
-  decomMapping[0xFB86] = "\u068E";
-  decomMapping[0xFB87] = "\u068E";
-  decomMapping[0xFB88] = "\u0688";
-  decomMapping[0xFB89] = "\u0688";
-  decomMapping[0xFB8A] = "\u0698";
-  decomMapping[0xFB8B] = "\u0698";
-  decomMapping[0xFB8C] = "\u0691";
-  decomMapping[0xFB8D] = "\u0691";
-  decomMapping[0xFB8E] = "\u06A9";
-  decomMapping[0xFB8F] = "\u06A9";
-  decomMapping[0xFB90] = "\u06A9";
-  decomMapping[0xFB91] = "\u06A9";
-  decomMapping[0xFB92] = "\u06AF";
-  decomMapping[0xFB93] = "\u06AF";
-  decomMapping[0xFB94] = "\u06AF";
-  decomMapping[0xFB95] = "\u06AF";
-  decomMapping[0xFB96] = "\u06B3";
-  decomMapping[0xFB97] = "\u06B3";
-  decomMapping[0xFB98] = "\u06B3";
-  decomMapping[0xFB99] = "\u06B3";
-  decomMapping[0xFB9A] = "\u06B1";
-  decomMapping[0xFB9B] = "\u06B1";
-  decomMapping[0xFB9C] = "\u06B1";
-  decomMapping[0xFB9D] = "\u06B1";
-  decomMapping[0xFB9E] = "\u06BA";
-  decomMapping[0xFB9F] = "\u06BA";
-  decomMapping[0xFBA0] = "\u06BB";
-  decomMapping[0xFBA1] = "\u06BB";
-  decomMapping[0xFBA2] = "\u06BB";
-  decomMapping[0xFBA3] = "\u06BB";
-  decomMapping[0xFBA4] = "\u06C0";
-  decomMapping[0xFBA5] = "\u06C0";
-  decomMapping[0xFBA6] = "\u06C1";
-  decomMapping[0xFBA7] = "\u06C1";
-  decomMapping[0xFBA8] = "\u06C1";
-  decomMapping[0xFBA9] = "\u06C1";
-  decomMapping[0xFBAA] = "\u06BE";
-  decomMapping[0xFBAB] = "\u06BE";
-  decomMapping[0xFBAC] = "\u06BE";
-  decomMapping[0xFBAD] = "\u06BE";
-  decomMapping[0xFBAE] = "\u06D2";
-  decomMapping[0xFBAF] = "\u06D2";
-  decomMapping[0xFBB0] = "\u06D3";
-  decomMapping[0xFBB1] = "\u06D3";
-  decomMapping[0xFBD3] = "\u06AD";
-  decomMapping[0xFBD4] = "\u06AD";
-  decomMapping[0xFBD5] = "\u06AD";
-  decomMapping[0xFBD6] = "\u06AD";
-  decomMapping[0xFBD7] = "\u06C7";
-  decomMapping[0xFBD8] = "\u06C7";
-  decomMapping[0xFBD9] = "\u06C6";
-  decomMapping[0xFBDA] = "\u06C6";
-  decomMapping[0xFBDB] = "\u06C8";
-  decomMapping[0xFBDC] = "\u06C8";
-  decomMapping[0xFBDD] = "\u0677";
-  decomMapping[0xFBDE] = "\u06CB";
-  decomMapping[0xFBDF] = "\u06CB";
-  decomMapping[0xFBE0] = "\u06C5";
-  decomMapping[0xFBE1] = "\u06C5";
-  decomMapping[0xFBE2] = "\u06C9";
-  decomMapping[0xFBE3] = "\u06C9";
-  decomMapping[0xFBE4] = "\u06D0";
-  decomMapping[0xFBE5] = "\u06D0";
-  decomMapping[0xFBE6] = "\u06D0";
-  decomMapping[0xFBE7] = "\u06D0";
-  decomMapping[0xFBE8] = "\u0649";
-  decomMapping[0xFBE9] = "\u0649";
-  decomMapping[0xFBEA] = "\u0626\u0627";
-  decomMapping[0xFBEB] = "\u0626\u0627";
-  decomMapping[0xFBEC] = "\u0626\u06D5";
-  decomMapping[0xFBED] = "\u0626\u06D5";
-  decomMapping[0xFBEE] = "\u0626\u0648";
-  decomMapping[0xFBEF] = "\u0626\u0648";
-  decomMapping[0xFBF0] = "\u0626\u06C7";
-  decomMapping[0xFBF1] = "\u0626\u06C7";
-  decomMapping[0xFBF2] = "\u0626\u06C6";
-  decomMapping[0xFBF3] = "\u0626\u06C6";
-  decomMapping[0xFBF4] = "\u0626\u06C8";
-  decomMapping[0xFBF5] = "\u0626\u06C8";
-  decomMapping[0xFBF6] = "\u0626\u06D0";
-  decomMapping[0xFBF7] = "\u0626\u06D0";
-  decomMapping[0xFBF8] = "\u0626\u06D0";
-  decomMapping[0xFBF9] = "\u0626\u0649";
-  decomMapping[0xFBFA] = "\u0626\u0649";
-  decomMapping[0xFBFB] = "\u0626\u0649";
-  decomMapping[0xFBFC] = "\u06CC";
-  decomMapping[0xFBFD] = "\u06CC";
-  decomMapping[0xFBFE] = "\u06CC";
-  decomMapping[0xFBFF] = "\u06CC";
-  decomMapping[0xFC00] = "\u0626\u062C";
-  decomMapping[0xFC01] = "\u0626\u062D";
-  decomMapping[0xFC02] = "\u0626\u0645";
-  decomMapping[0xFC03] = "\u0626\u0649";
-  decomMapping[0xFC04] = "\u0626\u064A";
-  decomMapping[0xFC05] = "\u0628\u062C";
-  decomMapping[0xFC06] = "\u0628\u062D";
-  decomMapping[0xFC07] = "\u0628\u062E";
-  decomMapping[0xFC08] = "\u0628\u0645";
-  decomMapping[0xFC09] = "\u0628\u0649";
-  decomMapping[0xFC0A] = "\u0628\u064A";
-  decomMapping[0xFC0B] = "\u062A\u062C";
-  decomMapping[0xFC0C] = "\u062A\u062D";
-  decomMapping[0xFC0D] = "\u062A\u062E";
-  decomMapping[0xFC0E] = "\u062A\u0645";
-  decomMapping[0xFC0F] = "\u062A\u0649";
-  decomMapping[0xFC10] = "\u062A\u064A";
-  decomMapping[0xFC11] = "\u062B\u062C";
-  decomMapping[0xFC12] = "\u062B\u0645";
-  decomMapping[0xFC13] = "\u062B\u0649";
-  decomMapping[0xFC14] = "\u062B\u064A";
-  decomMapping[0xFC15] = "\u062C\u062D";
-  decomMapping[0xFC16] = "\u062C\u0645";
-  decomMapping[0xFC17] = "\u062D\u062C";
-  decomMapping[0xFC18] = "\u062D\u0645";
-  decomMapping[0xFC19] = "\u062E\u062C";
-  decomMapping[0xFC1A] = "\u062E\u062D";
-  decomMapping[0xFC1B] = "\u062E\u0645";
-  decomMapping[0xFC1C] = "\u0633\u062C";
-  decomMapping[0xFC1D] = "\u0633\u062D";
-  decomMapping[0xFC1E] = "\u0633\u062E";
-  decomMapping[0xFC1F] = "\u0633\u0645";
-  decomMapping[0xFC20] = "\u0635\u062D";
-  decomMapping[0xFC21] = "\u0635\u0645";
-  decomMapping[0xFC22] = "\u0636\u062C";
-  decomMapping[0xFC23] = "\u0636\u062D";
-  decomMapping[0xFC24] = "\u0636\u062E";
-  decomMapping[0xFC25] = "\u0636\u0645";
-  decomMapping[0xFC26] = "\u0637\u062D";
-  decomMapping[0xFC27] = "\u0637\u0645";
-  decomMapping[0xFC28] = "\u0638\u0645";
-  decomMapping[0xFC29] = "\u0639\u062C";
-  decomMapping[0xFC2A] = "\u0639\u0645";
-  decomMapping[0xFC2B] = "\u063A\u062C";
-  decomMapping[0xFC2C] = "\u063A\u0645";
-  decomMapping[0xFC2D] = "\u0641\u062C";
-  decomMapping[0xFC2E] = "\u0641\u062D";
-  decomMapping[0xFC2F] = "\u0641\u062E";
-  decomMapping[0xFC30] = "\u0641\u0645";
-  decomMapping[0xFC31] = "\u0641\u0649";
-  decomMapping[0xFC32] = "\u0641\u064A";
-  decomMapping[0xFC33] = "\u0642\u062D";
-  decomMapping[0xFC34] = "\u0642\u0645";
-  decomMapping[0xFC35] = "\u0642\u0649";
-  decomMapping[0xFC36] = "\u0642\u064A";
-  decomMapping[0xFC37] = "\u0643\u0627";
-  decomMapping[0xFC38] = "\u0643\u062C";
-  decomMapping[0xFC39] = "\u0643\u062D";
-  decomMapping[0xFC3A] = "\u0643\u062E";
-  decomMapping[0xFC3B] = "\u0643\u0644";
-  decomMapping[0xFC3C] = "\u0643\u0645";
-  decomMapping[0xFC3D] = "\u0643\u0649";
-  decomMapping[0xFC3E] = "\u0643\u064A";
-  decomMapping[0xFC3F] = "\u0644\u062C";
-  decomMapping[0xFC40] = "\u0644\u062D";
-  decomMapping[0xFC41] = "\u0644\u062E";
-  decomMapping[0xFC42] = "\u0644\u0645";
-  decomMapping[0xFC43] = "\u0644\u0649";
-  decomMapping[0xFC44] = "\u0644\u064A";
-  decomMapping[0xFC45] = "\u0645\u062C";
-  decomMapping[0xFC46] = "\u0645\u062D";
-  decomMapping[0xFC47] = "\u0645\u062E";
-  decomMapping[0xFC48] = "\u0645\u0645";
-  decomMapping[0xFC49] = "\u0645\u0649";
-  decomMapping[0xFC4A] = "\u0645\u064A";
-  decomMapping[0xFC4B] = "\u0646\u062C";
-  decomMapping[0xFC4C] = "\u0646\u062D";
-  decomMapping[0xFC4D] = "\u0646\u062E";
-  decomMapping[0xFC4E] = "\u0646\u0645";
-  decomMapping[0xFC4F] = "\u0646\u0649";
-  decomMapping[0xFC50] = "\u0646\u064A";
-  decomMapping[0xFC51] = "\u0647\u062C";
-  decomMapping[0xFC52] = "\u0647\u0645";
-  decomMapping[0xFC53] = "\u0647\u0649";
-  decomMapping[0xFC54] = "\u0647\u064A";
-  decomMapping[0xFC55] = "\u064A\u062C";
-  decomMapping[0xFC56] = "\u064A\u062D";
-  decomMapping[0xFC57] = "\u064A\u062E";
-  decomMapping[0xFC58] = "\u064A\u0645";
-  decomMapping[0xFC59] = "\u064A\u0649";
-  decomMapping[0xFC5A] = "\u064A\u064A";
-  decomMapping[0xFC5B] = "\u0630\u0670";
-  decomMapping[0xFC5C] = "\u0631\u0670";
-  decomMapping[0xFC5D] = "\u0649\u0670";
-  decomMapping[0xFC5E] = "\u0020\u064C\u0651";
-  decomMapping[0xFC5F] = "\u0020\u064D\u0651";
-  decomMapping[0xFC60] = "\u0020\u064E\u0651";
-  decomMapping[0xFC61] = "\u0020\u064F\u0651";
-  decomMapping[0xFC62] = "\u0020\u0650\u0651";
-  decomMapping[0xFC63] = "\u0020\u0651\u0670";
-  decomMapping[0xFC64] = "\u0626\u0631";
-  decomMapping[0xFC65] = "\u0626\u0632";
-  decomMapping[0xFC66] = "\u0626\u0645";
-  decomMapping[0xFC67] = "\u0626\u0646";
-  decomMapping[0xFC68] = "\u0626\u0649";
-  decomMapping[0xFC69] = "\u0626\u064A";
-  decomMapping[0xFC6A] = "\u0628\u0631";
-  decomMapping[0xFC6B] = "\u0628\u0632";
-  decomMapping[0xFC6C] = "\u0628\u0645";
-  decomMapping[0xFC6D] = "\u0628\u0646";
-  decomMapping[0xFC6E] = "\u0628\u0649";
-  decomMapping[0xFC6F] = "\u0628\u064A";
-  decomMapping[0xFC70] = "\u062A\u0631";
-  decomMapping[0xFC71] = "\u062A\u0632";
-  decomMapping[0xFC72] = "\u062A\u0645";
-  decomMapping[0xFC73] = "\u062A\u0646";
-  decomMapping[0xFC74] = "\u062A\u0649";
-  decomMapping[0xFC75] = "\u062A\u064A";
-  decomMapping[0xFC76] = "\u062B\u0631";
-  decomMapping[0xFC77] = "\u062B\u0632";
-  decomMapping[0xFC78] = "\u062B\u0645";
-  decomMapping[0xFC79] = "\u062B\u0646";
-  decomMapping[0xFC7A] = "\u062B\u0649";
-  decomMapping[0xFC7B] = "\u062B\u064A";
-  decomMapping[0xFC7C] = "\u0641\u0649";
-  decomMapping[0xFC7D] = "\u0641\u064A";
-  decomMapping[0xFC7E] = "\u0642\u0649";
-  decomMapping[0xFC7F] = "\u0642\u064A";
-  decomMapping[0xFC80] = "\u0643\u0627";
-  decomMapping[0xFC81] = "\u0643\u0644";
-  decomMapping[0xFC82] = "\u0643\u0645";
-  decomMapping[0xFC83] = "\u0643\u0649";
-  decomMapping[0xFC84] = "\u0643\u064A";
-  decomMapping[0xFC85] = "\u0644\u0645";
-  decomMapping[0xFC86] = "\u0644\u0649";
-  decomMapping[0xFC87] = "\u0644\u064A";
-  decomMapping[0xFC88] = "\u0645\u0627";
-  decomMapping[0xFC89] = "\u0645\u0645";
-  decomMapping[0xFC8A] = "\u0646\u0631";
-  decomMapping[0xFC8B] = "\u0646\u0632";
-  decomMapping[0xFC8C] = "\u0646\u0645";
-  decomMapping[0xFC8D] = "\u0646\u0646";
-  decomMapping[0xFC8E] = "\u0646\u0649";
-  decomMapping[0xFC8F] = "\u0646\u064A";
-  decomMapping[0xFC90] = "\u0649\u0670";
-  decomMapping[0xFC91] = "\u064A\u0631";
-  decomMapping[0xFC92] = "\u064A\u0632";
-  decomMapping[0xFC93] = "\u064A\u0645";
-  decomMapping[0xFC94] = "\u064A\u0646";
-  decomMapping[0xFC95] = "\u064A\u0649";
-  decomMapping[0xFC96] = "\u064A\u064A";
-  decomMapping[0xFC97] = "\u0626\u062C";
-  decomMapping[0xFC98] = "\u0626\u062D";
-  decomMapping[0xFC99] = "\u0626\u062E";
-  decomMapping[0xFC9A] = "\u0626\u0645";
-  decomMapping[0xFC9B] = "\u0626\u0647";
-  decomMapping[0xFC9C] = "\u0628\u062C";
-  decomMapping[0xFC9D] = "\u0628\u062D";
-  decomMapping[0xFC9E] = "\u0628\u062E";
-  decomMapping[0xFC9F] = "\u0628\u0645";
-  decomMapping[0xFCA0] = "\u0628\u0647";
-  decomMapping[0xFCA1] = "\u062A\u062C";
-  decomMapping[0xFCA2] = "\u062A\u062D";
-  decomMapping[0xFCA3] = "\u062A\u062E";
-  decomMapping[0xFCA4] = "\u062A\u0645";
-  decomMapping[0xFCA5] = "\u062A\u0647";
-  decomMapping[0xFCA6] = "\u062B\u0645";
-  decomMapping[0xFCA7] = "\u062C\u062D";
-  decomMapping[0xFCA8] = "\u062C\u0645";
-  decomMapping[0xFCA9] = "\u062D\u062C";
-  decomMapping[0xFCAA] = "\u062D\u0645";
-  decomMapping[0xFCAB] = "\u062E\u062C";
-  decomMapping[0xFCAC] = "\u062E\u0645";
-  decomMapping[0xFCAD] = "\u0633\u062C";
-  decomMapping[0xFCAE] = "\u0633\u062D";
-  decomMapping[0xFCAF] = "\u0633\u062E";
-  decomMapping[0xFCB0] = "\u0633\u0645";
-  decomMapping[0xFCB1] = "\u0635\u062D";
-  decomMapping[0xFCB2] = "\u0635\u062E";
-  decomMapping[0xFCB3] = "\u0635\u0645";
-  decomMapping[0xFCB4] = "\u0636\u062C";
-  decomMapping[0xFCB5] = "\u0636\u062D";
-  decomMapping[0xFCB6] = "\u0636\u062E";
-  decomMapping[0xFCB7] = "\u0636\u0645";
-  decomMapping[0xFCB8] = "\u0637\u062D";
-  decomMapping[0xFCB9] = "\u0638\u0645";
-  decomMapping[0xFCBA] = "\u0639\u062C";
-  decomMapping[0xFCBB] = "\u0639\u0645";
-  decomMapping[0xFCBC] = "\u063A\u062C";
-  decomMapping[0xFCBD] = "\u063A\u0645";
-  decomMapping[0xFCBE] = "\u0641\u062C";
-  decomMapping[0xFCBF] = "\u0641\u062D";
-  decomMapping[0xFCC0] = "\u0641\u062E";
-  decomMapping[0xFCC1] = "\u0641\u0645";
-  decomMapping[0xFCC2] = "\u0642\u062D";
-  decomMapping[0xFCC3] = "\u0642\u0645";
-  decomMapping[0xFCC4] = "\u0643\u062C";
-  decomMapping[0xFCC5] = "\u0643\u062D";
-  decomMapping[0xFCC6] = "\u0643\u062E";
-  decomMapping[0xFCC7] = "\u0643\u0644";
-  decomMapping[0xFCC8] = "\u0643\u0645";
-  decomMapping[0xFCC9] = "\u0644\u062C";
-  decomMapping[0xFCCA] = "\u0644\u062D";
-  decomMapping[0xFCCB] = "\u0644\u062E";
-  decomMapping[0xFCCC] = "\u0644\u0645";
-  decomMapping[0xFCCD] = "\u0644\u0647";
-  decomMapping[0xFCCE] = "\u0645\u062C";
-  decomMapping[0xFCCF] = "\u0645\u062D";
-  decomMapping[0xFCD0] = "\u0645\u062E";
-  decomMapping[0xFCD1] = "\u0645\u0645";
-  decomMapping[0xFCD2] = "\u0646\u062C";
-  decomMapping[0xFCD3] = "\u0646\u062D";
-  decomMapping[0xFCD4] = "\u0646\u062E";
-  decomMapping[0xFCD5] = "\u0646\u0645";
-  decomMapping[0xFCD6] = "\u0646\u0647";
-  decomMapping[0xFCD7] = "\u0647\u062C";
-  decomMapping[0xFCD8] = "\u0647\u0645";
-  decomMapping[0xFCD9] = "\u0647\u0670";
-  decomMapping[0xFCDA] = "\u064A\u062C";
-  decomMapping[0xFCDB] = "\u064A\u062D";
-  decomMapping[0xFCDC] = "\u064A\u062E";
-  decomMapping[0xFCDD] = "\u064A\u0645";
-  decomMapping[0xFCDE] = "\u064A\u0647";
-  decomMapping[0xFCDF] = "\u0626\u0645";
-  decomMapping[0xFCE0] = "\u0626\u0647";
-  decomMapping[0xFCE1] = "\u0628\u0645";
-  decomMapping[0xFCE2] = "\u0628\u0647";
-  decomMapping[0xFCE3] = "\u062A\u0645";
-  decomMapping[0xFCE4] = "\u062A\u0647";
-  decomMapping[0xFCE5] = "\u062B\u0645";
-  decomMapping[0xFCE6] = "\u062B\u0647";
-  decomMapping[0xFCE7] = "\u0633\u0645";
-  decomMapping[0xFCE8] = "\u0633\u0647";
-  decomMapping[0xFCE9] = "\u0634\u0645";
-  decomMapping[0xFCEA] = "\u0634\u0647";
-  decomMapping[0xFCEB] = "\u0643\u0644";
-  decomMapping[0xFCEC] = "\u0643\u0645";
-  decomMapping[0xFCED] = "\u0644\u0645";
-  decomMapping[0xFCEE] = "\u0646\u0645";
-  decomMapping[0xFCEF] = "\u0646\u0647";
-  decomMapping[0xFCF0] = "\u064A\u0645";
-  decomMapping[0xFCF1] = "\u064A\u0647";
-  decomMapping[0xFCF2] = "\u0640\u064E\u0651";
-  decomMapping[0xFCF3] = "\u0640\u064F\u0651";
-  decomMapping[0xFCF4] = "\u0640\u0650\u0651";
-  decomMapping[0xFCF5] = "\u0637\u0649";
-  decomMapping[0xFCF6] = "\u0637\u064A";
-  decomMapping[0xFCF7] = "\u0639\u0649";
-  decomMapping[0xFCF8] = "\u0639\u064A";
-  decomMapping[0xFCF9] = "\u063A\u0649";
-  decomMapping[0xFCFA] = "\u063A\u064A";
-  decomMapping[0xFCFB] = "\u0633\u0649";
-  decomMapping[0xFCFC] = "\u0633\u064A";
-  decomMapping[0xFCFD] = "\u0634\u0649";
-  decomMapping[0xFCFE] = "\u0634\u064A";
-  decomMapping[0xFCFF] = "\u062D\u0649";
-  decomMapping[0xFD00] = "\u062D\u064A";
-  decomMapping[0xFD01] = "\u062C\u0649";
-  decomMapping[0xFD02] = "\u062C\u064A";
-  decomMapping[0xFD03] = "\u062E\u0649";
-  decomMapping[0xFD04] = "\u062E\u064A";
-  decomMapping[0xFD05] = "\u0635\u0649";
-  decomMapping[0xFD06] = "\u0635\u064A";
-  decomMapping[0xFD07] = "\u0636\u0649";
-  decomMapping[0xFD08] = "\u0636\u064A";
-  decomMapping[0xFD09] = "\u0634\u062C";
-  decomMapping[0xFD0A] = "\u0634\u062D";
-  decomMapping[0xFD0B] = "\u0634\u062E";
-  decomMapping[0xFD0C] = "\u0634\u0645";
-  decomMapping[0xFD0D] = "\u0634\u0631";
-  decomMapping[0xFD0E] = "\u0633\u0631";
-  decomMapping[0xFD0F] = "\u0635\u0631";
-  decomMapping[0xFD10] = "\u0636\u0631";
-  decomMapping[0xFD11] = "\u0637\u0649";
-  decomMapping[0xFD12] = "\u0637\u064A";
-  decomMapping[0xFD13] = "\u0639\u0649";
-  decomMapping[0xFD14] = "\u0639\u064A";
-  decomMapping[0xFD15] = "\u063A\u0649";
-  decomMapping[0xFD16] = "\u063A\u064A";
-  decomMapping[0xFD17] = "\u0633\u0649";
-  decomMapping[0xFD18] = "\u0633\u064A";
-  decomMapping[0xFD19] = "\u0634\u0649";
-  decomMapping[0xFD1A] = "\u0634\u064A";
-  decomMapping[0xFD1B] = "\u062D\u0649";
-  decomMapping[0xFD1C] = "\u062D\u064A";
-  decomMapping[0xFD1D] = "\u062C\u0649";
-  decomMapping[0xFD1E] = "\u062C\u064A";
-  decomMapping[0xFD1F] = "\u062E\u0649";
-  decomMapping[0xFD20] = "\u062E\u064A";
-  decomMapping[0xFD21] = "\u0635\u0649";
-  decomMapping[0xFD22] = "\u0635\u064A";
-  decomMapping[0xFD23] = "\u0636\u0649";
-  decomMapping[0xFD24] = "\u0636\u064A";
-  decomMapping[0xFD25] = "\u0634\u062C";
-  decomMapping[0xFD26] = "\u0634\u062D";
-  decomMapping[0xFD27] = "\u0634\u062E";
-  decomMapping[0xFD28] = "\u0634\u0645";
-  decomMapping[0xFD29] = "\u0634\u0631";
-  decomMapping[0xFD2A] = "\u0633\u0631";
-  decomMapping[0xFD2B] = "\u0635\u0631";
-  decomMapping[0xFD2C] = "\u0636\u0631";
-  decomMapping[0xFD2D] = "\u0634\u062C";
-  decomMapping[0xFD2E] = "\u0634\u062D";
-  decomMapping[0xFD2F] = "\u0634\u062E";
-  decomMapping[0xFD30] = "\u0634\u0645";
-  decomMapping[0xFD31] = "\u0633\u0647";
-  decomMapping[0xFD32] = "\u0634\u0647";
-  decomMapping[0xFD33] = "\u0637\u0645";
-  decomMapping[0xFD34] = "\u0633\u062C";
-  decomMapping[0xFD35] = "\u0633\u062D";
-  decomMapping[0xFD36] = "\u0633\u062E";
-  decomMapping[0xFD37] = "\u0634\u062C";
-  decomMapping[0xFD38] = "\u0634\u062D";
-  decomMapping[0xFD39] = "\u0634\u062E";
-  decomMapping[0xFD3A] = "\u0637\u0645";
-  decomMapping[0xFD3B] = "\u0638\u0645";
-  decomMapping[0xFD3C] = "\u0627\u064B";
-  decomMapping[0xFD3D] = "\u0627\u064B";
-  decomMapping[0xFD50] = "\u062A\u062C\u0645";
-  decomMapping[0xFD51] = "\u062A\u062D\u062C";
-  decomMapping[0xFD52] = "\u062A\u062D\u062C";
-  decomMapping[0xFD53] = "\u062A\u062D\u0645";
-  decomMapping[0xFD54] = "\u062A\u062E\u0645";
-  decomMapping[0xFD55] = "\u062A\u0645\u062C";
-  decomMapping[0xFD56] = "\u062A\u0645\u062D";
-  decomMapping[0xFD57] = "\u062A\u0645\u062E";
-  decomMapping[0xFD58] = "\u062C\u0645\u062D";
-  decomMapping[0xFD59] = "\u062C\u0645\u062D";
-  decomMapping[0xFD5A] = "\u062D\u0645\u064A";
-  decomMapping[0xFD5B] = "\u062D\u0645\u0649";
-  decomMapping[0xFD5C] = "\u0633\u062D\u062C";
-  decomMapping[0xFD5D] = "\u0633\u062C\u062D";
-  decomMapping[0xFD5E] = "\u0633\u062C\u0649";
-  decomMapping[0xFD5F] = "\u0633\u0645\u062D";
-  decomMapping[0xFD60] = "\u0633\u0645\u062D";
-  decomMapping[0xFD61] = "\u0633\u0645\u062C";
-  decomMapping[0xFD62] = "\u0633\u0645\u0645";
-  decomMapping[0xFD63] = "\u0633\u0645\u0645";
-  decomMapping[0xFD64] = "\u0635\u062D\u062D";
-  decomMapping[0xFD65] = "\u0635\u062D\u062D";
-  decomMapping[0xFD66] = "\u0635\u0645\u0645";
-  decomMapping[0xFD67] = "\u0634\u062D\u0645";
-  decomMapping[0xFD68] = "\u0634\u062D\u0645";
-  decomMapping[0xFD69] = "\u0634\u062C\u064A";
-  decomMapping[0xFD6A] = "\u0634\u0645\u062E";
-  decomMapping[0xFD6B] = "\u0634\u0645\u062E";
-  decomMapping[0xFD6C] = "\u0634\u0645\u0645";
-  decomMapping[0xFD6D] = "\u0634\u0645\u0645";
-  decomMapping[0xFD6E] = "\u0636\u062D\u0649";
-  decomMapping[0xFD6F] = "\u0636\u062E\u0645";
-  decomMapping[0xFD70] = "\u0636\u062E\u0645";
-  decomMapping[0xFD71] = "\u0637\u0645\u062D";
-  decomMapping[0xFD72] = "\u0637\u0645\u062D";
-  decomMapping[0xFD73] = "\u0637\u0645\u0645";
-  decomMapping[0xFD74] = "\u0637\u0645\u064A";
-  decomMapping[0xFD75] = "\u0639\u062C\u0645";
-  decomMapping[0xFD76] = "\u0639\u0645\u0645";
-  decomMapping[0xFD77] = "\u0639\u0645\u0645";
-  decomMapping[0xFD78] = "\u0639\u0645\u0649";
-  decomMapping[0xFD79] = "\u063A\u0645\u0645";
-  decomMapping[0xFD7A] = "\u063A\u0645\u064A";
-  decomMapping[0xFD7B] = "\u063A\u0645\u0649";
-  decomMapping[0xFD7C] = "\u0641\u062E\u0645";
-  decomMapping[0xFD7D] = "\u0641\u062E\u0645";
-  decomMapping[0xFD7E] = "\u0642\u0645\u062D";
-  decomMapping[0xFD7F] = "\u0642\u0645\u0645";
-  decomMapping[0xFD80] = "\u0644\u062D\u0645";
-  decomMapping[0xFD81] = "\u0644\u062D\u064A";
-  decomMapping[0xFD82] = "\u0644\u062D\u0649";
-  decomMapping[0xFD83] = "\u0644\u062C\u062C";
-  decomMapping[0xFD84] = "\u0644\u062C\u062C";
-  decomMapping[0xFD85] = "\u0644\u062E\u0645";
-  decomMapping[0xFD86] = "\u0644\u062E\u0645";
-  decomMapping[0xFD87] = "\u0644\u0645\u062D";
-  decomMapping[0xFD88] = "\u0644\u0645\u062D";
-  decomMapping[0xFD89] = "\u0645\u062D\u062C";
-  decomMapping[0xFD8A] = "\u0645\u062D\u0645";
-  decomMapping[0xFD8B] = "\u0645\u062D\u064A";
-  decomMapping[0xFD8C] = "\u0645\u062C\u062D";
-  decomMapping[0xFD8D] = "\u0645\u062C\u0645";
-  decomMapping[0xFD8E] = "\u0645\u062E\u062C";
-  decomMapping[0xFD8F] = "\u0645\u062E\u0645";
-  decomMapping[0xFD92] = "\u0645\u062C\u062E";
-  decomMapping[0xFD93] = "\u0647\u0645\u062C";
-  decomMapping[0xFD94] = "\u0647\u0645\u0645";
-  decomMapping[0xFD95] = "\u0646\u062D\u0645";
-  decomMapping[0xFD96] = "\u0646\u062D\u0649";
-  decomMapping[0xFD97] = "\u0646\u062C\u0645";
-  decomMapping[0xFD98] = "\u0646\u062C\u0645";
-  decomMapping[0xFD99] = "\u0646\u062C\u0649";
-  decomMapping[0xFD9A] = "\u0646\u0645\u064A";
-  decomMapping[0xFD9B] = "\u0646\u0645\u0649";
-  decomMapping[0xFD9C] = "\u064A\u0645\u0645";
-  decomMapping[0xFD9D] = "\u064A\u0645\u0645";
-  decomMapping[0xFD9E] = "\u0628\u062E\u064A";
-  decomMapping[0xFD9F] = "\u062A\u062C\u064A";
-  decomMapping[0xFDA0] = "\u062A\u062C\u0649";
-  decomMapping[0xFDA1] = "\u062A\u062E\u064A";
-  decomMapping[0xFDA2] = "\u062A\u062E\u0649";
-  decomMapping[0xFDA3] = "\u062A\u0645\u064A";
-  decomMapping[0xFDA4] = "\u062A\u0645\u0649";
-  decomMapping[0xFDA5] = "\u062C\u0645\u064A";
-  decomMapping[0xFDA6] = "\u062C\u062D\u0649";
-  decomMapping[0xFDA7] = "\u062C\u0645\u0649";
-  decomMapping[0xFDA8] = "\u0633\u062E\u0649";
-  decomMapping[0xFDA9] = "\u0635\u062D\u064A";
-  decomMapping[0xFDAA] = "\u0634\u062D\u064A";
-  decomMapping[0xFDAB] = "\u0636\u062D\u064A";
-  decomMapping[0xFDAC] = "\u0644\u062C\u064A";
-  decomMapping[0xFDAD] = "\u0644\u0645\u064A";
-  decomMapping[0xFDAE] = "\u064A\u062D\u064A";
-  decomMapping[0xFDAF] = "\u064A\u062C\u064A";
-  decomMapping[0xFDB0] = "\u064A\u0645\u064A";
-  decomMapping[0xFDB1] = "\u0645\u0645\u064A";
-  decomMapping[0xFDB2] = "\u0642\u0645\u064A";
-  decomMapping[0xFDB3] = "\u0646\u062D\u064A";
-  decomMapping[0xFDB4] = "\u0642\u0645\u062D";
-  decomMapping[0xFDB5] = "\u0644\u062D\u0645";
-  decomMapping[0xFDB6] = "\u0639\u0645\u064A";
-  decomMapping[0xFDB7] = "\u0643\u0645\u064A";
-  decomMapping[0xFDB8] = "\u0646\u062C\u062D";
-  decomMapping[0xFDB9] = "\u0645\u062E\u064A";
-  decomMapping[0xFDBA] = "\u0644\u062C\u0645";
-  decomMapping[0xFDBB] = "\u0643\u0645\u0645";
-  decomMapping[0xFDBC] = "\u0644\u062C\u0645";
-  decomMapping[0xFDBD] = "\u0646\u062C\u062D";
-  decomMapping[0xFDBE] = "\u062C\u062D\u064A";
-  decomMapping[0xFDBF] = "\u062D\u062C\u064A";
-  decomMapping[0xFDC0] = "\u0645\u062C\u064A";
-  decomMapping[0xFDC1] = "\u0641\u0645\u064A";
-  decomMapping[0xFDC2] = "\u0628\u062D\u064A";
-  decomMapping[0xFDC3] = "\u0643\u0645\u0645";
-  decomMapping[0xFDC4] = "\u0639\u062C\u0645";
-  decomMapping[0xFDC5] = "\u0635\u0645\u0645";
-  decomMapping[0xFDC6] = "\u0633\u062E\u064A";
-  decomMapping[0xFDC7] = "\u0646\u062C\u064A";
-  decomMapping[0xFDF0] = "\u0635\u0644\u06D2";
-  decomMapping[0xFDF1] = "\u0642\u0644\u06D2";
-  decomMapping[0xFDF2] = "\u0627\u0644\u0644\u0647";
-  decomMapping[0xFDF3] = "\u0627\u0643\u0628\u0631";
-  decomMapping[0xFDF4] = "\u0645\u062D\u0645\u062F";
-  decomMapping[0xFDF5] = "\u0635\u0644\u0639\u0645";
-  decomMapping[0xFDF6] = "\u0631\u0633\u0648\u0644";
-  decomMapping[0xFDF7] = "\u0639\u0644\u064A\u0647";
-  decomMapping[0xFDF8] = "\u0648\u0633\u0644\u0645";
-  decomMapping[0xFDF9] = "\u0635\u0644\u0649";
-  decomMapping[0xFDFA] =
-      "\u0635\u0644\u0649\u0020\u0627\u0644\u0644\u0647\u0020\u0639\u0644\u064A\u0647\u0020\u0648\u0633\u0644\u0645";
-  decomMapping[0xFDFB] = "\u062C\u0644\u0020\u062C\u0644\u0627\u0644\u0647";
-  decomMapping[0xFDFC] = "\u0631\u06CC\u0627\u0644";
-  decomMapping[0xFE10] = "\u002C";
-  decomMapping[0xFE11] = "\u3001";
-  decomMapping[0xFE12] = "\u3002";
-  decomMapping[0xFE13] = "\u003A";
-  decomMapping[0xFE14] = "\u003B";
-  decomMapping[0xFE15] = "\u0021";
-  decomMapping[0xFE16] = "\u003F";
-  decomMapping[0xFE17] = "\u3016";
-  decomMapping[0xFE18] = "\u3017";
-  decomMapping[0xFE19] = "\u2026";
-  decomMapping[0xFE30] = "\u2025";
-  decomMapping[0xFE31] = "\u2014";
-  decomMapping[0xFE32] = "\u2013";
-  decomMapping[0xFE33] = "\u005F";
-  decomMapping[0xFE34] = "\u005F";
-  decomMapping[0xFE35] = "\u0028";
-  decomMapping[0xFE36] = "\u0029";
-  decomMapping[0xFE37] = "\u007B";
-  decomMapping[0xFE38] = "\u007D";
-  decomMapping[0xFE39] = "\u3014";
-  decomMapping[0xFE3A] = "\u3015";
-  decomMapping[0xFE3B] = "\u3010";
-  decomMapping[0xFE3C] = "\u3011";
-  decomMapping[0xFE3D] = "\u300A";
-  decomMapping[0xFE3E] = "\u300B";
-  decomMapping[0xFE3F] = "\u3008";
-  decomMapping[0xFE40] = "\u3009";
-  decomMapping[0xFE41] = "\u300C";
-  decomMapping[0xFE42] = "\u300D";
-  decomMapping[0xFE43] = "\u300E";
-  decomMapping[0xFE44] = "\u300F";
-  decomMapping[0xFE47] = "\u005B";
-  decomMapping[0xFE48] = "\u005D";
-  decomMapping[0xFE49] = "\u203E";
-  decomMapping[0xFE4A] = "\u203E";
-  decomMapping[0xFE4B] = "\u203E";
-  decomMapping[0xFE4C] = "\u203E";
-  decomMapping[0xFE4D] = "\u005F";
-  decomMapping[0xFE4E] = "\u005F";
-  decomMapping[0xFE4F] = "\u005F";
-  decomMapping[0xFE50] = "\u002C";
-  decomMapping[0xFE51] = "\u3001";
-  decomMapping[0xFE52] = "\u002E";
-  decomMapping[0xFE54] = "\u003B";
-  decomMapping[0xFE55] = "\u003A";
-  decomMapping[0xFE56] = "\u003F";
-  decomMapping[0xFE57] = "\u0021";
-  decomMapping[0xFE58] = "\u2014";
-  decomMapping[0xFE59] = "\u0028";
-  decomMapping[0xFE5A] = "\u0029";
-  decomMapping[0xFE5B] = "\u007B";
-  decomMapping[0xFE5C] = "\u007D";
-  decomMapping[0xFE5D] = "\u3014";
-  decomMapping[0xFE5E] = "\u3015";
-  decomMapping[0xFE5F] = "\u0023";
-  decomMapping[0xFE60] = "\u0026";
-  decomMapping[0xFE61] = "\u002A";
-  decomMapping[0xFE62] = "\u002B";
-  decomMapping[0xFE63] = "\u002D";
-  decomMapping[0xFE64] = "\u003C";
-  decomMapping[0xFE65] = "\u003E";
-  decomMapping[0xFE66] = "\u003D";
-  decomMapping[0xFE68] = "\u005C";
-  decomMapping[0xFE69] = "\u0024";
-  decomMapping[0xFE6A] = "\u0025";
-  decomMapping[0xFE6B] = "\u0040";
-  decomMapping[0xFE70] = "\u0020\u064B";
-  decomMapping[0xFE71] = "\u0640\u064B";
-  decomMapping[0xFE72] = "\u0020\u064C";
-  decomMapping[0xFE74] = "\u0020\u064D";
-  decomMapping[0xFE76] = "\u0020\u064E";
-  decomMapping[0xFE77] = "\u0640\u064E";
-  decomMapping[0xFE78] = "\u0020\u064F";
-  decomMapping[0xFE79] = "\u0640\u064F";
-  decomMapping[0xFE7A] = "\u0020\u0650";
-  decomMapping[0xFE7B] = "\u0640\u0650";
-  decomMapping[0xFE7C] = "\u0020\u0651";
-  decomMapping[0xFE7D] = "\u0640\u0651";
-  decomMapping[0xFE7E] = "\u0020\u0652";
-  decomMapping[0xFE7F] = "\u0640\u0652";
-  decomMapping[0xFE80] = "\u0621";
-  decomMapping[0xFE81] = "\u0622";
-  decomMapping[0xFE82] = "\u0622";
-  decomMapping[0xFE83] = "\u0623";
-  decomMapping[0xFE84] = "\u0623";
-  decomMapping[0xFE85] = "\u0624";
-  decomMapping[0xFE86] = "\u0624";
-  decomMapping[0xFE87] = "\u0625";
-  decomMapping[0xFE88] = "\u0625";
-  decomMapping[0xFE89] = "\u0626";
-  decomMapping[0xFE8A] = "\u0626";
-  decomMapping[0xFE8B] = "\u0626";
-  decomMapping[0xFE8C] = "\u0626";
-  decomMapping[0xFE8D] = "\u0627";
-  decomMapping[0xFE8E] = "\u0627";
-  decomMapping[0xFE8F] = "\u0628";
-  decomMapping[0xFE90] = "\u0628";
-  decomMapping[0xFE91] = "\u0628";
-  decomMapping[0xFE92] = "\u0628";
-  decomMapping[0xFE93] = "\u0629";
-  decomMapping[0xFE94] = "\u0629";
-  decomMapping[0xFE95] = "\u062A";
-  decomMapping[0xFE96] = "\u062A";
-  decomMapping[0xFE97] = "\u062A";
-  decomMapping[0xFE98] = "\u062A";
-  decomMapping[0xFE99] = "\u062B";
-  decomMapping[0xFE9A] = "\u062B";
-  decomMapping[0xFE9B] = "\u062B";
-  decomMapping[0xFE9C] = "\u062B";
-  decomMapping[0xFE9D] = "\u062C";
-  decomMapping[0xFE9E] = "\u062C";
-  decomMapping[0xFE9F] = "\u062C";
-  decomMapping[0xFEA0] = "\u062C";
-  decomMapping[0xFEA1] = "\u062D";
-  decomMapping[0xFEA2] = "\u062D";
-  decomMapping[0xFEA3] = "\u062D";
-  decomMapping[0xFEA4] = "\u062D";
-  decomMapping[0xFEA5] = "\u062E";
-  decomMapping[0xFEA6] = "\u062E";
-  decomMapping[0xFEA7] = "\u062E";
-  decomMapping[0xFEA8] = "\u062E";
-  decomMapping[0xFEA9] = "\u062F";
-  decomMapping[0xFEAA] = "\u062F";
-  decomMapping[0xFEAB] = "\u0630";
-  decomMapping[0xFEAC] = "\u0630";
-  decomMapping[0xFEAD] = "\u0631";
-  decomMapping[0xFEAE] = "\u0631";
-  decomMapping[0xFEAF] = "\u0632";
-  decomMapping[0xFEB0] = "\u0632";
-  decomMapping[0xFEB1] = "\u0633";
-  decomMapping[0xFEB2] = "\u0633";
-  decomMapping[0xFEB3] = "\u0633";
-  decomMapping[0xFEB4] = "\u0633";
-  decomMapping[0xFEB5] = "\u0634";
-  decomMapping[0xFEB6] = "\u0634";
-  decomMapping[0xFEB7] = "\u0634";
-  decomMapping[0xFEB8] = "\u0634";
-  decomMapping[0xFEB9] = "\u0635";
-  decomMapping[0xFEBA] = "\u0635";
-  decomMapping[0xFEBB] = "\u0635";
-  decomMapping[0xFEBC] = "\u0635";
-  decomMapping[0xFEBD] = "\u0636";
-  decomMapping[0xFEBE] = "\u0636";
-  decomMapping[0xFEBF] = "\u0636";
-  decomMapping[0xFEC0] = "\u0636";
-  decomMapping[0xFEC1] = "\u0637";
-  decomMapping[0xFEC2] = "\u0637";
-  decomMapping[0xFEC3] = "\u0637";
-  decomMapping[0xFEC4] = "\u0637";
-  decomMapping[0xFEC5] = "\u0638";
-  decomMapping[0xFEC6] = "\u0638";
-  decomMapping[0xFEC7] = "\u0638";
-  decomMapping[0xFEC8] = "\u0638";
-  decomMapping[0xFEC9] = "\u0639";
-  decomMapping[0xFECA] = "\u0639";
-  decomMapping[0xFECB] = "\u0639";
-  decomMapping[0xFECC] = "\u0639";
-  decomMapping[0xFECD] = "\u063A";
-  decomMapping[0xFECE] = "\u063A";
-  decomMapping[0xFECF] = "\u063A";
-  decomMapping[0xFED0] = "\u063A";
-  decomMapping[0xFED1] = "\u0641";
-  decomMapping[0xFED2] = "\u0641";
-  decomMapping[0xFED3] = "\u0641";
-  decomMapping[0xFED4] = "\u0641";
-  decomMapping[0xFED5] = "\u0642";
-  decomMapping[0xFED6] = "\u0642";
-  decomMapping[0xFED7] = "\u0642";
-  decomMapping[0xFED8] = "\u0642";
-  decomMapping[0xFED9] = "\u0643";
-  decomMapping[0xFEDA] = "\u0643";
-  decomMapping[0xFEDB] = "\u0643";
-  decomMapping[0xFEDC] = "\u0643";
-  decomMapping[0xFEDD] = "\u0644";
-  decomMapping[0xFEDE] = "\u0644";
-  decomMapping[0xFEDF] = "\u0644";
-  decomMapping[0xFEE0] = "\u0644";
-  decomMapping[0xFEE1] = "\u0645";
-  decomMapping[0xFEE2] = "\u0645";
-  decomMapping[0xFEE3] = "\u0645";
-  decomMapping[0xFEE4] = "\u0645";
-  decomMapping[0xFEE5] = "\u0646";
-  decomMapping[0xFEE6] = "\u0646";
-  decomMapping[0xFEE7] = "\u0646";
-  decomMapping[0xFEE8] = "\u0646";
-  decomMapping[0xFEE9] = "\u0647";
-  decomMapping[0xFEEA] = "\u0647";
-  decomMapping[0xFEEB] = "\u0647";
-  decomMapping[0xFEEC] = "\u0647";
-  decomMapping[0xFEED] = "\u0648";
-  decomMapping[0xFEEE] = "\u0648";
-  decomMapping[0xFEEF] = "\u0649";
-  decomMapping[0xFEF0] = "\u0649";
-  decomMapping[0xFEF1] = "\u064A";
-  decomMapping[0xFEF2] = "\u064A";
-  decomMapping[0xFEF3] = "\u064A";
-  decomMapping[0xFEF4] = "\u064A";
-  decomMapping[0xFEF5] = "\u0644\u0622";
-  decomMapping[0xFEF6] = "\u0644\u0622";
-  decomMapping[0xFEF7] = "\u0644\u0623";
-  decomMapping[0xFEF8] = "\u0644\u0623";
-  decomMapping[0xFEF9] = "\u0644\u0625";
-  decomMapping[0xFEFA] = "\u0644\u0625";
-  decomMapping[0xFEFB] = "\u0644\u0627";
-  decomMapping[0xFEFC] = "\u0644\u0627";
-  decomMapping[0xFF01] = "\u0021";
-  decomMapping[0xFF02] = "\u0022";
-  decomMapping[0xFF03] = "\u0023";
-  decomMapping[0xFF04] = "\u0024";
-  decomMapping[0xFF05] = "\u0025";
-  decomMapping[0xFF06] = "\u0026";
-  decomMapping[0xFF07] = "\u0027";
-  decomMapping[0xFF08] = "\u0028";
-  decomMapping[0xFF09] = "\u0029";
-  decomMapping[0xFF0A] = "\u002A";
-  decomMapping[0xFF0B] = "\u002B";
-  decomMapping[0xFF0C] = "\u002C";
-  decomMapping[0xFF0D] = "\u002D";
-  decomMapping[0xFF0E] = "\u002E";
-  decomMapping[0xFF0F] = "\u002F";
-  decomMapping[0xFF10] = "\u0030";
-  decomMapping[0xFF11] = "\u0031";
-  decomMapping[0xFF12] = "\u0032";
-  decomMapping[0xFF13] = "\u0033";
-  decomMapping[0xFF14] = "\u0034";
-  decomMapping[0xFF15] = "\u0035";
-  decomMapping[0xFF16] = "\u0036";
-  decomMapping[0xFF17] = "\u0037";
-  decomMapping[0xFF18] = "\u0038";
-  decomMapping[0xFF19] = "\u0039";
-  decomMapping[0xFF1A] = "\u003A";
-  decomMapping[0xFF1B] = "\u003B";
-  decomMapping[0xFF1C] = "\u003C";
-  decomMapping[0xFF1D] = "\u003D";
-  decomMapping[0xFF1E] = "\u003E";
-  decomMapping[0xFF1F] = "\u003F";
-  decomMapping[0xFF20] = "\u0040";
-  decomMapping[0xFF21] = "\u0041";
-  decomMapping[0xFF22] = "\u0042";
-  decomMapping[0xFF23] = "\u0043";
-  decomMapping[0xFF24] = "\u0044";
-  decomMapping[0xFF25] = "\u0045";
-  decomMapping[0xFF26] = "\u0046";
-  decomMapping[0xFF27] = "\u0047";
-  decomMapping[0xFF28] = "\u0048";
-  decomMapping[0xFF29] = "\u0049";
-  decomMapping[0xFF2A] = "\u004A";
-  decomMapping[0xFF2B] = "\u004B";
-  decomMapping[0xFF2C] = "\u004C";
-  decomMapping[0xFF2D] = "\u004D";
-  decomMapping[0xFF2E] = "\u004E";
-  decomMapping[0xFF2F] = "\u004F";
-  decomMapping[0xFF30] = "\u0050";
-  decomMapping[0xFF31] = "\u0051";
-  decomMapping[0xFF32] = "\u0052";
-  decomMapping[0xFF33] = "\u0053";
-  decomMapping[0xFF34] = "\u0054";
-  decomMapping[0xFF35] = "\u0055";
-  decomMapping[0xFF36] = "\u0056";
-  decomMapping[0xFF37] = "\u0057";
-  decomMapping[0xFF38] = "\u0058";
-  decomMapping[0xFF39] = "\u0059";
-  decomMapping[0xFF3A] = "\u005A";
-  decomMapping[0xFF3B] = "\u005B";
-  decomMapping[0xFF3C] = "\u005C";
-  decomMapping[0xFF3D] = "\u005D";
-  decomMapping[0xFF3E] = "\u005E";
-  decomMapping[0xFF3F] = "\u005F";
-  decomMapping[0xFF40] = "\u0060";
-  decomMapping[0xFF41] = "\u0061";
-  decomMapping[0xFF42] = "\u0062";
-  decomMapping[0xFF43] = "\u0063";
-  decomMapping[0xFF44] = "\u0064";
-  decomMapping[0xFF45] = "\u0065";
-  decomMapping[0xFF46] = "\u0066";
-  decomMapping[0xFF47] = "\u0067";
-  decomMapping[0xFF48] = "\u0068";
-  decomMapping[0xFF49] = "\u0069";
-  decomMapping[0xFF4A] = "\u006A";
-  decomMapping[0xFF4B] = "\u006B";
-  decomMapping[0xFF4C] = "\u006C";
-  decomMapping[0xFF4D] = "\u006D";
-  decomMapping[0xFF4E] = "\u006E";
-  decomMapping[0xFF4F] = "\u006F";
-  decomMapping[0xFF50] = "\u0070";
-  decomMapping[0xFF51] = "\u0071";
-  decomMapping[0xFF52] = "\u0072";
-  decomMapping[0xFF53] = "\u0073";
-  decomMapping[0xFF54] = "\u0074";
-  decomMapping[0xFF55] = "\u0075";
-  decomMapping[0xFF56] = "\u0076";
-  decomMapping[0xFF57] = "\u0077";
-  decomMapping[0xFF58] = "\u0078";
-  decomMapping[0xFF59] = "\u0079";
-  decomMapping[0xFF5A] = "\u007A";
-  decomMapping[0xFF5B] = "\u007B";
-  decomMapping[0xFF5C] = "\u007C";
-  decomMapping[0xFF5D] = "\u007D";
-  decomMapping[0xFF5E] = "\u007E";
-  decomMapping[0xFF5F] = "\u2985";
-  decomMapping[0xFF60] = "\u2986";
-  decomMapping[0xFF61] = "\u3002";
-  decomMapping[0xFF62] = "\u300C";
-  decomMapping[0xFF63] = "\u300D";
-  decomMapping[0xFF64] = "\u3001";
-  decomMapping[0xFF65] = "\u30FB";
-  decomMapping[0xFF66] = "\u30F2";
-  decomMapping[0xFF67] = "\u30A1";
-  decomMapping[0xFF68] = "\u30A3";
-  decomMapping[0xFF69] = "\u30A5";
-  decomMapping[0xFF6A] = "\u30A7";
-  decomMapping[0xFF6B] = "\u30A9";
-  decomMapping[0xFF6C] = "\u30E3";
-  decomMapping[0xFF6D] = "\u30E5";
-  decomMapping[0xFF6E] = "\u30E7";
-  decomMapping[0xFF6F] = "\u30C3";
-  decomMapping[0xFF70] = "\u30FC";
-  decomMapping[0xFF71] = "\u30A2";
-  decomMapping[0xFF72] = "\u30A4";
-  decomMapping[0xFF73] = "\u30A6";
-  decomMapping[0xFF74] = "\u30A8";
-  decomMapping[0xFF75] = "\u30AA";
-  decomMapping[0xFF76] = "\u30AB";
-  decomMapping[0xFF77] = "\u30AD";
-  decomMapping[0xFF78] = "\u30AF";
-  decomMapping[0xFF79] = "\u30B1";
-  decomMapping[0xFF7A] = "\u30B3";
-  decomMapping[0xFF7B] = "\u30B5";
-  decomMapping[0xFF7C] = "\u30B7";
-  decomMapping[0xFF7D] = "\u30B9";
-  decomMapping[0xFF7E] = "\u30BB";
-  decomMapping[0xFF7F] = "\u30BD";
-  decomMapping[0xFF80] = "\u30BF";
-  decomMapping[0xFF81] = "\u30C1";
-  decomMapping[0xFF82] = "\u30C4";
-  decomMapping[0xFF83] = "\u30C6";
-  decomMapping[0xFF84] = "\u30C8";
-  decomMapping[0xFF85] = "\u30CA";
-  decomMapping[0xFF86] = "\u30CB";
-  decomMapping[0xFF87] = "\u30CC";
-  decomMapping[0xFF88] = "\u30CD";
-  decomMapping[0xFF89] = "\u30CE";
-  decomMapping[0xFF8A] = "\u30CF";
-  decomMapping[0xFF8B] = "\u30D2";
-  decomMapping[0xFF8C] = "\u30D5";
-  decomMapping[0xFF8D] = "\u30D8";
-  decomMapping[0xFF8E] = "\u30DB";
-  decomMapping[0xFF8F] = "\u30DE";
-  decomMapping[0xFF90] = "\u30DF";
-  decomMapping[0xFF91] = "\u30E0";
-  decomMapping[0xFF92] = "\u30E1";
-  decomMapping[0xFF93] = "\u30E2";
-  decomMapping[0xFF94] = "\u30E4";
-  decomMapping[0xFF95] = "\u30E6";
-  decomMapping[0xFF96] = "\u30E8";
-  decomMapping[0xFF97] = "\u30E9";
-  decomMapping[0xFF98] = "\u30EA";
-  decomMapping[0xFF99] = "\u30EB";
-  decomMapping[0xFF9A] = "\u30EC";
-  decomMapping[0xFF9B] = "\u30ED";
-  decomMapping[0xFF9C] = "\u30EF";
-  decomMapping[0xFF9D] = "\u30F3";
-  decomMapping[0xFF9E] = "\u3099";
-  decomMapping[0xFF9F] = "\u309A";
-  decomMapping[0xFFA0] = "\u3164";
-  decomMapping[0xFFA1] = "\u3131";
-  decomMapping[0xFFA2] = "\u3132";
-  decomMapping[0xFFA3] = "\u3133";
-  decomMapping[0xFFA4] = "\u3134";
-  decomMapping[0xFFA5] = "\u3135";
-  decomMapping[0xFFA6] = "\u3136";
-  decomMapping[0xFFA7] = "\u3137";
-  decomMapping[0xFFA8] = "\u3138";
-  decomMapping[0xFFA9] = "\u3139";
-  decomMapping[0xFFAA] = "\u313A";
-  decomMapping[0xFFAB] = "\u313B";
-  decomMapping[0xFFAC] = "\u313C";
-  decomMapping[0xFFAD] = "\u313D";
-  decomMapping[0xFFAE] = "\u313E";
-  decomMapping[0xFFAF] = "\u313F";
-  decomMapping[0xFFB0] = "\u3140";
-  decomMapping[0xFFB1] = "\u3141";
-  decomMapping[0xFFB2] = "\u3142";
-  decomMapping[0xFFB3] = "\u3143";
-  decomMapping[0xFFB4] = "\u3144";
-  decomMapping[0xFFB5] = "\u3145";
-  decomMapping[0xFFB6] = "\u3146";
-  decomMapping[0xFFB7] = "\u3147";
-  decomMapping[0xFFB8] = "\u3148";
-  decomMapping[0xFFB9] = "\u3149";
-  decomMapping[0xFFBA] = "\u314A";
-  decomMapping[0xFFBB] = "\u314B";
-  decomMapping[0xFFBC] = "\u314C";
-  decomMapping[0xFFBD] = "\u314D";
-  decomMapping[0xFFBE] = "\u314E";
-  decomMapping[0xFFC2] = "\u314F";
-  decomMapping[0xFFC3] = "\u3150";
-  decomMapping[0xFFC4] = "\u3151";
-  decomMapping[0xFFC5] = "\u3152";
-  decomMapping[0xFFC6] = "\u3153";
-  decomMapping[0xFFC7] = "\u3154";
-  decomMapping[0xFFCA] = "\u3155";
-  decomMapping[0xFFCB] = "\u3156";
-  decomMapping[0xFFCC] = "\u3157";
-  decomMapping[0xFFCD] = "\u3158";
-  decomMapping[0xFFCE] = "\u3159";
-  decomMapping[0xFFCF] = "\u315A";
-  decomMapping[0xFFD2] = "\u315B";
-  decomMapping[0xFFD3] = "\u315C";
-  decomMapping[0xFFD4] = "\u315D";
-  decomMapping[0xFFD5] = "\u315E";
-  decomMapping[0xFFD6] = "\u315F";
-  decomMapping[0xFFD7] = "\u3160";
-  decomMapping[0xFFDA] = "\u3161";
-  decomMapping[0xFFDB] = "\u3162";
-  decomMapping[0xFFDC] = "\u3163";
-  decomMapping[0xFFE0] = "\u00A2";
-  decomMapping[0xFFE1] = "\u00A3";
-  decomMapping[0xFFE2] = "\u00AC";
-  decomMapping[0xFFE3] = "\u00AF";
-  decomMapping[0xFFE4] = "\u00A6";
-  decomMapping[0xFFE5] = "\u00A5";
-  decomMapping[0xFFE6] = "\u20A9";
-  decomMapping[0xFFE8] = "\u2502";
-  decomMapping[0xFFE9] = "\u2190";
-  decomMapping[0xFFEA] = "\u2191";
-  decomMapping[0xFFEB] = "\u2192";
-  decomMapping[0xFFEC] = "\u2193";
-  decomMapping[0xFFED] = "\u25A0";
-  decomMapping[0xFFEE] = "\u25CB";
-  composeMapping["\u0020"] = 0x00A0;
-  composeMapping["\u0020\u0308"] = 0x00A8;
-  composeMapping["\u0061"] = 0x00AA;
-  composeMapping["\u0020\u0304"] = 0x00AF;
-  composeMapping["\u0032"] = 0x00B2;
-  composeMapping["\u0033"] = 0x00B3;
-  composeMapping["\u0020\u0301"] = 0x00B4;
-  composeMapping["\u03BC"] = 0x00B5;
-  composeMapping["\u0020\u0327"] = 0x00B8;
-  composeMapping["\u0031"] = 0x00B9;
-  composeMapping["\u006F"] = 0x00BA;
-  composeMapping["\u0031\u2044\u0034"] = 0x00BC;
-  composeMapping["\u0031\u2044\u0032"] = 0x00BD;
-  composeMapping["\u0033\u2044\u0034"] = 0x00BE;
-  composeMapping["\u0041\u0300"] = 0x00C0;
-  composeMapping["\u0041\u0301"] = 0x00C1;
-  composeMapping["\u0041\u0302"] = 0x00C2;
-  composeMapping["\u0041\u0303"] = 0x00C3;
-  composeMapping["\u0041\u0308"] = 0x00C4;
-  composeMapping["\u0041\u030A"] = 0x00C5;
-  composeMapping["\u0043\u0327"] = 0x00C7;
-  composeMapping["\u0045\u0300"] = 0x00C8;
-  composeMapping["\u0045\u0301"] = 0x00C9;
-  composeMapping["\u0045\u0302"] = 0x00CA;
-  composeMapping["\u0045\u0308"] = 0x00CB;
-  composeMapping["\u0049\u0300"] = 0x00CC;
-  composeMapping["\u0049\u0301"] = 0x00CD;
-  composeMapping["\u0049\u0302"] = 0x00CE;
-  composeMapping["\u0049\u0308"] = 0x00CF;
-  composeMapping["\u004E\u0303"] = 0x00D1;
-  composeMapping["\u004F\u0300"] = 0x00D2;
-  composeMapping["\u004F\u0301"] = 0x00D3;
-  composeMapping["\u004F\u0302"] = 0x00D4;
-  composeMapping["\u004F\u0303"] = 0x00D5;
-  composeMapping["\u004F\u0308"] = 0x00D6;
-  composeMapping["\u0055\u0300"] = 0x00D9;
-  composeMapping["\u0055\u0301"] = 0x00DA;
-  composeMapping["\u0055\u0302"] = 0x00DB;
-  composeMapping["\u0055\u0308"] = 0x00DC;
-  composeMapping["\u0059\u0301"] = 0x00DD;
-  composeMapping["\u0061\u0300"] = 0x00E0;
-  composeMapping["\u0061\u0301"] = 0x00E1;
-  composeMapping["\u0061\u0302"] = 0x00E2;
-  composeMapping["\u0061\u0303"] = 0x00E3;
-  composeMapping["\u0061\u0308"] = 0x00E4;
-  composeMapping["\u0061\u030A"] = 0x00E5;
-  composeMapping["\u0063\u0327"] = 0x00E7;
-  composeMapping["\u0065\u0300"] = 0x00E8;
-  composeMapping["\u0065\u0301"] = 0x00E9;
-  composeMapping["\u0065\u0302"] = 0x00EA;
-  composeMapping["\u0065\u0308"] = 0x00EB;
-  composeMapping["\u0069\u0300"] = 0x00EC;
-  composeMapping["\u0069\u0301"] = 0x00ED;
-  composeMapping["\u0069\u0302"] = 0x00EE;
-  composeMapping["\u0069\u0308"] = 0x00EF;
-  composeMapping["\u006E\u0303"] = 0x00F1;
-  composeMapping["\u006F\u0300"] = 0x00F2;
-  composeMapping["\u006F\u0301"] = 0x00F3;
-  composeMapping["\u006F\u0302"] = 0x00F4;
-  composeMapping["\u006F\u0303"] = 0x00F5;
-  composeMapping["\u006F\u0308"] = 0x00F6;
-  composeMapping["\u0075\u0300"] = 0x00F9;
-  composeMapping["\u0075\u0301"] = 0x00FA;
-  composeMapping["\u0075\u0302"] = 0x00FB;
-  composeMapping["\u0075\u0308"] = 0x00FC;
-  composeMapping["\u0079\u0301"] = 0x00FD;
-  composeMapping["\u0079\u0308"] = 0x00FF;
-  composeMapping["\u0041\u0304"] = 0x0100;
-  composeMapping["\u0061\u0304"] = 0x0101;
-  composeMapping["\u0041\u0306"] = 0x0102;
-  composeMapping["\u0061\u0306"] = 0x0103;
-  composeMapping["\u0041\u0328"] = 0x0104;
-  composeMapping["\u0061\u0328"] = 0x0105;
-  composeMapping["\u0043\u0301"] = 0x0106;
-  composeMapping["\u0063\u0301"] = 0x0107;
-  composeMapping["\u0043\u0302"] = 0x0108;
-  composeMapping["\u0063\u0302"] = 0x0109;
-  composeMapping["\u0043\u0307"] = 0x010A;
-  composeMapping["\u0063\u0307"] = 0x010B;
-  composeMapping["\u0043\u030C"] = 0x010C;
-  composeMapping["\u0063\u030C"] = 0x010D;
-  composeMapping["\u0044\u030C"] = 0x010E;
-  composeMapping["\u0064\u030C"] = 0x010F;
-  composeMapping["\u0045\u0304"] = 0x0112;
-  composeMapping["\u0065\u0304"] = 0x0113;
-  composeMapping["\u0045\u0306"] = 0x0114;
-  composeMapping["\u0065\u0306"] = 0x0115;
-  composeMapping["\u0045\u0307"] = 0x0116;
-  composeMapping["\u0065\u0307"] = 0x0117;
-  composeMapping["\u0045\u0328"] = 0x0118;
-  composeMapping["\u0065\u0328"] = 0x0119;
-  composeMapping["\u0045\u030C"] = 0x011A;
-  composeMapping["\u0065\u030C"] = 0x011B;
-  composeMapping["\u0047\u0302"] = 0x011C;
-  composeMapping["\u0067\u0302"] = 0x011D;
-  composeMapping["\u0047\u0306"] = 0x011E;
-  composeMapping["\u0067\u0306"] = 0x011F;
-  composeMapping["\u0047\u0307"] = 0x0120;
-  composeMapping["\u0067\u0307"] = 0x0121;
-  composeMapping["\u0047\u0327"] = 0x0122;
-  composeMapping["\u0067\u0327"] = 0x0123;
-  composeMapping["\u0048\u0302"] = 0x0124;
-  composeMapping["\u0068\u0302"] = 0x0125;
-  composeMapping["\u0049\u0303"] = 0x0128;
-  composeMapping["\u0069\u0303"] = 0x0129;
-  composeMapping["\u0049\u0304"] = 0x012A;
-  composeMapping["\u0069\u0304"] = 0x012B;
-  composeMapping["\u0049\u0306"] = 0x012C;
-  composeMapping["\u0069\u0306"] = 0x012D;
-  composeMapping["\u0049\u0328"] = 0x012E;
-  composeMapping["\u0069\u0328"] = 0x012F;
-  composeMapping["\u0049\u0307"] = 0x0130;
-  composeMapping["\u0049\u004A"] = 0x0132;
-  composeMapping["\u0069\u006A"] = 0x0133;
-  composeMapping["\u004A\u0302"] = 0x0134;
-  composeMapping["\u006A\u0302"] = 0x0135;
-  composeMapping["\u004B\u0327"] = 0x0136;
-  composeMapping["\u006B\u0327"] = 0x0137;
-  composeMapping["\u004C\u0301"] = 0x0139;
-  composeMapping["\u006C\u0301"] = 0x013A;
-  composeMapping["\u004C\u0327"] = 0x013B;
-  composeMapping["\u006C\u0327"] = 0x013C;
-  composeMapping["\u004C\u030C"] = 0x013D;
-  composeMapping["\u006C\u030C"] = 0x013E;
-  composeMapping["\u004C\u00B7"] = 0x013F;
-  composeMapping["\u006C\u00B7"] = 0x0140;
-  composeMapping["\u004E\u0301"] = 0x0143;
-  composeMapping["\u006E\u0301"] = 0x0144;
-  composeMapping["\u004E\u0327"] = 0x0145;
-  composeMapping["\u006E\u0327"] = 0x0146;
-  composeMapping["\u004E\u030C"] = 0x0147;
-  composeMapping["\u006E\u030C"] = 0x0148;
-  composeMapping["\u02BC\u006E"] = 0x0149;
-  composeMapping["\u004F\u0304"] = 0x014C;
-  composeMapping["\u006F\u0304"] = 0x014D;
-  composeMapping["\u004F\u0306"] = 0x014E;
-  composeMapping["\u006F\u0306"] = 0x014F;
-  composeMapping["\u004F\u030B"] = 0x0150;
-  composeMapping["\u006F\u030B"] = 0x0151;
-  composeMapping["\u0052\u0301"] = 0x0154;
-  composeMapping["\u0072\u0301"] = 0x0155;
-  composeMapping["\u0052\u0327"] = 0x0156;
-  composeMapping["\u0072\u0327"] = 0x0157;
-  composeMapping["\u0052\u030C"] = 0x0158;
-  composeMapping["\u0072\u030C"] = 0x0159;
-  composeMapping["\u0053\u0301"] = 0x015A;
-  composeMapping["\u0073\u0301"] = 0x015B;
-  composeMapping["\u0053\u0302"] = 0x015C;
-  composeMapping["\u0073\u0302"] = 0x015D;
-  composeMapping["\u0053\u0327"] = 0x015E;
-  composeMapping["\u0073\u0327"] = 0x015F;
-  composeMapping["\u0053\u030C"] = 0x0160;
-  composeMapping["\u0073\u030C"] = 0x0161;
-  composeMapping["\u0054\u0327"] = 0x0162;
-  composeMapping["\u0074\u0327"] = 0x0163;
-  composeMapping["\u0054\u030C"] = 0x0164;
-  composeMapping["\u0074\u030C"] = 0x0165;
-  composeMapping["\u0055\u0303"] = 0x0168;
-  composeMapping["\u0075\u0303"] = 0x0169;
-  composeMapping["\u0055\u0304"] = 0x016A;
-  composeMapping["\u0075\u0304"] = 0x016B;
-  composeMapping["\u0055\u0306"] = 0x016C;
-  composeMapping["\u0075\u0306"] = 0x016D;
-  composeMapping["\u0055\u030A"] = 0x016E;
-  composeMapping["\u0075\u030A"] = 0x016F;
-  composeMapping["\u0055\u030B"] = 0x0170;
-  composeMapping["\u0075\u030B"] = 0x0171;
-  composeMapping["\u0055\u0328"] = 0x0172;
-  composeMapping["\u0075\u0328"] = 0x0173;
-  composeMapping["\u0057\u0302"] = 0x0174;
-  composeMapping["\u0077\u0302"] = 0x0175;
-  composeMapping["\u0059\u0302"] = 0x0176;
-  composeMapping["\u0079\u0302"] = 0x0177;
-  composeMapping["\u0059\u0308"] = 0x0178;
-  composeMapping["\u005A\u0301"] = 0x0179;
-  composeMapping["\u007A\u0301"] = 0x017A;
-  composeMapping["\u005A\u0307"] = 0x017B;
-  composeMapping["\u007A\u0307"] = 0x017C;
-  composeMapping["\u005A\u030C"] = 0x017D;
-  composeMapping["\u007A\u030C"] = 0x017E;
-  composeMapping["\u0073"] = 0x017F;
-  composeMapping["\u004F\u031B"] = 0x01A0;
-  composeMapping["\u006F\u031B"] = 0x01A1;
-  composeMapping["\u0055\u031B"] = 0x01AF;
-  composeMapping["\u0075\u031B"] = 0x01B0;
-  composeMapping["\u0044\u017D"] = 0x01C4;
-  composeMapping["\u0044\u017E"] = 0x01C5;
-  composeMapping["\u0064\u017E"] = 0x01C6;
-  composeMapping["\u004C\u004A"] = 0x01C7;
-  composeMapping["\u004C\u006A"] = 0x01C8;
-  composeMapping["\u006C\u006A"] = 0x01C9;
-  composeMapping["\u004E\u004A"] = 0x01CA;
-  composeMapping["\u004E\u006A"] = 0x01CB;
-  composeMapping["\u006E\u006A"] = 0x01CC;
-  composeMapping["\u0041\u030C"] = 0x01CD;
-  composeMapping["\u0061\u030C"] = 0x01CE;
-  composeMapping["\u0049\u030C"] = 0x01CF;
-  composeMapping["\u0069\u030C"] = 0x01D0;
-  composeMapping["\u004F\u030C"] = 0x01D1;
-  composeMapping["\u006F\u030C"] = 0x01D2;
-  composeMapping["\u0055\u030C"] = 0x01D3;
-  composeMapping["\u0075\u030C"] = 0x01D4;
-  composeMapping["\u00DC\u0304"] = 0x01D5;
-  composeMapping["\u00FC\u0304"] = 0x01D6;
-  composeMapping["\u00DC\u0301"] = 0x01D7;
-  composeMapping["\u00FC\u0301"] = 0x01D8;
-  composeMapping["\u00DC\u030C"] = 0x01D9;
-  composeMapping["\u00FC\u030C"] = 0x01DA;
-  composeMapping["\u00DC\u0300"] = 0x01DB;
-  composeMapping["\u00FC\u0300"] = 0x01DC;
-  composeMapping["\u00C4\u0304"] = 0x01DE;
-  composeMapping["\u00E4\u0304"] = 0x01DF;
-  composeMapping["\u0226\u0304"] = 0x01E0;
-  composeMapping["\u0227\u0304"] = 0x01E1;
-  composeMapping["\u00C6\u0304"] = 0x01E2;
-  composeMapping["\u00E6\u0304"] = 0x01E3;
-  composeMapping["\u0047\u030C"] = 0x01E6;
-  composeMapping["\u0067\u030C"] = 0x01E7;
-  composeMapping["\u004B\u030C"] = 0x01E8;
-  composeMapping["\u006B\u030C"] = 0x01E9;
-  composeMapping["\u004F\u0328"] = 0x01EA;
-  composeMapping["\u006F\u0328"] = 0x01EB;
-  composeMapping["\u01EA\u0304"] = 0x01EC;
-  composeMapping["\u01EB\u0304"] = 0x01ED;
-  composeMapping["\u01B7\u030C"] = 0x01EE;
-  composeMapping["\u0292\u030C"] = 0x01EF;
-  composeMapping["\u006A\u030C"] = 0x01F0;
-  composeMapping["\u0044\u005A"] = 0x01F1;
-  composeMapping["\u0044\u007A"] = 0x01F2;
-  composeMapping["\u0064\u007A"] = 0x01F3;
-  composeMapping["\u0047\u0301"] = 0x01F4;
-  composeMapping["\u0067\u0301"] = 0x01F5;
-  composeMapping["\u004E\u0300"] = 0x01F8;
-  composeMapping["\u006E\u0300"] = 0x01F9;
-  composeMapping["\u00C5\u0301"] = 0x01FA;
-  composeMapping["\u00E5\u0301"] = 0x01FB;
-  composeMapping["\u00C6\u0301"] = 0x01FC;
-  composeMapping["\u00E6\u0301"] = 0x01FD;
-  composeMapping["\u00D8\u0301"] = 0x01FE;
-  composeMapping["\u00F8\u0301"] = 0x01FF;
-  composeMapping["\u0041\u030F"] = 0x0200;
-  composeMapping["\u0061\u030F"] = 0x0201;
-  composeMapping["\u0041\u0311"] = 0x0202;
-  composeMapping["\u0061\u0311"] = 0x0203;
-  composeMapping["\u0045\u030F"] = 0x0204;
-  composeMapping["\u0065\u030F"] = 0x0205;
-  composeMapping["\u0045\u0311"] = 0x0206;
-  composeMapping["\u0065\u0311"] = 0x0207;
-  composeMapping["\u0049\u030F"] = 0x0208;
-  composeMapping["\u0069\u030F"] = 0x0209;
-  composeMapping["\u0049\u0311"] = 0x020A;
-  composeMapping["\u0069\u0311"] = 0x020B;
-  composeMapping["\u004F\u030F"] = 0x020C;
-  composeMapping["\u006F\u030F"] = 0x020D;
-  composeMapping["\u004F\u0311"] = 0x020E;
-  composeMapping["\u006F\u0311"] = 0x020F;
-  composeMapping["\u0052\u030F"] = 0x0210;
-  composeMapping["\u0072\u030F"] = 0x0211;
-  composeMapping["\u0052\u0311"] = 0x0212;
-  composeMapping["\u0072\u0311"] = 0x0213;
-  composeMapping["\u0055\u030F"] = 0x0214;
-  composeMapping["\u0075\u030F"] = 0x0215;
-  composeMapping["\u0055\u0311"] = 0x0216;
-  composeMapping["\u0075\u0311"] = 0x0217;
-  composeMapping["\u0053\u0326"] = 0x0218;
-  composeMapping["\u0073\u0326"] = 0x0219;
-  composeMapping["\u0054\u0326"] = 0x021A;
-  composeMapping["\u0074\u0326"] = 0x021B;
-  composeMapping["\u0048\u030C"] = 0x021E;
-  composeMapping["\u0068\u030C"] = 0x021F;
-  composeMapping["\u0041\u0307"] = 0x0226;
-  composeMapping["\u0061\u0307"] = 0x0227;
-  composeMapping["\u0045\u0327"] = 0x0228;
-  composeMapping["\u0065\u0327"] = 0x0229;
-  composeMapping["\u00D6\u0304"] = 0x022A;
-  composeMapping["\u00F6\u0304"] = 0x022B;
-  composeMapping["\u00D5\u0304"] = 0x022C;
-  composeMapping["\u00F5\u0304"] = 0x022D;
-  composeMapping["\u004F\u0307"] = 0x022E;
-  composeMapping["\u006F\u0307"] = 0x022F;
-  composeMapping["\u022E\u0304"] = 0x0230;
-  composeMapping["\u022F\u0304"] = 0x0231;
-  composeMapping["\u0059\u0304"] = 0x0232;
-  composeMapping["\u0079\u0304"] = 0x0233;
-  composeMapping["\u0068"] = 0x02B0;
-  composeMapping["\u0266"] = 0x02B1;
-  composeMapping["\u006A"] = 0x02B2;
-  composeMapping["\u0072"] = 0x02B3;
-  composeMapping["\u0279"] = 0x02B4;
-  composeMapping["\u027B"] = 0x02B5;
-  composeMapping["\u0281"] = 0x02B6;
-  composeMapping["\u0077"] = 0x02B7;
-  composeMapping["\u0079"] = 0x02B8;
-  composeMapping["\u0020\u0306"] = 0x02D8;
-  composeMapping["\u0020\u0307"] = 0x02D9;
-  composeMapping["\u0020\u030A"] = 0x02DA;
-  composeMapping["\u0020\u0328"] = 0x02DB;
-  composeMapping["\u0020\u0303"] = 0x02DC;
-  composeMapping["\u0020\u030B"] = 0x02DD;
-  composeMapping["\u0263"] = 0x02E0;
-  composeMapping["\u006C"] = 0x02E1;
-  composeMapping["\u0073"] = 0x02E2;
-  composeMapping["\u0078"] = 0x02E3;
-  composeMapping["\u0295"] = 0x02E4;
-  composeMapping["\u0300"] = 0x0340;
-  composeMapping["\u0301"] = 0x0341;
-  composeMapping["\u0313"] = 0x0343;
-  composeMapping["\u0308\u0301"] = 0x0344;
-  composeMapping["\u02B9"] = 0x0374;
-  composeMapping["\u0020\u0345"] = 0x037A;
-  composeMapping["\u003B"] = 0x037E;
-  composeMapping["\u0020\u0301"] = 0x0384;
-  composeMapping["\u00A8\u0301"] = 0x0385;
-  composeMapping["\u0391\u0301"] = 0x0386;
-  composeMapping["\u00B7"] = 0x0387;
-  composeMapping["\u0395\u0301"] = 0x0388;
-  composeMapping["\u0397\u0301"] = 0x0389;
-  composeMapping["\u0399\u0301"] = 0x038A;
-  composeMapping["\u039F\u0301"] = 0x038C;
-  composeMapping["\u03A5\u0301"] = 0x038E;
-  composeMapping["\u03A9\u0301"] = 0x038F;
-  composeMapping["\u03CA\u0301"] = 0x0390;
-  composeMapping["\u0399\u0308"] = 0x03AA;
-  composeMapping["\u03A5\u0308"] = 0x03AB;
-  composeMapping["\u03B1\u0301"] = 0x03AC;
-  composeMapping["\u03B5\u0301"] = 0x03AD;
-  composeMapping["\u03B7\u0301"] = 0x03AE;
-  composeMapping["\u03B9\u0301"] = 0x03AF;
-  composeMapping["\u03CB\u0301"] = 0x03B0;
-  composeMapping["\u03B9\u0308"] = 0x03CA;
-  composeMapping["\u03C5\u0308"] = 0x03CB;
-  composeMapping["\u03BF\u0301"] = 0x03CC;
-  composeMapping["\u03C5\u0301"] = 0x03CD;
-  composeMapping["\u03C9\u0301"] = 0x03CE;
-  composeMapping["\u03B2"] = 0x03D0;
-  composeMapping["\u03B8"] = 0x03D1;
-  composeMapping["\u03A5"] = 0x03D2;
-  composeMapping["\u03D2\u0301"] = 0x03D3;
-  composeMapping["\u03D2\u0308"] = 0x03D4;
-  composeMapping["\u03C6"] = 0x03D5;
-  composeMapping["\u03C0"] = 0x03D6;
-  composeMapping["\u03BA"] = 0x03F0;
-  composeMapping["\u03C1"] = 0x03F1;
-  composeMapping["\u03C2"] = 0x03F2;
-  composeMapping["\u0398"] = 0x03F4;
-  composeMapping["\u03B5"] = 0x03F5;
-  composeMapping["\u03A3"] = 0x03F9;
-  composeMapping["\u0415\u0300"] = 0x0400;
-  composeMapping["\u0415\u0308"] = 0x0401;
-  composeMapping["\u0413\u0301"] = 0x0403;
-  composeMapping["\u0406\u0308"] = 0x0407;
-  composeMapping["\u041A\u0301"] = 0x040C;
-  composeMapping["\u0418\u0300"] = 0x040D;
-  composeMapping["\u0423\u0306"] = 0x040E;
-  composeMapping["\u0418\u0306"] = 0x0419;
-  composeMapping["\u0438\u0306"] = 0x0439;
-  composeMapping["\u0435\u0300"] = 0x0450;
-  composeMapping["\u0435\u0308"] = 0x0451;
-  composeMapping["\u0433\u0301"] = 0x0453;
-  composeMapping["\u0456\u0308"] = 0x0457;
-  composeMapping["\u043A\u0301"] = 0x045C;
-  composeMapping["\u0438\u0300"] = 0x045D;
-  composeMapping["\u0443\u0306"] = 0x045E;
-  composeMapping["\u0474\u030F"] = 0x0476;
-  composeMapping["\u0475\u030F"] = 0x0477;
-  composeMapping["\u0416\u0306"] = 0x04C1;
-  composeMapping["\u0436\u0306"] = 0x04C2;
-  composeMapping["\u0410\u0306"] = 0x04D0;
-  composeMapping["\u0430\u0306"] = 0x04D1;
-  composeMapping["\u0410\u0308"] = 0x04D2;
-  composeMapping["\u0430\u0308"] = 0x04D3;
-  composeMapping["\u0415\u0306"] = 0x04D6;
-  composeMapping["\u0435\u0306"] = 0x04D7;
-  composeMapping["\u04D8\u0308"] = 0x04DA;
-  composeMapping["\u04D9\u0308"] = 0x04DB;
-  composeMapping["\u0416\u0308"] = 0x04DC;
-  composeMapping["\u0436\u0308"] = 0x04DD;
-  composeMapping["\u0417\u0308"] = 0x04DE;
-  composeMapping["\u0437\u0308"] = 0x04DF;
-  composeMapping["\u0418\u0304"] = 0x04E2;
-  composeMapping["\u0438\u0304"] = 0x04E3;
-  composeMapping["\u0418\u0308"] = 0x04E4;
-  composeMapping["\u0438\u0308"] = 0x04E5;
-  composeMapping["\u041E\u0308"] = 0x04E6;
-  composeMapping["\u043E\u0308"] = 0x04E7;
-  composeMapping["\u04E8\u0308"] = 0x04EA;
-  composeMapping["\u04E9\u0308"] = 0x04EB;
-  composeMapping["\u042D\u0308"] = 0x04EC;
-  composeMapping["\u044D\u0308"] = 0x04ED;
-  composeMapping["\u0423\u0304"] = 0x04EE;
-  composeMapping["\u0443\u0304"] = 0x04EF;
-  composeMapping["\u0423\u0308"] = 0x04F0;
-  composeMapping["\u0443\u0308"] = 0x04F1;
-  composeMapping["\u0423\u030B"] = 0x04F2;
-  composeMapping["\u0443\u030B"] = 0x04F3;
-  composeMapping["\u0427\u0308"] = 0x04F4;
-  composeMapping["\u0447\u0308"] = 0x04F5;
-  composeMapping["\u042B\u0308"] = 0x04F8;
-  composeMapping["\u044B\u0308"] = 0x04F9;
-  composeMapping["\u0565\u0582"] = 0x0587;
-  composeMapping["\u0627\u0653"] = 0x0622;
-  composeMapping["\u0627\u0654"] = 0x0623;
-  composeMapping["\u0648\u0654"] = 0x0624;
-  composeMapping["\u0627\u0655"] = 0x0625;
-  composeMapping["\u064A\u0654"] = 0x0626;
-  composeMapping["\u0627\u0674"] = 0x0675;
-  composeMapping["\u0648\u0674"] = 0x0676;
-  composeMapping["\u06C7\u0674"] = 0x0677;
-  composeMapping["\u064A\u0674"] = 0x0678;
-  composeMapping["\u06D5\u0654"] = 0x06C0;
-  composeMapping["\u06C1\u0654"] = 0x06C2;
-  composeMapping["\u06D2\u0654"] = 0x06D3;
-  composeMapping["\u0928\u093C"] = 0x0929;
-  composeMapping["\u0930\u093C"] = 0x0931;
-  composeMapping["\u0933\u093C"] = 0x0934;
-  composeMapping["\u0915\u093C"] = 0x0958;
-  composeMapping["\u0916\u093C"] = 0x0959;
-  composeMapping["\u0917\u093C"] = 0x095A;
-  composeMapping["\u091C\u093C"] = 0x095B;
-  composeMapping["\u0921\u093C"] = 0x095C;
-  composeMapping["\u0922\u093C"] = 0x095D;
-  composeMapping["\u092B\u093C"] = 0x095E;
-  composeMapping["\u092F\u093C"] = 0x095F;
-  composeMapping["\u09C7\u09BE"] = 0x09CB;
-  composeMapping["\u09C7\u09D7"] = 0x09CC;
-  composeMapping["\u09A1\u09BC"] = 0x09DC;
-  composeMapping["\u09A2\u09BC"] = 0x09DD;
-  composeMapping["\u09AF\u09BC"] = 0x09DF;
-  composeMapping["\u0A32\u0A3C"] = 0x0A33;
-  composeMapping["\u0A38\u0A3C"] = 0x0A36;
-  composeMapping["\u0A16\u0A3C"] = 0x0A59;
-  composeMapping["\u0A17\u0A3C"] = 0x0A5A;
-  composeMapping["\u0A1C\u0A3C"] = 0x0A5B;
-  composeMapping["\u0A2B\u0A3C"] = 0x0A5E;
-  composeMapping["\u0B47\u0B56"] = 0x0B48;
-  composeMapping["\u0B47\u0B3E"] = 0x0B4B;
-  composeMapping["\u0B47\u0B57"] = 0x0B4C;
-  composeMapping["\u0B21\u0B3C"] = 0x0B5C;
-  composeMapping["\u0B22\u0B3C"] = 0x0B5D;
-  composeMapping["\u0B92\u0BD7"] = 0x0B94;
-  composeMapping["\u0BC6\u0BBE"] = 0x0BCA;
-  composeMapping["\u0BC7\u0BBE"] = 0x0BCB;
-  composeMapping["\u0BC6\u0BD7"] = 0x0BCC;
-  composeMapping["\u0C46\u0C56"] = 0x0C48;
-  composeMapping["\u0CBF\u0CD5"] = 0x0CC0;
-  composeMapping["\u0CC6\u0CD5"] = 0x0CC7;
-  composeMapping["\u0CC6\u0CD6"] = 0x0CC8;
-  composeMapping["\u0CC6\u0CC2"] = 0x0CCA;
-  composeMapping["\u0CCA\u0CD5"] = 0x0CCB;
-  composeMapping["\u0D46\u0D3E"] = 0x0D4A;
-  composeMapping["\u0D47\u0D3E"] = 0x0D4B;
-  composeMapping["\u0D46\u0D57"] = 0x0D4C;
-  composeMapping["\u0DD9\u0DCA"] = 0x0DDA;
-  composeMapping["\u0DD9\u0DCF"] = 0x0DDC;
-  composeMapping["\u0DDC\u0DCA"] = 0x0DDD;
-  composeMapping["\u0DD9\u0DDF"] = 0x0DDE;
-  composeMapping["\u0E4D\u0E32"] = 0x0E33;
-  composeMapping["\u0ECD\u0EB2"] = 0x0EB3;
-  composeMapping["\u0EAB\u0E99"] = 0x0EDC;
-  composeMapping["\u0EAB\u0EA1"] = 0x0EDD;
-  composeMapping["\u0F0B"] = 0x0F0C;
-  composeMapping["\u0F42\u0FB7"] = 0x0F43;
-  composeMapping["\u0F4C\u0FB7"] = 0x0F4D;
-  composeMapping["\u0F51\u0FB7"] = 0x0F52;
-  composeMapping["\u0F56\u0FB7"] = 0x0F57;
-  composeMapping["\u0F5B\u0FB7"] = 0x0F5C;
-  composeMapping["\u0F40\u0FB5"] = 0x0F69;
-  composeMapping["\u0F71\u0F72"] = 0x0F73;
-  composeMapping["\u0F71\u0F74"] = 0x0F75;
-  composeMapping["\u0FB2\u0F80"] = 0x0F76;
-  composeMapping["\u0FB2\u0F81"] = 0x0F77;
-  composeMapping["\u0FB3\u0F80"] = 0x0F78;
-  composeMapping["\u0FB3\u0F81"] = 0x0F79;
-  composeMapping["\u0F71\u0F80"] = 0x0F81;
-  composeMapping["\u0F92\u0FB7"] = 0x0F93;
-  composeMapping["\u0F9C\u0FB7"] = 0x0F9D;
-  composeMapping["\u0FA1\u0FB7"] = 0x0FA2;
-  composeMapping["\u0FA6\u0FB7"] = 0x0FA7;
-  composeMapping["\u0FAB\u0FB7"] = 0x0FAC;
-  composeMapping["\u0F90\u0FB5"] = 0x0FB9;
-  composeMapping["\u1025\u102E"] = 0x1026;
-  composeMapping["\u10DC"] = 0x10FC;
-  composeMapping["\u1B05\u1B35"] = 0x1B06;
-  composeMapping["\u1B07\u1B35"] = 0x1B08;
-  composeMapping["\u1B09\u1B35"] = 0x1B0A;
-  composeMapping["\u1B0B\u1B35"] = 0x1B0C;
-  composeMapping["\u1B0D\u1B35"] = 0x1B0E;
-  composeMapping["\u1B11\u1B35"] = 0x1B12;
-  composeMapping["\u1B3A\u1B35"] = 0x1B3B;
-  composeMapping["\u1B3C\u1B35"] = 0x1B3D;
-  composeMapping["\u1B3E\u1B35"] = 0x1B40;
-  composeMapping["\u1B3F\u1B35"] = 0x1B41;
-  composeMapping["\u1B42\u1B35"] = 0x1B43;
-  composeMapping["\u0041"] = 0x1D2C;
-  composeMapping["\u00C6"] = 0x1D2D;
-  composeMapping["\u0042"] = 0x1D2E;
-  composeMapping["\u0044"] = 0x1D30;
-  composeMapping["\u0045"] = 0x1D31;
-  composeMapping["\u018E"] = 0x1D32;
-  composeMapping["\u0047"] = 0x1D33;
-  composeMapping["\u0048"] = 0x1D34;
-  composeMapping["\u0049"] = 0x1D35;
-  composeMapping["\u004A"] = 0x1D36;
-  composeMapping["\u004B"] = 0x1D37;
-  composeMapping["\u004C"] = 0x1D38;
-  composeMapping["\u004D"] = 0x1D39;
-  composeMapping["\u004E"] = 0x1D3A;
-  composeMapping["\u004F"] = 0x1D3C;
-  composeMapping["\u0222"] = 0x1D3D;
-  composeMapping["\u0050"] = 0x1D3E;
-  composeMapping["\u0052"] = 0x1D3F;
-  composeMapping["\u0054"] = 0x1D40;
-  composeMapping["\u0055"] = 0x1D41;
-  composeMapping["\u0057"] = 0x1D42;
-  composeMapping["\u0061"] = 0x1D43;
-  composeMapping["\u0250"] = 0x1D44;
-  composeMapping["\u0251"] = 0x1D45;
-  composeMapping["\u1D02"] = 0x1D46;
-  composeMapping["\u0062"] = 0x1D47;
-  composeMapping["\u0064"] = 0x1D48;
-  composeMapping["\u0065"] = 0x1D49;
-  composeMapping["\u0259"] = 0x1D4A;
-  composeMapping["\u025B"] = 0x1D4B;
-  composeMapping["\u025C"] = 0x1D4C;
-  composeMapping["\u0067"] = 0x1D4D;
-  composeMapping["\u006B"] = 0x1D4F;
-  composeMapping["\u006D"] = 0x1D50;
-  composeMapping["\u014B"] = 0x1D51;
-  composeMapping["\u006F"] = 0x1D52;
-  composeMapping["\u0254"] = 0x1D53;
-  composeMapping["\u1D16"] = 0x1D54;
-  composeMapping["\u1D17"] = 0x1D55;
-  composeMapping["\u0070"] = 0x1D56;
-  composeMapping["\u0074"] = 0x1D57;
-  composeMapping["\u0075"] = 0x1D58;
-  composeMapping["\u1D1D"] = 0x1D59;
-  composeMapping["\u026F"] = 0x1D5A;
-  composeMapping["\u0076"] = 0x1D5B;
-  composeMapping["\u1D25"] = 0x1D5C;
-  composeMapping["\u03B2"] = 0x1D5D;
-  composeMapping["\u03B3"] = 0x1D5E;
-  composeMapping["\u03B4"] = 0x1D5F;
-  composeMapping["\u03C6"] = 0x1D60;
-  composeMapping["\u03C7"] = 0x1D61;
-  composeMapping["\u0069"] = 0x1D62;
-  composeMapping["\u0072"] = 0x1D63;
-  composeMapping["\u0075"] = 0x1D64;
-  composeMapping["\u0076"] = 0x1D65;
-  composeMapping["\u03B2"] = 0x1D66;
-  composeMapping["\u03B3"] = 0x1D67;
-  composeMapping["\u03C1"] = 0x1D68;
-  composeMapping["\u03C6"] = 0x1D69;
-  composeMapping["\u03C7"] = 0x1D6A;
-  composeMapping["\u043D"] = 0x1D78;
-  composeMapping["\u0252"] = 0x1D9B;
-  composeMapping["\u0063"] = 0x1D9C;
-  composeMapping["\u0255"] = 0x1D9D;
-  composeMapping["\u00F0"] = 0x1D9E;
-  composeMapping["\u025C"] = 0x1D9F;
-  composeMapping["\u0066"] = 0x1DA0;
-  composeMapping["\u025F"] = 0x1DA1;
-  composeMapping["\u0261"] = 0x1DA2;
-  composeMapping["\u0265"] = 0x1DA3;
-  composeMapping["\u0268"] = 0x1DA4;
-  composeMapping["\u0269"] = 0x1DA5;
-  composeMapping["\u026A"] = 0x1DA6;
-  composeMapping["\u1D7B"] = 0x1DA7;
-  composeMapping["\u029D"] = 0x1DA8;
-  composeMapping["\u026D"] = 0x1DA9;
-  composeMapping["\u1D85"] = 0x1DAA;
-  composeMapping["\u029F"] = 0x1DAB;
-  composeMapping["\u0271"] = 0x1DAC;
-  composeMapping["\u0270"] = 0x1DAD;
-  composeMapping["\u0272"] = 0x1DAE;
-  composeMapping["\u0273"] = 0x1DAF;
-  composeMapping["\u0274"] = 0x1DB0;
-  composeMapping["\u0275"] = 0x1DB1;
-  composeMapping["\u0278"] = 0x1DB2;
-  composeMapping["\u0282"] = 0x1DB3;
-  composeMapping["\u0283"] = 0x1DB4;
-  composeMapping["\u01AB"] = 0x1DB5;
-  composeMapping["\u0289"] = 0x1DB6;
-  composeMapping["\u028A"] = 0x1DB7;
-  composeMapping["\u1D1C"] = 0x1DB8;
-  composeMapping["\u028B"] = 0x1DB9;
-  composeMapping["\u028C"] = 0x1DBA;
-  composeMapping["\u007A"] = 0x1DBB;
-  composeMapping["\u0290"] = 0x1DBC;
-  composeMapping["\u0291"] = 0x1DBD;
-  composeMapping["\u0292"] = 0x1DBE;
-  composeMapping["\u03B8"] = 0x1DBF;
-  composeMapping["\u0041\u0325"] = 0x1E00;
-  composeMapping["\u0061\u0325"] = 0x1E01;
-  composeMapping["\u0042\u0307"] = 0x1E02;
-  composeMapping["\u0062\u0307"] = 0x1E03;
-  composeMapping["\u0042\u0323"] = 0x1E04;
-  composeMapping["\u0062\u0323"] = 0x1E05;
-  composeMapping["\u0042\u0331"] = 0x1E06;
-  composeMapping["\u0062\u0331"] = 0x1E07;
-  composeMapping["\u00C7\u0301"] = 0x1E08;
-  composeMapping["\u00E7\u0301"] = 0x1E09;
-  composeMapping["\u0044\u0307"] = 0x1E0A;
-  composeMapping["\u0064\u0307"] = 0x1E0B;
-  composeMapping["\u0044\u0323"] = 0x1E0C;
-  composeMapping["\u0064\u0323"] = 0x1E0D;
-  composeMapping["\u0044\u0331"] = 0x1E0E;
-  composeMapping["\u0064\u0331"] = 0x1E0F;
-  composeMapping["\u0044\u0327"] = 0x1E10;
-  composeMapping["\u0064\u0327"] = 0x1E11;
-  composeMapping["\u0044\u032D"] = 0x1E12;
-  composeMapping["\u0064\u032D"] = 0x1E13;
-  composeMapping["\u0112\u0300"] = 0x1E14;
-  composeMapping["\u0113\u0300"] = 0x1E15;
-  composeMapping["\u0112\u0301"] = 0x1E16;
-  composeMapping["\u0113\u0301"] = 0x1E17;
-  composeMapping["\u0045\u032D"] = 0x1E18;
-  composeMapping["\u0065\u032D"] = 0x1E19;
-  composeMapping["\u0045\u0330"] = 0x1E1A;
-  composeMapping["\u0065\u0330"] = 0x1E1B;
-  composeMapping["\u0228\u0306"] = 0x1E1C;
-  composeMapping["\u0229\u0306"] = 0x1E1D;
-  composeMapping["\u0046\u0307"] = 0x1E1E;
-  composeMapping["\u0066\u0307"] = 0x1E1F;
-  composeMapping["\u0047\u0304"] = 0x1E20;
-  composeMapping["\u0067\u0304"] = 0x1E21;
-  composeMapping["\u0048\u0307"] = 0x1E22;
-  composeMapping["\u0068\u0307"] = 0x1E23;
-  composeMapping["\u0048\u0323"] = 0x1E24;
-  composeMapping["\u0068\u0323"] = 0x1E25;
-  composeMapping["\u0048\u0308"] = 0x1E26;
-  composeMapping["\u0068\u0308"] = 0x1E27;
-  composeMapping["\u0048\u0327"] = 0x1E28;
-  composeMapping["\u0068\u0327"] = 0x1E29;
-  composeMapping["\u0048\u032E"] = 0x1E2A;
-  composeMapping["\u0068\u032E"] = 0x1E2B;
-  composeMapping["\u0049\u0330"] = 0x1E2C;
-  composeMapping["\u0069\u0330"] = 0x1E2D;
-  composeMapping["\u00CF\u0301"] = 0x1E2E;
-  composeMapping["\u00EF\u0301"] = 0x1E2F;
-  composeMapping["\u004B\u0301"] = 0x1E30;
-  composeMapping["\u006B\u0301"] = 0x1E31;
-  composeMapping["\u004B\u0323"] = 0x1E32;
-  composeMapping["\u006B\u0323"] = 0x1E33;
-  composeMapping["\u004B\u0331"] = 0x1E34;
-  composeMapping["\u006B\u0331"] = 0x1E35;
-  composeMapping["\u004C\u0323"] = 0x1E36;
-  composeMapping["\u006C\u0323"] = 0x1E37;
-  composeMapping["\u1E36\u0304"] = 0x1E38;
-  composeMapping["\u1E37\u0304"] = 0x1E39;
-  composeMapping["\u004C\u0331"] = 0x1E3A;
-  composeMapping["\u006C\u0331"] = 0x1E3B;
-  composeMapping["\u004C\u032D"] = 0x1E3C;
-  composeMapping["\u006C\u032D"] = 0x1E3D;
-  composeMapping["\u004D\u0301"] = 0x1E3E;
-  composeMapping["\u006D\u0301"] = 0x1E3F;
-  composeMapping["\u004D\u0307"] = 0x1E40;
-  composeMapping["\u006D\u0307"] = 0x1E41;
-  composeMapping["\u004D\u0323"] = 0x1E42;
-  composeMapping["\u006D\u0323"] = 0x1E43;
-  composeMapping["\u004E\u0307"] = 0x1E44;
-  composeMapping["\u006E\u0307"] = 0x1E45;
-  composeMapping["\u004E\u0323"] = 0x1E46;
-  composeMapping["\u006E\u0323"] = 0x1E47;
-  composeMapping["\u004E\u0331"] = 0x1E48;
-  composeMapping["\u006E\u0331"] = 0x1E49;
-  composeMapping["\u004E\u032D"] = 0x1E4A;
-  composeMapping["\u006E\u032D"] = 0x1E4B;
-  composeMapping["\u00D5\u0301"] = 0x1E4C;
-  composeMapping["\u00F5\u0301"] = 0x1E4D;
-  composeMapping["\u00D5\u0308"] = 0x1E4E;
-  composeMapping["\u00F5\u0308"] = 0x1E4F;
-  composeMapping["\u014C\u0300"] = 0x1E50;
-  composeMapping["\u014D\u0300"] = 0x1E51;
-  composeMapping["\u014C\u0301"] = 0x1E52;
-  composeMapping["\u014D\u0301"] = 0x1E53;
-  composeMapping["\u0050\u0301"] = 0x1E54;
-  composeMapping["\u0070\u0301"] = 0x1E55;
-  composeMapping["\u0050\u0307"] = 0x1E56;
-  composeMapping["\u0070\u0307"] = 0x1E57;
-  composeMapping["\u0052\u0307"] = 0x1E58;
-  composeMapping["\u0072\u0307"] = 0x1E59;
-  composeMapping["\u0052\u0323"] = 0x1E5A;
-  composeMapping["\u0072\u0323"] = 0x1E5B;
-  composeMapping["\u1E5A\u0304"] = 0x1E5C;
-  composeMapping["\u1E5B\u0304"] = 0x1E5D;
-  composeMapping["\u0052\u0331"] = 0x1E5E;
-  composeMapping["\u0072\u0331"] = 0x1E5F;
-  composeMapping["\u0053\u0307"] = 0x1E60;
-  composeMapping["\u0073\u0307"] = 0x1E61;
-  composeMapping["\u0053\u0323"] = 0x1E62;
-  composeMapping["\u0073\u0323"] = 0x1E63;
-  composeMapping["\u015A\u0307"] = 0x1E64;
-  composeMapping["\u015B\u0307"] = 0x1E65;
-  composeMapping["\u0160\u0307"] = 0x1E66;
-  composeMapping["\u0161\u0307"] = 0x1E67;
-  composeMapping["\u1E62\u0307"] = 0x1E68;
-  composeMapping["\u1E63\u0307"] = 0x1E69;
-  composeMapping["\u0054\u0307"] = 0x1E6A;
-  composeMapping["\u0074\u0307"] = 0x1E6B;
-  composeMapping["\u0054\u0323"] = 0x1E6C;
-  composeMapping["\u0074\u0323"] = 0x1E6D;
-  composeMapping["\u0054\u0331"] = 0x1E6E;
-  composeMapping["\u0074\u0331"] = 0x1E6F;
-  composeMapping["\u0054\u032D"] = 0x1E70;
-  composeMapping["\u0074\u032D"] = 0x1E71;
-  composeMapping["\u0055\u0324"] = 0x1E72;
-  composeMapping["\u0075\u0324"] = 0x1E73;
-  composeMapping["\u0055\u0330"] = 0x1E74;
-  composeMapping["\u0075\u0330"] = 0x1E75;
-  composeMapping["\u0055\u032D"] = 0x1E76;
-  composeMapping["\u0075\u032D"] = 0x1E77;
-  composeMapping["\u0168\u0301"] = 0x1E78;
-  composeMapping["\u0169\u0301"] = 0x1E79;
-  composeMapping["\u016A\u0308"] = 0x1E7A;
-  composeMapping["\u016B\u0308"] = 0x1E7B;
-  composeMapping["\u0056\u0303"] = 0x1E7C;
-  composeMapping["\u0076\u0303"] = 0x1E7D;
-  composeMapping["\u0056\u0323"] = 0x1E7E;
-  composeMapping["\u0076\u0323"] = 0x1E7F;
-  composeMapping["\u0057\u0300"] = 0x1E80;
-  composeMapping["\u0077\u0300"] = 0x1E81;
-  composeMapping["\u0057\u0301"] = 0x1E82;
-  composeMapping["\u0077\u0301"] = 0x1E83;
-  composeMapping["\u0057\u0308"] = 0x1E84;
-  composeMapping["\u0077\u0308"] = 0x1E85;
-  composeMapping["\u0057\u0307"] = 0x1E86;
-  composeMapping["\u0077\u0307"] = 0x1E87;
-  composeMapping["\u0057\u0323"] = 0x1E88;
-  composeMapping["\u0077\u0323"] = 0x1E89;
-  composeMapping["\u0058\u0307"] = 0x1E8A;
-  composeMapping["\u0078\u0307"] = 0x1E8B;
-  composeMapping["\u0058\u0308"] = 0x1E8C;
-  composeMapping["\u0078\u0308"] = 0x1E8D;
-  composeMapping["\u0059\u0307"] = 0x1E8E;
-  composeMapping["\u0079\u0307"] = 0x1E8F;
-  composeMapping["\u005A\u0302"] = 0x1E90;
-  composeMapping["\u007A\u0302"] = 0x1E91;
-  composeMapping["\u005A\u0323"] = 0x1E92;
-  composeMapping["\u007A\u0323"] = 0x1E93;
-  composeMapping["\u005A\u0331"] = 0x1E94;
-  composeMapping["\u007A\u0331"] = 0x1E95;
-  composeMapping["\u0068\u0331"] = 0x1E96;
-  composeMapping["\u0074\u0308"] = 0x1E97;
-  composeMapping["\u0077\u030A"] = 0x1E98;
-  composeMapping["\u0079\u030A"] = 0x1E99;
-  composeMapping["\u0061\u02BE"] = 0x1E9A;
-  composeMapping["\u017F\u0307"] = 0x1E9B;
-  composeMapping["\u0041\u0323"] = 0x1EA0;
-  composeMapping["\u0061\u0323"] = 0x1EA1;
-  composeMapping["\u0041\u0309"] = 0x1EA2;
-  composeMapping["\u0061\u0309"] = 0x1EA3;
-  composeMapping["\u00C2\u0301"] = 0x1EA4;
-  composeMapping["\u00E2\u0301"] = 0x1EA5;
-  composeMapping["\u00C2\u0300"] = 0x1EA6;
-  composeMapping["\u00E2\u0300"] = 0x1EA7;
-  composeMapping["\u00C2\u0309"] = 0x1EA8;
-  composeMapping["\u00E2\u0309"] = 0x1EA9;
-  composeMapping["\u00C2\u0303"] = 0x1EAA;
-  composeMapping["\u00E2\u0303"] = 0x1EAB;
-  composeMapping["\u1EA0\u0302"] = 0x1EAC;
-  composeMapping["\u1EA1\u0302"] = 0x1EAD;
-  composeMapping["\u0102\u0301"] = 0x1EAE;
-  composeMapping["\u0103\u0301"] = 0x1EAF;
-  composeMapping["\u0102\u0300"] = 0x1EB0;
-  composeMapping["\u0103\u0300"] = 0x1EB1;
-  composeMapping["\u0102\u0309"] = 0x1EB2;
-  composeMapping["\u0103\u0309"] = 0x1EB3;
-  composeMapping["\u0102\u0303"] = 0x1EB4;
-  composeMapping["\u0103\u0303"] = 0x1EB5;
-  composeMapping["\u1EA0\u0306"] = 0x1EB6;
-  composeMapping["\u1EA1\u0306"] = 0x1EB7;
-  composeMapping["\u0045\u0323"] = 0x1EB8;
-  composeMapping["\u0065\u0323"] = 0x1EB9;
-  composeMapping["\u0045\u0309"] = 0x1EBA;
-  composeMapping["\u0065\u0309"] = 0x1EBB;
-  composeMapping["\u0045\u0303"] = 0x1EBC;
-  composeMapping["\u0065\u0303"] = 0x1EBD;
-  composeMapping["\u00CA\u0301"] = 0x1EBE;
-  composeMapping["\u00EA\u0301"] = 0x1EBF;
-  composeMapping["\u00CA\u0300"] = 0x1EC0;
-  composeMapping["\u00EA\u0300"] = 0x1EC1;
-  composeMapping["\u00CA\u0309"] = 0x1EC2;
-  composeMapping["\u00EA\u0309"] = 0x1EC3;
-  composeMapping["\u00CA\u0303"] = 0x1EC4;
-  composeMapping["\u00EA\u0303"] = 0x1EC5;
-  composeMapping["\u1EB8\u0302"] = 0x1EC6;
-  composeMapping["\u1EB9\u0302"] = 0x1EC7;
-  composeMapping["\u0049\u0309"] = 0x1EC8;
-  composeMapping["\u0069\u0309"] = 0x1EC9;
-  composeMapping["\u0049\u0323"] = 0x1ECA;
-  composeMapping["\u0069\u0323"] = 0x1ECB;
-  composeMapping["\u004F\u0323"] = 0x1ECC;
-  composeMapping["\u006F\u0323"] = 0x1ECD;
-  composeMapping["\u004F\u0309"] = 0x1ECE;
-  composeMapping["\u006F\u0309"] = 0x1ECF;
-  composeMapping["\u00D4\u0301"] = 0x1ED0;
-  composeMapping["\u00F4\u0301"] = 0x1ED1;
-  composeMapping["\u00D4\u0300"] = 0x1ED2;
-  composeMapping["\u00F4\u0300"] = 0x1ED3;
-  composeMapping["\u00D4\u0309"] = 0x1ED4;
-  composeMapping["\u00F4\u0309"] = 0x1ED5;
-  composeMapping["\u00D4\u0303"] = 0x1ED6;
-  composeMapping["\u00F4\u0303"] = 0x1ED7;
-  composeMapping["\u1ECC\u0302"] = 0x1ED8;
-  composeMapping["\u1ECD\u0302"] = 0x1ED9;
-  composeMapping["\u01A0\u0301"] = 0x1EDA;
-  composeMapping["\u01A1\u0301"] = 0x1EDB;
-  composeMapping["\u01A0\u0300"] = 0x1EDC;
-  composeMapping["\u01A1\u0300"] = 0x1EDD;
-  composeMapping["\u01A0\u0309"] = 0x1EDE;
-  composeMapping["\u01A1\u0309"] = 0x1EDF;
-  composeMapping["\u01A0\u0303"] = 0x1EE0;
-  composeMapping["\u01A1\u0303"] = 0x1EE1;
-  composeMapping["\u01A0\u0323"] = 0x1EE2;
-  composeMapping["\u01A1\u0323"] = 0x1EE3;
-  composeMapping["\u0055\u0323"] = 0x1EE4;
-  composeMapping["\u0075\u0323"] = 0x1EE5;
-  composeMapping["\u0055\u0309"] = 0x1EE6;
-  composeMapping["\u0075\u0309"] = 0x1EE7;
-  composeMapping["\u01AF\u0301"] = 0x1EE8;
-  composeMapping["\u01B0\u0301"] = 0x1EE9;
-  composeMapping["\u01AF\u0300"] = 0x1EEA;
-  composeMapping["\u01B0\u0300"] = 0x1EEB;
-  composeMapping["\u01AF\u0309"] = 0x1EEC;
-  composeMapping["\u01B0\u0309"] = 0x1EED;
-  composeMapping["\u01AF\u0303"] = 0x1EEE;
-  composeMapping["\u01B0\u0303"] = 0x1EEF;
-  composeMapping["\u01AF\u0323"] = 0x1EF0;
-  composeMapping["\u01B0\u0323"] = 0x1EF1;
-  composeMapping["\u0059\u0300"] = 0x1EF2;
-  composeMapping["\u0079\u0300"] = 0x1EF3;
-  composeMapping["\u0059\u0323"] = 0x1EF4;
-  composeMapping["\u0079\u0323"] = 0x1EF5;
-  composeMapping["\u0059\u0309"] = 0x1EF6;
-  composeMapping["\u0079\u0309"] = 0x1EF7;
-  composeMapping["\u0059\u0303"] = 0x1EF8;
-  composeMapping["\u0079\u0303"] = 0x1EF9;
-  composeMapping["\u03B1\u0313"] = 0x1F00;
-  composeMapping["\u03B1\u0314"] = 0x1F01;
-  composeMapping["\u1F00\u0300"] = 0x1F02;
-  composeMapping["\u1F01\u0300"] = 0x1F03;
-  composeMapping["\u1F00\u0301"] = 0x1F04;
-  composeMapping["\u1F01\u0301"] = 0x1F05;
-  composeMapping["\u1F00\u0342"] = 0x1F06;
-  composeMapping["\u1F01\u0342"] = 0x1F07;
-  composeMapping["\u0391\u0313"] = 0x1F08;
-  composeMapping["\u0391\u0314"] = 0x1F09;
-  composeMapping["\u1F08\u0300"] = 0x1F0A;
-  composeMapping["\u1F09\u0300"] = 0x1F0B;
-  composeMapping["\u1F08\u0301"] = 0x1F0C;
-  composeMapping["\u1F09\u0301"] = 0x1F0D;
-  composeMapping["\u1F08\u0342"] = 0x1F0E;
-  composeMapping["\u1F09\u0342"] = 0x1F0F;
-  composeMapping["\u03B5\u0313"] = 0x1F10;
-  composeMapping["\u03B5\u0314"] = 0x1F11;
-  composeMapping["\u1F10\u0300"] = 0x1F12;
-  composeMapping["\u1F11\u0300"] = 0x1F13;
-  composeMapping["\u1F10\u0301"] = 0x1F14;
-  composeMapping["\u1F11\u0301"] = 0x1F15;
-  composeMapping["\u0395\u0313"] = 0x1F18;
-  composeMapping["\u0395\u0314"] = 0x1F19;
-  composeMapping["\u1F18\u0300"] = 0x1F1A;
-  composeMapping["\u1F19\u0300"] = 0x1F1B;
-  composeMapping["\u1F18\u0301"] = 0x1F1C;
-  composeMapping["\u1F19\u0301"] = 0x1F1D;
-  composeMapping["\u03B7\u0313"] = 0x1F20;
-  composeMapping["\u03B7\u0314"] = 0x1F21;
-  composeMapping["\u1F20\u0300"] = 0x1F22;
-  composeMapping["\u1F21\u0300"] = 0x1F23;
-  composeMapping["\u1F20\u0301"] = 0x1F24;
-  composeMapping["\u1F21\u0301"] = 0x1F25;
-  composeMapping["\u1F20\u0342"] = 0x1F26;
-  composeMapping["\u1F21\u0342"] = 0x1F27;
-  composeMapping["\u0397\u0313"] = 0x1F28;
-  composeMapping["\u0397\u0314"] = 0x1F29;
-  composeMapping["\u1F28\u0300"] = 0x1F2A;
-  composeMapping["\u1F29\u0300"] = 0x1F2B;
-  composeMapping["\u1F28\u0301"] = 0x1F2C;
-  composeMapping["\u1F29\u0301"] = 0x1F2D;
-  composeMapping["\u1F28\u0342"] = 0x1F2E;
-  composeMapping["\u1F29\u0342"] = 0x1F2F;
-  composeMapping["\u03B9\u0313"] = 0x1F30;
-  composeMapping["\u03B9\u0314"] = 0x1F31;
-  composeMapping["\u1F30\u0300"] = 0x1F32;
-  composeMapping["\u1F31\u0300"] = 0x1F33;
-  composeMapping["\u1F30\u0301"] = 0x1F34;
-  composeMapping["\u1F31\u0301"] = 0x1F35;
-  composeMapping["\u1F30\u0342"] = 0x1F36;
-  composeMapping["\u1F31\u0342"] = 0x1F37;
-  composeMapping["\u0399\u0313"] = 0x1F38;
-  composeMapping["\u0399\u0314"] = 0x1F39;
-  composeMapping["\u1F38\u0300"] = 0x1F3A;
-  composeMapping["\u1F39\u0300"] = 0x1F3B;
-  composeMapping["\u1F38\u0301"] = 0x1F3C;
-  composeMapping["\u1F39\u0301"] = 0x1F3D;
-  composeMapping["\u1F38\u0342"] = 0x1F3E;
-  composeMapping["\u1F39\u0342"] = 0x1F3F;
-  composeMapping["\u03BF\u0313"] = 0x1F40;
-  composeMapping["\u03BF\u0314"] = 0x1F41;
-  composeMapping["\u1F40\u0300"] = 0x1F42;
-  composeMapping["\u1F41\u0300"] = 0x1F43;
-  composeMapping["\u1F40\u0301"] = 0x1F44;
-  composeMapping["\u1F41\u0301"] = 0x1F45;
-  composeMapping["\u039F\u0313"] = 0x1F48;
-  composeMapping["\u039F\u0314"] = 0x1F49;
-  composeMapping["\u1F48\u0300"] = 0x1F4A;
-  composeMapping["\u1F49\u0300"] = 0x1F4B;
-  composeMapping["\u1F48\u0301"] = 0x1F4C;
-  composeMapping["\u1F49\u0301"] = 0x1F4D;
-  composeMapping["\u03C5\u0313"] = 0x1F50;
-  composeMapping["\u03C5\u0314"] = 0x1F51;
-  composeMapping["\u1F50\u0300"] = 0x1F52;
-  composeMapping["\u1F51\u0300"] = 0x1F53;
-  composeMapping["\u1F50\u0301"] = 0x1F54;
-  composeMapping["\u1F51\u0301"] = 0x1F55;
-  composeMapping["\u1F50\u0342"] = 0x1F56;
-  composeMapping["\u1F51\u0342"] = 0x1F57;
-  composeMapping["\u03A5\u0314"] = 0x1F59;
-  composeMapping["\u1F59\u0300"] = 0x1F5B;
-  composeMapping["\u1F59\u0301"] = 0x1F5D;
-  composeMapping["\u1F59\u0342"] = 0x1F5F;
-  composeMapping["\u03C9\u0313"] = 0x1F60;
-  composeMapping["\u03C9\u0314"] = 0x1F61;
-  composeMapping["\u1F60\u0300"] = 0x1F62;
-  composeMapping["\u1F61\u0300"] = 0x1F63;
-  composeMapping["\u1F60\u0301"] = 0x1F64;
-  composeMapping["\u1F61\u0301"] = 0x1F65;
-  composeMapping["\u1F60\u0342"] = 0x1F66;
-  composeMapping["\u1F61\u0342"] = 0x1F67;
-  composeMapping["\u03A9\u0313"] = 0x1F68;
-  composeMapping["\u03A9\u0314"] = 0x1F69;
-  composeMapping["\u1F68\u0300"] = 0x1F6A;
-  composeMapping["\u1F69\u0300"] = 0x1F6B;
-  composeMapping["\u1F68\u0301"] = 0x1F6C;
-  composeMapping["\u1F69\u0301"] = 0x1F6D;
-  composeMapping["\u1F68\u0342"] = 0x1F6E;
-  composeMapping["\u1F69\u0342"] = 0x1F6F;
-  composeMapping["\u03B1\u0300"] = 0x1F70;
-  composeMapping["\u03AC"] = 0x1F71;
-  composeMapping["\u03B5\u0300"] = 0x1F72;
-  composeMapping["\u03AD"] = 0x1F73;
-  composeMapping["\u03B7\u0300"] = 0x1F74;
-  composeMapping["\u03AE"] = 0x1F75;
-  composeMapping["\u03B9\u0300"] = 0x1F76;
-  composeMapping["\u03AF"] = 0x1F77;
-  composeMapping["\u03BF\u0300"] = 0x1F78;
-  composeMapping["\u03CC"] = 0x1F79;
-  composeMapping["\u03C5\u0300"] = 0x1F7A;
-  composeMapping["\u03CD"] = 0x1F7B;
-  composeMapping["\u03C9\u0300"] = 0x1F7C;
-  composeMapping["\u03CE"] = 0x1F7D;
-  composeMapping["\u1F00\u0345"] = 0x1F80;
-  composeMapping["\u1F01\u0345"] = 0x1F81;
-  composeMapping["\u1F02\u0345"] = 0x1F82;
-  composeMapping["\u1F03\u0345"] = 0x1F83;
-  composeMapping["\u1F04\u0345"] = 0x1F84;
-  composeMapping["\u1F05\u0345"] = 0x1F85;
-  composeMapping["\u1F06\u0345"] = 0x1F86;
-  composeMapping["\u1F07\u0345"] = 0x1F87;
-  composeMapping["\u1F08\u0345"] = 0x1F88;
-  composeMapping["\u1F09\u0345"] = 0x1F89;
-  composeMapping["\u1F0A\u0345"] = 0x1F8A;
-  composeMapping["\u1F0B\u0345"] = 0x1F8B;
-  composeMapping["\u1F0C\u0345"] = 0x1F8C;
-  composeMapping["\u1F0D\u0345"] = 0x1F8D;
-  composeMapping["\u1F0E\u0345"] = 0x1F8E;
-  composeMapping["\u1F0F\u0345"] = 0x1F8F;
-  composeMapping["\u1F20\u0345"] = 0x1F90;
-  composeMapping["\u1F21\u0345"] = 0x1F91;
-  composeMapping["\u1F22\u0345"] = 0x1F92;
-  composeMapping["\u1F23\u0345"] = 0x1F93;
-  composeMapping["\u1F24\u0345"] = 0x1F94;
-  composeMapping["\u1F25\u0345"] = 0x1F95;
-  composeMapping["\u1F26\u0345"] = 0x1F96;
-  composeMapping["\u1F27\u0345"] = 0x1F97;
-  composeMapping["\u1F28\u0345"] = 0x1F98;
-  composeMapping["\u1F29\u0345"] = 0x1F99;
-  composeMapping["\u1F2A\u0345"] = 0x1F9A;
-  composeMapping["\u1F2B\u0345"] = 0x1F9B;
-  composeMapping["\u1F2C\u0345"] = 0x1F9C;
-  composeMapping["\u1F2D\u0345"] = 0x1F9D;
-  composeMapping["\u1F2E\u0345"] = 0x1F9E;
-  composeMapping["\u1F2F\u0345"] = 0x1F9F;
-  composeMapping["\u1F60\u0345"] = 0x1FA0;
-  composeMapping["\u1F61\u0345"] = 0x1FA1;
-  composeMapping["\u1F62\u0345"] = 0x1FA2;
-  composeMapping["\u1F63\u0345"] = 0x1FA3;
-  composeMapping["\u1F64\u0345"] = 0x1FA4;
-  composeMapping["\u1F65\u0345"] = 0x1FA5;
-  composeMapping["\u1F66\u0345"] = 0x1FA6;
-  composeMapping["\u1F67\u0345"] = 0x1FA7;
-  composeMapping["\u1F68\u0345"] = 0x1FA8;
-  composeMapping["\u1F69\u0345"] = 0x1FA9;
-  composeMapping["\u1F6A\u0345"] = 0x1FAA;
-  composeMapping["\u1F6B\u0345"] = 0x1FAB;
-  composeMapping["\u1F6C\u0345"] = 0x1FAC;
-  composeMapping["\u1F6D\u0345"] = 0x1FAD;
-  composeMapping["\u1F6E\u0345"] = 0x1FAE;
-  composeMapping["\u1F6F\u0345"] = 0x1FAF;
-  composeMapping["\u03B1\u0306"] = 0x1FB0;
-  composeMapping["\u03B1\u0304"] = 0x1FB1;
-  composeMapping["\u1F70\u0345"] = 0x1FB2;
-  composeMapping["\u03B1\u0345"] = 0x1FB3;
-  composeMapping["\u03AC\u0345"] = 0x1FB4;
-  composeMapping["\u03B1\u0342"] = 0x1FB6;
-  composeMapping["\u1FB6\u0345"] = 0x1FB7;
-  composeMapping["\u0391\u0306"] = 0x1FB8;
-  composeMapping["\u0391\u0304"] = 0x1FB9;
-  composeMapping["\u0391\u0300"] = 0x1FBA;
-  composeMapping["\u0386"] = 0x1FBB;
-  composeMapping["\u0391\u0345"] = 0x1FBC;
-  composeMapping["\u0020\u0313"] = 0x1FBD;
-  composeMapping["\u03B9"] = 0x1FBE;
-  composeMapping["\u0020\u0313"] = 0x1FBF;
-  composeMapping["\u0020\u0342"] = 0x1FC0;
-  composeMapping["\u00A8\u0342"] = 0x1FC1;
-  composeMapping["\u1F74\u0345"] = 0x1FC2;
-  composeMapping["\u03B7\u0345"] = 0x1FC3;
-  composeMapping["\u03AE\u0345"] = 0x1FC4;
-  composeMapping["\u03B7\u0342"] = 0x1FC6;
-  composeMapping["\u1FC6\u0345"] = 0x1FC7;
-  composeMapping["\u0395\u0300"] = 0x1FC8;
-  composeMapping["\u0388"] = 0x1FC9;
-  composeMapping["\u0397\u0300"] = 0x1FCA;
-  composeMapping["\u0389"] = 0x1FCB;
-  composeMapping["\u0397\u0345"] = 0x1FCC;
-  composeMapping["\u1FBF\u0300"] = 0x1FCD;
-  composeMapping["\u1FBF\u0301"] = 0x1FCE;
-  composeMapping["\u1FBF\u0342"] = 0x1FCF;
-  composeMapping["\u03B9\u0306"] = 0x1FD0;
-  composeMapping["\u03B9\u0304"] = 0x1FD1;
-  composeMapping["\u03CA\u0300"] = 0x1FD2;
-  composeMapping["\u0390"] = 0x1FD3;
-  composeMapping["\u03B9\u0342"] = 0x1FD6;
-  composeMapping["\u03CA\u0342"] = 0x1FD7;
-  composeMapping["\u0399\u0306"] = 0x1FD8;
-  composeMapping["\u0399\u0304"] = 0x1FD9;
-  composeMapping["\u0399\u0300"] = 0x1FDA;
-  composeMapping["\u038A"] = 0x1FDB;
-  composeMapping["\u1FFE\u0300"] = 0x1FDD;
-  composeMapping["\u1FFE\u0301"] = 0x1FDE;
-  composeMapping["\u1FFE\u0342"] = 0x1FDF;
-  composeMapping["\u03C5\u0306"] = 0x1FE0;
-  composeMapping["\u03C5\u0304"] = 0x1FE1;
-  composeMapping["\u03CB\u0300"] = 0x1FE2;
-  composeMapping["\u03B0"] = 0x1FE3;
-  composeMapping["\u03C1\u0313"] = 0x1FE4;
-  composeMapping["\u03C1\u0314"] = 0x1FE5;
-  composeMapping["\u03C5\u0342"] = 0x1FE6;
-  composeMapping["\u03CB\u0342"] = 0x1FE7;
-  composeMapping["\u03A5\u0306"] = 0x1FE8;
-  composeMapping["\u03A5\u0304"] = 0x1FE9;
-  composeMapping["\u03A5\u0300"] = 0x1FEA;
-  composeMapping["\u038E"] = 0x1FEB;
-  composeMapping["\u03A1\u0314"] = 0x1FEC;
-  composeMapping["\u00A8\u0300"] = 0x1FED;
-  composeMapping["\u0385"] = 0x1FEE;
-  composeMapping["\u0060"] = 0x1FEF;
-  composeMapping["\u1F7C\u0345"] = 0x1FF2;
-  composeMapping["\u03C9\u0345"] = 0x1FF3;
-  composeMapping["\u03CE\u0345"] = 0x1FF4;
-  composeMapping["\u03C9\u0342"] = 0x1FF6;
-  composeMapping["\u1FF6\u0345"] = 0x1FF7;
-  composeMapping["\u039F\u0300"] = 0x1FF8;
-  composeMapping["\u038C"] = 0x1FF9;
-  composeMapping["\u03A9\u0300"] = 0x1FFA;
-  composeMapping["\u038F"] = 0x1FFB;
-  composeMapping["\u03A9\u0345"] = 0x1FFC;
-  composeMapping["\u00B4"] = 0x1FFD;
-  composeMapping["\u0020\u0314"] = 0x1FFE;
-  composeMapping["\u2002"] = 0x2000;
-  composeMapping["\u2003"] = 0x2001;
-  composeMapping["\u0020"] = 0x2002;
-  composeMapping["\u0020"] = 0x2003;
-  composeMapping["\u0020"] = 0x2004;
-  composeMapping["\u0020"] = 0x2005;
-  composeMapping["\u0020"] = 0x2006;
-  composeMapping["\u0020"] = 0x2007;
-  composeMapping["\u0020"] = 0x2008;
-  composeMapping["\u0020"] = 0x2009;
-  composeMapping["\u0020"] = 0x200A;
-  composeMapping["\u2010"] = 0x2011;
-  composeMapping["\u0020\u0333"] = 0x2017;
-  composeMapping["\u002E"] = 0x2024;
-  composeMapping["\u002E\u002E"] = 0x2025;
-  composeMapping["\u002E\u002E\u002E"] = 0x2026;
-  composeMapping["\u0020"] = 0x202F;
-  composeMapping["\u2032\u2032"] = 0x2033;
-  composeMapping["\u2032\u2032\u2032"] = 0x2034;
-  composeMapping["\u2035\u2035"] = 0x2036;
-  composeMapping["\u2035\u2035\u2035"] = 0x2037;
-  composeMapping["\u0021\u0021"] = 0x203C;
-  composeMapping["\u0020\u0305"] = 0x203E;
-  composeMapping["\u003F\u003F"] = 0x2047;
-  composeMapping["\u003F\u0021"] = 0x2048;
-  composeMapping["\u0021\u003F"] = 0x2049;
-  composeMapping["\u2032\u2032\u2032\u2032"] = 0x2057;
-  composeMapping["\u0020"] = 0x205F;
-  composeMapping["\u0030"] = 0x2070;
-  composeMapping["\u0069"] = 0x2071;
-  composeMapping["\u0034"] = 0x2074;
-  composeMapping["\u0035"] = 0x2075;
-  composeMapping["\u0036"] = 0x2076;
-  composeMapping["\u0037"] = 0x2077;
-  composeMapping["\u0038"] = 0x2078;
-  composeMapping["\u0039"] = 0x2079;
-  composeMapping["\u002B"] = 0x207A;
-  composeMapping["\u2212"] = 0x207B;
-  composeMapping["\u003D"] = 0x207C;
-  composeMapping["\u0028"] = 0x207D;
-  composeMapping["\u0029"] = 0x207E;
-  composeMapping["\u006E"] = 0x207F;
-  composeMapping["\u0030"] = 0x2080;
-  composeMapping["\u0031"] = 0x2081;
-  composeMapping["\u0032"] = 0x2082;
-  composeMapping["\u0033"] = 0x2083;
-  composeMapping["\u0034"] = 0x2084;
-  composeMapping["\u0035"] = 0x2085;
-  composeMapping["\u0036"] = 0x2086;
-  composeMapping["\u0037"] = 0x2087;
-  composeMapping["\u0038"] = 0x2088;
-  composeMapping["\u0039"] = 0x2089;
-  composeMapping["\u002B"] = 0x208A;
-  composeMapping["\u2212"] = 0x208B;
-  composeMapping["\u003D"] = 0x208C;
-  composeMapping["\u0028"] = 0x208D;
-  composeMapping["\u0029"] = 0x208E;
-  composeMapping["\u0061"] = 0x2090;
-  composeMapping["\u0065"] = 0x2091;
-  composeMapping["\u006F"] = 0x2092;
-  composeMapping["\u0078"] = 0x2093;
-  composeMapping["\u0259"] = 0x2094;
-  composeMapping["\u0068"] = 0x2095;
-  composeMapping["\u006B"] = 0x2096;
-  composeMapping["\u006C"] = 0x2097;
-  composeMapping["\u006D"] = 0x2098;
-  composeMapping["\u006E"] = 0x2099;
-  composeMapping["\u0070"] = 0x209A;
-  composeMapping["\u0073"] = 0x209B;
-  composeMapping["\u0074"] = 0x209C;
-  composeMapping["\u0052\u0073"] = 0x20A8;
-  composeMapping["\u0061\u002F\u0063"] = 0x2100;
-  composeMapping["\u0061\u002F\u0073"] = 0x2101;
-  composeMapping["\u0043"] = 0x2102;
-  composeMapping["\u00B0\u0043"] = 0x2103;
-  composeMapping["\u0063\u002F\u006F"] = 0x2105;
-  composeMapping["\u0063\u002F\u0075"] = 0x2106;
-  composeMapping["\u0190"] = 0x2107;
-  composeMapping["\u00B0\u0046"] = 0x2109;
-  composeMapping["\u0067"] = 0x210A;
-  composeMapping["\u0048"] = 0x210B;
-  composeMapping["\u0048"] = 0x210C;
-  composeMapping["\u0048"] = 0x210D;
-  composeMapping["\u0068"] = 0x210E;
-  composeMapping["\u0127"] = 0x210F;
-  composeMapping["\u0049"] = 0x2110;
-  composeMapping["\u0049"] = 0x2111;
-  composeMapping["\u004C"] = 0x2112;
-  composeMapping["\u006C"] = 0x2113;
-  composeMapping["\u004E"] = 0x2115;
-  composeMapping["\u004E\u006F"] = 0x2116;
-  composeMapping["\u0050"] = 0x2119;
-  composeMapping["\u0051"] = 0x211A;
-  composeMapping["\u0052"] = 0x211B;
-  composeMapping["\u0052"] = 0x211C;
-  composeMapping["\u0052"] = 0x211D;
-  composeMapping["\u0053\u004D"] = 0x2120;
-  composeMapping["\u0054\u0045\u004C"] = 0x2121;
-  composeMapping["\u0054\u004D"] = 0x2122;
-  composeMapping["\u005A"] = 0x2124;
-  composeMapping["\u03A9"] = 0x2126;
-  composeMapping["\u005A"] = 0x2128;
-  composeMapping["\u004B"] = 0x212A;
-  composeMapping["\u00C5"] = 0x212B;
-  composeMapping["\u0042"] = 0x212C;
-  composeMapping["\u0043"] = 0x212D;
-  composeMapping["\u0065"] = 0x212F;
-  composeMapping["\u0045"] = 0x2130;
-  composeMapping["\u0046"] = 0x2131;
-  composeMapping["\u004D"] = 0x2133;
-  composeMapping["\u006F"] = 0x2134;
-  composeMapping["\u05D0"] = 0x2135;
-  composeMapping["\u05D1"] = 0x2136;
-  composeMapping["\u05D2"] = 0x2137;
-  composeMapping["\u05D3"] = 0x2138;
-  composeMapping["\u0069"] = 0x2139;
-  composeMapping["\u0046\u0041\u0058"] = 0x213B;
-  composeMapping["\u03C0"] = 0x213C;
-  composeMapping["\u03B3"] = 0x213D;
-  composeMapping["\u0393"] = 0x213E;
-  composeMapping["\u03A0"] = 0x213F;
-  composeMapping["\u2211"] = 0x2140;
-  composeMapping["\u0044"] = 0x2145;
-  composeMapping["\u0064"] = 0x2146;
-  composeMapping["\u0065"] = 0x2147;
-  composeMapping["\u0069"] = 0x2148;
-  composeMapping["\u006A"] = 0x2149;
-  composeMapping["\u0031\u2044\u0037"] = 0x2150;
-  composeMapping["\u0031\u2044\u0039"] = 0x2151;
-  composeMapping["\u0031\u2044\u0031\u0030"] = 0x2152;
-  composeMapping["\u0031\u2044\u0033"] = 0x2153;
-  composeMapping["\u0032\u2044\u0033"] = 0x2154;
-  composeMapping["\u0031\u2044\u0035"] = 0x2155;
-  composeMapping["\u0032\u2044\u0035"] = 0x2156;
-  composeMapping["\u0033\u2044\u0035"] = 0x2157;
-  composeMapping["\u0034\u2044\u0035"] = 0x2158;
-  composeMapping["\u0031\u2044\u0036"] = 0x2159;
-  composeMapping["\u0035\u2044\u0036"] = 0x215A;
-  composeMapping["\u0031\u2044\u0038"] = 0x215B;
-  composeMapping["\u0033\u2044\u0038"] = 0x215C;
-  composeMapping["\u0035\u2044\u0038"] = 0x215D;
-  composeMapping["\u0037\u2044\u0038"] = 0x215E;
-  composeMapping["\u0031\u2044"] = 0x215F;
-  composeMapping["\u0049"] = 0x2160;
-  composeMapping["\u0049\u0049"] = 0x2161;
-  composeMapping["\u0049\u0049\u0049"] = 0x2162;
-  composeMapping["\u0049\u0056"] = 0x2163;
-  composeMapping["\u0056"] = 0x2164;
-  composeMapping["\u0056\u0049"] = 0x2165;
-  composeMapping["\u0056\u0049\u0049"] = 0x2166;
-  composeMapping["\u0056\u0049\u0049\u0049"] = 0x2167;
-  composeMapping["\u0049\u0058"] = 0x2168;
-  composeMapping["\u0058"] = 0x2169;
-  composeMapping["\u0058\u0049"] = 0x216A;
-  composeMapping["\u0058\u0049\u0049"] = 0x216B;
-  composeMapping["\u004C"] = 0x216C;
-  composeMapping["\u0043"] = 0x216D;
-  composeMapping["\u0044"] = 0x216E;
-  composeMapping["\u004D"] = 0x216F;
-  composeMapping["\u0069"] = 0x2170;
-  composeMapping["\u0069\u0069"] = 0x2171;
-  composeMapping["\u0069\u0069\u0069"] = 0x2172;
-  composeMapping["\u0069\u0076"] = 0x2173;
-  composeMapping["\u0076"] = 0x2174;
-  composeMapping["\u0076\u0069"] = 0x2175;
-  composeMapping["\u0076\u0069\u0069"] = 0x2176;
-  composeMapping["\u0076\u0069\u0069\u0069"] = 0x2177;
-  composeMapping["\u0069\u0078"] = 0x2178;
-  composeMapping["\u0078"] = 0x2179;
-  composeMapping["\u0078\u0069"] = 0x217A;
-  composeMapping["\u0078\u0069\u0069"] = 0x217B;
-  composeMapping["\u006C"] = 0x217C;
-  composeMapping["\u0063"] = 0x217D;
-  composeMapping["\u0064"] = 0x217E;
-  composeMapping["\u006D"] = 0x217F;
-  composeMapping["\u0030\u2044\u0033"] = 0x2189;
-  composeMapping["\u2190\u0338"] = 0x219A;
-  composeMapping["\u2192\u0338"] = 0x219B;
-  composeMapping["\u2194\u0338"] = 0x21AE;
-  composeMapping["\u21D0\u0338"] = 0x21CD;
-  composeMapping["\u21D4\u0338"] = 0x21CE;
-  composeMapping["\u21D2\u0338"] = 0x21CF;
-  composeMapping["\u2203\u0338"] = 0x2204;
-  composeMapping["\u2208\u0338"] = 0x2209;
-  composeMapping["\u220B\u0338"] = 0x220C;
-  composeMapping["\u2223\u0338"] = 0x2224;
-  composeMapping["\u2225\u0338"] = 0x2226;
-  composeMapping["\u222B\u222B"] = 0x222C;
-  composeMapping["\u222B\u222B\u222B"] = 0x222D;
-  composeMapping["\u222E\u222E"] = 0x222F;
-  composeMapping["\u222E\u222E\u222E"] = 0x2230;
-  composeMapping["\u223C\u0338"] = 0x2241;
-  composeMapping["\u2243\u0338"] = 0x2244;
-  composeMapping["\u2245\u0338"] = 0x2247;
-  composeMapping["\u2248\u0338"] = 0x2249;
-  composeMapping["\u003D\u0338"] = 0x2260;
-  composeMapping["\u2261\u0338"] = 0x2262;
-  composeMapping["\u224D\u0338"] = 0x226D;
-  composeMapping["\u003C\u0338"] = 0x226E;
-  composeMapping["\u003E\u0338"] = 0x226F;
-  composeMapping["\u2264\u0338"] = 0x2270;
-  composeMapping["\u2265\u0338"] = 0x2271;
-  composeMapping["\u2272\u0338"] = 0x2274;
-  composeMapping["\u2273\u0338"] = 0x2275;
-  composeMapping["\u2276\u0338"] = 0x2278;
-  composeMapping["\u2277\u0338"] = 0x2279;
-  composeMapping["\u227A\u0338"] = 0x2280;
-  composeMapping["\u227B\u0338"] = 0x2281;
-  composeMapping["\u2282\u0338"] = 0x2284;
-  composeMapping["\u2283\u0338"] = 0x2285;
-  composeMapping["\u2286\u0338"] = 0x2288;
-  composeMapping["\u2287\u0338"] = 0x2289;
-  composeMapping["\u22A2\u0338"] = 0x22AC;
-  composeMapping["\u22A8\u0338"] = 0x22AD;
-  composeMapping["\u22A9\u0338"] = 0x22AE;
-  composeMapping["\u22AB\u0338"] = 0x22AF;
-  composeMapping["\u227C\u0338"] = 0x22E0;
-  composeMapping["\u227D\u0338"] = 0x22E1;
-  composeMapping["\u2291\u0338"] = 0x22E2;
-  composeMapping["\u2292\u0338"] = 0x22E3;
-  composeMapping["\u22B2\u0338"] = 0x22EA;
-  composeMapping["\u22B3\u0338"] = 0x22EB;
-  composeMapping["\u22B4\u0338"] = 0x22EC;
-  composeMapping["\u22B5\u0338"] = 0x22ED;
-  composeMapping["\u3008"] = 0x2329;
-  composeMapping["\u3009"] = 0x232A;
-  composeMapping["\u0031"] = 0x2460;
-  composeMapping["\u0032"] = 0x2461;
-  composeMapping["\u0033"] = 0x2462;
-  composeMapping["\u0034"] = 0x2463;
-  composeMapping["\u0035"] = 0x2464;
-  composeMapping["\u0036"] = 0x2465;
-  composeMapping["\u0037"] = 0x2466;
-  composeMapping["\u0038"] = 0x2467;
-  composeMapping["\u0039"] = 0x2468;
-  composeMapping["\u0031\u0030"] = 0x2469;
-  composeMapping["\u0031\u0031"] = 0x246A;
-  composeMapping["\u0031\u0032"] = 0x246B;
-  composeMapping["\u0031\u0033"] = 0x246C;
-  composeMapping["\u0031\u0034"] = 0x246D;
-  composeMapping["\u0031\u0035"] = 0x246E;
-  composeMapping["\u0031\u0036"] = 0x246F;
-  composeMapping["\u0031\u0037"] = 0x2470;
-  composeMapping["\u0031\u0038"] = 0x2471;
-  composeMapping["\u0031\u0039"] = 0x2472;
-  composeMapping["\u0032\u0030"] = 0x2473;
-  composeMapping["\u0028\u0031\u0029"] = 0x2474;
-  composeMapping["\u0028\u0032\u0029"] = 0x2475;
-  composeMapping["\u0028\u0033\u0029"] = 0x2476;
-  composeMapping["\u0028\u0034\u0029"] = 0x2477;
-  composeMapping["\u0028\u0035\u0029"] = 0x2478;
-  composeMapping["\u0028\u0036\u0029"] = 0x2479;
-  composeMapping["\u0028\u0037\u0029"] = 0x247A;
-  composeMapping["\u0028\u0038\u0029"] = 0x247B;
-  composeMapping["\u0028\u0039\u0029"] = 0x247C;
-  composeMapping["\u0028\u0031\u0030\u0029"] = 0x247D;
-  composeMapping["\u0028\u0031\u0031\u0029"] = 0x247E;
-  composeMapping["\u0028\u0031\u0032\u0029"] = 0x247F;
-  composeMapping["\u0028\u0031\u0033\u0029"] = 0x2480;
-  composeMapping["\u0028\u0031\u0034\u0029"] = 0x2481;
-  composeMapping["\u0028\u0031\u0035\u0029"] = 0x2482;
-  composeMapping["\u0028\u0031\u0036\u0029"] = 0x2483;
-  composeMapping["\u0028\u0031\u0037\u0029"] = 0x2484;
-  composeMapping["\u0028\u0031\u0038\u0029"] = 0x2485;
-  composeMapping["\u0028\u0031\u0039\u0029"] = 0x2486;
-  composeMapping["\u0028\u0032\u0030\u0029"] = 0x2487;
-  composeMapping["\u0031\u002E"] = 0x2488;
-  composeMapping["\u0032\u002E"] = 0x2489;
-  composeMapping["\u0033\u002E"] = 0x248A;
-  composeMapping["\u0034\u002E"] = 0x248B;
-  composeMapping["\u0035\u002E"] = 0x248C;
-  composeMapping["\u0036\u002E"] = 0x248D;
-  composeMapping["\u0037\u002E"] = 0x248E;
-  composeMapping["\u0038\u002E"] = 0x248F;
-  composeMapping["\u0039\u002E"] = 0x2490;
-  composeMapping["\u0031\u0030\u002E"] = 0x2491;
-  composeMapping["\u0031\u0031\u002E"] = 0x2492;
-  composeMapping["\u0031\u0032\u002E"] = 0x2493;
-  composeMapping["\u0031\u0033\u002E"] = 0x2494;
-  composeMapping["\u0031\u0034\u002E"] = 0x2495;
-  composeMapping["\u0031\u0035\u002E"] = 0x2496;
-  composeMapping["\u0031\u0036\u002E"] = 0x2497;
-  composeMapping["\u0031\u0037\u002E"] = 0x2498;
-  composeMapping["\u0031\u0038\u002E"] = 0x2499;
-  composeMapping["\u0031\u0039\u002E"] = 0x249A;
-  composeMapping["\u0032\u0030\u002E"] = 0x249B;
-  composeMapping["\u0028\u0061\u0029"] = 0x249C;
-  composeMapping["\u0028\u0062\u0029"] = 0x249D;
-  composeMapping["\u0028\u0063\u0029"] = 0x249E;
-  composeMapping["\u0028\u0064\u0029"] = 0x249F;
-  composeMapping["\u0028\u0065\u0029"] = 0x24A0;
-  composeMapping["\u0028\u0066\u0029"] = 0x24A1;
-  composeMapping["\u0028\u0067\u0029"] = 0x24A2;
-  composeMapping["\u0028\u0068\u0029"] = 0x24A3;
-  composeMapping["\u0028\u0069\u0029"] = 0x24A4;
-  composeMapping["\u0028\u006A\u0029"] = 0x24A5;
-  composeMapping["\u0028\u006B\u0029"] = 0x24A6;
-  composeMapping["\u0028\u006C\u0029"] = 0x24A7;
-  composeMapping["\u0028\u006D\u0029"] = 0x24A8;
-  composeMapping["\u0028\u006E\u0029"] = 0x24A9;
-  composeMapping["\u0028\u006F\u0029"] = 0x24AA;
-  composeMapping["\u0028\u0070\u0029"] = 0x24AB;
-  composeMapping["\u0028\u0071\u0029"] = 0x24AC;
-  composeMapping["\u0028\u0072\u0029"] = 0x24AD;
-  composeMapping["\u0028\u0073\u0029"] = 0x24AE;
-  composeMapping["\u0028\u0074\u0029"] = 0x24AF;
-  composeMapping["\u0028\u0075\u0029"] = 0x24B0;
-  composeMapping["\u0028\u0076\u0029"] = 0x24B1;
-  composeMapping["\u0028\u0077\u0029"] = 0x24B2;
-  composeMapping["\u0028\u0078\u0029"] = 0x24B3;
-  composeMapping["\u0028\u0079\u0029"] = 0x24B4;
-  composeMapping["\u0028\u007A\u0029"] = 0x24B5;
-  composeMapping["\u0041"] = 0x24B6;
-  composeMapping["\u0042"] = 0x24B7;
-  composeMapping["\u0043"] = 0x24B8;
-  composeMapping["\u0044"] = 0x24B9;
-  composeMapping["\u0045"] = 0x24BA;
-  composeMapping["\u0046"] = 0x24BB;
-  composeMapping["\u0047"] = 0x24BC;
-  composeMapping["\u0048"] = 0x24BD;
-  composeMapping["\u0049"] = 0x24BE;
-  composeMapping["\u004A"] = 0x24BF;
-  composeMapping["\u004B"] = 0x24C0;
-  composeMapping["\u004C"] = 0x24C1;
-  composeMapping["\u004D"] = 0x24C2;
-  composeMapping["\u004E"] = 0x24C3;
-  composeMapping["\u004F"] = 0x24C4;
-  composeMapping["\u0050"] = 0x24C5;
-  composeMapping["\u0051"] = 0x24C6;
-  composeMapping["\u0052"] = 0x24C7;
-  composeMapping["\u0053"] = 0x24C8;
-  composeMapping["\u0054"] = 0x24C9;
-  composeMapping["\u0055"] = 0x24CA;
-  composeMapping["\u0056"] = 0x24CB;
-  composeMapping["\u0057"] = 0x24CC;
-  composeMapping["\u0058"] = 0x24CD;
-  composeMapping["\u0059"] = 0x24CE;
-  composeMapping["\u005A"] = 0x24CF;
-  composeMapping["\u0061"] = 0x24D0;
-  composeMapping["\u0062"] = 0x24D1;
-  composeMapping["\u0063"] = 0x24D2;
-  composeMapping["\u0064"] = 0x24D3;
-  composeMapping["\u0065"] = 0x24D4;
-  composeMapping["\u0066"] = 0x24D5;
-  composeMapping["\u0067"] = 0x24D6;
-  composeMapping["\u0068"] = 0x24D7;
-  composeMapping["\u0069"] = 0x24D8;
-  composeMapping["\u006A"] = 0x24D9;
-  composeMapping["\u006B"] = 0x24DA;
-  composeMapping["\u006C"] = 0x24DB;
-  composeMapping["\u006D"] = 0x24DC;
-  composeMapping["\u006E"] = 0x24DD;
-  composeMapping["\u006F"] = 0x24DE;
-  composeMapping["\u0070"] = 0x24DF;
-  composeMapping["\u0071"] = 0x24E0;
-  composeMapping["\u0072"] = 0x24E1;
-  composeMapping["\u0073"] = 0x24E2;
-  composeMapping["\u0074"] = 0x24E3;
-  composeMapping["\u0075"] = 0x24E4;
-  composeMapping["\u0076"] = 0x24E5;
-  composeMapping["\u0077"] = 0x24E6;
-  composeMapping["\u0078"] = 0x24E7;
-  composeMapping["\u0079"] = 0x24E8;
-  composeMapping["\u007A"] = 0x24E9;
-  composeMapping["\u0030"] = 0x24EA;
-  composeMapping["\u222B\u222B\u222B\u222B"] = 0x2A0C;
-  composeMapping["\u003A\u003A\u003D"] = 0x2A74;
-  composeMapping["\u003D\u003D"] = 0x2A75;
-  composeMapping["\u003D\u003D\u003D"] = 0x2A76;
-  composeMapping["\u2ADD\u0338"] = 0x2ADC;
-  composeMapping["\u006A"] = 0x2C7C;
-  composeMapping["\u0056"] = 0x2C7D;
-  composeMapping["\u2D61"] = 0x2D6F;
-  composeMapping["\u6BCD"] = 0x2E9F;
-  composeMapping["\u9F9F"] = 0x2EF3;
-  composeMapping["\u4E00"] = 0x2F00;
-  composeMapping["\u4E28"] = 0x2F01;
-  composeMapping["\u4E36"] = 0x2F02;
-  composeMapping["\u4E3F"] = 0x2F03;
-  composeMapping["\u4E59"] = 0x2F04;
-  composeMapping["\u4E85"] = 0x2F05;
-  composeMapping["\u4E8C"] = 0x2F06;
-  composeMapping["\u4EA0"] = 0x2F07;
-  composeMapping["\u4EBA"] = 0x2F08;
-  composeMapping["\u513F"] = 0x2F09;
-  composeMapping["\u5165"] = 0x2F0A;
-  composeMapping["\u516B"] = 0x2F0B;
-  composeMapping["\u5182"] = 0x2F0C;
-  composeMapping["\u5196"] = 0x2F0D;
-  composeMapping["\u51AB"] = 0x2F0E;
-  composeMapping["\u51E0"] = 0x2F0F;
-  composeMapping["\u51F5"] = 0x2F10;
-  composeMapping["\u5200"] = 0x2F11;
-  composeMapping["\u529B"] = 0x2F12;
-  composeMapping["\u52F9"] = 0x2F13;
-  composeMapping["\u5315"] = 0x2F14;
-  composeMapping["\u531A"] = 0x2F15;
-  composeMapping["\u5338"] = 0x2F16;
-  composeMapping["\u5341"] = 0x2F17;
-  composeMapping["\u535C"] = 0x2F18;
-  composeMapping["\u5369"] = 0x2F19;
-  composeMapping["\u5382"] = 0x2F1A;
-  composeMapping["\u53B6"] = 0x2F1B;
-  composeMapping["\u53C8"] = 0x2F1C;
-  composeMapping["\u53E3"] = 0x2F1D;
-  composeMapping["\u56D7"] = 0x2F1E;
-  composeMapping["\u571F"] = 0x2F1F;
-  composeMapping["\u58EB"] = 0x2F20;
-  composeMapping["\u5902"] = 0x2F21;
-  composeMapping["\u590A"] = 0x2F22;
-  composeMapping["\u5915"] = 0x2F23;
-  composeMapping["\u5927"] = 0x2F24;
-  composeMapping["\u5973"] = 0x2F25;
-  composeMapping["\u5B50"] = 0x2F26;
-  composeMapping["\u5B80"] = 0x2F27;
-  composeMapping["\u5BF8"] = 0x2F28;
-  composeMapping["\u5C0F"] = 0x2F29;
-  composeMapping["\u5C22"] = 0x2F2A;
-  composeMapping["\u5C38"] = 0x2F2B;
-  composeMapping["\u5C6E"] = 0x2F2C;
-  composeMapping["\u5C71"] = 0x2F2D;
-  composeMapping["\u5DDB"] = 0x2F2E;
-  composeMapping["\u5DE5"] = 0x2F2F;
-  composeMapping["\u5DF1"] = 0x2F30;
-  composeMapping["\u5DFE"] = 0x2F31;
-  composeMapping["\u5E72"] = 0x2F32;
-  composeMapping["\u5E7A"] = 0x2F33;
-  composeMapping["\u5E7F"] = 0x2F34;
-  composeMapping["\u5EF4"] = 0x2F35;
-  composeMapping["\u5EFE"] = 0x2F36;
-  composeMapping["\u5F0B"] = 0x2F37;
-  composeMapping["\u5F13"] = 0x2F38;
-  composeMapping["\u5F50"] = 0x2F39;
-  composeMapping["\u5F61"] = 0x2F3A;
-  composeMapping["\u5F73"] = 0x2F3B;
-  composeMapping["\u5FC3"] = 0x2F3C;
-  composeMapping["\u6208"] = 0x2F3D;
-  composeMapping["\u6236"] = 0x2F3E;
-  composeMapping["\u624B"] = 0x2F3F;
-  composeMapping["\u652F"] = 0x2F40;
-  composeMapping["\u6534"] = 0x2F41;
-  composeMapping["\u6587"] = 0x2F42;
-  composeMapping["\u6597"] = 0x2F43;
-  composeMapping["\u65A4"] = 0x2F44;
-  composeMapping["\u65B9"] = 0x2F45;
-  composeMapping["\u65E0"] = 0x2F46;
-  composeMapping["\u65E5"] = 0x2F47;
-  composeMapping["\u66F0"] = 0x2F48;
-  composeMapping["\u6708"] = 0x2F49;
-  composeMapping["\u6728"] = 0x2F4A;
-  composeMapping["\u6B20"] = 0x2F4B;
-  composeMapping["\u6B62"] = 0x2F4C;
-  composeMapping["\u6B79"] = 0x2F4D;
-  composeMapping["\u6BB3"] = 0x2F4E;
-  composeMapping["\u6BCB"] = 0x2F4F;
-  composeMapping["\u6BD4"] = 0x2F50;
-  composeMapping["\u6BDB"] = 0x2F51;
-  composeMapping["\u6C0F"] = 0x2F52;
-  composeMapping["\u6C14"] = 0x2F53;
-  composeMapping["\u6C34"] = 0x2F54;
-  composeMapping["\u706B"] = 0x2F55;
-  composeMapping["\u722A"] = 0x2F56;
-  composeMapping["\u7236"] = 0x2F57;
-  composeMapping["\u723B"] = 0x2F58;
-  composeMapping["\u723F"] = 0x2F59;
-  composeMapping["\u7247"] = 0x2F5A;
-  composeMapping["\u7259"] = 0x2F5B;
-  composeMapping["\u725B"] = 0x2F5C;
-  composeMapping["\u72AC"] = 0x2F5D;
-  composeMapping["\u7384"] = 0x2F5E;
-  composeMapping["\u7389"] = 0x2F5F;
-  composeMapping["\u74DC"] = 0x2F60;
-  composeMapping["\u74E6"] = 0x2F61;
-  composeMapping["\u7518"] = 0x2F62;
-  composeMapping["\u751F"] = 0x2F63;
-  composeMapping["\u7528"] = 0x2F64;
-  composeMapping["\u7530"] = 0x2F65;
-  composeMapping["\u758B"] = 0x2F66;
-  composeMapping["\u7592"] = 0x2F67;
-  composeMapping["\u7676"] = 0x2F68;
-  composeMapping["\u767D"] = 0x2F69;
-  composeMapping["\u76AE"] = 0x2F6A;
-  composeMapping["\u76BF"] = 0x2F6B;
-  composeMapping["\u76EE"] = 0x2F6C;
-  composeMapping["\u77DB"] = 0x2F6D;
-  composeMapping["\u77E2"] = 0x2F6E;
-  composeMapping["\u77F3"] = 0x2F6F;
-  composeMapping["\u793A"] = 0x2F70;
-  composeMapping["\u79B8"] = 0x2F71;
-  composeMapping["\u79BE"] = 0x2F72;
-  composeMapping["\u7A74"] = 0x2F73;
-  composeMapping["\u7ACB"] = 0x2F74;
-  composeMapping["\u7AF9"] = 0x2F75;
-  composeMapping["\u7C73"] = 0x2F76;
-  composeMapping["\u7CF8"] = 0x2F77;
-  composeMapping["\u7F36"] = 0x2F78;
-  composeMapping["\u7F51"] = 0x2F79;
-  composeMapping["\u7F8A"] = 0x2F7A;
-  composeMapping["\u7FBD"] = 0x2F7B;
-  composeMapping["\u8001"] = 0x2F7C;
-  composeMapping["\u800C"] = 0x2F7D;
-  composeMapping["\u8012"] = 0x2F7E;
-  composeMapping["\u8033"] = 0x2F7F;
-  composeMapping["\u807F"] = 0x2F80;
-  composeMapping["\u8089"] = 0x2F81;
-  composeMapping["\u81E3"] = 0x2F82;
-  composeMapping["\u81EA"] = 0x2F83;
-  composeMapping["\u81F3"] = 0x2F84;
-  composeMapping["\u81FC"] = 0x2F85;
-  composeMapping["\u820C"] = 0x2F86;
-  composeMapping["\u821B"] = 0x2F87;
-  composeMapping["\u821F"] = 0x2F88;
-  composeMapping["\u826E"] = 0x2F89;
-  composeMapping["\u8272"] = 0x2F8A;
-  composeMapping["\u8278"] = 0x2F8B;
-  composeMapping["\u864D"] = 0x2F8C;
-  composeMapping["\u866B"] = 0x2F8D;
-  composeMapping["\u8840"] = 0x2F8E;
-  composeMapping["\u884C"] = 0x2F8F;
-  composeMapping["\u8863"] = 0x2F90;
-  composeMapping["\u897E"] = 0x2F91;
-  composeMapping["\u898B"] = 0x2F92;
-  composeMapping["\u89D2"] = 0x2F93;
-  composeMapping["\u8A00"] = 0x2F94;
-  composeMapping["\u8C37"] = 0x2F95;
-  composeMapping["\u8C46"] = 0x2F96;
-  composeMapping["\u8C55"] = 0x2F97;
-  composeMapping["\u8C78"] = 0x2F98;
-  composeMapping["\u8C9D"] = 0x2F99;
-  composeMapping["\u8D64"] = 0x2F9A;
-  composeMapping["\u8D70"] = 0x2F9B;
-  composeMapping["\u8DB3"] = 0x2F9C;
-  composeMapping["\u8EAB"] = 0x2F9D;
-  composeMapping["\u8ECA"] = 0x2F9E;
-  composeMapping["\u8F9B"] = 0x2F9F;
-  composeMapping["\u8FB0"] = 0x2FA0;
-  composeMapping["\u8FB5"] = 0x2FA1;
-  composeMapping["\u9091"] = 0x2FA2;
-  composeMapping["\u9149"] = 0x2FA3;
-  composeMapping["\u91C6"] = 0x2FA4;
-  composeMapping["\u91CC"] = 0x2FA5;
-  composeMapping["\u91D1"] = 0x2FA6;
-  composeMapping["\u9577"] = 0x2FA7;
-  composeMapping["\u9580"] = 0x2FA8;
-  composeMapping["\u961C"] = 0x2FA9;
-  composeMapping["\u96B6"] = 0x2FAA;
-  composeMapping["\u96B9"] = 0x2FAB;
-  composeMapping["\u96E8"] = 0x2FAC;
-  composeMapping["\u9751"] = 0x2FAD;
-  composeMapping["\u975E"] = 0x2FAE;
-  composeMapping["\u9762"] = 0x2FAF;
-  composeMapping["\u9769"] = 0x2FB0;
-  composeMapping["\u97CB"] = 0x2FB1;
-  composeMapping["\u97ED"] = 0x2FB2;
-  composeMapping["\u97F3"] = 0x2FB3;
-  composeMapping["\u9801"] = 0x2FB4;
-  composeMapping["\u98A8"] = 0x2FB5;
-  composeMapping["\u98DB"] = 0x2FB6;
-  composeMapping["\u98DF"] = 0x2FB7;
-  composeMapping["\u9996"] = 0x2FB8;
-  composeMapping["\u9999"] = 0x2FB9;
-  composeMapping["\u99AC"] = 0x2FBA;
-  composeMapping["\u9AA8"] = 0x2FBB;
-  composeMapping["\u9AD8"] = 0x2FBC;
-  composeMapping["\u9ADF"] = 0x2FBD;
-  composeMapping["\u9B25"] = 0x2FBE;
-  composeMapping["\u9B2F"] = 0x2FBF;
-  composeMapping["\u9B32"] = 0x2FC0;
-  composeMapping["\u9B3C"] = 0x2FC1;
-  composeMapping["\u9B5A"] = 0x2FC2;
-  composeMapping["\u9CE5"] = 0x2FC3;
-  composeMapping["\u9E75"] = 0x2FC4;
-  composeMapping["\u9E7F"] = 0x2FC5;
-  composeMapping["\u9EA5"] = 0x2FC6;
-  composeMapping["\u9EBB"] = 0x2FC7;
-  composeMapping["\u9EC3"] = 0x2FC8;
-  composeMapping["\u9ECD"] = 0x2FC9;
-  composeMapping["\u9ED1"] = 0x2FCA;
-  composeMapping["\u9EF9"] = 0x2FCB;
-  composeMapping["\u9EFD"] = 0x2FCC;
-  composeMapping["\u9F0E"] = 0x2FCD;
-  composeMapping["\u9F13"] = 0x2FCE;
-  composeMapping["\u9F20"] = 0x2FCF;
-  composeMapping["\u9F3B"] = 0x2FD0;
-  composeMapping["\u9F4A"] = 0x2FD1;
-  composeMapping["\u9F52"] = 0x2FD2;
-  composeMapping["\u9F8D"] = 0x2FD3;
-  composeMapping["\u9F9C"] = 0x2FD4;
-  composeMapping["\u9FA0"] = 0x2FD5;
-  composeMapping["\u0020"] = 0x3000;
-  composeMapping["\u3012"] = 0x3036;
-  composeMapping["\u5341"] = 0x3038;
-  composeMapping["\u5344"] = 0x3039;
-  composeMapping["\u5345"] = 0x303A;
-  composeMapping["\u304B\u3099"] = 0x304C;
-  composeMapping["\u304D\u3099"] = 0x304E;
-  composeMapping["\u304F\u3099"] = 0x3050;
-  composeMapping["\u3051\u3099"] = 0x3052;
-  composeMapping["\u3053\u3099"] = 0x3054;
-  composeMapping["\u3055\u3099"] = 0x3056;
-  composeMapping["\u3057\u3099"] = 0x3058;
-  composeMapping["\u3059\u3099"] = 0x305A;
-  composeMapping["\u305B\u3099"] = 0x305C;
-  composeMapping["\u305D\u3099"] = 0x305E;
-  composeMapping["\u305F\u3099"] = 0x3060;
-  composeMapping["\u3061\u3099"] = 0x3062;
-  composeMapping["\u3064\u3099"] = 0x3065;
-  composeMapping["\u3066\u3099"] = 0x3067;
-  composeMapping["\u3068\u3099"] = 0x3069;
-  composeMapping["\u306F\u3099"] = 0x3070;
-  composeMapping["\u306F\u309A"] = 0x3071;
-  composeMapping["\u3072\u3099"] = 0x3073;
-  composeMapping["\u3072\u309A"] = 0x3074;
-  composeMapping["\u3075\u3099"] = 0x3076;
-  composeMapping["\u3075\u309A"] = 0x3077;
-  composeMapping["\u3078\u3099"] = 0x3079;
-  composeMapping["\u3078\u309A"] = 0x307A;
-  composeMapping["\u307B\u3099"] = 0x307C;
-  composeMapping["\u307B\u309A"] = 0x307D;
-  composeMapping["\u3046\u3099"] = 0x3094;
-  composeMapping["\u0020\u3099"] = 0x309B;
-  composeMapping["\u0020\u309A"] = 0x309C;
-  composeMapping["\u309D\u3099"] = 0x309E;
-  composeMapping["\u3088\u308A"] = 0x309F;
-  composeMapping["\u30AB\u3099"] = 0x30AC;
-  composeMapping["\u30AD\u3099"] = 0x30AE;
-  composeMapping["\u30AF\u3099"] = 0x30B0;
-  composeMapping["\u30B1\u3099"] = 0x30B2;
-  composeMapping["\u30B3\u3099"] = 0x30B4;
-  composeMapping["\u30B5\u3099"] = 0x30B6;
-  composeMapping["\u30B7\u3099"] = 0x30B8;
-  composeMapping["\u30B9\u3099"] = 0x30BA;
-  composeMapping["\u30BB\u3099"] = 0x30BC;
-  composeMapping["\u30BD\u3099"] = 0x30BE;
-  composeMapping["\u30BF\u3099"] = 0x30C0;
-  composeMapping["\u30C1\u3099"] = 0x30C2;
-  composeMapping["\u30C4\u3099"] = 0x30C5;
-  composeMapping["\u30C6\u3099"] = 0x30C7;
-  composeMapping["\u30C8\u3099"] = 0x30C9;
-  composeMapping["\u30CF\u3099"] = 0x30D0;
-  composeMapping["\u30CF\u309A"] = 0x30D1;
-  composeMapping["\u30D2\u3099"] = 0x30D3;
-  composeMapping["\u30D2\u309A"] = 0x30D4;
-  composeMapping["\u30D5\u3099"] = 0x30D6;
-  composeMapping["\u30D5\u309A"] = 0x30D7;
-  composeMapping["\u30D8\u3099"] = 0x30D9;
-  composeMapping["\u30D8\u309A"] = 0x30DA;
-  composeMapping["\u30DB\u3099"] = 0x30DC;
-  composeMapping["\u30DB\u309A"] = 0x30DD;
-  composeMapping["\u30A6\u3099"] = 0x30F4;
-  composeMapping["\u30EF\u3099"] = 0x30F7;
-  composeMapping["\u30F0\u3099"] = 0x30F8;
-  composeMapping["\u30F1\u3099"] = 0x30F9;
-  composeMapping["\u30F2\u3099"] = 0x30FA;
-  composeMapping["\u30FD\u3099"] = 0x30FE;
-  composeMapping["\u30B3\u30C8"] = 0x30FF;
-  composeMapping["\u1100"] = 0x3131;
-  composeMapping["\u1101"] = 0x3132;
-  composeMapping["\u11AA"] = 0x3133;
-  composeMapping["\u1102"] = 0x3134;
-  composeMapping["\u11AC"] = 0x3135;
-  composeMapping["\u11AD"] = 0x3136;
-  composeMapping["\u1103"] = 0x3137;
-  composeMapping["\u1104"] = 0x3138;
-  composeMapping["\u1105"] = 0x3139;
-  composeMapping["\u11B0"] = 0x313A;
-  composeMapping["\u11B1"] = 0x313B;
-  composeMapping["\u11B2"] = 0x313C;
-  composeMapping["\u11B3"] = 0x313D;
-  composeMapping["\u11B4"] = 0x313E;
-  composeMapping["\u11B5"] = 0x313F;
-  composeMapping["\u111A"] = 0x3140;
-  composeMapping["\u1106"] = 0x3141;
-  composeMapping["\u1107"] = 0x3142;
-  composeMapping["\u1108"] = 0x3143;
-  composeMapping["\u1121"] = 0x3144;
-  composeMapping["\u1109"] = 0x3145;
-  composeMapping["\u110A"] = 0x3146;
-  composeMapping["\u110B"] = 0x3147;
-  composeMapping["\u110C"] = 0x3148;
-  composeMapping["\u110D"] = 0x3149;
-  composeMapping["\u110E"] = 0x314A;
-  composeMapping["\u110F"] = 0x314B;
-  composeMapping["\u1110"] = 0x314C;
-  composeMapping["\u1111"] = 0x314D;
-  composeMapping["\u1112"] = 0x314E;
-  composeMapping["\u1161"] = 0x314F;
-  composeMapping["\u1162"] = 0x3150;
-  composeMapping["\u1163"] = 0x3151;
-  composeMapping["\u1164"] = 0x3152;
-  composeMapping["\u1165"] = 0x3153;
-  composeMapping["\u1166"] = 0x3154;
-  composeMapping["\u1167"] = 0x3155;
-  composeMapping["\u1168"] = 0x3156;
-  composeMapping["\u1169"] = 0x3157;
-  composeMapping["\u116A"] = 0x3158;
-  composeMapping["\u116B"] = 0x3159;
-  composeMapping["\u116C"] = 0x315A;
-  composeMapping["\u116D"] = 0x315B;
-  composeMapping["\u116E"] = 0x315C;
-  composeMapping["\u116F"] = 0x315D;
-  composeMapping["\u1170"] = 0x315E;
-  composeMapping["\u1171"] = 0x315F;
-  composeMapping["\u1172"] = 0x3160;
-  composeMapping["\u1173"] = 0x3161;
-  composeMapping["\u1174"] = 0x3162;
-  composeMapping["\u1175"] = 0x3163;
-  composeMapping["\u1160"] = 0x3164;
-  composeMapping["\u1114"] = 0x3165;
-  composeMapping["\u1115"] = 0x3166;
-  composeMapping["\u11C7"] = 0x3167;
-  composeMapping["\u11C8"] = 0x3168;
-  composeMapping["\u11CC"] = 0x3169;
-  composeMapping["\u11CE"] = 0x316A;
-  composeMapping["\u11D3"] = 0x316B;
-  composeMapping["\u11D7"] = 0x316C;
-  composeMapping["\u11D9"] = 0x316D;
-  composeMapping["\u111C"] = 0x316E;
-  composeMapping["\u11DD"] = 0x316F;
-  composeMapping["\u11DF"] = 0x3170;
-  composeMapping["\u111D"] = 0x3171;
-  composeMapping["\u111E"] = 0x3172;
-  composeMapping["\u1120"] = 0x3173;
-  composeMapping["\u1122"] = 0x3174;
-  composeMapping["\u1123"] = 0x3175;
-  composeMapping["\u1127"] = 0x3176;
-  composeMapping["\u1129"] = 0x3177;
-  composeMapping["\u112B"] = 0x3178;
-  composeMapping["\u112C"] = 0x3179;
-  composeMapping["\u112D"] = 0x317A;
-  composeMapping["\u112E"] = 0x317B;
-  composeMapping["\u112F"] = 0x317C;
-  composeMapping["\u1132"] = 0x317D;
-  composeMapping["\u1136"] = 0x317E;
-  composeMapping["\u1140"] = 0x317F;
-  composeMapping["\u1147"] = 0x3180;
-  composeMapping["\u114C"] = 0x3181;
-  composeMapping["\u11F1"] = 0x3182;
-  composeMapping["\u11F2"] = 0x3183;
-  composeMapping["\u1157"] = 0x3184;
-  composeMapping["\u1158"] = 0x3185;
-  composeMapping["\u1159"] = 0x3186;
-  composeMapping["\u1184"] = 0x3187;
-  composeMapping["\u1185"] = 0x3188;
-  composeMapping["\u1188"] = 0x3189;
-  composeMapping["\u1191"] = 0x318A;
-  composeMapping["\u1192"] = 0x318B;
-  composeMapping["\u1194"] = 0x318C;
-  composeMapping["\u119E"] = 0x318D;
-  composeMapping["\u11A1"] = 0x318E;
-  composeMapping["\u4E00"] = 0x3192;
-  composeMapping["\u4E8C"] = 0x3193;
-  composeMapping["\u4E09"] = 0x3194;
-  composeMapping["\u56DB"] = 0x3195;
-  composeMapping["\u4E0A"] = 0x3196;
-  composeMapping["\u4E2D"] = 0x3197;
-  composeMapping["\u4E0B"] = 0x3198;
-  composeMapping["\u7532"] = 0x3199;
-  composeMapping["\u4E59"] = 0x319A;
-  composeMapping["\u4E19"] = 0x319B;
-  composeMapping["\u4E01"] = 0x319C;
-  composeMapping["\u5929"] = 0x319D;
-  composeMapping["\u5730"] = 0x319E;
-  composeMapping["\u4EBA"] = 0x319F;
-  composeMapping["\u0028\u1100\u0029"] = 0x3200;
-  composeMapping["\u0028\u1102\u0029"] = 0x3201;
-  composeMapping["\u0028\u1103\u0029"] = 0x3202;
-  composeMapping["\u0028\u1105\u0029"] = 0x3203;
-  composeMapping["\u0028\u1106\u0029"] = 0x3204;
-  composeMapping["\u0028\u1107\u0029"] = 0x3205;
-  composeMapping["\u0028\u1109\u0029"] = 0x3206;
-  composeMapping["\u0028\u110B\u0029"] = 0x3207;
-  composeMapping["\u0028\u110C\u0029"] = 0x3208;
-  composeMapping["\u0028\u110E\u0029"] = 0x3209;
-  composeMapping["\u0028\u110F\u0029"] = 0x320A;
-  composeMapping["\u0028\u1110\u0029"] = 0x320B;
-  composeMapping["\u0028\u1111\u0029"] = 0x320C;
-  composeMapping["\u0028\u1112\u0029"] = 0x320D;
-  composeMapping["\u0028\u1100\u1161\u0029"] = 0x320E;
-  composeMapping["\u0028\u1102\u1161\u0029"] = 0x320F;
-  composeMapping["\u0028\u1103\u1161\u0029"] = 0x3210;
-  composeMapping["\u0028\u1105\u1161\u0029"] = 0x3211;
-  composeMapping["\u0028\u1106\u1161\u0029"] = 0x3212;
-  composeMapping["\u0028\u1107\u1161\u0029"] = 0x3213;
-  composeMapping["\u0028\u1109\u1161\u0029"] = 0x3214;
-  composeMapping["\u0028\u110B\u1161\u0029"] = 0x3215;
-  composeMapping["\u0028\u110C\u1161\u0029"] = 0x3216;
-  composeMapping["\u0028\u110E\u1161\u0029"] = 0x3217;
-  composeMapping["\u0028\u110F\u1161\u0029"] = 0x3218;
-  composeMapping["\u0028\u1110\u1161\u0029"] = 0x3219;
-  composeMapping["\u0028\u1111\u1161\u0029"] = 0x321A;
-  composeMapping["\u0028\u1112\u1161\u0029"] = 0x321B;
-  composeMapping["\u0028\u110C\u116E\u0029"] = 0x321C;
-  composeMapping["\u0028\u110B\u1169\u110C\u1165\u11AB\u0029"] = 0x321D;
-  composeMapping["\u0028\u110B\u1169\u1112\u116E\u0029"] = 0x321E;
-  composeMapping["\u0028\u4E00\u0029"] = 0x3220;
-  composeMapping["\u0028\u4E8C\u0029"] = 0x3221;
-  composeMapping["\u0028\u4E09\u0029"] = 0x3222;
-  composeMapping["\u0028\u56DB\u0029"] = 0x3223;
-  composeMapping["\u0028\u4E94\u0029"] = 0x3224;
-  composeMapping["\u0028\u516D\u0029"] = 0x3225;
-  composeMapping["\u0028\u4E03\u0029"] = 0x3226;
-  composeMapping["\u0028\u516B\u0029"] = 0x3227;
-  composeMapping["\u0028\u4E5D\u0029"] = 0x3228;
-  composeMapping["\u0028\u5341\u0029"] = 0x3229;
-  composeMapping["\u0028\u6708\u0029"] = 0x322A;
-  composeMapping["\u0028\u706B\u0029"] = 0x322B;
-  composeMapping["\u0028\u6C34\u0029"] = 0x322C;
-  composeMapping["\u0028\u6728\u0029"] = 0x322D;
-  composeMapping["\u0028\u91D1\u0029"] = 0x322E;
-  composeMapping["\u0028\u571F\u0029"] = 0x322F;
-  composeMapping["\u0028\u65E5\u0029"] = 0x3230;
-  composeMapping["\u0028\u682A\u0029"] = 0x3231;
-  composeMapping["\u0028\u6709\u0029"] = 0x3232;
-  composeMapping["\u0028\u793E\u0029"] = 0x3233;
-  composeMapping["\u0028\u540D\u0029"] = 0x3234;
-  composeMapping["\u0028\u7279\u0029"] = 0x3235;
-  composeMapping["\u0028\u8CA1\u0029"] = 0x3236;
-  composeMapping["\u0028\u795D\u0029"] = 0x3237;
-  composeMapping["\u0028\u52B4\u0029"] = 0x3238;
-  composeMapping["\u0028\u4EE3\u0029"] = 0x3239;
-  composeMapping["\u0028\u547C\u0029"] = 0x323A;
-  composeMapping["\u0028\u5B66\u0029"] = 0x323B;
-  composeMapping["\u0028\u76E3\u0029"] = 0x323C;
-  composeMapping["\u0028\u4F01\u0029"] = 0x323D;
-  composeMapping["\u0028\u8CC7\u0029"] = 0x323E;
-  composeMapping["\u0028\u5354\u0029"] = 0x323F;
-  composeMapping["\u0028\u796D\u0029"] = 0x3240;
-  composeMapping["\u0028\u4F11\u0029"] = 0x3241;
-  composeMapping["\u0028\u81EA\u0029"] = 0x3242;
-  composeMapping["\u0028\u81F3\u0029"] = 0x3243;
-  composeMapping["\u554F"] = 0x3244;
-  composeMapping["\u5E7C"] = 0x3245;
-  composeMapping["\u6587"] = 0x3246;
-  composeMapping["\u7B8F"] = 0x3247;
-  composeMapping["\u0050\u0054\u0045"] = 0x3250;
-  composeMapping["\u0032\u0031"] = 0x3251;
-  composeMapping["\u0032\u0032"] = 0x3252;
-  composeMapping["\u0032\u0033"] = 0x3253;
-  composeMapping["\u0032\u0034"] = 0x3254;
-  composeMapping["\u0032\u0035"] = 0x3255;
-  composeMapping["\u0032\u0036"] = 0x3256;
-  composeMapping["\u0032\u0037"] = 0x3257;
-  composeMapping["\u0032\u0038"] = 0x3258;
-  composeMapping["\u0032\u0039"] = 0x3259;
-  composeMapping["\u0033\u0030"] = 0x325A;
-  composeMapping["\u0033\u0031"] = 0x325B;
-  composeMapping["\u0033\u0032"] = 0x325C;
-  composeMapping["\u0033\u0033"] = 0x325D;
-  composeMapping["\u0033\u0034"] = 0x325E;
-  composeMapping["\u0033\u0035"] = 0x325F;
-  composeMapping["\u1100"] = 0x3260;
-  composeMapping["\u1102"] = 0x3261;
-  composeMapping["\u1103"] = 0x3262;
-  composeMapping["\u1105"] = 0x3263;
-  composeMapping["\u1106"] = 0x3264;
-  composeMapping["\u1107"] = 0x3265;
-  composeMapping["\u1109"] = 0x3266;
-  composeMapping["\u110B"] = 0x3267;
-  composeMapping["\u110C"] = 0x3268;
-  composeMapping["\u110E"] = 0x3269;
-  composeMapping["\u110F"] = 0x326A;
-  composeMapping["\u1110"] = 0x326B;
-  composeMapping["\u1111"] = 0x326C;
-  composeMapping["\u1112"] = 0x326D;
-  composeMapping["\u1100\u1161"] = 0x326E;
-  composeMapping["\u1102\u1161"] = 0x326F;
-  composeMapping["\u1103\u1161"] = 0x3270;
-  composeMapping["\u1105\u1161"] = 0x3271;
-  composeMapping["\u1106\u1161"] = 0x3272;
-  composeMapping["\u1107\u1161"] = 0x3273;
-  composeMapping["\u1109\u1161"] = 0x3274;
-  composeMapping["\u110B\u1161"] = 0x3275;
-  composeMapping["\u110C\u1161"] = 0x3276;
-  composeMapping["\u110E\u1161"] = 0x3277;
-  composeMapping["\u110F\u1161"] = 0x3278;
-  composeMapping["\u1110\u1161"] = 0x3279;
-  composeMapping["\u1111\u1161"] = 0x327A;
-  composeMapping["\u1112\u1161"] = 0x327B;
-  composeMapping["\u110E\u1161\u11B7\u1100\u1169"] = 0x327C;
-  composeMapping["\u110C\u116E\u110B\u1174"] = 0x327D;
-  composeMapping["\u110B\u116E"] = 0x327E;
-  composeMapping["\u4E00"] = 0x3280;
-  composeMapping["\u4E8C"] = 0x3281;
-  composeMapping["\u4E09"] = 0x3282;
-  composeMapping["\u56DB"] = 0x3283;
-  composeMapping["\u4E94"] = 0x3284;
-  composeMapping["\u516D"] = 0x3285;
-  composeMapping["\u4E03"] = 0x3286;
-  composeMapping["\u516B"] = 0x3287;
-  composeMapping["\u4E5D"] = 0x3288;
-  composeMapping["\u5341"] = 0x3289;
-  composeMapping["\u6708"] = 0x328A;
-  composeMapping["\u706B"] = 0x328B;
-  composeMapping["\u6C34"] = 0x328C;
-  composeMapping["\u6728"] = 0x328D;
-  composeMapping["\u91D1"] = 0x328E;
-  composeMapping["\u571F"] = 0x328F;
-  composeMapping["\u65E5"] = 0x3290;
-  composeMapping["\u682A"] = 0x3291;
-  composeMapping["\u6709"] = 0x3292;
-  composeMapping["\u793E"] = 0x3293;
-  composeMapping["\u540D"] = 0x3294;
-  composeMapping["\u7279"] = 0x3295;
-  composeMapping["\u8CA1"] = 0x3296;
-  composeMapping["\u795D"] = 0x3297;
-  composeMapping["\u52B4"] = 0x3298;
-  composeMapping["\u79D8"] = 0x3299;
-  composeMapping["\u7537"] = 0x329A;
-  composeMapping["\u5973"] = 0x329B;
-  composeMapping["\u9069"] = 0x329C;
-  composeMapping["\u512A"] = 0x329D;
-  composeMapping["\u5370"] = 0x329E;
-  composeMapping["\u6CE8"] = 0x329F;
-  composeMapping["\u9805"] = 0x32A0;
-  composeMapping["\u4F11"] = 0x32A1;
-  composeMapping["\u5199"] = 0x32A2;
-  composeMapping["\u6B63"] = 0x32A3;
-  composeMapping["\u4E0A"] = 0x32A4;
-  composeMapping["\u4E2D"] = 0x32A5;
-  composeMapping["\u4E0B"] = 0x32A6;
-  composeMapping["\u5DE6"] = 0x32A7;
-  composeMapping["\u53F3"] = 0x32A8;
-  composeMapping["\u533B"] = 0x32A9;
-  composeMapping["\u5B97"] = 0x32AA;
-  composeMapping["\u5B66"] = 0x32AB;
-  composeMapping["\u76E3"] = 0x32AC;
-  composeMapping["\u4F01"] = 0x32AD;
-  composeMapping["\u8CC7"] = 0x32AE;
-  composeMapping["\u5354"] = 0x32AF;
-  composeMapping["\u591C"] = 0x32B0;
-  composeMapping["\u0033\u0036"] = 0x32B1;
-  composeMapping["\u0033\u0037"] = 0x32B2;
-  composeMapping["\u0033\u0038"] = 0x32B3;
-  composeMapping["\u0033\u0039"] = 0x32B4;
-  composeMapping["\u0034\u0030"] = 0x32B5;
-  composeMapping["\u0034\u0031"] = 0x32B6;
-  composeMapping["\u0034\u0032"] = 0x32B7;
-  composeMapping["\u0034\u0033"] = 0x32B8;
-  composeMapping["\u0034\u0034"] = 0x32B9;
-  composeMapping["\u0034\u0035"] = 0x32BA;
-  composeMapping["\u0034\u0036"] = 0x32BB;
-  composeMapping["\u0034\u0037"] = 0x32BC;
-  composeMapping["\u0034\u0038"] = 0x32BD;
-  composeMapping["\u0034\u0039"] = 0x32BE;
-  composeMapping["\u0035\u0030"] = 0x32BF;
-  composeMapping["\u0031\u6708"] = 0x32C0;
-  composeMapping["\u0032\u6708"] = 0x32C1;
-  composeMapping["\u0033\u6708"] = 0x32C2;
-  composeMapping["\u0034\u6708"] = 0x32C3;
-  composeMapping["\u0035\u6708"] = 0x32C4;
-  composeMapping["\u0036\u6708"] = 0x32C5;
-  composeMapping["\u0037\u6708"] = 0x32C6;
-  composeMapping["\u0038\u6708"] = 0x32C7;
-  composeMapping["\u0039\u6708"] = 0x32C8;
-  composeMapping["\u0031\u0030\u6708"] = 0x32C9;
-  composeMapping["\u0031\u0031\u6708"] = 0x32CA;
-  composeMapping["\u0031\u0032\u6708"] = 0x32CB;
-  composeMapping["\u0048\u0067"] = 0x32CC;
-  composeMapping["\u0065\u0072\u0067"] = 0x32CD;
-  composeMapping["\u0065\u0056"] = 0x32CE;
-  composeMapping["\u004C\u0054\u0044"] = 0x32CF;
-  composeMapping["\u30A2"] = 0x32D0;
-  composeMapping["\u30A4"] = 0x32D1;
-  composeMapping["\u30A6"] = 0x32D2;
-  composeMapping["\u30A8"] = 0x32D3;
-  composeMapping["\u30AA"] = 0x32D4;
-  composeMapping["\u30AB"] = 0x32D5;
-  composeMapping["\u30AD"] = 0x32D6;
-  composeMapping["\u30AF"] = 0x32D7;
-  composeMapping["\u30B1"] = 0x32D8;
-  composeMapping["\u30B3"] = 0x32D9;
-  composeMapping["\u30B5"] = 0x32DA;
-  composeMapping["\u30B7"] = 0x32DB;
-  composeMapping["\u30B9"] = 0x32DC;
-  composeMapping["\u30BB"] = 0x32DD;
-  composeMapping["\u30BD"] = 0x32DE;
-  composeMapping["\u30BF"] = 0x32DF;
-  composeMapping["\u30C1"] = 0x32E0;
-  composeMapping["\u30C4"] = 0x32E1;
-  composeMapping["\u30C6"] = 0x32E2;
-  composeMapping["\u30C8"] = 0x32E3;
-  composeMapping["\u30CA"] = 0x32E4;
-  composeMapping["\u30CB"] = 0x32E5;
-  composeMapping["\u30CC"] = 0x32E6;
-  composeMapping["\u30CD"] = 0x32E7;
-  composeMapping["\u30CE"] = 0x32E8;
-  composeMapping["\u30CF"] = 0x32E9;
-  composeMapping["\u30D2"] = 0x32EA;
-  composeMapping["\u30D5"] = 0x32EB;
-  composeMapping["\u30D8"] = 0x32EC;
-  composeMapping["\u30DB"] = 0x32ED;
-  composeMapping["\u30DE"] = 0x32EE;
-  composeMapping["\u30DF"] = 0x32EF;
-  composeMapping["\u30E0"] = 0x32F0;
-  composeMapping["\u30E1"] = 0x32F1;
-  composeMapping["\u30E2"] = 0x32F2;
-  composeMapping["\u30E4"] = 0x32F3;
-  composeMapping["\u30E6"] = 0x32F4;
-  composeMapping["\u30E8"] = 0x32F5;
-  composeMapping["\u30E9"] = 0x32F6;
-  composeMapping["\u30EA"] = 0x32F7;
-  composeMapping["\u30EB"] = 0x32F8;
-  composeMapping["\u30EC"] = 0x32F9;
-  composeMapping["\u30ED"] = 0x32FA;
-  composeMapping["\u30EF"] = 0x32FB;
-  composeMapping["\u30F0"] = 0x32FC;
-  composeMapping["\u30F1"] = 0x32FD;
-  composeMapping["\u30F2"] = 0x32FE;
-  composeMapping["\u30A2\u30D1\u30FC\u30C8"] = 0x3300;
-  composeMapping["\u30A2\u30EB\u30D5\u30A1"] = 0x3301;
-  composeMapping["\u30A2\u30F3\u30DA\u30A2"] = 0x3302;
-  composeMapping["\u30A2\u30FC\u30EB"] = 0x3303;
-  composeMapping["\u30A4\u30CB\u30F3\u30B0"] = 0x3304;
-  composeMapping["\u30A4\u30F3\u30C1"] = 0x3305;
-  composeMapping["\u30A6\u30A9\u30F3"] = 0x3306;
-  composeMapping["\u30A8\u30B9\u30AF\u30FC\u30C9"] = 0x3307;
-  composeMapping["\u30A8\u30FC\u30AB\u30FC"] = 0x3308;
-  composeMapping["\u30AA\u30F3\u30B9"] = 0x3309;
-  composeMapping["\u30AA\u30FC\u30E0"] = 0x330A;
-  composeMapping["\u30AB\u30A4\u30EA"] = 0x330B;
-  composeMapping["\u30AB\u30E9\u30C3\u30C8"] = 0x330C;
-  composeMapping["\u30AB\u30ED\u30EA\u30FC"] = 0x330D;
-  composeMapping["\u30AC\u30ED\u30F3"] = 0x330E;
-  composeMapping["\u30AC\u30F3\u30DE"] = 0x330F;
-  composeMapping["\u30AE\u30AC"] = 0x3310;
-  composeMapping["\u30AE\u30CB\u30FC"] = 0x3311;
-  composeMapping["\u30AD\u30E5\u30EA\u30FC"] = 0x3312;
-  composeMapping["\u30AE\u30EB\u30C0\u30FC"] = 0x3313;
-  composeMapping["\u30AD\u30ED"] = 0x3314;
-  composeMapping["\u30AD\u30ED\u30B0\u30E9\u30E0"] = 0x3315;
-  composeMapping["\u30AD\u30ED\u30E1\u30FC\u30C8\u30EB"] = 0x3316;
-  composeMapping["\u30AD\u30ED\u30EF\u30C3\u30C8"] = 0x3317;
-  composeMapping["\u30B0\u30E9\u30E0"] = 0x3318;
-  composeMapping["\u30B0\u30E9\u30E0\u30C8\u30F3"] = 0x3319;
-  composeMapping["\u30AF\u30EB\u30BC\u30A4\u30ED"] = 0x331A;
-  composeMapping["\u30AF\u30ED\u30FC\u30CD"] = 0x331B;
-  composeMapping["\u30B1\u30FC\u30B9"] = 0x331C;
-  composeMapping["\u30B3\u30EB\u30CA"] = 0x331D;
-  composeMapping["\u30B3\u30FC\u30DD"] = 0x331E;
-  composeMapping["\u30B5\u30A4\u30AF\u30EB"] = 0x331F;
-  composeMapping["\u30B5\u30F3\u30C1\u30FC\u30E0"] = 0x3320;
-  composeMapping["\u30B7\u30EA\u30F3\u30B0"] = 0x3321;
-  composeMapping["\u30BB\u30F3\u30C1"] = 0x3322;
-  composeMapping["\u30BB\u30F3\u30C8"] = 0x3323;
-  composeMapping["\u30C0\u30FC\u30B9"] = 0x3324;
-  composeMapping["\u30C7\u30B7"] = 0x3325;
-  composeMapping["\u30C9\u30EB"] = 0x3326;
-  composeMapping["\u30C8\u30F3"] = 0x3327;
-  composeMapping["\u30CA\u30CE"] = 0x3328;
-  composeMapping["\u30CE\u30C3\u30C8"] = 0x3329;
-  composeMapping["\u30CF\u30A4\u30C4"] = 0x332A;
-  composeMapping["\u30D1\u30FC\u30BB\u30F3\u30C8"] = 0x332B;
-  composeMapping["\u30D1\u30FC\u30C4"] = 0x332C;
-  composeMapping["\u30D0\u30FC\u30EC\u30EB"] = 0x332D;
-  composeMapping["\u30D4\u30A2\u30B9\u30C8\u30EB"] = 0x332E;
-  composeMapping["\u30D4\u30AF\u30EB"] = 0x332F;
-  composeMapping["\u30D4\u30B3"] = 0x3330;
-  composeMapping["\u30D3\u30EB"] = 0x3331;
-  composeMapping["\u30D5\u30A1\u30E9\u30C3\u30C9"] = 0x3332;
-  composeMapping["\u30D5\u30A3\u30FC\u30C8"] = 0x3333;
-  composeMapping["\u30D6\u30C3\u30B7\u30A7\u30EB"] = 0x3334;
-  composeMapping["\u30D5\u30E9\u30F3"] = 0x3335;
-  composeMapping["\u30D8\u30AF\u30BF\u30FC\u30EB"] = 0x3336;
-  composeMapping["\u30DA\u30BD"] = 0x3337;
-  composeMapping["\u30DA\u30CB\u30D2"] = 0x3338;
-  composeMapping["\u30D8\u30EB\u30C4"] = 0x3339;
-  composeMapping["\u30DA\u30F3\u30B9"] = 0x333A;
-  composeMapping["\u30DA\u30FC\u30B8"] = 0x333B;
-  composeMapping["\u30D9\u30FC\u30BF"] = 0x333C;
-  composeMapping["\u30DD\u30A4\u30F3\u30C8"] = 0x333D;
-  composeMapping["\u30DC\u30EB\u30C8"] = 0x333E;
-  composeMapping["\u30DB\u30F3"] = 0x333F;
-  composeMapping["\u30DD\u30F3\u30C9"] = 0x3340;
-  composeMapping["\u30DB\u30FC\u30EB"] = 0x3341;
-  composeMapping["\u30DB\u30FC\u30F3"] = 0x3342;
-  composeMapping["\u30DE\u30A4\u30AF\u30ED"] = 0x3343;
-  composeMapping["\u30DE\u30A4\u30EB"] = 0x3344;
-  composeMapping["\u30DE\u30C3\u30CF"] = 0x3345;
-  composeMapping["\u30DE\u30EB\u30AF"] = 0x3346;
-  composeMapping["\u30DE\u30F3\u30B7\u30E7\u30F3"] = 0x3347;
-  composeMapping["\u30DF\u30AF\u30ED\u30F3"] = 0x3348;
-  composeMapping["\u30DF\u30EA"] = 0x3349;
-  composeMapping["\u30DF\u30EA\u30D0\u30FC\u30EB"] = 0x334A;
-  composeMapping["\u30E1\u30AC"] = 0x334B;
-  composeMapping["\u30E1\u30AC\u30C8\u30F3"] = 0x334C;
-  composeMapping["\u30E1\u30FC\u30C8\u30EB"] = 0x334D;
-  composeMapping["\u30E4\u30FC\u30C9"] = 0x334E;
-  composeMapping["\u30E4\u30FC\u30EB"] = 0x334F;
-  composeMapping["\u30E6\u30A2\u30F3"] = 0x3350;
-  composeMapping["\u30EA\u30C3\u30C8\u30EB"] = 0x3351;
-  composeMapping["\u30EA\u30E9"] = 0x3352;
-  composeMapping["\u30EB\u30D4\u30FC"] = 0x3353;
-  composeMapping["\u30EB\u30FC\u30D6\u30EB"] = 0x3354;
-  composeMapping["\u30EC\u30E0"] = 0x3355;
-  composeMapping["\u30EC\u30F3\u30C8\u30B2\u30F3"] = 0x3356;
-  composeMapping["\u30EF\u30C3\u30C8"] = 0x3357;
-  composeMapping["\u0030\u70B9"] = 0x3358;
-  composeMapping["\u0031\u70B9"] = 0x3359;
-  composeMapping["\u0032\u70B9"] = 0x335A;
-  composeMapping["\u0033\u70B9"] = 0x335B;
-  composeMapping["\u0034\u70B9"] = 0x335C;
-  composeMapping["\u0035\u70B9"] = 0x335D;
-  composeMapping["\u0036\u70B9"] = 0x335E;
-  composeMapping["\u0037\u70B9"] = 0x335F;
-  composeMapping["\u0038\u70B9"] = 0x3360;
-  composeMapping["\u0039\u70B9"] = 0x3361;
-  composeMapping["\u0031\u0030\u70B9"] = 0x3362;
-  composeMapping["\u0031\u0031\u70B9"] = 0x3363;
-  composeMapping["\u0031\u0032\u70B9"] = 0x3364;
-  composeMapping["\u0031\u0033\u70B9"] = 0x3365;
-  composeMapping["\u0031\u0034\u70B9"] = 0x3366;
-  composeMapping["\u0031\u0035\u70B9"] = 0x3367;
-  composeMapping["\u0031\u0036\u70B9"] = 0x3368;
-  composeMapping["\u0031\u0037\u70B9"] = 0x3369;
-  composeMapping["\u0031\u0038\u70B9"] = 0x336A;
-  composeMapping["\u0031\u0039\u70B9"] = 0x336B;
-  composeMapping["\u0032\u0030\u70B9"] = 0x336C;
-  composeMapping["\u0032\u0031\u70B9"] = 0x336D;
-  composeMapping["\u0032\u0032\u70B9"] = 0x336E;
-  composeMapping["\u0032\u0033\u70B9"] = 0x336F;
-  composeMapping["\u0032\u0034\u70B9"] = 0x3370;
-  composeMapping["\u0068\u0050\u0061"] = 0x3371;
-  composeMapping["\u0064\u0061"] = 0x3372;
-  composeMapping["\u0041\u0055"] = 0x3373;
-  composeMapping["\u0062\u0061\u0072"] = 0x3374;
-  composeMapping["\u006F\u0056"] = 0x3375;
-  composeMapping["\u0070\u0063"] = 0x3376;
-  composeMapping["\u0064\u006D"] = 0x3377;
-  composeMapping["\u0064\u006D\u00B2"] = 0x3378;
-  composeMapping["\u0064\u006D\u00B3"] = 0x3379;
-  composeMapping["\u0049\u0055"] = 0x337A;
-  composeMapping["\u5E73\u6210"] = 0x337B;
-  composeMapping["\u662D\u548C"] = 0x337C;
-  composeMapping["\u5927\u6B63"] = 0x337D;
-  composeMapping["\u660E\u6CBB"] = 0x337E;
-  composeMapping["\u682A\u5F0F\u4F1A\u793E"] = 0x337F;
-  composeMapping["\u0070\u0041"] = 0x3380;
-  composeMapping["\u006E\u0041"] = 0x3381;
-  composeMapping["\u03BC\u0041"] = 0x3382;
-  composeMapping["\u006D\u0041"] = 0x3383;
-  composeMapping["\u006B\u0041"] = 0x3384;
-  composeMapping["\u004B\u0042"] = 0x3385;
-  composeMapping["\u004D\u0042"] = 0x3386;
-  composeMapping["\u0047\u0042"] = 0x3387;
-  composeMapping["\u0063\u0061\u006C"] = 0x3388;
-  composeMapping["\u006B\u0063\u0061\u006C"] = 0x3389;
-  composeMapping["\u0070\u0046"] = 0x338A;
-  composeMapping["\u006E\u0046"] = 0x338B;
-  composeMapping["\u03BC\u0046"] = 0x338C;
-  composeMapping["\u03BC\u0067"] = 0x338D;
-  composeMapping["\u006D\u0067"] = 0x338E;
-  composeMapping["\u006B\u0067"] = 0x338F;
-  composeMapping["\u0048\u007A"] = 0x3390;
-  composeMapping["\u006B\u0048\u007A"] = 0x3391;
-  composeMapping["\u004D\u0048\u007A"] = 0x3392;
-  composeMapping["\u0047\u0048\u007A"] = 0x3393;
-  composeMapping["\u0054\u0048\u007A"] = 0x3394;
-  composeMapping["\u03BC\u2113"] = 0x3395;
-  composeMapping["\u006D\u2113"] = 0x3396;
-  composeMapping["\u0064\u2113"] = 0x3397;
-  composeMapping["\u006B\u2113"] = 0x3398;
-  composeMapping["\u0066\u006D"] = 0x3399;
-  composeMapping["\u006E\u006D"] = 0x339A;
-  composeMapping["\u03BC\u006D"] = 0x339B;
-  composeMapping["\u006D\u006D"] = 0x339C;
-  composeMapping["\u0063\u006D"] = 0x339D;
-  composeMapping["\u006B\u006D"] = 0x339E;
-  composeMapping["\u006D\u006D\u00B2"] = 0x339F;
-  composeMapping["\u0063\u006D\u00B2"] = 0x33A0;
-  composeMapping["\u006D\u00B2"] = 0x33A1;
-  composeMapping["\u006B\u006D\u00B2"] = 0x33A2;
-  composeMapping["\u006D\u006D\u00B3"] = 0x33A3;
-  composeMapping["\u0063\u006D\u00B3"] = 0x33A4;
-  composeMapping["\u006D\u00B3"] = 0x33A5;
-  composeMapping["\u006B\u006D\u00B3"] = 0x33A6;
-  composeMapping["\u006D\u2215\u0073"] = 0x33A7;
-  composeMapping["\u006D\u2215\u0073\u00B2"] = 0x33A8;
-  composeMapping["\u0050\u0061"] = 0x33A9;
-  composeMapping["\u006B\u0050\u0061"] = 0x33AA;
-  composeMapping["\u004D\u0050\u0061"] = 0x33AB;
-  composeMapping["\u0047\u0050\u0061"] = 0x33AC;
-  composeMapping["\u0072\u0061\u0064"] = 0x33AD;
-  composeMapping["\u0072\u0061\u0064\u2215\u0073"] = 0x33AE;
-  composeMapping["\u0072\u0061\u0064\u2215\u0073\u00B2"] = 0x33AF;
-  composeMapping["\u0070\u0073"] = 0x33B0;
-  composeMapping["\u006E\u0073"] = 0x33B1;
-  composeMapping["\u03BC\u0073"] = 0x33B2;
-  composeMapping["\u006D\u0073"] = 0x33B3;
-  composeMapping["\u0070\u0056"] = 0x33B4;
-  composeMapping["\u006E\u0056"] = 0x33B5;
-  composeMapping["\u03BC\u0056"] = 0x33B6;
-  composeMapping["\u006D\u0056"] = 0x33B7;
-  composeMapping["\u006B\u0056"] = 0x33B8;
-  composeMapping["\u004D\u0056"] = 0x33B9;
-  composeMapping["\u0070\u0057"] = 0x33BA;
-  composeMapping["\u006E\u0057"] = 0x33BB;
-  composeMapping["\u03BC\u0057"] = 0x33BC;
-  composeMapping["\u006D\u0057"] = 0x33BD;
-  composeMapping["\u006B\u0057"] = 0x33BE;
-  composeMapping["\u004D\u0057"] = 0x33BF;
-  composeMapping["\u006B\u03A9"] = 0x33C0;
-  composeMapping["\u004D\u03A9"] = 0x33C1;
-  composeMapping["\u0061\u002E\u006D\u002E"] = 0x33C2;
-  composeMapping["\u0042\u0071"] = 0x33C3;
-  composeMapping["\u0063\u0063"] = 0x33C4;
-  composeMapping["\u0063\u0064"] = 0x33C5;
-  composeMapping["\u0043\u2215\u006B\u0067"] = 0x33C6;
-  composeMapping["\u0043\u006F\u002E"] = 0x33C7;
-  composeMapping["\u0064\u0042"] = 0x33C8;
-  composeMapping["\u0047\u0079"] = 0x33C9;
-  composeMapping["\u0068\u0061"] = 0x33CA;
-  composeMapping["\u0048\u0050"] = 0x33CB;
-  composeMapping["\u0069\u006E"] = 0x33CC;
-  composeMapping["\u004B\u004B"] = 0x33CD;
-  composeMapping["\u004B\u004D"] = 0x33CE;
-  composeMapping["\u006B\u0074"] = 0x33CF;
-  composeMapping["\u006C\u006D"] = 0x33D0;
-  composeMapping["\u006C\u006E"] = 0x33D1;
-  composeMapping["\u006C\u006F\u0067"] = 0x33D2;
-  composeMapping["\u006C\u0078"] = 0x33D3;
-  composeMapping["\u006D\u0062"] = 0x33D4;
-  composeMapping["\u006D\u0069\u006C"] = 0x33D5;
-  composeMapping["\u006D\u006F\u006C"] = 0x33D6;
-  composeMapping["\u0050\u0048"] = 0x33D7;
-  composeMapping["\u0070\u002E\u006D\u002E"] = 0x33D8;
-  composeMapping["\u0050\u0050\u004D"] = 0x33D9;
-  composeMapping["\u0050\u0052"] = 0x33DA;
-  composeMapping["\u0073\u0072"] = 0x33DB;
-  composeMapping["\u0053\u0076"] = 0x33DC;
-  composeMapping["\u0057\u0062"] = 0x33DD;
-  composeMapping["\u0056\u2215\u006D"] = 0x33DE;
-  composeMapping["\u0041\u2215\u006D"] = 0x33DF;
-  composeMapping["\u0031\u65E5"] = 0x33E0;
-  composeMapping["\u0032\u65E5"] = 0x33E1;
-  composeMapping["\u0033\u65E5"] = 0x33E2;
-  composeMapping["\u0034\u65E5"] = 0x33E3;
-  composeMapping["\u0035\u65E5"] = 0x33E4;
-  composeMapping["\u0036\u65E5"] = 0x33E5;
-  composeMapping["\u0037\u65E5"] = 0x33E6;
-  composeMapping["\u0038\u65E5"] = 0x33E7;
-  composeMapping["\u0039\u65E5"] = 0x33E8;
-  composeMapping["\u0031\u0030\u65E5"] = 0x33E9;
-  composeMapping["\u0031\u0031\u65E5"] = 0x33EA;
-  composeMapping["\u0031\u0032\u65E5"] = 0x33EB;
-  composeMapping["\u0031\u0033\u65E5"] = 0x33EC;
-  composeMapping["\u0031\u0034\u65E5"] = 0x33ED;
-  composeMapping["\u0031\u0035\u65E5"] = 0x33EE;
-  composeMapping["\u0031\u0036\u65E5"] = 0x33EF;
-  composeMapping["\u0031\u0037\u65E5"] = 0x33F0;
-  composeMapping["\u0031\u0038\u65E5"] = 0x33F1;
-  composeMapping["\u0031\u0039\u65E5"] = 0x33F2;
-  composeMapping["\u0032\u0030\u65E5"] = 0x33F3;
-  composeMapping["\u0032\u0031\u65E5"] = 0x33F4;
-  composeMapping["\u0032\u0032\u65E5"] = 0x33F5;
-  composeMapping["\u0032\u0033\u65E5"] = 0x33F6;
-  composeMapping["\u0032\u0034\u65E5"] = 0x33F7;
-  composeMapping["\u0032\u0035\u65E5"] = 0x33F8;
-  composeMapping["\u0032\u0036\u65E5"] = 0x33F9;
-  composeMapping["\u0032\u0037\u65E5"] = 0x33FA;
-  composeMapping["\u0032\u0038\u65E5"] = 0x33FB;
-  composeMapping["\u0032\u0039\u65E5"] = 0x33FC;
-  composeMapping["\u0033\u0030\u65E5"] = 0x33FD;
-  composeMapping["\u0033\u0031\u65E5"] = 0x33FE;
-  composeMapping["\u0067\u0061\u006C"] = 0x33FF;
-  composeMapping["\u044A"] = 0xA69C;
-  composeMapping["\u044C"] = 0xA69D;
-  composeMapping["\uA76F"] = 0xA770;
-  composeMapping["\u0126"] = 0xA7F8;
-  composeMapping["\u0153"] = 0xA7F9;
-  composeMapping["\uA727"] = 0xAB5C;
-  composeMapping["\uAB37"] = 0xAB5D;
-  composeMapping["\u026B"] = 0xAB5E;
-  composeMapping["\uAB52"] = 0xAB5F;
-  composeMapping["\u8C48"] = 0xF900;
-  composeMapping["\u66F4"] = 0xF901;
-  composeMapping["\u8ECA"] = 0xF902;
-  composeMapping["\u8CC8"] = 0xF903;
-  composeMapping["\u6ED1"] = 0xF904;
-  composeMapping["\u4E32"] = 0xF905;
-  composeMapping["\u53E5"] = 0xF906;
-  composeMapping["\u9F9C"] = 0xF907;
-  composeMapping["\u9F9C"] = 0xF908;
-  composeMapping["\u5951"] = 0xF909;
-  composeMapping["\u91D1"] = 0xF90A;
-  composeMapping["\u5587"] = 0xF90B;
-  composeMapping["\u5948"] = 0xF90C;
-  composeMapping["\u61F6"] = 0xF90D;
-  composeMapping["\u7669"] = 0xF90E;
-  composeMapping["\u7F85"] = 0xF90F;
-  composeMapping["\u863F"] = 0xF910;
-  composeMapping["\u87BA"] = 0xF911;
-  composeMapping["\u88F8"] = 0xF912;
-  composeMapping["\u908F"] = 0xF913;
-  composeMapping["\u6A02"] = 0xF914;
-  composeMapping["\u6D1B"] = 0xF915;
-  composeMapping["\u70D9"] = 0xF916;
-  composeMapping["\u73DE"] = 0xF917;
-  composeMapping["\u843D"] = 0xF918;
-  composeMapping["\u916A"] = 0xF919;
-  composeMapping["\u99F1"] = 0xF91A;
-  composeMapping["\u4E82"] = 0xF91B;
-  composeMapping["\u5375"] = 0xF91C;
-  composeMapping["\u6B04"] = 0xF91D;
-  composeMapping["\u721B"] = 0xF91E;
-  composeMapping["\u862D"] = 0xF91F;
-  composeMapping["\u9E1E"] = 0xF920;
-  composeMapping["\u5D50"] = 0xF921;
-  composeMapping["\u6FEB"] = 0xF922;
-  composeMapping["\u85CD"] = 0xF923;
-  composeMapping["\u8964"] = 0xF924;
-  composeMapping["\u62C9"] = 0xF925;
-  composeMapping["\u81D8"] = 0xF926;
-  composeMapping["\u881F"] = 0xF927;
-  composeMapping["\u5ECA"] = 0xF928;
-  composeMapping["\u6717"] = 0xF929;
-  composeMapping["\u6D6A"] = 0xF92A;
-  composeMapping["\u72FC"] = 0xF92B;
-  composeMapping["\u90CE"] = 0xF92C;
-  composeMapping["\u4F86"] = 0xF92D;
-  composeMapping["\u51B7"] = 0xF92E;
-  composeMapping["\u52DE"] = 0xF92F;
-  composeMapping["\u64C4"] = 0xF930;
-  composeMapping["\u6AD3"] = 0xF931;
-  composeMapping["\u7210"] = 0xF932;
-  composeMapping["\u76E7"] = 0xF933;
-  composeMapping["\u8001"] = 0xF934;
-  composeMapping["\u8606"] = 0xF935;
-  composeMapping["\u865C"] = 0xF936;
-  composeMapping["\u8DEF"] = 0xF937;
-  composeMapping["\u9732"] = 0xF938;
-  composeMapping["\u9B6F"] = 0xF939;
-  composeMapping["\u9DFA"] = 0xF93A;
-  composeMapping["\u788C"] = 0xF93B;
-  composeMapping["\u797F"] = 0xF93C;
-  composeMapping["\u7DA0"] = 0xF93D;
-  composeMapping["\u83C9"] = 0xF93E;
-  composeMapping["\u9304"] = 0xF93F;
-  composeMapping["\u9E7F"] = 0xF940;
-  composeMapping["\u8AD6"] = 0xF941;
-  composeMapping["\u58DF"] = 0xF942;
-  composeMapping["\u5F04"] = 0xF943;
-  composeMapping["\u7C60"] = 0xF944;
-  composeMapping["\u807E"] = 0xF945;
-  composeMapping["\u7262"] = 0xF946;
-  composeMapping["\u78CA"] = 0xF947;
-  composeMapping["\u8CC2"] = 0xF948;
-  composeMapping["\u96F7"] = 0xF949;
-  composeMapping["\u58D8"] = 0xF94A;
-  composeMapping["\u5C62"] = 0xF94B;
-  composeMapping["\u6A13"] = 0xF94C;
-  composeMapping["\u6DDA"] = 0xF94D;
-  composeMapping["\u6F0F"] = 0xF94E;
-  composeMapping["\u7D2F"] = 0xF94F;
-  composeMapping["\u7E37"] = 0xF950;
-  composeMapping["\u964B"] = 0xF951;
-  composeMapping["\u52D2"] = 0xF952;
-  composeMapping["\u808B"] = 0xF953;
-  composeMapping["\u51DC"] = 0xF954;
-  composeMapping["\u51CC"] = 0xF955;
-  composeMapping["\u7A1C"] = 0xF956;
-  composeMapping["\u7DBE"] = 0xF957;
-  composeMapping["\u83F1"] = 0xF958;
-  composeMapping["\u9675"] = 0xF959;
-  composeMapping["\u8B80"] = 0xF95A;
-  composeMapping["\u62CF"] = 0xF95B;
-  composeMapping["\u6A02"] = 0xF95C;
-  composeMapping["\u8AFE"] = 0xF95D;
-  composeMapping["\u4E39"] = 0xF95E;
-  composeMapping["\u5BE7"] = 0xF95F;
-  composeMapping["\u6012"] = 0xF960;
-  composeMapping["\u7387"] = 0xF961;
-  composeMapping["\u7570"] = 0xF962;
-  composeMapping["\u5317"] = 0xF963;
-  composeMapping["\u78FB"] = 0xF964;
-  composeMapping["\u4FBF"] = 0xF965;
-  composeMapping["\u5FA9"] = 0xF966;
-  composeMapping["\u4E0D"] = 0xF967;
-  composeMapping["\u6CCC"] = 0xF968;
-  composeMapping["\u6578"] = 0xF969;
-  composeMapping["\u7D22"] = 0xF96A;
-  composeMapping["\u53C3"] = 0xF96B;
-  composeMapping["\u585E"] = 0xF96C;
-  composeMapping["\u7701"] = 0xF96D;
-  composeMapping["\u8449"] = 0xF96E;
-  composeMapping["\u8AAA"] = 0xF96F;
-  composeMapping["\u6BBA"] = 0xF970;
-  composeMapping["\u8FB0"] = 0xF971;
-  composeMapping["\u6C88"] = 0xF972;
-  composeMapping["\u62FE"] = 0xF973;
-  composeMapping["\u82E5"] = 0xF974;
-  composeMapping["\u63A0"] = 0xF975;
-  composeMapping["\u7565"] = 0xF976;
-  composeMapping["\u4EAE"] = 0xF977;
-  composeMapping["\u5169"] = 0xF978;
-  composeMapping["\u51C9"] = 0xF979;
-  composeMapping["\u6881"] = 0xF97A;
-  composeMapping["\u7CE7"] = 0xF97B;
-  composeMapping["\u826F"] = 0xF97C;
-  composeMapping["\u8AD2"] = 0xF97D;
-  composeMapping["\u91CF"] = 0xF97E;
-  composeMapping["\u52F5"] = 0xF97F;
-  composeMapping["\u5442"] = 0xF980;
-  composeMapping["\u5973"] = 0xF981;
-  composeMapping["\u5EEC"] = 0xF982;
-  composeMapping["\u65C5"] = 0xF983;
-  composeMapping["\u6FFE"] = 0xF984;
-  composeMapping["\u792A"] = 0xF985;
-  composeMapping["\u95AD"] = 0xF986;
-  composeMapping["\u9A6A"] = 0xF987;
-  composeMapping["\u9E97"] = 0xF988;
-  composeMapping["\u9ECE"] = 0xF989;
-  composeMapping["\u529B"] = 0xF98A;
-  composeMapping["\u66C6"] = 0xF98B;
-  composeMapping["\u6B77"] = 0xF98C;
-  composeMapping["\u8F62"] = 0xF98D;
-  composeMapping["\u5E74"] = 0xF98E;
-  composeMapping["\u6190"] = 0xF98F;
-  composeMapping["\u6200"] = 0xF990;
-  composeMapping["\u649A"] = 0xF991;
-  composeMapping["\u6F23"] = 0xF992;
-  composeMapping["\u7149"] = 0xF993;
-  composeMapping["\u7489"] = 0xF994;
-  composeMapping["\u79CA"] = 0xF995;
-  composeMapping["\u7DF4"] = 0xF996;
-  composeMapping["\u806F"] = 0xF997;
-  composeMapping["\u8F26"] = 0xF998;
-  composeMapping["\u84EE"] = 0xF999;
-  composeMapping["\u9023"] = 0xF99A;
-  composeMapping["\u934A"] = 0xF99B;
-  composeMapping["\u5217"] = 0xF99C;
-  composeMapping["\u52A3"] = 0xF99D;
-  composeMapping["\u54BD"] = 0xF99E;
-  composeMapping["\u70C8"] = 0xF99F;
-  composeMapping["\u88C2"] = 0xF9A0;
-  composeMapping["\u8AAA"] = 0xF9A1;
-  composeMapping["\u5EC9"] = 0xF9A2;
-  composeMapping["\u5FF5"] = 0xF9A3;
-  composeMapping["\u637B"] = 0xF9A4;
-  composeMapping["\u6BAE"] = 0xF9A5;
-  composeMapping["\u7C3E"] = 0xF9A6;
-  composeMapping["\u7375"] = 0xF9A7;
-  composeMapping["\u4EE4"] = 0xF9A8;
-  composeMapping["\u56F9"] = 0xF9A9;
-  composeMapping["\u5BE7"] = 0xF9AA;
-  composeMapping["\u5DBA"] = 0xF9AB;
-  composeMapping["\u601C"] = 0xF9AC;
-  composeMapping["\u73B2"] = 0xF9AD;
-  composeMapping["\u7469"] = 0xF9AE;
-  composeMapping["\u7F9A"] = 0xF9AF;
-  composeMapping["\u8046"] = 0xF9B0;
-  composeMapping["\u9234"] = 0xF9B1;
-  composeMapping["\u96F6"] = 0xF9B2;
-  composeMapping["\u9748"] = 0xF9B3;
-  composeMapping["\u9818"] = 0xF9B4;
-  composeMapping["\u4F8B"] = 0xF9B5;
-  composeMapping["\u79AE"] = 0xF9B6;
-  composeMapping["\u91B4"] = 0xF9B7;
-  composeMapping["\u96B8"] = 0xF9B8;
-  composeMapping["\u60E1"] = 0xF9B9;
-  composeMapping["\u4E86"] = 0xF9BA;
-  composeMapping["\u50DA"] = 0xF9BB;
-  composeMapping["\u5BEE"] = 0xF9BC;
-  composeMapping["\u5C3F"] = 0xF9BD;
-  composeMapping["\u6599"] = 0xF9BE;
-  composeMapping["\u6A02"] = 0xF9BF;
-  composeMapping["\u71CE"] = 0xF9C0;
-  composeMapping["\u7642"] = 0xF9C1;
-  composeMapping["\u84FC"] = 0xF9C2;
-  composeMapping["\u907C"] = 0xF9C3;
-  composeMapping["\u9F8D"] = 0xF9C4;
-  composeMapping["\u6688"] = 0xF9C5;
-  composeMapping["\u962E"] = 0xF9C6;
-  composeMapping["\u5289"] = 0xF9C7;
-  composeMapping["\u677B"] = 0xF9C8;
-  composeMapping["\u67F3"] = 0xF9C9;
-  composeMapping["\u6D41"] = 0xF9CA;
-  composeMapping["\u6E9C"] = 0xF9CB;
-  composeMapping["\u7409"] = 0xF9CC;
-  composeMapping["\u7559"] = 0xF9CD;
-  composeMapping["\u786B"] = 0xF9CE;
-  composeMapping["\u7D10"] = 0xF9CF;
-  composeMapping["\u985E"] = 0xF9D0;
-  composeMapping["\u516D"] = 0xF9D1;
-  composeMapping["\u622E"] = 0xF9D2;
-  composeMapping["\u9678"] = 0xF9D3;
-  composeMapping["\u502B"] = 0xF9D4;
-  composeMapping["\u5D19"] = 0xF9D5;
-  composeMapping["\u6DEA"] = 0xF9D6;
-  composeMapping["\u8F2A"] = 0xF9D7;
-  composeMapping["\u5F8B"] = 0xF9D8;
-  composeMapping["\u6144"] = 0xF9D9;
-  composeMapping["\u6817"] = 0xF9DA;
-  composeMapping["\u7387"] = 0xF9DB;
-  composeMapping["\u9686"] = 0xF9DC;
-  composeMapping["\u5229"] = 0xF9DD;
-  composeMapping["\u540F"] = 0xF9DE;
-  composeMapping["\u5C65"] = 0xF9DF;
-  composeMapping["\u6613"] = 0xF9E0;
-  composeMapping["\u674E"] = 0xF9E1;
-  composeMapping["\u68A8"] = 0xF9E2;
-  composeMapping["\u6CE5"] = 0xF9E3;
-  composeMapping["\u7406"] = 0xF9E4;
-  composeMapping["\u75E2"] = 0xF9E5;
-  composeMapping["\u7F79"] = 0xF9E6;
-  composeMapping["\u88CF"] = 0xF9E7;
-  composeMapping["\u88E1"] = 0xF9E8;
-  composeMapping["\u91CC"] = 0xF9E9;
-  composeMapping["\u96E2"] = 0xF9EA;
-  composeMapping["\u533F"] = 0xF9EB;
-  composeMapping["\u6EBA"] = 0xF9EC;
-  composeMapping["\u541D"] = 0xF9ED;
-  composeMapping["\u71D0"] = 0xF9EE;
-  composeMapping["\u7498"] = 0xF9EF;
-  composeMapping["\u85FA"] = 0xF9F0;
-  composeMapping["\u96A3"] = 0xF9F1;
-  composeMapping["\u9C57"] = 0xF9F2;
-  composeMapping["\u9E9F"] = 0xF9F3;
-  composeMapping["\u6797"] = 0xF9F4;
-  composeMapping["\u6DCB"] = 0xF9F5;
-  composeMapping["\u81E8"] = 0xF9F6;
-  composeMapping["\u7ACB"] = 0xF9F7;
-  composeMapping["\u7B20"] = 0xF9F8;
-  composeMapping["\u7C92"] = 0xF9F9;
-  composeMapping["\u72C0"] = 0xF9FA;
-  composeMapping["\u7099"] = 0xF9FB;
-  composeMapping["\u8B58"] = 0xF9FC;
-  composeMapping["\u4EC0"] = 0xF9FD;
-  composeMapping["\u8336"] = 0xF9FE;
-  composeMapping["\u523A"] = 0xF9FF;
-  composeMapping["\u5207"] = 0xFA00;
-  composeMapping["\u5EA6"] = 0xFA01;
-  composeMapping["\u62D3"] = 0xFA02;
-  composeMapping["\u7CD6"] = 0xFA03;
-  composeMapping["\u5B85"] = 0xFA04;
-  composeMapping["\u6D1E"] = 0xFA05;
-  composeMapping["\u66B4"] = 0xFA06;
-  composeMapping["\u8F3B"] = 0xFA07;
-  composeMapping["\u884C"] = 0xFA08;
-  composeMapping["\u964D"] = 0xFA09;
-  composeMapping["\u898B"] = 0xFA0A;
-  composeMapping["\u5ED3"] = 0xFA0B;
-  composeMapping["\u5140"] = 0xFA0C;
-  composeMapping["\u55C0"] = 0xFA0D;
-  composeMapping["\u585A"] = 0xFA10;
-  composeMapping["\u6674"] = 0xFA12;
-  composeMapping["\u51DE"] = 0xFA15;
-  composeMapping["\u732A"] = 0xFA16;
-  composeMapping["\u76CA"] = 0xFA17;
-  composeMapping["\u793C"] = 0xFA18;
-  composeMapping["\u795E"] = 0xFA19;
-  composeMapping["\u7965"] = 0xFA1A;
-  composeMapping["\u798F"] = 0xFA1B;
-  composeMapping["\u9756"] = 0xFA1C;
-  composeMapping["\u7CBE"] = 0xFA1D;
-  composeMapping["\u7FBD"] = 0xFA1E;
-  composeMapping["\u8612"] = 0xFA20;
-  composeMapping["\u8AF8"] = 0xFA22;
-  composeMapping["\u9038"] = 0xFA25;
-  composeMapping["\u90FD"] = 0xFA26;
-  composeMapping["\u98EF"] = 0xFA2A;
-  composeMapping["\u98FC"] = 0xFA2B;
-  composeMapping["\u9928"] = 0xFA2C;
-  composeMapping["\u9DB4"] = 0xFA2D;
-  composeMapping["\u90DE"] = 0xFA2E;
-  composeMapping["\u96B7"] = 0xFA2F;
-  composeMapping["\u4FAE"] = 0xFA30;
-  composeMapping["\u50E7"] = 0xFA31;
-  composeMapping["\u514D"] = 0xFA32;
-  composeMapping["\u52C9"] = 0xFA33;
-  composeMapping["\u52E4"] = 0xFA34;
-  composeMapping["\u5351"] = 0xFA35;
-  composeMapping["\u559D"] = 0xFA36;
-  composeMapping["\u5606"] = 0xFA37;
-  composeMapping["\u5668"] = 0xFA38;
-  composeMapping["\u5840"] = 0xFA39;
-  composeMapping["\u58A8"] = 0xFA3A;
-  composeMapping["\u5C64"] = 0xFA3B;
-  composeMapping["\u5C6E"] = 0xFA3C;
-  composeMapping["\u6094"] = 0xFA3D;
-  composeMapping["\u6168"] = 0xFA3E;
-  composeMapping["\u618E"] = 0xFA3F;
-  composeMapping["\u61F2"] = 0xFA40;
-  composeMapping["\u654F"] = 0xFA41;
-  composeMapping["\u65E2"] = 0xFA42;
-  composeMapping["\u6691"] = 0xFA43;
-  composeMapping["\u6885"] = 0xFA44;
-  composeMapping["\u6D77"] = 0xFA45;
-  composeMapping["\u6E1A"] = 0xFA46;
-  composeMapping["\u6F22"] = 0xFA47;
-  composeMapping["\u716E"] = 0xFA48;
-  composeMapping["\u722B"] = 0xFA49;
-  composeMapping["\u7422"] = 0xFA4A;
-  composeMapping["\u7891"] = 0xFA4B;
-  composeMapping["\u793E"] = 0xFA4C;
-  composeMapping["\u7949"] = 0xFA4D;
-  composeMapping["\u7948"] = 0xFA4E;
-  composeMapping["\u7950"] = 0xFA4F;
-  composeMapping["\u7956"] = 0xFA50;
-  composeMapping["\u795D"] = 0xFA51;
-  composeMapping["\u798D"] = 0xFA52;
-  composeMapping["\u798E"] = 0xFA53;
-  composeMapping["\u7A40"] = 0xFA54;
-  composeMapping["\u7A81"] = 0xFA55;
-  composeMapping["\u7BC0"] = 0xFA56;
-  composeMapping["\u7DF4"] = 0xFA57;
-  composeMapping["\u7E09"] = 0xFA58;
-  composeMapping["\u7E41"] = 0xFA59;
-  composeMapping["\u7F72"] = 0xFA5A;
-  composeMapping["\u8005"] = 0xFA5B;
-  composeMapping["\u81ED"] = 0xFA5C;
-  composeMapping["\u8279"] = 0xFA5D;
-  composeMapping["\u8279"] = 0xFA5E;
-  composeMapping["\u8457"] = 0xFA5F;
-  composeMapping["\u8910"] = 0xFA60;
-  composeMapping["\u8996"] = 0xFA61;
-  composeMapping["\u8B01"] = 0xFA62;
-  composeMapping["\u8B39"] = 0xFA63;
-  composeMapping["\u8CD3"] = 0xFA64;
-  composeMapping["\u8D08"] = 0xFA65;
-  composeMapping["\u8FB6"] = 0xFA66;
-  composeMapping["\u9038"] = 0xFA67;
-  composeMapping["\u96E3"] = 0xFA68;
-  composeMapping["\u97FF"] = 0xFA69;
-  composeMapping["\u983B"] = 0xFA6A;
-  composeMapping["\u6075"] = 0xFA6B;
-  composeMapping["\u242EE"] = 0xFA6C;
-  composeMapping["\u8218"] = 0xFA6D;
-  composeMapping["\u4E26"] = 0xFA70;
-  composeMapping["\u51B5"] = 0xFA71;
-  composeMapping["\u5168"] = 0xFA72;
-  composeMapping["\u4F80"] = 0xFA73;
-  composeMapping["\u5145"] = 0xFA74;
-  composeMapping["\u5180"] = 0xFA75;
-  composeMapping["\u52C7"] = 0xFA76;
-  composeMapping["\u52FA"] = 0xFA77;
-  composeMapping["\u559D"] = 0xFA78;
-  composeMapping["\u5555"] = 0xFA79;
-  composeMapping["\u5599"] = 0xFA7A;
-  composeMapping["\u55E2"] = 0xFA7B;
-  composeMapping["\u585A"] = 0xFA7C;
-  composeMapping["\u58B3"] = 0xFA7D;
-  composeMapping["\u5944"] = 0xFA7E;
-  composeMapping["\u5954"] = 0xFA7F;
-  composeMapping["\u5A62"] = 0xFA80;
-  composeMapping["\u5B28"] = 0xFA81;
-  composeMapping["\u5ED2"] = 0xFA82;
-  composeMapping["\u5ED9"] = 0xFA83;
-  composeMapping["\u5F69"] = 0xFA84;
-  composeMapping["\u5FAD"] = 0xFA85;
-  composeMapping["\u60D8"] = 0xFA86;
-  composeMapping["\u614E"] = 0xFA87;
-  composeMapping["\u6108"] = 0xFA88;
-  composeMapping["\u618E"] = 0xFA89;
-  composeMapping["\u6160"] = 0xFA8A;
-  composeMapping["\u61F2"] = 0xFA8B;
-  composeMapping["\u6234"] = 0xFA8C;
-  composeMapping["\u63C4"] = 0xFA8D;
-  composeMapping["\u641C"] = 0xFA8E;
-  composeMapping["\u6452"] = 0xFA8F;
-  composeMapping["\u6556"] = 0xFA90;
-  composeMapping["\u6674"] = 0xFA91;
-  composeMapping["\u6717"] = 0xFA92;
-  composeMapping["\u671B"] = 0xFA93;
-  composeMapping["\u6756"] = 0xFA94;
-  composeMapping["\u6B79"] = 0xFA95;
-  composeMapping["\u6BBA"] = 0xFA96;
-  composeMapping["\u6D41"] = 0xFA97;
-  composeMapping["\u6EDB"] = 0xFA98;
-  composeMapping["\u6ECB"] = 0xFA99;
-  composeMapping["\u6F22"] = 0xFA9A;
-  composeMapping["\u701E"] = 0xFA9B;
-  composeMapping["\u716E"] = 0xFA9C;
-  composeMapping["\u77A7"] = 0xFA9D;
-  composeMapping["\u7235"] = 0xFA9E;
-  composeMapping["\u72AF"] = 0xFA9F;
-  composeMapping["\u732A"] = 0xFAA0;
-  composeMapping["\u7471"] = 0xFAA1;
-  composeMapping["\u7506"] = 0xFAA2;
-  composeMapping["\u753B"] = 0xFAA3;
-  composeMapping["\u761D"] = 0xFAA4;
-  composeMapping["\u761F"] = 0xFAA5;
-  composeMapping["\u76CA"] = 0xFAA6;
-  composeMapping["\u76DB"] = 0xFAA7;
-  composeMapping["\u76F4"] = 0xFAA8;
-  composeMapping["\u774A"] = 0xFAA9;
-  composeMapping["\u7740"] = 0xFAAA;
-  composeMapping["\u78CC"] = 0xFAAB;
-  composeMapping["\u7AB1"] = 0xFAAC;
-  composeMapping["\u7BC0"] = 0xFAAD;
-  composeMapping["\u7C7B"] = 0xFAAE;
-  composeMapping["\u7D5B"] = 0xFAAF;
-  composeMapping["\u7DF4"] = 0xFAB0;
-  composeMapping["\u7F3E"] = 0xFAB1;
-  composeMapping["\u8005"] = 0xFAB2;
-  composeMapping["\u8352"] = 0xFAB3;
-  composeMapping["\u83EF"] = 0xFAB4;
-  composeMapping["\u8779"] = 0xFAB5;
-  composeMapping["\u8941"] = 0xFAB6;
-  composeMapping["\u8986"] = 0xFAB7;
-  composeMapping["\u8996"] = 0xFAB8;
-  composeMapping["\u8ABF"] = 0xFAB9;
-  composeMapping["\u8AF8"] = 0xFABA;
-  composeMapping["\u8ACB"] = 0xFABB;
-  composeMapping["\u8B01"] = 0xFABC;
-  composeMapping["\u8AFE"] = 0xFABD;
-  composeMapping["\u8AED"] = 0xFABE;
-  composeMapping["\u8B39"] = 0xFABF;
-  composeMapping["\u8B8A"] = 0xFAC0;
-  composeMapping["\u8D08"] = 0xFAC1;
-  composeMapping["\u8F38"] = 0xFAC2;
-  composeMapping["\u9072"] = 0xFAC3;
-  composeMapping["\u9199"] = 0xFAC4;
-  composeMapping["\u9276"] = 0xFAC5;
-  composeMapping["\u967C"] = 0xFAC6;
-  composeMapping["\u96E3"] = 0xFAC7;
-  composeMapping["\u9756"] = 0xFAC8;
-  composeMapping["\u97DB"] = 0xFAC9;
-  composeMapping["\u97FF"] = 0xFACA;
-  composeMapping["\u980B"] = 0xFACB;
-  composeMapping["\u983B"] = 0xFACC;
-  composeMapping["\u9B12"] = 0xFACD;
-  composeMapping["\u9F9C"] = 0xFACE;
-  composeMapping["\u2284A"] = 0xFACF;
-  composeMapping["\u22844"] = 0xFAD0;
-  composeMapping["\u233D5"] = 0xFAD1;
-  composeMapping["\u3B9D"] = 0xFAD2;
-  composeMapping["\u4018"] = 0xFAD3;
-  composeMapping["\u4039"] = 0xFAD4;
-  composeMapping["\u25249"] = 0xFAD5;
-  composeMapping["\u25CD0"] = 0xFAD6;
-  composeMapping["\u27ED3"] = 0xFAD7;
-  composeMapping["\u9F43"] = 0xFAD8;
-  composeMapping["\u9F8E"] = 0xFAD9;
-  composeMapping["\u0066\u0066"] = 0xFB00;
-  composeMapping["\u0066\u0069"] = 0xFB01;
-  composeMapping["\u0066\u006C"] = 0xFB02;
-  composeMapping["\u0066\u0066\u0069"] = 0xFB03;
-  composeMapping["\u0066\u0066\u006C"] = 0xFB04;
-  composeMapping["\u017F\u0074"] = 0xFB05;
-  composeMapping["\u0073\u0074"] = 0xFB06;
-  composeMapping["\u0574\u0576"] = 0xFB13;
-  composeMapping["\u0574\u0565"] = 0xFB14;
-  composeMapping["\u0574\u056B"] = 0xFB15;
-  composeMapping["\u057E\u0576"] = 0xFB16;
-  composeMapping["\u0574\u056D"] = 0xFB17;
-  composeMapping["\u05D9\u05B4"] = 0xFB1D;
-  composeMapping["\u05F2\u05B7"] = 0xFB1F;
-  composeMapping["\u05E2"] = 0xFB20;
-  composeMapping["\u05D0"] = 0xFB21;
-  composeMapping["\u05D3"] = 0xFB22;
-  composeMapping["\u05D4"] = 0xFB23;
-  composeMapping["\u05DB"] = 0xFB24;
-  composeMapping["\u05DC"] = 0xFB25;
-  composeMapping["\u05DD"] = 0xFB26;
-  composeMapping["\u05E8"] = 0xFB27;
-  composeMapping["\u05EA"] = 0xFB28;
-  composeMapping["\u002B"] = 0xFB29;
-  composeMapping["\u05E9\u05C1"] = 0xFB2A;
-  composeMapping["\u05E9\u05C2"] = 0xFB2B;
-  composeMapping["\uFB49\u05C1"] = 0xFB2C;
-  composeMapping["\uFB49\u05C2"] = 0xFB2D;
-  composeMapping["\u05D0\u05B7"] = 0xFB2E;
-  composeMapping["\u05D0\u05B8"] = 0xFB2F;
-  composeMapping["\u05D0\u05BC"] = 0xFB30;
-  composeMapping["\u05D1\u05BC"] = 0xFB31;
-  composeMapping["\u05D2\u05BC"] = 0xFB32;
-  composeMapping["\u05D3\u05BC"] = 0xFB33;
-  composeMapping["\u05D4\u05BC"] = 0xFB34;
-  composeMapping["\u05D5\u05BC"] = 0xFB35;
-  composeMapping["\u05D6\u05BC"] = 0xFB36;
-  composeMapping["\u05D8\u05BC"] = 0xFB38;
-  composeMapping["\u05D9\u05BC"] = 0xFB39;
-  composeMapping["\u05DA\u05BC"] = 0xFB3A;
-  composeMapping["\u05DB\u05BC"] = 0xFB3B;
-  composeMapping["\u05DC\u05BC"] = 0xFB3C;
-  composeMapping["\u05DE\u05BC"] = 0xFB3E;
-  composeMapping["\u05E0\u05BC"] = 0xFB40;
-  composeMapping["\u05E1\u05BC"] = 0xFB41;
-  composeMapping["\u05E3\u05BC"] = 0xFB43;
-  composeMapping["\u05E4\u05BC"] = 0xFB44;
-  composeMapping["\u05E6\u05BC"] = 0xFB46;
-  composeMapping["\u05E7\u05BC"] = 0xFB47;
-  composeMapping["\u05E8\u05BC"] = 0xFB48;
-  composeMapping["\u05E9\u05BC"] = 0xFB49;
-  composeMapping["\u05EA\u05BC"] = 0xFB4A;
-  composeMapping["\u05D5\u05B9"] = 0xFB4B;
-  composeMapping["\u05D1\u05BF"] = 0xFB4C;
-  composeMapping["\u05DB\u05BF"] = 0xFB4D;
-  composeMapping["\u05E4\u05BF"] = 0xFB4E;
-  composeMapping["\u05D0\u05DC"] = 0xFB4F;
-  composeMapping["\u0671"] = 0xFB50;
-  composeMapping["\u0671"] = 0xFB51;
-  composeMapping["\u067B"] = 0xFB52;
-  composeMapping["\u067B"] = 0xFB53;
-  composeMapping["\u067B"] = 0xFB54;
-  composeMapping["\u067B"] = 0xFB55;
-  composeMapping["\u067E"] = 0xFB56;
-  composeMapping["\u067E"] = 0xFB57;
-  composeMapping["\u067E"] = 0xFB58;
-  composeMapping["\u067E"] = 0xFB59;
-  composeMapping["\u0680"] = 0xFB5A;
-  composeMapping["\u0680"] = 0xFB5B;
-  composeMapping["\u0680"] = 0xFB5C;
-  composeMapping["\u0680"] = 0xFB5D;
-  composeMapping["\u067A"] = 0xFB5E;
-  composeMapping["\u067A"] = 0xFB5F;
-  composeMapping["\u067A"] = 0xFB60;
-  composeMapping["\u067A"] = 0xFB61;
-  composeMapping["\u067F"] = 0xFB62;
-  composeMapping["\u067F"] = 0xFB63;
-  composeMapping["\u067F"] = 0xFB64;
-  composeMapping["\u067F"] = 0xFB65;
-  composeMapping["\u0679"] = 0xFB66;
-  composeMapping["\u0679"] = 0xFB67;
-  composeMapping["\u0679"] = 0xFB68;
-  composeMapping["\u0679"] = 0xFB69;
-  composeMapping["\u06A4"] = 0xFB6A;
-  composeMapping["\u06A4"] = 0xFB6B;
-  composeMapping["\u06A4"] = 0xFB6C;
-  composeMapping["\u06A4"] = 0xFB6D;
-  composeMapping["\u06A6"] = 0xFB6E;
-  composeMapping["\u06A6"] = 0xFB6F;
-  composeMapping["\u06A6"] = 0xFB70;
-  composeMapping["\u06A6"] = 0xFB71;
-  composeMapping["\u0684"] = 0xFB72;
-  composeMapping["\u0684"] = 0xFB73;
-  composeMapping["\u0684"] = 0xFB74;
-  composeMapping["\u0684"] = 0xFB75;
-  composeMapping["\u0683"] = 0xFB76;
-  composeMapping["\u0683"] = 0xFB77;
-  composeMapping["\u0683"] = 0xFB78;
-  composeMapping["\u0683"] = 0xFB79;
-  composeMapping["\u0686"] = 0xFB7A;
-  composeMapping["\u0686"] = 0xFB7B;
-  composeMapping["\u0686"] = 0xFB7C;
-  composeMapping["\u0686"] = 0xFB7D;
-  composeMapping["\u0687"] = 0xFB7E;
-  composeMapping["\u0687"] = 0xFB7F;
-  composeMapping["\u0687"] = 0xFB80;
-  composeMapping["\u0687"] = 0xFB81;
-  composeMapping["\u068D"] = 0xFB82;
-  composeMapping["\u068D"] = 0xFB83;
-  composeMapping["\u068C"] = 0xFB84;
-  composeMapping["\u068C"] = 0xFB85;
-  composeMapping["\u068E"] = 0xFB86;
-  composeMapping["\u068E"] = 0xFB87;
-  composeMapping["\u0688"] = 0xFB88;
-  composeMapping["\u0688"] = 0xFB89;
-  composeMapping["\u0698"] = 0xFB8A;
-  composeMapping["\u0698"] = 0xFB8B;
-  composeMapping["\u0691"] = 0xFB8C;
-  composeMapping["\u0691"] = 0xFB8D;
-  composeMapping["\u06A9"] = 0xFB8E;
-  composeMapping["\u06A9"] = 0xFB8F;
-  composeMapping["\u06A9"] = 0xFB90;
-  composeMapping["\u06A9"] = 0xFB91;
-  composeMapping["\u06AF"] = 0xFB92;
-  composeMapping["\u06AF"] = 0xFB93;
-  composeMapping["\u06AF"] = 0xFB94;
-  composeMapping["\u06AF"] = 0xFB95;
-  composeMapping["\u06B3"] = 0xFB96;
-  composeMapping["\u06B3"] = 0xFB97;
-  composeMapping["\u06B3"] = 0xFB98;
-  composeMapping["\u06B3"] = 0xFB99;
-  composeMapping["\u06B1"] = 0xFB9A;
-  composeMapping["\u06B1"] = 0xFB9B;
-  composeMapping["\u06B1"] = 0xFB9C;
-  composeMapping["\u06B1"] = 0xFB9D;
-  composeMapping["\u06BA"] = 0xFB9E;
-  composeMapping["\u06BA"] = 0xFB9F;
-  composeMapping["\u06BB"] = 0xFBA0;
-  composeMapping["\u06BB"] = 0xFBA1;
-  composeMapping["\u06BB"] = 0xFBA2;
-  composeMapping["\u06BB"] = 0xFBA3;
-  composeMapping["\u06C0"] = 0xFBA4;
-  composeMapping["\u06C0"] = 0xFBA5;
-  composeMapping["\u06C1"] = 0xFBA6;
-  composeMapping["\u06C1"] = 0xFBA7;
-  composeMapping["\u06C1"] = 0xFBA8;
-  composeMapping["\u06C1"] = 0xFBA9;
-  composeMapping["\u06BE"] = 0xFBAA;
-  composeMapping["\u06BE"] = 0xFBAB;
-  composeMapping["\u06BE"] = 0xFBAC;
-  composeMapping["\u06BE"] = 0xFBAD;
-  composeMapping["\u06D2"] = 0xFBAE;
-  composeMapping["\u06D2"] = 0xFBAF;
-  composeMapping["\u06D3"] = 0xFBB0;
-  composeMapping["\u06D3"] = 0xFBB1;
-  composeMapping["\u06AD"] = 0xFBD3;
-  composeMapping["\u06AD"] = 0xFBD4;
-  composeMapping["\u06AD"] = 0xFBD5;
-  composeMapping["\u06AD"] = 0xFBD6;
-  composeMapping["\u06C7"] = 0xFBD7;
-  composeMapping["\u06C7"] = 0xFBD8;
-  composeMapping["\u06C6"] = 0xFBD9;
-  composeMapping["\u06C6"] = 0xFBDA;
-  composeMapping["\u06C8"] = 0xFBDB;
-  composeMapping["\u06C8"] = 0xFBDC;
-  composeMapping["\u0677"] = 0xFBDD;
-  composeMapping["\u06CB"] = 0xFBDE;
-  composeMapping["\u06CB"] = 0xFBDF;
-  composeMapping["\u06C5"] = 0xFBE0;
-  composeMapping["\u06C5"] = 0xFBE1;
-  composeMapping["\u06C9"] = 0xFBE2;
-  composeMapping["\u06C9"] = 0xFBE3;
-  composeMapping["\u06D0"] = 0xFBE4;
-  composeMapping["\u06D0"] = 0xFBE5;
-  composeMapping["\u06D0"] = 0xFBE6;
-  composeMapping["\u06D0"] = 0xFBE7;
-  composeMapping["\u0649"] = 0xFBE8;
-  composeMapping["\u0649"] = 0xFBE9;
-  composeMapping["\u0626\u0627"] = 0xFBEA;
-  composeMapping["\u0626\u0627"] = 0xFBEB;
-  composeMapping["\u0626\u06D5"] = 0xFBEC;
-  composeMapping["\u0626\u06D5"] = 0xFBED;
-  composeMapping["\u0626\u0648"] = 0xFBEE;
-  composeMapping["\u0626\u0648"] = 0xFBEF;
-  composeMapping["\u0626\u06C7"] = 0xFBF0;
-  composeMapping["\u0626\u06C7"] = 0xFBF1;
-  composeMapping["\u0626\u06C6"] = 0xFBF2;
-  composeMapping["\u0626\u06C6"] = 0xFBF3;
-  composeMapping["\u0626\u06C8"] = 0xFBF4;
-  composeMapping["\u0626\u06C8"] = 0xFBF5;
-  composeMapping["\u0626\u06D0"] = 0xFBF6;
-  composeMapping["\u0626\u06D0"] = 0xFBF7;
-  composeMapping["\u0626\u06D0"] = 0xFBF8;
-  composeMapping["\u0626\u0649"] = 0xFBF9;
-  composeMapping["\u0626\u0649"] = 0xFBFA;
-  composeMapping["\u0626\u0649"] = 0xFBFB;
-  composeMapping["\u06CC"] = 0xFBFC;
-  composeMapping["\u06CC"] = 0xFBFD;
-  composeMapping["\u06CC"] = 0xFBFE;
-  composeMapping["\u06CC"] = 0xFBFF;
-  composeMapping["\u0626\u062C"] = 0xFC00;
-  composeMapping["\u0626\u062D"] = 0xFC01;
-  composeMapping["\u0626\u0645"] = 0xFC02;
-  composeMapping["\u0626\u0649"] = 0xFC03;
-  composeMapping["\u0626\u064A"] = 0xFC04;
-  composeMapping["\u0628\u062C"] = 0xFC05;
-  composeMapping["\u0628\u062D"] = 0xFC06;
-  composeMapping["\u0628\u062E"] = 0xFC07;
-  composeMapping["\u0628\u0645"] = 0xFC08;
-  composeMapping["\u0628\u0649"] = 0xFC09;
-  composeMapping["\u0628\u064A"] = 0xFC0A;
-  composeMapping["\u062A\u062C"] = 0xFC0B;
-  composeMapping["\u062A\u062D"] = 0xFC0C;
-  composeMapping["\u062A\u062E"] = 0xFC0D;
-  composeMapping["\u062A\u0645"] = 0xFC0E;
-  composeMapping["\u062A\u0649"] = 0xFC0F;
-  composeMapping["\u062A\u064A"] = 0xFC10;
-  composeMapping["\u062B\u062C"] = 0xFC11;
-  composeMapping["\u062B\u0645"] = 0xFC12;
-  composeMapping["\u062B\u0649"] = 0xFC13;
-  composeMapping["\u062B\u064A"] = 0xFC14;
-  composeMapping["\u062C\u062D"] = 0xFC15;
-  composeMapping["\u062C\u0645"] = 0xFC16;
-  composeMapping["\u062D\u062C"] = 0xFC17;
-  composeMapping["\u062D\u0645"] = 0xFC18;
-  composeMapping["\u062E\u062C"] = 0xFC19;
-  composeMapping["\u062E\u062D"] = 0xFC1A;
-  composeMapping["\u062E\u0645"] = 0xFC1B;
-  composeMapping["\u0633\u062C"] = 0xFC1C;
-  composeMapping["\u0633\u062D"] = 0xFC1D;
-  composeMapping["\u0633\u062E"] = 0xFC1E;
-  composeMapping["\u0633\u0645"] = 0xFC1F;
-  composeMapping["\u0635\u062D"] = 0xFC20;
-  composeMapping["\u0635\u0645"] = 0xFC21;
-  composeMapping["\u0636\u062C"] = 0xFC22;
-  composeMapping["\u0636\u062D"] = 0xFC23;
-  composeMapping["\u0636\u062E"] = 0xFC24;
-  composeMapping["\u0636\u0645"] = 0xFC25;
-  composeMapping["\u0637\u062D"] = 0xFC26;
-  composeMapping["\u0637\u0645"] = 0xFC27;
-  composeMapping["\u0638\u0645"] = 0xFC28;
-  composeMapping["\u0639\u062C"] = 0xFC29;
-  composeMapping["\u0639\u0645"] = 0xFC2A;
-  composeMapping["\u063A\u062C"] = 0xFC2B;
-  composeMapping["\u063A\u0645"] = 0xFC2C;
-  composeMapping["\u0641\u062C"] = 0xFC2D;
-  composeMapping["\u0641\u062D"] = 0xFC2E;
-  composeMapping["\u0641\u062E"] = 0xFC2F;
-  composeMapping["\u0641\u0645"] = 0xFC30;
-  composeMapping["\u0641\u0649"] = 0xFC31;
-  composeMapping["\u0641\u064A"] = 0xFC32;
-  composeMapping["\u0642\u062D"] = 0xFC33;
-  composeMapping["\u0642\u0645"] = 0xFC34;
-  composeMapping["\u0642\u0649"] = 0xFC35;
-  composeMapping["\u0642\u064A"] = 0xFC36;
-  composeMapping["\u0643\u0627"] = 0xFC37;
-  composeMapping["\u0643\u062C"] = 0xFC38;
-  composeMapping["\u0643\u062D"] = 0xFC39;
-  composeMapping["\u0643\u062E"] = 0xFC3A;
-  composeMapping["\u0643\u0644"] = 0xFC3B;
-  composeMapping["\u0643\u0645"] = 0xFC3C;
-  composeMapping["\u0643\u0649"] = 0xFC3D;
-  composeMapping["\u0643\u064A"] = 0xFC3E;
-  composeMapping["\u0644\u062C"] = 0xFC3F;
-  composeMapping["\u0644\u062D"] = 0xFC40;
-  composeMapping["\u0644\u062E"] = 0xFC41;
-  composeMapping["\u0644\u0645"] = 0xFC42;
-  composeMapping["\u0644\u0649"] = 0xFC43;
-  composeMapping["\u0644\u064A"] = 0xFC44;
-  composeMapping["\u0645\u062C"] = 0xFC45;
-  composeMapping["\u0645\u062D"] = 0xFC46;
-  composeMapping["\u0645\u062E"] = 0xFC47;
-  composeMapping["\u0645\u0645"] = 0xFC48;
-  composeMapping["\u0645\u0649"] = 0xFC49;
-  composeMapping["\u0645\u064A"] = 0xFC4A;
-  composeMapping["\u0646\u062C"] = 0xFC4B;
-  composeMapping["\u0646\u062D"] = 0xFC4C;
-  composeMapping["\u0646\u062E"] = 0xFC4D;
-  composeMapping["\u0646\u0645"] = 0xFC4E;
-  composeMapping["\u0646\u0649"] = 0xFC4F;
-  composeMapping["\u0646\u064A"] = 0xFC50;
-  composeMapping["\u0647\u062C"] = 0xFC51;
-  composeMapping["\u0647\u0645"] = 0xFC52;
-  composeMapping["\u0647\u0649"] = 0xFC53;
-  composeMapping["\u0647\u064A"] = 0xFC54;
-  composeMapping["\u064A\u062C"] = 0xFC55;
-  composeMapping["\u064A\u062D"] = 0xFC56;
-  composeMapping["\u064A\u062E"] = 0xFC57;
-  composeMapping["\u064A\u0645"] = 0xFC58;
-  composeMapping["\u064A\u0649"] = 0xFC59;
-  composeMapping["\u064A\u064A"] = 0xFC5A;
-  composeMapping["\u0630\u0670"] = 0xFC5B;
-  composeMapping["\u0631\u0670"] = 0xFC5C;
-  composeMapping["\u0649\u0670"] = 0xFC5D;
-  composeMapping["\u0020\u064C\u0651"] = 0xFC5E;
-  composeMapping["\u0020\u064D\u0651"] = 0xFC5F;
-  composeMapping["\u0020\u064E\u0651"] = 0xFC60;
-  composeMapping["\u0020\u064F\u0651"] = 0xFC61;
-  composeMapping["\u0020\u0650\u0651"] = 0xFC62;
-  composeMapping["\u0020\u0651\u0670"] = 0xFC63;
-  composeMapping["\u0626\u0631"] = 0xFC64;
-  composeMapping["\u0626\u0632"] = 0xFC65;
-  composeMapping["\u0626\u0645"] = 0xFC66;
-  composeMapping["\u0626\u0646"] = 0xFC67;
-  composeMapping["\u0626\u0649"] = 0xFC68;
-  composeMapping["\u0626\u064A"] = 0xFC69;
-  composeMapping["\u0628\u0631"] = 0xFC6A;
-  composeMapping["\u0628\u0632"] = 0xFC6B;
-  composeMapping["\u0628\u0645"] = 0xFC6C;
-  composeMapping["\u0628\u0646"] = 0xFC6D;
-  composeMapping["\u0628\u0649"] = 0xFC6E;
-  composeMapping["\u0628\u064A"] = 0xFC6F;
-  composeMapping["\u062A\u0631"] = 0xFC70;
-  composeMapping["\u062A\u0632"] = 0xFC71;
-  composeMapping["\u062A\u0645"] = 0xFC72;
-  composeMapping["\u062A\u0646"] = 0xFC73;
-  composeMapping["\u062A\u0649"] = 0xFC74;
-  composeMapping["\u062A\u064A"] = 0xFC75;
-  composeMapping["\u062B\u0631"] = 0xFC76;
-  composeMapping["\u062B\u0632"] = 0xFC77;
-  composeMapping["\u062B\u0645"] = 0xFC78;
-  composeMapping["\u062B\u0646"] = 0xFC79;
-  composeMapping["\u062B\u0649"] = 0xFC7A;
-  composeMapping["\u062B\u064A"] = 0xFC7B;
-  composeMapping["\u0641\u0649"] = 0xFC7C;
-  composeMapping["\u0641\u064A"] = 0xFC7D;
-  composeMapping["\u0642\u0649"] = 0xFC7E;
-  composeMapping["\u0642\u064A"] = 0xFC7F;
-  composeMapping["\u0643\u0627"] = 0xFC80;
-  composeMapping["\u0643\u0644"] = 0xFC81;
-  composeMapping["\u0643\u0645"] = 0xFC82;
-  composeMapping["\u0643\u0649"] = 0xFC83;
-  composeMapping["\u0643\u064A"] = 0xFC84;
-  composeMapping["\u0644\u0645"] = 0xFC85;
-  composeMapping["\u0644\u0649"] = 0xFC86;
-  composeMapping["\u0644\u064A"] = 0xFC87;
-  composeMapping["\u0645\u0627"] = 0xFC88;
-  composeMapping["\u0645\u0645"] = 0xFC89;
-  composeMapping["\u0646\u0631"] = 0xFC8A;
-  composeMapping["\u0646\u0632"] = 0xFC8B;
-  composeMapping["\u0646\u0645"] = 0xFC8C;
-  composeMapping["\u0646\u0646"] = 0xFC8D;
-  composeMapping["\u0646\u0649"] = 0xFC8E;
-  composeMapping["\u0646\u064A"] = 0xFC8F;
-  composeMapping["\u0649\u0670"] = 0xFC90;
-  composeMapping["\u064A\u0631"] = 0xFC91;
-  composeMapping["\u064A\u0632"] = 0xFC92;
-  composeMapping["\u064A\u0645"] = 0xFC93;
-  composeMapping["\u064A\u0646"] = 0xFC94;
-  composeMapping["\u064A\u0649"] = 0xFC95;
-  composeMapping["\u064A\u064A"] = 0xFC96;
-  composeMapping["\u0626\u062C"] = 0xFC97;
-  composeMapping["\u0626\u062D"] = 0xFC98;
-  composeMapping["\u0626\u062E"] = 0xFC99;
-  composeMapping["\u0626\u0645"] = 0xFC9A;
-  composeMapping["\u0626\u0647"] = 0xFC9B;
-  composeMapping["\u0628\u062C"] = 0xFC9C;
-  composeMapping["\u0628\u062D"] = 0xFC9D;
-  composeMapping["\u0628\u062E"] = 0xFC9E;
-  composeMapping["\u0628\u0645"] = 0xFC9F;
-  composeMapping["\u0628\u0647"] = 0xFCA0;
-  composeMapping["\u062A\u062C"] = 0xFCA1;
-  composeMapping["\u062A\u062D"] = 0xFCA2;
-  composeMapping["\u062A\u062E"] = 0xFCA3;
-  composeMapping["\u062A\u0645"] = 0xFCA4;
-  composeMapping["\u062A\u0647"] = 0xFCA5;
-  composeMapping["\u062B\u0645"] = 0xFCA6;
-  composeMapping["\u062C\u062D"] = 0xFCA7;
-  composeMapping["\u062C\u0645"] = 0xFCA8;
-  composeMapping["\u062D\u062C"] = 0xFCA9;
-  composeMapping["\u062D\u0645"] = 0xFCAA;
-  composeMapping["\u062E\u062C"] = 0xFCAB;
-  composeMapping["\u062E\u0645"] = 0xFCAC;
-  composeMapping["\u0633\u062C"] = 0xFCAD;
-  composeMapping["\u0633\u062D"] = 0xFCAE;
-  composeMapping["\u0633\u062E"] = 0xFCAF;
-  composeMapping["\u0633\u0645"] = 0xFCB0;
-  composeMapping["\u0635\u062D"] = 0xFCB1;
-  composeMapping["\u0635\u062E"] = 0xFCB2;
-  composeMapping["\u0635\u0645"] = 0xFCB3;
-  composeMapping["\u0636\u062C"] = 0xFCB4;
-  composeMapping["\u0636\u062D"] = 0xFCB5;
-  composeMapping["\u0636\u062E"] = 0xFCB6;
-  composeMapping["\u0636\u0645"] = 0xFCB7;
-  composeMapping["\u0637\u062D"] = 0xFCB8;
-  composeMapping["\u0638\u0645"] = 0xFCB9;
-  composeMapping["\u0639\u062C"] = 0xFCBA;
-  composeMapping["\u0639\u0645"] = 0xFCBB;
-  composeMapping["\u063A\u062C"] = 0xFCBC;
-  composeMapping["\u063A\u0645"] = 0xFCBD;
-  composeMapping["\u0641\u062C"] = 0xFCBE;
-  composeMapping["\u0641\u062D"] = 0xFCBF;
-  composeMapping["\u0641\u062E"] = 0xFCC0;
-  composeMapping["\u0641\u0645"] = 0xFCC1;
-  composeMapping["\u0642\u062D"] = 0xFCC2;
-  composeMapping["\u0642\u0645"] = 0xFCC3;
-  composeMapping["\u0643\u062C"] = 0xFCC4;
-  composeMapping["\u0643\u062D"] = 0xFCC5;
-  composeMapping["\u0643\u062E"] = 0xFCC6;
-  composeMapping["\u0643\u0644"] = 0xFCC7;
-  composeMapping["\u0643\u0645"] = 0xFCC8;
-  composeMapping["\u0644\u062C"] = 0xFCC9;
-  composeMapping["\u0644\u062D"] = 0xFCCA;
-  composeMapping["\u0644\u062E"] = 0xFCCB;
-  composeMapping["\u0644\u0645"] = 0xFCCC;
-  composeMapping["\u0644\u0647"] = 0xFCCD;
-  composeMapping["\u0645\u062C"] = 0xFCCE;
-  composeMapping["\u0645\u062D"] = 0xFCCF;
-  composeMapping["\u0645\u062E"] = 0xFCD0;
-  composeMapping["\u0645\u0645"] = 0xFCD1;
-  composeMapping["\u0646\u062C"] = 0xFCD2;
-  composeMapping["\u0646\u062D"] = 0xFCD3;
-  composeMapping["\u0646\u062E"] = 0xFCD4;
-  composeMapping["\u0646\u0645"] = 0xFCD5;
-  composeMapping["\u0646\u0647"] = 0xFCD6;
-  composeMapping["\u0647\u062C"] = 0xFCD7;
-  composeMapping["\u0647\u0645"] = 0xFCD8;
-  composeMapping["\u0647\u0670"] = 0xFCD9;
-  composeMapping["\u064A\u062C"] = 0xFCDA;
-  composeMapping["\u064A\u062D"] = 0xFCDB;
-  composeMapping["\u064A\u062E"] = 0xFCDC;
-  composeMapping["\u064A\u0645"] = 0xFCDD;
-  composeMapping["\u064A\u0647"] = 0xFCDE;
-  composeMapping["\u0626\u0645"] = 0xFCDF;
-  composeMapping["\u0626\u0647"] = 0xFCE0;
-  composeMapping["\u0628\u0645"] = 0xFCE1;
-  composeMapping["\u0628\u0647"] = 0xFCE2;
-  composeMapping["\u062A\u0645"] = 0xFCE3;
-  composeMapping["\u062A\u0647"] = 0xFCE4;
-  composeMapping["\u062B\u0645"] = 0xFCE5;
-  composeMapping["\u062B\u0647"] = 0xFCE6;
-  composeMapping["\u0633\u0645"] = 0xFCE7;
-  composeMapping["\u0633\u0647"] = 0xFCE8;
-  composeMapping["\u0634\u0645"] = 0xFCE9;
-  composeMapping["\u0634\u0647"] = 0xFCEA;
-  composeMapping["\u0643\u0644"] = 0xFCEB;
-  composeMapping["\u0643\u0645"] = 0xFCEC;
-  composeMapping["\u0644\u0645"] = 0xFCED;
-  composeMapping["\u0646\u0645"] = 0xFCEE;
-  composeMapping["\u0646\u0647"] = 0xFCEF;
-  composeMapping["\u064A\u0645"] = 0xFCF0;
-  composeMapping["\u064A\u0647"] = 0xFCF1;
-  composeMapping["\u0640\u064E\u0651"] = 0xFCF2;
-  composeMapping["\u0640\u064F\u0651"] = 0xFCF3;
-  composeMapping["\u0640\u0650\u0651"] = 0xFCF4;
-  composeMapping["\u0637\u0649"] = 0xFCF5;
-  composeMapping["\u0637\u064A"] = 0xFCF6;
-  composeMapping["\u0639\u0649"] = 0xFCF7;
-  composeMapping["\u0639\u064A"] = 0xFCF8;
-  composeMapping["\u063A\u0649"] = 0xFCF9;
-  composeMapping["\u063A\u064A"] = 0xFCFA;
-  composeMapping["\u0633\u0649"] = 0xFCFB;
-  composeMapping["\u0633\u064A"] = 0xFCFC;
-  composeMapping["\u0634\u0649"] = 0xFCFD;
-  composeMapping["\u0634\u064A"] = 0xFCFE;
-  composeMapping["\u062D\u0649"] = 0xFCFF;
-  composeMapping["\u062D\u064A"] = 0xFD00;
-  composeMapping["\u062C\u0649"] = 0xFD01;
-  composeMapping["\u062C\u064A"] = 0xFD02;
-  composeMapping["\u062E\u0649"] = 0xFD03;
-  composeMapping["\u062E\u064A"] = 0xFD04;
-  composeMapping["\u0635\u0649"] = 0xFD05;
-  composeMapping["\u0635\u064A"] = 0xFD06;
-  composeMapping["\u0636\u0649"] = 0xFD07;
-  composeMapping["\u0636\u064A"] = 0xFD08;
-  composeMapping["\u0634\u062C"] = 0xFD09;
-  composeMapping["\u0634\u062D"] = 0xFD0A;
-  composeMapping["\u0634\u062E"] = 0xFD0B;
-  composeMapping["\u0634\u0645"] = 0xFD0C;
-  composeMapping["\u0634\u0631"] = 0xFD0D;
-  composeMapping["\u0633\u0631"] = 0xFD0E;
-  composeMapping["\u0635\u0631"] = 0xFD0F;
-  composeMapping["\u0636\u0631"] = 0xFD10;
-  composeMapping["\u0637\u0649"] = 0xFD11;
-  composeMapping["\u0637\u064A"] = 0xFD12;
-  composeMapping["\u0639\u0649"] = 0xFD13;
-  composeMapping["\u0639\u064A"] = 0xFD14;
-  composeMapping["\u063A\u0649"] = 0xFD15;
-  composeMapping["\u063A\u064A"] = 0xFD16;
-  composeMapping["\u0633\u0649"] = 0xFD17;
-  composeMapping["\u0633\u064A"] = 0xFD18;
-  composeMapping["\u0634\u0649"] = 0xFD19;
-  composeMapping["\u0634\u064A"] = 0xFD1A;
-  composeMapping["\u062D\u0649"] = 0xFD1B;
-  composeMapping["\u062D\u064A"] = 0xFD1C;
-  composeMapping["\u062C\u0649"] = 0xFD1D;
-  composeMapping["\u062C\u064A"] = 0xFD1E;
-  composeMapping["\u062E\u0649"] = 0xFD1F;
-  composeMapping["\u062E\u064A"] = 0xFD20;
-  composeMapping["\u0635\u0649"] = 0xFD21;
-  composeMapping["\u0635\u064A"] = 0xFD22;
-  composeMapping["\u0636\u0649"] = 0xFD23;
-  composeMapping["\u0636\u064A"] = 0xFD24;
-  composeMapping["\u0634\u062C"] = 0xFD25;
-  composeMapping["\u0634\u062D"] = 0xFD26;
-  composeMapping["\u0634\u062E"] = 0xFD27;
-  composeMapping["\u0634\u0645"] = 0xFD28;
-  composeMapping["\u0634\u0631"] = 0xFD29;
-  composeMapping["\u0633\u0631"] = 0xFD2A;
-  composeMapping["\u0635\u0631"] = 0xFD2B;
-  composeMapping["\u0636\u0631"] = 0xFD2C;
-  composeMapping["\u0634\u062C"] = 0xFD2D;
-  composeMapping["\u0634\u062D"] = 0xFD2E;
-  composeMapping["\u0634\u062E"] = 0xFD2F;
-  composeMapping["\u0634\u0645"] = 0xFD30;
-  composeMapping["\u0633\u0647"] = 0xFD31;
-  composeMapping["\u0634\u0647"] = 0xFD32;
-  composeMapping["\u0637\u0645"] = 0xFD33;
-  composeMapping["\u0633\u062C"] = 0xFD34;
-  composeMapping["\u0633\u062D"] = 0xFD35;
-  composeMapping["\u0633\u062E"] = 0xFD36;
-  composeMapping["\u0634\u062C"] = 0xFD37;
-  composeMapping["\u0634\u062D"] = 0xFD38;
-  composeMapping["\u0634\u062E"] = 0xFD39;
-  composeMapping["\u0637\u0645"] = 0xFD3A;
-  composeMapping["\u0638\u0645"] = 0xFD3B;
-  composeMapping["\u0627\u064B"] = 0xFD3C;
-  composeMapping["\u0627\u064B"] = 0xFD3D;
-  composeMapping["\u062A\u062C\u0645"] = 0xFD50;
-  composeMapping["\u062A\u062D\u062C"] = 0xFD51;
-  composeMapping["\u062A\u062D\u062C"] = 0xFD52;
-  composeMapping["\u062A\u062D\u0645"] = 0xFD53;
-  composeMapping["\u062A\u062E\u0645"] = 0xFD54;
-  composeMapping["\u062A\u0645\u062C"] = 0xFD55;
-  composeMapping["\u062A\u0645\u062D"] = 0xFD56;
-  composeMapping["\u062A\u0645\u062E"] = 0xFD57;
-  composeMapping["\u062C\u0645\u062D"] = 0xFD58;
-  composeMapping["\u062C\u0645\u062D"] = 0xFD59;
-  composeMapping["\u062D\u0645\u064A"] = 0xFD5A;
-  composeMapping["\u062D\u0645\u0649"] = 0xFD5B;
-  composeMapping["\u0633\u062D\u062C"] = 0xFD5C;
-  composeMapping["\u0633\u062C\u062D"] = 0xFD5D;
-  composeMapping["\u0633\u062C\u0649"] = 0xFD5E;
-  composeMapping["\u0633\u0645\u062D"] = 0xFD5F;
-  composeMapping["\u0633\u0645\u062D"] = 0xFD60;
-  composeMapping["\u0633\u0645\u062C"] = 0xFD61;
-  composeMapping["\u0633\u0645\u0645"] = 0xFD62;
-  composeMapping["\u0633\u0645\u0645"] = 0xFD63;
-  composeMapping["\u0635\u062D\u062D"] = 0xFD64;
-  composeMapping["\u0635\u062D\u062D"] = 0xFD65;
-  composeMapping["\u0635\u0645\u0645"] = 0xFD66;
-  composeMapping["\u0634\u062D\u0645"] = 0xFD67;
-  composeMapping["\u0634\u062D\u0645"] = 0xFD68;
-  composeMapping["\u0634\u062C\u064A"] = 0xFD69;
-  composeMapping["\u0634\u0645\u062E"] = 0xFD6A;
-  composeMapping["\u0634\u0645\u062E"] = 0xFD6B;
-  composeMapping["\u0634\u0645\u0645"] = 0xFD6C;
-  composeMapping["\u0634\u0645\u0645"] = 0xFD6D;
-  composeMapping["\u0636\u062D\u0649"] = 0xFD6E;
-  composeMapping["\u0636\u062E\u0645"] = 0xFD6F;
-  composeMapping["\u0636\u062E\u0645"] = 0xFD70;
-  composeMapping["\u0637\u0645\u062D"] = 0xFD71;
-  composeMapping["\u0637\u0645\u062D"] = 0xFD72;
-  composeMapping["\u0637\u0645\u0645"] = 0xFD73;
-  composeMapping["\u0637\u0645\u064A"] = 0xFD74;
-  composeMapping["\u0639\u062C\u0645"] = 0xFD75;
-  composeMapping["\u0639\u0645\u0645"] = 0xFD76;
-  composeMapping["\u0639\u0645\u0645"] = 0xFD77;
-  composeMapping["\u0639\u0645\u0649"] = 0xFD78;
-  composeMapping["\u063A\u0645\u0645"] = 0xFD79;
-  composeMapping["\u063A\u0645\u064A"] = 0xFD7A;
-  composeMapping["\u063A\u0645\u0649"] = 0xFD7B;
-  composeMapping["\u0641\u062E\u0645"] = 0xFD7C;
-  composeMapping["\u0641\u062E\u0645"] = 0xFD7D;
-  composeMapping["\u0642\u0645\u062D"] = 0xFD7E;
-  composeMapping["\u0642\u0645\u0645"] = 0xFD7F;
-  composeMapping["\u0644\u062D\u0645"] = 0xFD80;
-  composeMapping["\u0644\u062D\u064A"] = 0xFD81;
-  composeMapping["\u0644\u062D\u0649"] = 0xFD82;
-  composeMapping["\u0644\u062C\u062C"] = 0xFD83;
-  composeMapping["\u0644\u062C\u062C"] = 0xFD84;
-  composeMapping["\u0644\u062E\u0645"] = 0xFD85;
-  composeMapping["\u0644\u062E\u0645"] = 0xFD86;
-  composeMapping["\u0644\u0645\u062D"] = 0xFD87;
-  composeMapping["\u0644\u0645\u062D"] = 0xFD88;
-  composeMapping["\u0645\u062D\u062C"] = 0xFD89;
-  composeMapping["\u0645\u062D\u0645"] = 0xFD8A;
-  composeMapping["\u0645\u062D\u064A"] = 0xFD8B;
-  composeMapping["\u0645\u062C\u062D"] = 0xFD8C;
-  composeMapping["\u0645\u062C\u0645"] = 0xFD8D;
-  composeMapping["\u0645\u062E\u062C"] = 0xFD8E;
-  composeMapping["\u0645\u062E\u0645"] = 0xFD8F;
-  composeMapping["\u0645\u062C\u062E"] = 0xFD92;
-  composeMapping["\u0647\u0645\u062C"] = 0xFD93;
-  composeMapping["\u0647\u0645\u0645"] = 0xFD94;
-  composeMapping["\u0646\u062D\u0645"] = 0xFD95;
-  composeMapping["\u0646\u062D\u0649"] = 0xFD96;
-  composeMapping["\u0646\u062C\u0645"] = 0xFD97;
-  composeMapping["\u0646\u062C\u0645"] = 0xFD98;
-  composeMapping["\u0646\u062C\u0649"] = 0xFD99;
-  composeMapping["\u0646\u0645\u064A"] = 0xFD9A;
-  composeMapping["\u0646\u0645\u0649"] = 0xFD9B;
-  composeMapping["\u064A\u0645\u0645"] = 0xFD9C;
-  composeMapping["\u064A\u0645\u0645"] = 0xFD9D;
-  composeMapping["\u0628\u062E\u064A"] = 0xFD9E;
-  composeMapping["\u062A\u062C\u064A"] = 0xFD9F;
-  composeMapping["\u062A\u062C\u0649"] = 0xFDA0;
-  composeMapping["\u062A\u062E\u064A"] = 0xFDA1;
-  composeMapping["\u062A\u062E\u0649"] = 0xFDA2;
-  composeMapping["\u062A\u0645\u064A"] = 0xFDA3;
-  composeMapping["\u062A\u0645\u0649"] = 0xFDA4;
-  composeMapping["\u062C\u0645\u064A"] = 0xFDA5;
-  composeMapping["\u062C\u062D\u0649"] = 0xFDA6;
-  composeMapping["\u062C\u0645\u0649"] = 0xFDA7;
-  composeMapping["\u0633\u062E\u0649"] = 0xFDA8;
-  composeMapping["\u0635\u062D\u064A"] = 0xFDA9;
-  composeMapping["\u0634\u062D\u064A"] = 0xFDAA;
-  composeMapping["\u0636\u062D\u064A"] = 0xFDAB;
-  composeMapping["\u0644\u062C\u064A"] = 0xFDAC;
-  composeMapping["\u0644\u0645\u064A"] = 0xFDAD;
-  composeMapping["\u064A\u062D\u064A"] = 0xFDAE;
-  composeMapping["\u064A\u062C\u064A"] = 0xFDAF;
-  composeMapping["\u064A\u0645\u064A"] = 0xFDB0;
-  composeMapping["\u0645\u0645\u064A"] = 0xFDB1;
-  composeMapping["\u0642\u0645\u064A"] = 0xFDB2;
-  composeMapping["\u0646\u062D\u064A"] = 0xFDB3;
-  composeMapping["\u0642\u0645\u062D"] = 0xFDB4;
-  composeMapping["\u0644\u062D\u0645"] = 0xFDB5;
-  composeMapping["\u0639\u0645\u064A"] = 0xFDB6;
-  composeMapping["\u0643\u0645\u064A"] = 0xFDB7;
-  composeMapping["\u0646\u062C\u062D"] = 0xFDB8;
-  composeMapping["\u0645\u062E\u064A"] = 0xFDB9;
-  composeMapping["\u0644\u062C\u0645"] = 0xFDBA;
-  composeMapping["\u0643\u0645\u0645"] = 0xFDBB;
-  composeMapping["\u0644\u062C\u0645"] = 0xFDBC;
-  composeMapping["\u0646\u062C\u062D"] = 0xFDBD;
-  composeMapping["\u062C\u062D\u064A"] = 0xFDBE;
-  composeMapping["\u062D\u062C\u064A"] = 0xFDBF;
-  composeMapping["\u0645\u062C\u064A"] = 0xFDC0;
-  composeMapping["\u0641\u0645\u064A"] = 0xFDC1;
-  composeMapping["\u0628\u062D\u064A"] = 0xFDC2;
-  composeMapping["\u0643\u0645\u0645"] = 0xFDC3;
-  composeMapping["\u0639\u062C\u0645"] = 0xFDC4;
-  composeMapping["\u0635\u0645\u0645"] = 0xFDC5;
-  composeMapping["\u0633\u062E\u064A"] = 0xFDC6;
-  composeMapping["\u0646\u062C\u064A"] = 0xFDC7;
-  composeMapping["\u0635\u0644\u06D2"] = 0xFDF0;
-  composeMapping["\u0642\u0644\u06D2"] = 0xFDF1;
-  composeMapping["\u0627\u0644\u0644\u0647"] = 0xFDF2;
-  composeMapping["\u0627\u0643\u0628\u0631"] = 0xFDF3;
-  composeMapping["\u0645\u062D\u0645\u062F"] = 0xFDF4;
-  composeMapping["\u0635\u0644\u0639\u0645"] = 0xFDF5;
-  composeMapping["\u0631\u0633\u0648\u0644"] = 0xFDF6;
-  composeMapping["\u0639\u0644\u064A\u0647"] = 0xFDF7;
-  composeMapping["\u0648\u0633\u0644\u0645"] = 0xFDF8;
-  composeMapping["\u0635\u0644\u0649"] = 0xFDF9;
-  composeMapping[
-          "\u0635\u0644\u0649\u0020\u0627\u0644\u0644\u0647\u0020\u0639\u0644\u064A\u0647\u0020\u0648\u0633\u0644\u0645"] =
-      0xFDFA;
-  composeMapping["\u062C\u0644\u0020\u062C\u0644\u0627\u0644\u0647"] = 0xFDFB;
-  composeMapping["\u0631\u06CC\u0627\u0644"] = 0xFDFC;
-  composeMapping["\u002C"] = 0xFE10;
-  composeMapping["\u3001"] = 0xFE11;
-  composeMapping["\u3002"] = 0xFE12;
-  composeMapping["\u003A"] = 0xFE13;
-  composeMapping["\u003B"] = 0xFE14;
-  composeMapping["\u0021"] = 0xFE15;
-  composeMapping["\u003F"] = 0xFE16;
-  composeMapping["\u3016"] = 0xFE17;
-  composeMapping["\u3017"] = 0xFE18;
-  composeMapping["\u2026"] = 0xFE19;
-  composeMapping["\u2025"] = 0xFE30;
-  composeMapping["\u2014"] = 0xFE31;
-  composeMapping["\u2013"] = 0xFE32;
-  composeMapping["\u005F"] = 0xFE33;
-  composeMapping["\u005F"] = 0xFE34;
-  composeMapping["\u0028"] = 0xFE35;
-  composeMapping["\u0029"] = 0xFE36;
-  composeMapping["\u007B"] = 0xFE37;
-  composeMapping["\u007D"] = 0xFE38;
-  composeMapping["\u3014"] = 0xFE39;
-  composeMapping["\u3015"] = 0xFE3A;
-  composeMapping["\u3010"] = 0xFE3B;
-  composeMapping["\u3011"] = 0xFE3C;
-  composeMapping["\u300A"] = 0xFE3D;
-  composeMapping["\u300B"] = 0xFE3E;
-  composeMapping["\u3008"] = 0xFE3F;
-  composeMapping["\u3009"] = 0xFE40;
-  composeMapping["\u300C"] = 0xFE41;
-  composeMapping["\u300D"] = 0xFE42;
-  composeMapping["\u300E"] = 0xFE43;
-  composeMapping["\u300F"] = 0xFE44;
-  composeMapping["\u005B"] = 0xFE47;
-  composeMapping["\u005D"] = 0xFE48;
-  composeMapping["\u203E"] = 0xFE49;
-  composeMapping["\u203E"] = 0xFE4A;
-  composeMapping["\u203E"] = 0xFE4B;
-  composeMapping["\u203E"] = 0xFE4C;
-  composeMapping["\u005F"] = 0xFE4D;
-  composeMapping["\u005F"] = 0xFE4E;
-  composeMapping["\u005F"] = 0xFE4F;
-  composeMapping["\u002C"] = 0xFE50;
-  composeMapping["\u3001"] = 0xFE51;
-  composeMapping["\u002E"] = 0xFE52;
-  composeMapping["\u003B"] = 0xFE54;
-  composeMapping["\u003A"] = 0xFE55;
-  composeMapping["\u003F"] = 0xFE56;
-  composeMapping["\u0021"] = 0xFE57;
-  composeMapping["\u2014"] = 0xFE58;
-  composeMapping["\u0028"] = 0xFE59;
-  composeMapping["\u0029"] = 0xFE5A;
-  composeMapping["\u007B"] = 0xFE5B;
-  composeMapping["\u007D"] = 0xFE5C;
-  composeMapping["\u3014"] = 0xFE5D;
-  composeMapping["\u3015"] = 0xFE5E;
-  composeMapping["\u0023"] = 0xFE5F;
-  composeMapping["\u0026"] = 0xFE60;
-  composeMapping["\u002A"] = 0xFE61;
-  composeMapping["\u002B"] = 0xFE62;
-  composeMapping["\u002D"] = 0xFE63;
-  composeMapping["\u003C"] = 0xFE64;
-  composeMapping["\u003E"] = 0xFE65;
-  composeMapping["\u003D"] = 0xFE66;
-  composeMapping["\u005C"] = 0xFE68;
-  composeMapping["\u0024"] = 0xFE69;
-  composeMapping["\u0025"] = 0xFE6A;
-  composeMapping["\u0040"] = 0xFE6B;
-  composeMapping["\u0020\u064B"] = 0xFE70;
-  composeMapping["\u0640\u064B"] = 0xFE71;
-  composeMapping["\u0020\u064C"] = 0xFE72;
-  composeMapping["\u0020\u064D"] = 0xFE74;
-  composeMapping["\u0020\u064E"] = 0xFE76;
-  composeMapping["\u0640\u064E"] = 0xFE77;
-  composeMapping["\u0020\u064F"] = 0xFE78;
-  composeMapping["\u0640\u064F"] = 0xFE79;
-  composeMapping["\u0020\u0650"] = 0xFE7A;
-  composeMapping["\u0640\u0650"] = 0xFE7B;
-  composeMapping["\u0020\u0651"] = 0xFE7C;
-  composeMapping["\u0640\u0651"] = 0xFE7D;
-  composeMapping["\u0020\u0652"] = 0xFE7E;
-  composeMapping["\u0640\u0652"] = 0xFE7F;
-  composeMapping["\u0621"] = 0xFE80;
-  composeMapping["\u0622"] = 0xFE81;
-  composeMapping["\u0622"] = 0xFE82;
-  composeMapping["\u0623"] = 0xFE83;
-  composeMapping["\u0623"] = 0xFE84;
-  composeMapping["\u0624"] = 0xFE85;
-  composeMapping["\u0624"] = 0xFE86;
-  composeMapping["\u0625"] = 0xFE87;
-  composeMapping["\u0625"] = 0xFE88;
-  composeMapping["\u0626"] = 0xFE89;
-  composeMapping["\u0626"] = 0xFE8A;
-  composeMapping["\u0626"] = 0xFE8B;
-  composeMapping["\u0626"] = 0xFE8C;
-  composeMapping["\u0627"] = 0xFE8D;
-  composeMapping["\u0627"] = 0xFE8E;
-  composeMapping["\u0628"] = 0xFE8F;
-  composeMapping["\u0628"] = 0xFE90;
-  composeMapping["\u0628"] = 0xFE91;
-  composeMapping["\u0628"] = 0xFE92;
-  composeMapping["\u0629"] = 0xFE93;
-  composeMapping["\u0629"] = 0xFE94;
-  composeMapping["\u062A"] = 0xFE95;
-  composeMapping["\u062A"] = 0xFE96;
-  composeMapping["\u062A"] = 0xFE97;
-  composeMapping["\u062A"] = 0xFE98;
-  composeMapping["\u062B"] = 0xFE99;
-  composeMapping["\u062B"] = 0xFE9A;
-  composeMapping["\u062B"] = 0xFE9B;
-  composeMapping["\u062B"] = 0xFE9C;
-  composeMapping["\u062C"] = 0xFE9D;
-  composeMapping["\u062C"] = 0xFE9E;
-  composeMapping["\u062C"] = 0xFE9F;
-  composeMapping["\u062C"] = 0xFEA0;
-  composeMapping["\u062D"] = 0xFEA1;
-  composeMapping["\u062D"] = 0xFEA2;
-  composeMapping["\u062D"] = 0xFEA3;
-  composeMapping["\u062D"] = 0xFEA4;
-  composeMapping["\u062E"] = 0xFEA5;
-  composeMapping["\u062E"] = 0xFEA6;
-  composeMapping["\u062E"] = 0xFEA7;
-  composeMapping["\u062E"] = 0xFEA8;
-  composeMapping["\u062F"] = 0xFEA9;
-  composeMapping["\u062F"] = 0xFEAA;
-  composeMapping["\u0630"] = 0xFEAB;
-  composeMapping["\u0630"] = 0xFEAC;
-  composeMapping["\u0631"] = 0xFEAD;
-  composeMapping["\u0631"] = 0xFEAE;
-  composeMapping["\u0632"] = 0xFEAF;
-  composeMapping["\u0632"] = 0xFEB0;
-  composeMapping["\u0633"] = 0xFEB1;
-  composeMapping["\u0633"] = 0xFEB2;
-  composeMapping["\u0633"] = 0xFEB3;
-  composeMapping["\u0633"] = 0xFEB4;
-  composeMapping["\u0634"] = 0xFEB5;
-  composeMapping["\u0634"] = 0xFEB6;
-  composeMapping["\u0634"] = 0xFEB7;
-  composeMapping["\u0634"] = 0xFEB8;
-  composeMapping["\u0635"] = 0xFEB9;
-  composeMapping["\u0635"] = 0xFEBA;
-  composeMapping["\u0635"] = 0xFEBB;
-  composeMapping["\u0635"] = 0xFEBC;
-  composeMapping["\u0636"] = 0xFEBD;
-  composeMapping["\u0636"] = 0xFEBE;
-  composeMapping["\u0636"] = 0xFEBF;
-  composeMapping["\u0636"] = 0xFEC0;
-  composeMapping["\u0637"] = 0xFEC1;
-  composeMapping["\u0637"] = 0xFEC2;
-  composeMapping["\u0637"] = 0xFEC3;
-  composeMapping["\u0637"] = 0xFEC4;
-  composeMapping["\u0638"] = 0xFEC5;
-  composeMapping["\u0638"] = 0xFEC6;
-  composeMapping["\u0638"] = 0xFEC7;
-  composeMapping["\u0638"] = 0xFEC8;
-  composeMapping["\u0639"] = 0xFEC9;
-  composeMapping["\u0639"] = 0xFECA;
-  composeMapping["\u0639"] = 0xFECB;
-  composeMapping["\u0639"] = 0xFECC;
-  composeMapping["\u063A"] = 0xFECD;
-  composeMapping["\u063A"] = 0xFECE;
-  composeMapping["\u063A"] = 0xFECF;
-  composeMapping["\u063A"] = 0xFED0;
-  composeMapping["\u0641"] = 0xFED1;
-  composeMapping["\u0641"] = 0xFED2;
-  composeMapping["\u0641"] = 0xFED3;
-  composeMapping["\u0641"] = 0xFED4;
-  composeMapping["\u0642"] = 0xFED5;
-  composeMapping["\u0642"] = 0xFED6;
-  composeMapping["\u0642"] = 0xFED7;
-  composeMapping["\u0642"] = 0xFED8;
-  composeMapping["\u0643"] = 0xFED9;
-  composeMapping["\u0643"] = 0xFEDA;
-  composeMapping["\u0643"] = 0xFEDB;
-  composeMapping["\u0643"] = 0xFEDC;
-  composeMapping["\u0644"] = 0xFEDD;
-  composeMapping["\u0644"] = 0xFEDE;
-  composeMapping["\u0644"] = 0xFEDF;
-  composeMapping["\u0644"] = 0xFEE0;
-  composeMapping["\u0645"] = 0xFEE1;
-  composeMapping["\u0645"] = 0xFEE2;
-  composeMapping["\u0645"] = 0xFEE3;
-  composeMapping["\u0645"] = 0xFEE4;
-  composeMapping["\u0646"] = 0xFEE5;
-  composeMapping["\u0646"] = 0xFEE6;
-  composeMapping["\u0646"] = 0xFEE7;
-  composeMapping["\u0646"] = 0xFEE8;
-  composeMapping["\u0647"] = 0xFEE9;
-  composeMapping["\u0647"] = 0xFEEA;
-  composeMapping["\u0647"] = 0xFEEB;
-  composeMapping["\u0647"] = 0xFEEC;
-  composeMapping["\u0648"] = 0xFEED;
-  composeMapping["\u0648"] = 0xFEEE;
-  composeMapping["\u0649"] = 0xFEEF;
-  composeMapping["\u0649"] = 0xFEF0;
-  composeMapping["\u064A"] = 0xFEF1;
-  composeMapping["\u064A"] = 0xFEF2;
-  composeMapping["\u064A"] = 0xFEF3;
-  composeMapping["\u064A"] = 0xFEF4;
-  composeMapping["\u0644\u0622"] = 0xFEF5;
-  composeMapping["\u0644\u0622"] = 0xFEF6;
-  composeMapping["\u0644\u0623"] = 0xFEF7;
-  composeMapping["\u0644\u0623"] = 0xFEF8;
-  composeMapping["\u0644\u0625"] = 0xFEF9;
-  composeMapping["\u0644\u0625"] = 0xFEFA;
-  composeMapping["\u0644\u0627"] = 0xFEFB;
-  composeMapping["\u0644\u0627"] = 0xFEFC;
-  composeMapping["\u0021"] = 0xFF01;
-  composeMapping["\u0022"] = 0xFF02;
-  composeMapping["\u0023"] = 0xFF03;
-  composeMapping["\u0024"] = 0xFF04;
-  composeMapping["\u0025"] = 0xFF05;
-  composeMapping["\u0026"] = 0xFF06;
-  composeMapping["\u0027"] = 0xFF07;
-  composeMapping["\u0028"] = 0xFF08;
-  composeMapping["\u0029"] = 0xFF09;
-  composeMapping["\u002A"] = 0xFF0A;
-  composeMapping["\u002B"] = 0xFF0B;
-  composeMapping["\u002C"] = 0xFF0C;
-  composeMapping["\u002D"] = 0xFF0D;
-  composeMapping["\u002E"] = 0xFF0E;
-  composeMapping["\u002F"] = 0xFF0F;
-  composeMapping["\u0030"] = 0xFF10;
-  composeMapping["\u0031"] = 0xFF11;
-  composeMapping["\u0032"] = 0xFF12;
-  composeMapping["\u0033"] = 0xFF13;
-  composeMapping["\u0034"] = 0xFF14;
-  composeMapping["\u0035"] = 0xFF15;
-  composeMapping["\u0036"] = 0xFF16;
-  composeMapping["\u0037"] = 0xFF17;
-  composeMapping["\u0038"] = 0xFF18;
-  composeMapping["\u0039"] = 0xFF19;
-  composeMapping["\u003A"] = 0xFF1A;
-  composeMapping["\u003B"] = 0xFF1B;
-  composeMapping["\u003C"] = 0xFF1C;
-  composeMapping["\u003D"] = 0xFF1D;
-  composeMapping["\u003E"] = 0xFF1E;
-  composeMapping["\u003F"] = 0xFF1F;
-  composeMapping["\u0040"] = 0xFF20;
-  composeMapping["\u0041"] = 0xFF21;
-  composeMapping["\u0042"] = 0xFF22;
-  composeMapping["\u0043"] = 0xFF23;
-  composeMapping["\u0044"] = 0xFF24;
-  composeMapping["\u0045"] = 0xFF25;
-  composeMapping["\u0046"] = 0xFF26;
-  composeMapping["\u0047"] = 0xFF27;
-  composeMapping["\u0048"] = 0xFF28;
-  composeMapping["\u0049"] = 0xFF29;
-  composeMapping["\u004A"] = 0xFF2A;
-  composeMapping["\u004B"] = 0xFF2B;
-  composeMapping["\u004C"] = 0xFF2C;
-  composeMapping["\u004D"] = 0xFF2D;
-  composeMapping["\u004E"] = 0xFF2E;
-  composeMapping["\u004F"] = 0xFF2F;
-  composeMapping["\u0050"] = 0xFF30;
-  composeMapping["\u0051"] = 0xFF31;
-  composeMapping["\u0052"] = 0xFF32;
-  composeMapping["\u0053"] = 0xFF33;
-  composeMapping["\u0054"] = 0xFF34;
-  composeMapping["\u0055"] = 0xFF35;
-  composeMapping["\u0056"] = 0xFF36;
-  composeMapping["\u0057"] = 0xFF37;
-  composeMapping["\u0058"] = 0xFF38;
-  composeMapping["\u0059"] = 0xFF39;
-  composeMapping["\u005A"] = 0xFF3A;
-  composeMapping["\u005B"] = 0xFF3B;
-  composeMapping["\u005C"] = 0xFF3C;
-  composeMapping["\u005D"] = 0xFF3D;
-  composeMapping["\u005E"] = 0xFF3E;
-  composeMapping["\u005F"] = 0xFF3F;
-  composeMapping["\u0060"] = 0xFF40;
-  composeMapping["\u0061"] = 0xFF41;
-  composeMapping["\u0062"] = 0xFF42;
-  composeMapping["\u0063"] = 0xFF43;
-  composeMapping["\u0064"] = 0xFF44;
-  composeMapping["\u0065"] = 0xFF45;
-  composeMapping["\u0066"] = 0xFF46;
-  composeMapping["\u0067"] = 0xFF47;
-  composeMapping["\u0068"] = 0xFF48;
-  composeMapping["\u0069"] = 0xFF49;
-  composeMapping["\u006A"] = 0xFF4A;
-  composeMapping["\u006B"] = 0xFF4B;
-  composeMapping["\u006C"] = 0xFF4C;
-  composeMapping["\u006D"] = 0xFF4D;
-  composeMapping["\u006E"] = 0xFF4E;
-  composeMapping["\u006F"] = 0xFF4F;
-  composeMapping["\u0070"] = 0xFF50;
-  composeMapping["\u0071"] = 0xFF51;
-  composeMapping["\u0072"] = 0xFF52;
-  composeMapping["\u0073"] = 0xFF53;
-  composeMapping["\u0074"] = 0xFF54;
-  composeMapping["\u0075"] = 0xFF55;
-  composeMapping["\u0076"] = 0xFF56;
-  composeMapping["\u0077"] = 0xFF57;
-  composeMapping["\u0078"] = 0xFF58;
-  composeMapping["\u0079"] = 0xFF59;
-  composeMapping["\u007A"] = 0xFF5A;
-  composeMapping["\u007B"] = 0xFF5B;
-  composeMapping["\u007C"] = 0xFF5C;
-  composeMapping["\u007D"] = 0xFF5D;
-  composeMapping["\u007E"] = 0xFF5E;
-  composeMapping["\u2985"] = 0xFF5F;
-  composeMapping["\u2986"] = 0xFF60;
-  composeMapping["\u3002"] = 0xFF61;
-  composeMapping["\u300C"] = 0xFF62;
-  composeMapping["\u300D"] = 0xFF63;
-  composeMapping["\u3001"] = 0xFF64;
-  composeMapping["\u30FB"] = 0xFF65;
-  composeMapping["\u30F2"] = 0xFF66;
-  composeMapping["\u30A1"] = 0xFF67;
-  composeMapping["\u30A3"] = 0xFF68;
-  composeMapping["\u30A5"] = 0xFF69;
-  composeMapping["\u30A7"] = 0xFF6A;
-  composeMapping["\u30A9"] = 0xFF6B;
-  composeMapping["\u30E3"] = 0xFF6C;
-  composeMapping["\u30E5"] = 0xFF6D;
-  composeMapping["\u30E7"] = 0xFF6E;
-  composeMapping["\u30C3"] = 0xFF6F;
-  composeMapping["\u30FC"] = 0xFF70;
-  composeMapping["\u30A2"] = 0xFF71;
-  composeMapping["\u30A4"] = 0xFF72;
-  composeMapping["\u30A6"] = 0xFF73;
-  composeMapping["\u30A8"] = 0xFF74;
-  composeMapping["\u30AA"] = 0xFF75;
-  composeMapping["\u30AB"] = 0xFF76;
-  composeMapping["\u30AD"] = 0xFF77;
-  composeMapping["\u30AF"] = 0xFF78;
-  composeMapping["\u30B1"] = 0xFF79;
-  composeMapping["\u30B3"] = 0xFF7A;
-  composeMapping["\u30B5"] = 0xFF7B;
-  composeMapping["\u30B7"] = 0xFF7C;
-  composeMapping["\u30B9"] = 0xFF7D;
-  composeMapping["\u30BB"] = 0xFF7E;
-  composeMapping["\u30BD"] = 0xFF7F;
-  composeMapping["\u30BF"] = 0xFF80;
-  composeMapping["\u30C1"] = 0xFF81;
-  composeMapping["\u30C4"] = 0xFF82;
-  composeMapping["\u30C6"] = 0xFF83;
-  composeMapping["\u30C8"] = 0xFF84;
-  composeMapping["\u30CA"] = 0xFF85;
-  composeMapping["\u30CB"] = 0xFF86;
-  composeMapping["\u30CC"] = 0xFF87;
-  composeMapping["\u30CD"] = 0xFF88;
-  composeMapping["\u30CE"] = 0xFF89;
-  composeMapping["\u30CF"] = 0xFF8A;
-  composeMapping["\u30D2"] = 0xFF8B;
-  composeMapping["\u30D5"] = 0xFF8C;
-  composeMapping["\u30D8"] = 0xFF8D;
-  composeMapping["\u30DB"] = 0xFF8E;
-  composeMapping["\u30DE"] = 0xFF8F;
-  composeMapping["\u30DF"] = 0xFF90;
-  composeMapping["\u30E0"] = 0xFF91;
-  composeMapping["\u30E1"] = 0xFF92;
-  composeMapping["\u30E2"] = 0xFF93;
-  composeMapping["\u30E4"] = 0xFF94;
-  composeMapping["\u30E6"] = 0xFF95;
-  composeMapping["\u30E8"] = 0xFF96;
-  composeMapping["\u30E9"] = 0xFF97;
-  composeMapping["\u30EA"] = 0xFF98;
-  composeMapping["\u30EB"] = 0xFF99;
-  composeMapping["\u30EC"] = 0xFF9A;
-  composeMapping["\u30ED"] = 0xFF9B;
-  composeMapping["\u30EF"] = 0xFF9C;
-  composeMapping["\u30F3"] = 0xFF9D;
-  composeMapping["\u3099"] = 0xFF9E;
-  composeMapping["\u309A"] = 0xFF9F;
-  composeMapping["\u3164"] = 0xFFA0;
-  composeMapping["\u3131"] = 0xFFA1;
-  composeMapping["\u3132"] = 0xFFA2;
-  composeMapping["\u3133"] = 0xFFA3;
-  composeMapping["\u3134"] = 0xFFA4;
-  composeMapping["\u3135"] = 0xFFA5;
-  composeMapping["\u3136"] = 0xFFA6;
-  composeMapping["\u3137"] = 0xFFA7;
-  composeMapping["\u3138"] = 0xFFA8;
-  composeMapping["\u3139"] = 0xFFA9;
-  composeMapping["\u313A"] = 0xFFAA;
-  composeMapping["\u313B"] = 0xFFAB;
-  composeMapping["\u313C"] = 0xFFAC;
-  composeMapping["\u313D"] = 0xFFAD;
-  composeMapping["\u313E"] = 0xFFAE;
-  composeMapping["\u313F"] = 0xFFAF;
-  composeMapping["\u3140"] = 0xFFB0;
-  composeMapping["\u3141"] = 0xFFB1;
-  composeMapping["\u3142"] = 0xFFB2;
-  composeMapping["\u3143"] = 0xFFB3;
-  composeMapping["\u3144"] = 0xFFB4;
-  composeMapping["\u3145"] = 0xFFB5;
-  composeMapping["\u3146"] = 0xFFB6;
-  composeMapping["\u3147"] = 0xFFB7;
-  composeMapping["\u3148"] = 0xFFB8;
-  composeMapping["\u3149"] = 0xFFB9;
-  composeMapping["\u314A"] = 0xFFBA;
-  composeMapping["\u314B"] = 0xFFBB;
-  composeMapping["\u314C"] = 0xFFBC;
-  composeMapping["\u314D"] = 0xFFBD;
-  composeMapping["\u314E"] = 0xFFBE;
-  composeMapping["\u314F"] = 0xFFC2;
-  composeMapping["\u3150"] = 0xFFC3;
-  composeMapping["\u3151"] = 0xFFC4;
-  composeMapping["\u3152"] = 0xFFC5;
-  composeMapping["\u3153"] = 0xFFC6;
-  composeMapping["\u3154"] = 0xFFC7;
-  composeMapping["\u3155"] = 0xFFCA;
-  composeMapping["\u3156"] = 0xFFCB;
-  composeMapping["\u3157"] = 0xFFCC;
-  composeMapping["\u3158"] = 0xFFCD;
-  composeMapping["\u3159"] = 0xFFCE;
-  composeMapping["\u315A"] = 0xFFCF;
-  composeMapping["\u315B"] = 0xFFD2;
-  composeMapping["\u315C"] = 0xFFD3;
-  composeMapping["\u315D"] = 0xFFD4;
-  composeMapping["\u315E"] = 0xFFD5;
-  composeMapping["\u315F"] = 0xFFD6;
-  composeMapping["\u3160"] = 0xFFD7;
-  composeMapping["\u3161"] = 0xFFDA;
-  composeMapping["\u3162"] = 0xFFDB;
-  composeMapping["\u3163"] = 0xFFDC;
-  composeMapping["\u00A2"] = 0xFFE0;
-  composeMapping["\u00A3"] = 0xFFE1;
-  composeMapping["\u00AC"] = 0xFFE2;
-  composeMapping["\u00AF"] = 0xFFE3;
-  composeMapping["\u00A6"] = 0xFFE4;
-  composeMapping["\u00A5"] = 0xFFE5;
-  composeMapping["\u20A9"] = 0xFFE6;
-  composeMapping["\u2502"] = 0xFFE8;
-  composeMapping["\u2190"] = 0xFFE9;
-  composeMapping["\u2191"] = 0xFFEA;
-  composeMapping["\u2192"] = 0xFFEB;
-  composeMapping["\u2193"] = 0xFFEC;
-  composeMapping["\u25A0"] = 0xFFED;
-  composeMapping["\u25CB"] = 0xFFEE;
 }
 
 /// <summary>
@@ -15638,13 +14887,15 @@ UnicodeDecompositionType getUnicodeDecompositionType(int c) {
   _init();
 
   if (decomType.containsKey(c)) return decomType[c];
-  return UnicodeDecompositionType.None;
+  return UnicodeDecompositionType.none;
 }
 
-String getUnicodeDecompositionMapping(int c) {
+List<int> getUnicodeDecompositionMapping(int c) {
   _init();
 
-  if (decomMapping.containsKey(c)) return decomMapping[c];
+  if (decomMapping.containsKey(c)) {
+    return decomMapping[c];
+  }
   return null;
 }
 
