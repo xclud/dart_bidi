@@ -121,7 +121,7 @@ int getArabicCharacterByLetterForm(int ch, LetterForm form) {
 }
 
 _init() {
-  if (_charForms.length == 0) {
+  if (_charForms.length != 0) {
     return;
   }
 

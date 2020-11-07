@@ -1,7 +1,6 @@
 import 'dart:core';
 import 'enums.dart';
 import 'paragraph.dart';
-import 'string_builder.dart';
 import 'unicode_character_resolver.dart';
 
 /// <summary>
@@ -9,14 +8,14 @@ import 'unicode_character_resolver.dart';
 /// </summary>
 /// <param name="logicalString">The original logical-ordered string.</param>
 /// <returns>The visual representation of the string.</returns>
-String logicalToVisual(String logicalString) {
+List<int> logicalToVisual(String logicalString) {
   final pars = splitStringToParagraphs(logicalString);
-  final sb = StringBuilder();
+  final sb = List<int>();
   for (final p in pars) {
-    sb.write(p.BidiText);
+    sb.addAll(p.bidiText);
   }
 
-  return sb.toString();
+  return sb;
 }
 
 /// <summary>
@@ -45,38 +44,38 @@ String logicalToVisual2(
   lengths = List<int>();
 
   List<Paragraph> pars = splitStringToParagraphs(logicalString);
-  final sb = StringBuilder();
+  final sb = <int>[];
   for (Paragraph p in pars) {
-    sb.write(p.BidiText);
-    indexes.addAll(p.BidiIndexes);
-    lengths.addAll(p.BidiIndexLengths);
+    sb.addAll(p.bidiText);
+    indexes.addAll(p.bidiIndexes);
+    lengths.addAll(p.bidiIndexLengths);
   }
 
-  return sb.toString();
+  return String.fromCharCodes(sb);
 }
 
 // 3.3.1.P1 - Split the text into separate paragraphs.
 // A paragraph separator is kept with the previous paragraph.
 // Within each paragraph, apply all the other rules of this algorithm.
 List<Paragraph> splitStringToParagraphs(String logicalString) {
-  List<Paragraph> ret = new List<Paragraph>();
-  int i;
-  final sb = StringBuilder();
-  for (i = 0; i < logicalString.length; ++i) {
+  List<Paragraph> ret = [];
+
+  var sb = <int>[];
+  for (var i = 0; i < logicalString.length; ++i) {
     final c = logicalString.codeUnits[i];
     final cType = getBidiCharacterType(c);
     if (cType == BidiCharacterType.B) {
-      final p = Paragraph(sb.toString());
-      p.ParagraphSeparator = c;
+      final p = Paragraph(sb);
+      p.paragraphSeparator = c;
       ret.add(p);
-      sb.clear();
+      sb = [];
     } else {
-      sb.write(c);
+      sb.add(c);
     }
   }
   if (sb.length > 0) // string ended without a paragraph separator
   {
-    ret.add(Paragraph(sb.toString()));
+    ret.add(Paragraph(sb));
   }
   return ret;
 }

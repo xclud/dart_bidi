@@ -6,37 +6,38 @@ import 'character_mirror_resolver.dart';
 import 'enums.dart';
 import 'shaping_resolver.dart';
 import 'stack.dart';
-import 'string_builder.dart';
 import 'unicode_character_resolver.dart';
 
 class Paragraph {
-  String _original_text;
-  String _text;
-  String _bidi_text;
+  final List<int> _original_text = [];
+  final List<int> _text = [];
+  final List<int> _bidi_text = [];
   int _paragraph_separator = BidiChars.NotAChar;
 
-  int embedding_level;
+  int _embedding_level = 0;
   List<CharData> _text_data;
-  List<int> _char_lengths;
-  List<int> _bidi_indexes;
+  final List<int> _char_lengths = [];
+  final List<int> _bidi_indexes = [];
 
   bool _hasArabic;
   bool _hasNSMs;
 
-  Paragraph(String text) {
-    _char_lengths = new List<int>();
-    _bidi_indexes = new List<int>();
-
+  Paragraph(List<int> text) {
     Text = text;
   }
 
-  String get Text {
+  List<int> get Text {
     return _original_text;
   }
 
-  void set Text(String value) {
-    _original_text = value;
-    _text = value;
+  void set Text(Iterable<int> value) {
+    _original_text.clear();
+    _text.clear();
+
+    if (value != null) {
+      _original_text.addAll(value);
+      _text.addAll(value);
+    }
 
     normalizeText();
 
@@ -46,36 +47,37 @@ class Paragraph {
     removeBidiMarkers();
   }
 
-  int get ParagraphSeparator {
+  int get paragraphSeparator {
     return _paragraph_separator;
   }
 
-  void set ParagraphSeparator(int value) {
+  void set paragraphSeparator(int value) {
     _paragraph_separator = value;
   }
 
-  String get BidiText {
-    var ret = _bidi_text;
+  List<int> get bidiText {
+    var ret = _bidi_text.toList();
+
     if (_paragraph_separator != BidiChars.NotAChar) {
-      ret += String.fromCharCode(_paragraph_separator);
+      ret.add(_paragraph_separator);
     }
     return ret;
   }
 
-  List<int> get BidiIndexes {
+  List<int> get bidiIndexes {
     return _bidi_indexes;
   }
 
-  List<int> get BidiIndexLengths {
+  List<int> get bidiIndexLengths {
     return _char_lengths;
   }
 
   int get EmbeddingLevel {
-    return embedding_level;
+    return _embedding_level;
   }
 
   void set EmbeddingLevel(int value) {
-    embedding_level = value;
+    _embedding_level = value;
   }
 
   void removeBidiMarkers() {
@@ -89,7 +91,7 @@ class Paragraph {
       0x202C,
     ];
 
-    final sb = _bidi_text.codeUnits.toList();
+    final sb = _bidi_text.toList();
 
     int i = 0;
     while (i < sb.length) {
@@ -102,7 +104,8 @@ class Paragraph {
       }
     }
 
-    _bidi_text = String.fromCharCodes(sb);
+    _bidi_text.clear();
+    _bidi_text.addAll(sb);
   }
 
   // 3.3.1 The Paragraph Level
@@ -110,10 +113,10 @@ class Paragraph {
   // P3 - If a character is found in P2 and it is of type AL or R, then
   // set the paragraph embedding level to one; otherwise, set it to zero.
   void recalculateParagraphEmbeddingLevel() {
-    for (var c in _text.codeUnits) {
+    for (var c in _text) {
       final cType = getBidiCharacterType(c);
       if (cType == BidiCharacterType.R || cType == BidiCharacterType.AL) {
-        embedding_level = 1;
+        _embedding_level = 1;
         break;
       } else if (cType == BidiCharacterType.L) break;
     }
@@ -123,7 +126,8 @@ class Paragraph {
     final sb = internalDecompose(_char_lengths);
     internalCompose(sb, _char_lengths);
 
-    _text = sb.toString();
+    _text.clear();
+    _text.addAll(sb);
   }
 
   // 3.3.2 Explicit Levels and Directions
@@ -131,9 +135,16 @@ class Paragraph {
     // This method is implemented in such a way it handles the string in logical order,
     // rather than visual order, so it is easier to handle complex layouts. That is why
     // it is placed BEFORE ReorderString rather than AFTER it, as its number suggests.
-    if (_hasArabic) _text = performArabicShaping(_text);
+    if (_hasArabic) {
+      final shaped = performArabicShaping(_text);
+      _text.clear();
+      _text.addAll(shaped);
+    }
 
     _text_data = List<CharData>(_text.length);
+    for (var i = 0; i < _text_data.length; i++) {
+      _text_data[i] = CharData();
+    }
 
     // X1
     var embeddingLevel = EmbeddingLevel;
@@ -144,7 +155,7 @@ class Paragraph {
     int idx = 0;
     for (int i = 0; i < _text.length; ++i) {
       bool x9Char = false;
-      final c = _text.codeUnits[i];
+      final c = _text[i];
       _text_data[i]._ct = getBidiCharacterType(c);
       _text_data[i]._char = c;
       _text_data[i]._idx = idx;
@@ -247,15 +258,18 @@ class Paragraph {
     List<int> indexes = new List<int>();
     List<int> lengths = new List<int>();
 
-    final sb = StringBuilder();
+    final sb = List<int>();
     for (CharData cd in _text_data) {
-      sb.write(cd._char);
+      sb.add(cd._char);
       indexes.add(cd._idx);
       lengths.add(1);
     }
 
-    _bidi_text = sb.toString();
-    _bidi_indexes = indexes;
+    _bidi_text.clear();
+    _bidi_text.addAll(sb);
+
+    _bidi_indexes.clear();
+    _bidi_indexes.addAll(indexes);
   }
 
   /// <summary>
@@ -549,7 +563,7 @@ class Paragraph {
   /// Implements rules R1-R7 and rules L1-L3 of section 8.2 (Arabic) of the Unicode standard.
   /// </summary>
   // TODO - this code is very special-cased.
-  String performArabicShaping(String text) {
+  List<int> performArabicShaping(List<int> text) {
     ArabicShapeJoiningType last_jt = ArabicShapeJoiningType.U;
     LetterForm last_form = LetterForm.Isolated;
     int last_pos = 0;
@@ -557,7 +571,7 @@ class Paragraph {
     final letterForms = List<LetterForm>(text.length);
 
     for (int curr_pos = 0; curr_pos < text.length; ++curr_pos) {
-      var ch = text.codeUnits[curr_pos];
+      var ch = text[curr_pos];
       //string chStr = (ch).toString("X4");
 
       final jt = getArabicShapeJoiningType(ch);
@@ -595,10 +609,10 @@ class Paragraph {
     last_pos = 0;
     int insert_pos = 0;
 
-    StringBuilder sb = new StringBuilder();
+    final sb = <int>[];
 
     for (int curr_pos = 0; curr_pos < text.length; ++curr_pos) {
-      var ch = text.codeUnits[curr_pos];
+      var ch = text[curr_pos];
       //string chStr = (ch).toString("X4");
       final jt = getArabicShapeJoiningType(ch);
 
@@ -665,10 +679,10 @@ class Paragraph {
         }
       }
 
-      sb.write(getArabicCharacterByLetterForm(ch, letterForms[curr_pos]));
+      sb.add(getArabicCharacterByLetterForm(ch, letterForms[curr_pos]));
     }
 
-    return sb.toString();
+    return sb;
   }
 
   int getPairwiseComposition(int first, int second) {
@@ -677,7 +691,7 @@ class Paragraph {
     return compose(first.toString() + second.toString());
   }
 
-  void internalCompose(StringBuilder target, List<int> char_lengths) {
+  void internalCompose(List<int> target, List<int> char_lengths) {
     if (target.length == 0) return;
     int starterPos = 0;
     int compPos = 1;
@@ -741,11 +755,12 @@ class Paragraph {
       }
     }
     target.length = compPos;
-    char_lengths.removeRange(compPos, char_lengths.length - compPos);
+    if (char_lengths.length - compPos > 0) {
+      char_lengths.removeRange(compPos, char_lengths.length - compPos);
+    }
   }
 
-  void GetRecursiveDecomposition(
-      bool canonical, int ch, StringBuilder builder) {
+  void GetRecursiveDecomposition(bool canonical, int ch, List<int> builder) {
     final decomp = getUnicodeDecompositionMapping(ch);
     if (decomp != null &&
         !(canonical &&
@@ -755,25 +770,25 @@ class Paragraph {
       }
     } else // if no decomp, append
     {
-      builder.write(ch);
+      builder.add(ch);
     }
   }
 
-  StringBuilder internalDecompose(List<int> char_lengths) {
-    StringBuilder target = new StringBuilder();
-    StringBuilder buffer = new StringBuilder();
+  List<int> internalDecompose(List<int> char_lengths) {
+    final List<int> target = [];
+    final List<int> buffer = [];
 
     _hasArabic = false;
     _hasNSMs = false;
 
     for (int i = 0; i < _text.length; ++i) {
-      final ct = getBidiCharacterType(_text.codeUnits[i]);
+      final ct = getBidiCharacterType(_text[i]);
       _hasArabic |=
           ((ct == BidiCharacterType.AL) || (ct == BidiCharacterType.AN));
       _hasNSMs |= (ct == BidiCharacterType.NSM);
 
       buffer.clear();
-      GetRecursiveDecomposition(false, _text.codeUnits[i], buffer);
+      GetRecursiveDecomposition(false, _text[i], buffer);
       char_lengths.add(1 - buffer.length);
       // add all of the characters in the decomposition.
       // (may be just the original character, if there was
@@ -792,7 +807,7 @@ class Paragraph {
             if (getUnicodeCanonicalClass(ch2).value <= chClass.value) break;
           }
         }
-        target.inserti(k, ch);
+        target.insert(k, ch);
       }
     }
     return target;
