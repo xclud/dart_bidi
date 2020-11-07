@@ -13,7 +13,7 @@ String logicalToVisual(String logicalString) {
   final pars = splitStringToParagraphs(logicalString);
   final sb = StringBuilder();
   for (final p in pars) {
-    sb.AppendS(p.BidiText);
+    sb.write(p.BidiText);
   }
 
   return sb.toString();
@@ -47,7 +47,7 @@ String logicalToVisual2(
   List<Paragraph> pars = splitStringToParagraphs(logicalString);
   final sb = StringBuilder();
   for (Paragraph p in pars) {
-    sb.AppendS(p.BidiText);
+    sb.write(p.BidiText);
     indexes.addAll(p.BidiIndexes);
     lengths.addAll(p.BidiIndexLengths);
   }
@@ -69,9 +69,9 @@ List<Paragraph> splitStringToParagraphs(String logicalString) {
       final p = Paragraph(sb.toString());
       p.ParagraphSeparator = c;
       ret.add(p);
-      sb.length = 0;
+      sb.clear();
     } else {
-      sb.Append(c);
+      sb.write(c);
     }
   }
   if (sb.length > 0) // string ended without a paragraph separator

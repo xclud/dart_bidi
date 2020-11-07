@@ -79,14 +79,22 @@ class Paragraph {
   }
 
   void removeBidiMarkers() {
-    final controlChars = "\u200F\u202B\u202E\u200E\u202A\u202D\u202C";
+    final controlChars = [
+      0x200F,
+      0x202B,
+      0x202E,
+      0x200E,
+      0x202A,
+      0x202D,
+      0x202C,
+    ];
 
-    final sb = StringBuilder.fromText(_bidi_text);
+    final sb = _bidi_text.codeUnits.toList();
 
     int i = 0;
     while (i < sb.length) {
-      if (controlChars.contains(sb[i].toString())) {
-        sb.remove(i, 1);
+      if (controlChars.contains(sb[i])) {
+        sb.removeAt(i);
         _bidi_indexes.removeAt(i);
         _char_lengths.removeAt(i);
       } else {
@@ -94,7 +102,7 @@ class Paragraph {
       }
     }
 
-    _bidi_text = sb.toString();
+    _bidi_text = String.fromCharCodes(sb);
   }
 
   // 3.3.1 The Paragraph Level
@@ -196,7 +204,7 @@ class Paragraph {
       // embedding level and directional override.
       else if (c == BidiChars.PDF) {
         x9Char = true;
-        if (elStack.Count > 0) {
+        if (elStack.length > 0) {
           embeddingLevel = elStack.pop();
           dos = dosStack.pop();
         }
@@ -241,7 +249,7 @@ class Paragraph {
 
     final sb = StringBuilder();
     for (CharData cd in _text_data) {
-      sb.Append(cd._char);
+      sb.write(cd._char);
       indexes.add(cd._idx);
       lengths.add(1);
     }
@@ -657,7 +665,7 @@ class Paragraph {
         }
       }
 
-      sb.Append(getArabicCharacterByLetterForm(ch, letterForms[curr_pos]));
+      sb.write(getArabicCharacterByLetterForm(ch, letterForms[curr_pos]));
     }
 
     return sb.toString();
@@ -747,7 +755,7 @@ class Paragraph {
       }
     } else // if no decomp, append
     {
-      builder.Append(ch);
+      builder.write(ch);
     }
   }
 
@@ -764,7 +772,7 @@ class Paragraph {
           ((ct == BidiCharacterType.AL) || (ct == BidiCharacterType.AN));
       _hasNSMs |= (ct == BidiCharacterType.NSM);
 
-      buffer.length = 0;
+      buffer.clear();
       GetRecursiveDecomposition(false, _text.codeUnits[i], buffer);
       char_lengths.add(1 - buffer.length);
       // add all of the characters in the decomposition.
