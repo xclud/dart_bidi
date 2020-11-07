@@ -5,6 +5,9 @@ Implementation of the BIDI algorithm, as described in http://www.unicode.org/rep
 
 Converts *logical* strings to their equivalent *visual* representation. Persian, Hebrew and Arabic languages (and any other RTL language) are supported.
 
+
+![Screenshot](screenshots/mahdi.png)
+
 ## Getting Started
 In your `pubspec.yaml` file add:
 
