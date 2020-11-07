@@ -1,11 +1,11 @@
 name: bidi
-description: BiDi algorithm for dart and flutter.
-version: 0.0.1
+description: Implementation of the BIDI algorithm, as described in http://www.unicode.org/reports/tr9/tr9-17.html.
+version: 1.0.0
 repository: https://github.com/xclud/dart_bidi
 homepage: https://pwa.ir
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
 
