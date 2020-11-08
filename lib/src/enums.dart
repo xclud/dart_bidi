@@ -1,5 +1,4 @@
 /// Letter joining types of Persian letters.
-
 enum ShapeJoiningType {
   ///Right Joining
   R,

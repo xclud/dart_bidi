@@ -3,11 +3,8 @@ import 'enums.dart';
 import 'paragraph.dart';
 import 'unicode_character_resolver.dart';
 
-/// <summary>
 /// Implementation of the BIDI algorithm, as described in http://www.unicode.org/reports/tr9/tr9-17.html
-/// </summary>
-/// <param name="logicalString">The original logical-ordered string.</param>
-/// <returns>The visual representation of the string.</returns>
+/// [logicalString] is the original logical-ordered string. Returns the visual representation of the string.
 List<int> logicalToVisual(String logicalString) {
   final pars = splitStringToParagraphs(logicalString);
   final sb = List<int>();
@@ -18,13 +15,11 @@ List<int> logicalToVisual(String logicalString) {
   return sb;
 }
 
-/// <summary>
 /// Implementation of the BIDI algorithm, as described in http://www.unicode.org/reports/tr9/tr9-17.html
-/// </summary>
-/// <param name="logicalString">The original logical-ordered string.</param>
-/// <param name="indexes">Implies where the original characters are.</param>
-/// <param name="lengths">Implies how many characters each original character occupies.</param>
-/// <returns>The visual representation of the string.</returns>
+/// [logicalString] is the original logical-ordered string.
+/// [indexes] Implies where the original characters are.
+/// [lengths] Implies how many characters each original character occupies.
+/// Returns the visual representation of the string.
 String logicalToVisual2(
     String logicalString, List<int> indexes, List<int> lengths) {
   //Section 3:
@@ -73,7 +68,7 @@ List<Paragraph> splitStringToParagraphs(String logicalString) {
       sb.add(c);
     }
   }
-  if (sb.length > 0) // string ended without a paragraph separator
+  if (sb.isNotEmpty) // string ended without a paragraph separator
   {
     ret.add(Paragraph(sb));
   }

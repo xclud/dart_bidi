@@ -23,14 +23,14 @@ class Paragraph {
   bool _hasNSMs;
 
   Paragraph(List<int> text) {
-    Text = text;
+    this.text = text;
   }
 
-  List<int> get Text {
+  List<int> get text {
     return _original_text;
   }
 
-  void set Text(Iterable<int> value) {
+  set text(Iterable<int> value) {
     _original_text.clear();
     _text.clear();
 
@@ -72,11 +72,11 @@ class Paragraph {
     return _char_lengths;
   }
 
-  int get EmbeddingLevel {
+  int get embeddingLevel {
     return _embedding_level;
   }
 
-  void set EmbeddingLevel(int value) {
+  set embeddingLevel(int value) {
     _embedding_level = value;
   }
 
@@ -147,7 +147,7 @@ class Paragraph {
     }
 
     // X1
-    var embeddingLevel = EmbeddingLevel;
+    var embeddingLevel = this.embeddingLevel;
     DirectionalOverrideStatus dos = DirectionalOverrideStatus.Neutral;
     Stack<DirectionalOverrideStatus> dosStack =
         Stack<DirectionalOverrideStatus>();
@@ -231,7 +231,7 @@ class Paragraph {
     }
 
     // X10. The remaining rules are applied to each run of characters at the same level.
-    int prevLevel = EmbeddingLevel;
+    int prevLevel = embeddingLevel;
     int start = 0;
     while (start < _text.length) {
       final level = _text_data[start]._el;
@@ -241,7 +241,7 @@ class Paragraph {
       while (limit < _text.length && _text_data[limit]._el == level) ++limit;
 
       final nextLevel =
-          limit < _text.length ? _text_data[limit]._el : EmbeddingLevel;
+          limit < _text.length ? _text_data[limit]._el : embeddingLevel;
       final eor = typeForLevel(max(nextLevel, level));
 
       resolveWeakTypes(start, limit, sor, eor);
@@ -499,7 +499,7 @@ class Paragraph {
     for (int i = 0; i < _text_data.length; ++i) {
       if (_text_data[i]._ct == BidiCharacterType.S ||
           _text_data[i]._ct == BidiCharacterType.B) {
-        for (int j = l1_start; j <= i; ++j) _text_data[j]._el = EmbeddingLevel;
+        for (int j = l1_start; j <= i; ++j) _text_data[j]._el = embeddingLevel;
       }
 
       if (_text_data[i]._ct != BidiCharacterType.WS) {
@@ -507,7 +507,7 @@ class Paragraph {
       }
     }
     for (int j = l1_start; j < _text_data.length; ++j)
-      _text_data[j]._el = EmbeddingLevel;
+      _text_data[j]._el = embeddingLevel;
 
     // L2. From the highest level found in the text to the lowest odd level on each
     //     line, including intermediate levels not actually present in the text,
