@@ -7,7 +7,7 @@ import 'unicode_character_resolver.dart';
 /// [logicalString] is the original logical-ordered string. Returns the visual representation of the string.
 List<int> logicalToVisual(String logicalString) {
   final pars = splitStringToParagraphs(logicalString);
-  final sb = List<int>();
+  final sb = <int>[];
   for (final p in pars) {
     sb.addAll(p.bidiText);
   }
@@ -34,9 +34,6 @@ String logicalToVisual2(
   //(3) resolving weak types.
   //(4) resolving neutral types.
   //(5) resolving implicit embedding levels.
-
-  indexes = List<int>();
-  lengths = List<int>();
 
   List<Paragraph> pars = splitStringToParagraphs(logicalString);
   final sb = <int>[];

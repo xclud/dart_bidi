@@ -51,7 +51,7 @@ class Paragraph {
     return _paragraph_separator;
   }
 
-  void set paragraphSeparator(int value) {
+  set paragraphSeparator(int value) {
     _paragraph_separator = value;
   }
 
@@ -172,10 +172,11 @@ class Paragraph {
           ++embeddingLevel;
           embeddingLevel |= 1;
 
-          if (c == BidiChars.RLE)
+          if (c == BidiChars.RLE) {
             dos = DirectionalOverrideStatus.Neutral;
-          else
+          } else {
             dos = DirectionalOverrideStatus.RTL;
+          }
         }
       }
       // X3. With each LRE, compute the least greater even embedding level.
@@ -189,10 +190,11 @@ class Paragraph {
           embeddingLevel |= 1;
           ++embeddingLevel;
 
-          if (c == BidiChars.LRE)
+          if (c == BidiChars.LRE) {
             dos = DirectionalOverrideStatus.Neutral;
-          else
+          } else {
             dos = DirectionalOverrideStatus.LTR;
+          }
         }
       }
 
@@ -203,10 +205,11 @@ class Paragraph {
 
         //b. Whenever the directional override status is not neutral,
         //reset the current character type to the directional override status.
-        if (dos == DirectionalOverrideStatus.LTR)
+        if (dos == DirectionalOverrideStatus.LTR) {
           _text_data[i]._ct = BidiCharacterType.L;
-        else if (dos == DirectionalOverrideStatus.RTL)
+        } else if (dos == DirectionalOverrideStatus.RTL) {
           _text_data[i]._ct = BidiCharacterType.R;
+        }
       }
 
       //Terminating Embeddings and Overrides
@@ -238,7 +241,9 @@ class Paragraph {
       final sor = typeForLevel(max(prevLevel, level));
 
       int limit = start + 1;
-      while (limit < _text.length && _text_data[limit]._el == level) ++limit;
+      while (limit < _text.length && _text_data[limit]._el == level) {
+        ++limit;
+      }
 
       final nextLevel =
           limit < _text.length ? _text_data[limit]._el : embeddingLevel;
@@ -255,10 +260,10 @@ class Paragraph {
     reorderString();
     fixMirroredCharacters();
 
-    List<int> indexes = new List<int>();
-    List<int> lengths = new List<int>();
+    List<int> indexes = [];
+    List<int> lengths = [];
 
-    final sb = List<int>();
+    final List<int> sb = [];
     for (CharData cd in _text_data) {
       sb.add(cd._char);
       indexes.add(cd._idx);
@@ -285,10 +290,11 @@ class Paragraph {
       BidiCharacterType preceedingCharacterType = sor;
       for (int i = start; i < limit; ++i) {
         BidiCharacterType t = _text_data[i]._ct;
-        if (t == BidiCharacterType.NSM)
+        if (t == BidiCharacterType.NSM) {
           _text_data[i]._ct = preceedingCharacterType;
-        else
+        } else {
           preceedingCharacterType = t;
+        }
       }
     }
 
@@ -297,19 +303,21 @@ class Paragraph {
     var t_w2 = BidiCharacterType.EN;
     for (int i = start; i < limit; ++i) {
       if (_text_data[i]._ct == BidiCharacterType.L ||
-          _text_data[i]._ct == BidiCharacterType.R)
+          _text_data[i]._ct == BidiCharacterType.R) {
         t_w2 = BidiCharacterType.EN;
-      else if (_text_data[i]._ct == BidiCharacterType.AL)
+      } else if (_text_data[i]._ct == BidiCharacterType.AL) {
         t_w2 = BidiCharacterType.AN;
-      else if (_text_data[i]._ct == BidiCharacterType.EN)
+      } else if (_text_data[i]._ct == BidiCharacterType.EN) {
         _text_data[i]._ct = t_w2;
+      }
     }
 
     // W3. Change all ALs to R.
     if (_hasPersian) {
       for (int i = start; i < limit; ++i) {
-        if (_text_data[i]._ct == BidiCharacterType.AL)
+        if (_text_data[i]._ct == BidiCharacterType.AL) {
           _text_data[i]._ct = BidiCharacterType.R;
+        }
       }
     }
 
@@ -353,8 +361,9 @@ class Paragraph {
         BidiCharacterType t =
             runstart == start ? sor : _text_data[runstart - 1]._ct;
 
-        if (t != BidiCharacterType.EN)
+        if (t != BidiCharacterType.EN) {
           t = runlimit == limit ? eor : _text_data[runlimit]._ct;
+        }
 
         if (t == BidiCharacterType.EN) {
           setTypes(runstart, runlimit, BidiCharacterType.EN);
@@ -381,12 +390,13 @@ class Paragraph {
     BidiCharacterType t_w7 =
         sor == BidiCharacterType.L ? BidiCharacterType.L : BidiCharacterType.EN;
     for (int i = start; i < limit; ++i) {
-      if (_text_data[i]._ct == BidiCharacterType.R)
+      if (_text_data[i]._ct == BidiCharacterType.R) {
         t_w7 = BidiCharacterType.EN;
-      else if (_text_data[i]._ct == BidiCharacterType.L)
+      } else if (_text_data[i]._ct == BidiCharacterType.L) {
         t_w7 = BidiCharacterType.L;
-      else if (_text_data[i]._ct == BidiCharacterType.EN)
+      } else if (_text_data[i]._ct == BidiCharacterType.EN) {
         _text_data[i]._ct = t_w7;
+      }
     }
   }
 
@@ -419,22 +429,24 @@ class Paragraph {
         BidiCharacterType leadingType;
         BidiCharacterType trailingType;
 
-        if (runstart == start)
+        if (runstart == start) {
           leadingType = sor;
-        else {
+        } else {
           leadingType = _text_data[runstart - 1]._ct;
           if (leadingType == BidiCharacterType.AN ||
-              leadingType == BidiCharacterType.EN)
+              leadingType == BidiCharacterType.EN) {
             leadingType = BidiCharacterType.R;
+          }
         }
 
-        if (runlimit == limit)
+        if (runlimit == limit) {
           trailingType = eor;
-        else {
+        } else {
           trailingType = _text_data[runlimit]._ct;
           if (trailingType == BidiCharacterType.AN ||
-              trailingType == BidiCharacterType.EN)
+              trailingType == BidiCharacterType.EN) {
             trailingType = BidiCharacterType.R;
+          }
         }
 
         BidiCharacterType resolvedType;
@@ -468,10 +480,11 @@ class Paragraph {
       for (int i = start; i < limit; ++i) {
         BidiCharacterType t = _text_data[i]._ct;
         // Rule I1.
-        if (t == BidiCharacterType.R)
+        if (t == BidiCharacterType.R) {
           _text_data[i]._el += 1;
-        else if (t == BidiCharacterType.AN || t == BidiCharacterType.EN)
+        } else if (t == BidiCharacterType.AN || t == BidiCharacterType.EN) {
           _text_data[i]._el += 2;
+        }
       }
     } else // odd level
     {
@@ -499,15 +512,18 @@ class Paragraph {
     for (int i = 0; i < _text_data.length; ++i) {
       if (_text_data[i]._ct == BidiCharacterType.S ||
           _text_data[i]._ct == BidiCharacterType.B) {
-        for (int j = l1_start; j <= i; ++j) _text_data[j]._el = embeddingLevel;
+        for (int j = l1_start; j <= i; ++j) {
+          _text_data[j]._el = embeddingLevel;
+        }
       }
 
       if (_text_data[i]._ct != BidiCharacterType.WS) {
         l1_start = i + 1;
       }
     }
-    for (int j = l1_start; j < _text_data.length; ++j)
+    for (int j = l1_start; j < _text_data.length; ++j) {
       _text_data[j]._el = embeddingLevel;
+    }
 
     // L2. From the highest level found in the text to the lowest odd level on each
     //     line, including intermediate levels not actually present in the text,
@@ -553,8 +569,9 @@ class Paragraph {
   /// </summary>
   void fixMirroredCharacters() {
     for (int i = 0; i < _text_data.length; ++i) {
-      if ((_text_data[i]._el & 1) == 1)
+      if ((_text_data[i]._el & 1) == 1) {
         _text_data[i]._char = getBidiCharacterMirror(_text_data[i]._char);
+      }
     }
   }
 
@@ -600,8 +617,9 @@ class Paragraph {
         last_jt = jt;
         last_pos = curr_pos;
         last_char = ch;
-      } else
+      } else {
         letterForms[curr_pos] = LetterForm.Isolated;
+      }
     }
 
     last_char = BidiChars.NotAChar;
@@ -685,13 +703,17 @@ class Paragraph {
   }
 
   int getPairwiseComposition(int first, int second) {
-    if (first < 0 || first > 0xFFFF || second < 0 || second > 0xFFFF)
+    if (first < 0 || first > 0xFFFF || second < 0 || second > 0xFFFF) {
       return BidiChars.NotAChar;
+    }
     return compose(first.toString() + second.toString());
   }
 
   void internalCompose(List<int> target, List<int> char_lengths) {
-    if (target.length == 0) return;
+    if (target.isEmpty) {
+      return;
+    }
+
     int starterPos = 0;
     int compPos = 1;
     var starterCh = target[0];

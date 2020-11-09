@@ -14564,288 +14564,433 @@ void _init() {
   for (int i = 0; i < 0xffff; ++i) {
     bidiCharType[i] = BidiCharacterType.L;
   }
-  for (int i = 0; i < BctList_LRE.length; i += 2)
-    for (int j = BctList_LRE[i]; j < BctList_LRE[i] + BctList_LRE[i + 1]; ++j)
+  for (int i = 0; i < BctList_LRE.length; i += 2) {
+    for (int j = BctList_LRE[i]; j < BctList_LRE[i] + BctList_LRE[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.LRE;
+    }
+  }
 
-  for (int i = 0; i < BctList_LRO.length; i += 2)
-    for (int j = BctList_LRO[i]; j < BctList_LRO[i] + BctList_LRO[i + 1]; ++j)
+  for (int i = 0; i < BctList_LRO.length; i += 2) {
+    for (int j = BctList_LRO[i]; j < BctList_LRO[i] + BctList_LRO[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.LRO;
+    }
+  }
 
-  for (int i = 0; i < BctList_LRI.length; i += 2)
-    for (int j = BctList_LRI[i]; j < BctList_LRI[i] + BctList_LRI[i + 1]; ++j)
+  for (int i = 0; i < BctList_LRI.length; i += 2) {
+    for (int j = BctList_LRI[i]; j < BctList_LRI[i] + BctList_LRI[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.LRI;
+    }
+  }
 
-  for (int i = 0; i < BctList_R.length; i += 2)
-    for (int j = BctList_R[i]; j < BctList_R[i] + BctList_R[i + 1]; ++j)
+  for (int i = 0; i < BctList_R.length; i += 2) {
+    for (int j = BctList_R[i]; j < BctList_R[i] + BctList_R[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.R;
+    }
+  }
 
-  for (int i = 0; i < BctList_AL.length; i += 2)
-    for (int j = BctList_AL[i]; j < BctList_AL[i] + BctList_AL[i + 1]; ++j)
+  for (int i = 0; i < BctList_AL.length; i += 2) {
+    for (int j = BctList_AL[i]; j < BctList_AL[i] + BctList_AL[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.AL;
+    }
+  }
 
-  for (int i = 0; i < BctList_RLE.length; i += 2)
-    for (int j = BctList_RLE[i]; j < BctList_RLE[i] + BctList_RLE[i + 1]; ++j)
+  for (int i = 0; i < BctList_RLE.length; i += 2) {
+    for (int j = BctList_RLE[i]; j < BctList_RLE[i] + BctList_RLE[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.RLE;
+    }
+  }
 
-  for (int i = 0; i < BctList_RLO.length; i += 2)
-    for (int j = BctList_RLO[i]; j < BctList_RLO[i] + BctList_RLO[i + 1]; ++j)
+  for (int i = 0; i < BctList_RLO.length; i += 2) {
+    for (int j = BctList_RLO[i]; j < BctList_RLO[i] + BctList_RLO[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.RLO;
+    }
+  }
 
-  for (int i = 0; i < BctList_RLI.length; i += 2)
-    for (int j = BctList_RLI[i]; j < BctList_RLI[i] + BctList_RLI[i + 1]; ++j)
+  for (int i = 0; i < BctList_RLI.length; i += 2) {
+    for (int j = BctList_RLI[i]; j < BctList_RLI[i] + BctList_RLI[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.RLI;
+    }
+  }
 
-  for (int i = 0; i < BctList_FSI.length; i += 2)
-    for (int j = BctList_FSI[i]; j < BctList_FSI[i] + BctList_FSI[i + 1]; ++j)
+  for (int i = 0; i < BctList_FSI.length; i += 2) {
+    for (int j = BctList_FSI[i]; j < BctList_FSI[i] + BctList_FSI[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.FSI;
+    }
+  }
 
-  for (int i = 0; i < BctList_PDF.length; i += 2)
-    for (int j = BctList_PDF[i]; j < BctList_PDF[i] + BctList_PDF[i + 1]; ++j)
+  for (int i = 0; i < BctList_PDF.length; i += 2) {
+    for (int j = BctList_PDF[i]; j < BctList_PDF[i] + BctList_PDF[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.PDF;
+    }
+  }
 
-  for (int i = 0; i < BctList_PDI.length; i += 2)
-    for (int j = BctList_PDI[i]; j < BctList_PDI[i] + BctList_PDI[i + 1]; ++j)
+  for (int i = 0; i < BctList_PDI.length; i += 2) {
+    for (int j = BctList_PDI[i]; j < BctList_PDI[i] + BctList_PDI[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.PDI;
+    }
+  }
 
-  for (int i = 0; i < BctList_EN.length; i += 2)
-    for (int j = BctList_EN[i]; j < BctList_EN[i] + BctList_EN[i + 1]; ++j)
+  for (int i = 0; i < BctList_EN.length; i += 2) {
+    for (int j = BctList_EN[i]; j < BctList_EN[i] + BctList_EN[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.EN;
+    }
+  }
 
-  for (int i = 0; i < BctList_ES.length; i += 2)
-    for (int j = BctList_ES[i]; j < BctList_ES[i] + BctList_ES[i + 1]; ++j)
+  for (int i = 0; i < BctList_ES.length; i += 2) {
+    for (int j = BctList_ES[i]; j < BctList_ES[i] + BctList_ES[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.ES;
+    }
+  }
 
-  for (int i = 0; i < BctList_ET.length; i += 2)
-    for (int j = BctList_ET[i]; j < BctList_ET[i] + BctList_ET[i + 1]; ++j)
+  for (int i = 0; i < BctList_ET.length; i += 2) {
+    for (int j = BctList_ET[i]; j < BctList_ET[i] + BctList_ET[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.ET;
+    }
+  }
 
-  for (int i = 0; i < BctList_AN.length; i += 2)
-    for (int j = BctList_AN[i]; j < BctList_AN[i] + BctList_AN[i + 1]; ++j)
+  for (int i = 0; i < BctList_AN.length; i += 2) {
+    for (int j = BctList_AN[i]; j < BctList_AN[i] + BctList_AN[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.AN;
+    }
+  }
 
-  for (int i = 0; i < BctList_CS.length; i += 2)
-    for (int j = BctList_CS[i]; j < BctList_CS[i] + BctList_CS[i + 1]; ++j)
+  for (int i = 0; i < BctList_CS.length; i += 2) {
+    for (int j = BctList_CS[i]; j < BctList_CS[i] + BctList_CS[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.CS;
-
-  for (int i = 0; i < BctList_NSM.length; i += 2)
-    for (int j = BctList_NSM[i]; j < BctList_NSM[i] + BctList_NSM[i + 1]; ++j)
+    }
+  }
+  for (int i = 0; i < BctList_NSM.length; i += 2) {
+    for (int j = BctList_NSM[i]; j < BctList_NSM[i] + BctList_NSM[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.NSM;
+    }
+  }
 
-  for (int i = 0; i < BctList_BN.length; i += 2)
-    for (int j = BctList_BN[i]; j < BctList_BN[i] + BctList_BN[i + 1]; ++j)
+  for (int i = 0; i < BctList_BN.length; i += 2) {
+    for (int j = BctList_BN[i]; j < BctList_BN[i] + BctList_BN[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.BN;
+    }
+  }
 
-  for (int i = 0; i < BctList_B.length; i += 2)
-    for (int j = BctList_B[i]; j < BctList_B[i] + BctList_B[i + 1]; ++j)
+  for (int i = 0; i < BctList_B.length; i += 2) {
+    for (int j = BctList_B[i]; j < BctList_B[i] + BctList_B[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.B;
+    }
+  }
 
-  for (int i = 0; i < BctList_S.length; i += 2)
-    for (int j = BctList_S[i]; j < BctList_S[i] + BctList_S[i + 1]; ++j)
+  for (int i = 0; i < BctList_S.length; i += 2) {
+    for (int j = BctList_S[i]; j < BctList_S[i] + BctList_S[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.S;
+    }
+  }
 
-  for (int i = 0; i < BctList_WS.length; i += 2)
-    for (int j = BctList_WS[i]; j < BctList_WS[i] + BctList_WS[i + 1]; ++j)
+  for (int i = 0; i < BctList_WS.length; i += 2) {
+    for (int j = BctList_WS[i]; j < BctList_WS[i] + BctList_WS[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.WS;
+    }
+  }
 
-  for (int i = 0; i < BctList_ON.length; i += 2)
-    for (int j = BctList_ON[i]; j < BctList_ON[i] + BctList_ON[i + 1]; ++j)
+  for (int i = 0; i < BctList_ON.length; i += 2) {
+    for (int j = BctList_ON[i]; j < BctList_ON[i] + BctList_ON[i + 1]; ++j) {
       bidiCharType[j] = BidiCharacterType.ON;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Lu.length; i += 2)
-    for (int j = UgcList_Lu[i]; j < UgcList_Lu[i] + UgcList_Lu[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Lu.length; i += 2) {
+    for (int j = UgcList_Lu[i]; j < UgcList_Lu[i] + UgcList_Lu[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Lu;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Ll.length; i += 2)
-    for (int j = UgcList_Ll[i]; j < UgcList_Ll[i] + UgcList_Ll[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Ll.length; i += 2) {
+    for (int j = UgcList_Ll[i]; j < UgcList_Ll[i] + UgcList_Ll[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Ll;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Lt.length; i += 2)
-    for (int j = UgcList_Lt[i]; j < UgcList_Lt[i] + UgcList_Lt[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Lt.length; i += 2) {
+    for (int j = UgcList_Lt[i]; j < UgcList_Lt[i] + UgcList_Lt[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Lt;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Lm.length; i += 2)
-    for (int j = UgcList_Lm[i]; j < UgcList_Lm[i] + UgcList_Lm[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Lm.length; i += 2) {
+    for (int j = UgcList_Lm[i]; j < UgcList_Lm[i] + UgcList_Lm[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Lm;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Lo.length; i += 2)
-    for (int j = UgcList_Lo[i]; j < UgcList_Lo[i] + UgcList_Lo[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Lo.length; i += 2) {
+    for (int j = UgcList_Lo[i]; j < UgcList_Lo[i] + UgcList_Lo[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Lo;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Mn.length; i += 2)
-    for (int j = UgcList_Mn[i]; j < UgcList_Mn[i] + UgcList_Mn[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Mn.length; i += 2) {
+    for (int j = UgcList_Mn[i]; j < UgcList_Mn[i] + UgcList_Mn[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Mn;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Mc.length; i += 2)
-    for (int j = UgcList_Mc[i]; j < UgcList_Mc[i] + UgcList_Mc[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Mc.length; i += 2) {
+    for (int j = UgcList_Mc[i]; j < UgcList_Mc[i] + UgcList_Mc[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Mc;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Me.length; i += 2)
-    for (int j = UgcList_Me[i]; j < UgcList_Me[i] + UgcList_Me[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Me.length; i += 2) {
+    for (int j = UgcList_Me[i]; j < UgcList_Me[i] + UgcList_Me[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Me;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Nd.length; i += 2)
-    for (int j = UgcList_Nd[i]; j < UgcList_Nd[i] + UgcList_Nd[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Nd.length; i += 2) {
+    for (int j = UgcList_Nd[i]; j < UgcList_Nd[i] + UgcList_Nd[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Nd;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Nl.length; i += 2)
-    for (int j = UgcList_Nl[i]; j < UgcList_Nl[i] + UgcList_Nl[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Nl.length; i += 2) {
+    for (int j = UgcList_Nl[i]; j < UgcList_Nl[i] + UgcList_Nl[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Nl;
+    }
+  }
 
-  for (int i = 0; i < UgcList_No.length; i += 2)
-    for (int j = UgcList_No[i]; j < UgcList_No[i] + UgcList_No[i + 1]; ++j)
+  for (int i = 0; i < UgcList_No.length; i += 2) {
+    for (int j = UgcList_No[i]; j < UgcList_No[i] + UgcList_No[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.No;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Pc.length; i += 2)
-    for (int j = UgcList_Pc[i]; j < UgcList_Pc[i] + UgcList_Pc[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Pc.length; i += 2) {
+    for (int j = UgcList_Pc[i]; j < UgcList_Pc[i] + UgcList_Pc[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Pc;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Pd.length; i += 2)
-    for (int j = UgcList_Pd[i]; j < UgcList_Pd[i] + UgcList_Pd[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Pd.length; i += 2) {
+    for (int j = UgcList_Pd[i]; j < UgcList_Pd[i] + UgcList_Pd[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Pd;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Ps.length; i += 2)
-    for (int j = UgcList_Ps[i]; j < UgcList_Ps[i] + UgcList_Ps[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Ps.length; i += 2) {
+    for (int j = UgcList_Ps[i]; j < UgcList_Ps[i] + UgcList_Ps[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Ps;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Pe.length; i += 2)
-    for (int j = UgcList_Pe[i]; j < UgcList_Pe[i] + UgcList_Pe[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Pe.length; i += 2) {
+    for (int j = UgcList_Pe[i]; j < UgcList_Pe[i] + UgcList_Pe[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Pe;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Pi.length; i += 2)
-    for (int j = UgcList_Pi[i]; j < UgcList_Pi[i] + UgcList_Pi[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Pi.length; i += 2) {
+    for (int j = UgcList_Pi[i]; j < UgcList_Pi[i] + UgcList_Pi[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Pi;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Pf.length; i += 2)
-    for (int j = UgcList_Pf[i]; j < UgcList_Pf[i] + UgcList_Pf[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Pf.length; i += 2) {
+    for (int j = UgcList_Pf[i]; j < UgcList_Pf[i] + UgcList_Pf[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Pf;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Po.length; i += 2)
-    for (int j = UgcList_Po[i]; j < UgcList_Po[i] + UgcList_Po[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Po.length; i += 2) {
+    for (int j = UgcList_Po[i]; j < UgcList_Po[i] + UgcList_Po[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Po;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Sm.length; i += 2)
-    for (int j = UgcList_Sm[i]; j < UgcList_Sm[i] + UgcList_Sm[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Sm.length; i += 2) {
+    for (int j = UgcList_Sm[i]; j < UgcList_Sm[i] + UgcList_Sm[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Sm;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Sc.length; i += 2)
-    for (int j = UgcList_Sc[i]; j < UgcList_Sc[i] + UgcList_Sc[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Sc.length; i += 2) {
+    for (int j = UgcList_Sc[i]; j < UgcList_Sc[i] + UgcList_Sc[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Sc;
-
-  for (int i = 0; i < UgcList_Sk.length; i += 2)
-    for (int j = UgcList_Sk[i]; j < UgcList_Sk[i] + UgcList_Sk[i + 1]; ++j)
+    }
+  }
+  for (int i = 0; i < UgcList_Sk.length; i += 2) {
+    for (int j = UgcList_Sk[i]; j < UgcList_Sk[i] + UgcList_Sk[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Sk;
+    }
+  }
 
-  for (int i = 0; i < UgcList_So.length; i += 2)
-    for (int j = UgcList_So[i]; j < UgcList_So[i] + UgcList_So[i + 1]; ++j)
+  for (int i = 0; i < UgcList_So.length; i += 2) {
+    for (int j = UgcList_So[i]; j < UgcList_So[i] + UgcList_So[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.So;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Zs.length; i += 2)
-    for (int j = UgcList_Zs[i]; j < UgcList_Zs[i] + UgcList_Zs[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Zs.length; i += 2) {
+    for (int j = UgcList_Zs[i]; j < UgcList_Zs[i] + UgcList_Zs[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Zs;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Zl.length; i += 2)
-    for (int j = UgcList_Zl[i]; j < UgcList_Zl[i] + UgcList_Zl[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Zl.length; i += 2) {
+    for (int j = UgcList_Zl[i]; j < UgcList_Zl[i] + UgcList_Zl[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Zl;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Zp.length; i += 2)
-    for (int j = UgcList_Zp[i]; j < UgcList_Zp[i] + UgcList_Zp[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Zp.length; i += 2) {
+    for (int j = UgcList_Zp[i]; j < UgcList_Zp[i] + UgcList_Zp[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Zp;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Cc.length; i += 2)
-    for (int j = UgcList_Cc[i]; j < UgcList_Cc[i] + UgcList_Cc[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Cc.length; i += 2) {
+    for (int j = UgcList_Cc[i]; j < UgcList_Cc[i] + UgcList_Cc[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Cc;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Cf.length; i += 2)
-    for (int j = UgcList_Cf[i]; j < UgcList_Cf[i] + UgcList_Cf[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Cf.length; i += 2) {
+    for (int j = UgcList_Cf[i]; j < UgcList_Cf[i] + UgcList_Cf[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Cf;
+    }
+  }
 
-  for (int i = 0; i < UgcList_Cs.length; i += 2)
-    for (int j = UgcList_Cs[i]; j < UgcList_Cs[i] + UgcList_Cs[i + 1]; ++j)
+  for (int i = 0; i < UgcList_Cs.length; i += 2) {
+    for (int j = UgcList_Cs[i]; j < UgcList_Cs[i] + UgcList_Cs[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Cs;
-
-  for (int i = 0; i < UgcList_Co.length; i += 2)
-    for (int j = UgcList_Co[i]; j < UgcList_Co[i] + UgcList_Co[i + 1]; ++j)
+    }
+  }
+  for (int i = 0; i < UgcList_Co.length; i += 2) {
+    for (int j = UgcList_Co[i]; j < UgcList_Co[i] + UgcList_Co[i + 1]; ++j) {
       categories[j] = UnicodeGeneralCategory.Co;
+    }
+  }
 
-  for (int i = 0; i < UdtList_Font.length; i += 2)
+  for (int i = 0; i < UdtList_Font.length; i += 2) {
     for (int j = UdtList_Font[i];
         j < UdtList_Font[i] + UdtList_Font[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.Font;
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.Font;
+    }
+  }
 
-  for (int i = 0; i < UdtList_NoBreak.length; i += 2)
+  for (int i = 0; i < UdtList_NoBreak.length; i += 2) {
     for (int j = UdtList_NoBreak[i];
         j < UdtList_NoBreak[i] + UdtList_NoBreak[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.NoBreak;
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.NoBreak;
+    }
+  }
 
-  for (int i = 0; i < UdtList_Initial.length; i += 2)
+  for (int i = 0; i < UdtList_Initial.length; i += 2) {
     for (int j = UdtList_Initial[i];
         j < UdtList_Initial[i] + UdtList_Initial[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.Initial;
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.Initial;
+    }
+  }
 
-  for (int i = 0; i < UdtList_Medial.length; i += 2)
+  for (int i = 0; i < UdtList_Medial.length; i += 2) {
     for (int j = UdtList_Medial[i];
         j < UdtList_Medial[i] + UdtList_Medial[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.Medial;
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.Medial;
+    }
+  }
 
-  for (int i = 0; i < UdtList_Final.length; i += 2)
+  for (int i = 0; i < UdtList_Final.length; i += 2) {
     for (int j = UdtList_Final[i];
         j < UdtList_Final[i] + UdtList_Final[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.Final;
-
-  for (int i = 0; i < UdtList_Isolated.length; i += 2)
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.Final;
+    }
+  }
+  for (int i = 0; i < UdtList_Isolated.length; i += 2) {
     for (int j = UdtList_Isolated[i];
         j < UdtList_Isolated[i] + UdtList_Isolated[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.Isolated;
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.Isolated;
+    }
+  }
 
-  for (int i = 0; i < UdtList_Circle.length; i += 2)
+  for (int i = 0; i < UdtList_Circle.length; i += 2) {
     for (int j = UdtList_Circle[i];
         j < UdtList_Circle[i] + UdtList_Circle[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.Circle;
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.Circle;
+    }
+  }
 
-  for (int i = 0; i < UdtList_Super.length; i += 2)
+  for (int i = 0; i < UdtList_Super.length; i += 2) {
     for (int j = UdtList_Super[i];
         j < UdtList_Super[i] + UdtList_Super[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.Super;
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.Super;
+    }
+  }
 
-  for (int i = 0; i < UdtList_Sub.length; i += 2)
-    for (int j = UdtList_Sub[i]; j < UdtList_Sub[i] + UdtList_Sub[i + 1]; ++j)
+  for (int i = 0; i < UdtList_Sub.length; i += 2) {
+    for (int j = UdtList_Sub[i]; j < UdtList_Sub[i] + UdtList_Sub[i + 1]; ++j) {
       decomType[j] = UnicodeDecompositionType.Sub;
+    }
+  }
 
-  for (int i = 0; i < UdtList_Vertical.length; i += 2)
+  for (int i = 0; i < UdtList_Vertical.length; i += 2) {
     for (int j = UdtList_Vertical[i];
         j < UdtList_Vertical[i] + UdtList_Vertical[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.Vertical;
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.Vertical;
+    }
+  }
 
-  for (int i = 0; i < UdtList_Wide.length; i += 2)
+  for (int i = 0; i < UdtList_Wide.length; i += 2) {
     for (int j = UdtList_Wide[i];
         j < UdtList_Wide[i] + UdtList_Wide[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.Wide;
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.Wide;
+    }
+  }
 
-  for (int i = 0; i < UdtList_Narrow.length; i += 2)
+  for (int i = 0; i < UdtList_Narrow.length; i += 2) {
     for (int j = UdtList_Narrow[i];
         j < UdtList_Narrow[i] + UdtList_Narrow[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.Narrow;
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.Narrow;
+    }
+  }
 
-  for (int i = 0; i < UdtList_Small.length; i += 2)
+  for (int i = 0; i < UdtList_Small.length; i += 2) {
     for (int j = UdtList_Small[i];
         j < UdtList_Small[i] + UdtList_Small[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.Small;
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.Small;
+    }
+  }
 
-  for (int i = 0; i < UdtList_Square.length; i += 2)
+  for (int i = 0; i < UdtList_Square.length; i += 2) {
     for (int j = UdtList_Square[i];
         j < UdtList_Square[i] + UdtList_Square[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.Square;
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.Square;
+    }
+  }
 
-  for (int i = 0; i < UdtList_Fraction.length; i += 2)
+  for (int i = 0; i < UdtList_Fraction.length; i += 2) {
     for (int j = UdtList_Fraction[i];
         j < UdtList_Fraction[i] + UdtList_Fraction[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.Fraction;
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.Fraction;
+    }
+  }
 
-  for (int i = 0; i < UdtList_Compat.length; i += 2)
+  for (int i = 0; i < UdtList_Compat.length; i += 2) {
     for (int j = UdtList_Compat[i];
         j < UdtList_Compat[i] + UdtList_Compat[i + 1];
-        ++j) decomType[j] = UnicodeDecompositionType.Compat;
+        ++j) {
+      decomType[j] = UnicodeDecompositionType.Compat;
+    }
+  }
 }
 
 /// <summary>
@@ -14867,7 +15012,9 @@ BidiCharacterType getBidiCharacterType(int c) {
 UnicodeGeneralCategory getUnicodeGeneralCategory(int c) {
   _init();
 
-  if (categories.containsKey(c)) return categories[c];
+  if (categories.containsKey(c)) {
+    return categories[c];
+  }
   return UnicodeGeneralCategory.Cn;
 }
 
@@ -14879,14 +15026,18 @@ UnicodeGeneralCategory getUnicodeGeneralCategory(int c) {
 UnicodeCanonicalClass getUnicodeCanonicalClass(int c) {
   _init();
 
-  if (canonClass.containsKey(c)) return canonClass[c];
+  if (canonClass.containsKey(c)) {
+    return canonClass[c];
+  }
   return UnicodeCanonicalClass.NR;
 }
 
 UnicodeDecompositionType getUnicodeDecompositionType(int c) {
   _init();
 
-  if (decomType.containsKey(c)) return decomType[c];
+  if (decomType.containsKey(c)) {
+    return decomType[c];
+  }
   return UnicodeDecompositionType.none;
 }
 
@@ -14902,6 +15053,8 @@ List<int> getUnicodeDecompositionMapping(int c) {
 int compose(String sequence) {
   _init();
 
-  if (composeMapping.containsKey(sequence)) return composeMapping[sequence];
+  if (composeMapping.containsKey(sequence)) {
+    return composeMapping[sequence];
+  }
   return 0xFFFF;
 }

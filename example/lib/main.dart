@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     border: OutlineInputBorder(),
                   ),
                   onChanged: (value) {
-                    if (value.length == 0) {
+                    if (value.isEmpty) {
                       return;
                     }
 
