@@ -13,9 +13,9 @@ class Paragraph {
   final List<int> _original_text = [];
   final List<int> _text = [];
   final List<int> _bidi_text = [];
-  int _paragraph_separator = BidiChars.NotAChar;
+  int paragraphSeparator = BidiChars.NotAChar;
 
-  int _embedding_level = 0;
+  int embeddingLevel = 0;
   late List<CharData> _text_data;
   final List<int> _char_lengths = [];
   final List<int> _bidi_indexes = [];
@@ -35,10 +35,8 @@ class Paragraph {
     _original_text.clear();
     _text.clear();
 
-    if (value != null) {
-      _original_text.addAll(value);
-      _text.addAll(value);
-    }
+    _original_text.addAll(value);
+    _text.addAll(value);
 
     normalizeText();
 
@@ -48,19 +46,11 @@ class Paragraph {
     removeBidiMarkers();
   }
 
-  int get paragraphSeparator {
-    return _paragraph_separator;
-  }
-
-  set paragraphSeparator(int value) {
-    _paragraph_separator = value;
-  }
-
   List<int> get bidiText {
     var ret = _bidi_text.toList();
 
-    if (_paragraph_separator != BidiChars.NotAChar) {
-      ret.add(_paragraph_separator);
+    if (paragraphSeparator != BidiChars.NotAChar) {
+      ret.add(paragraphSeparator);
     }
     return ret;
   }
@@ -71,14 +61,6 @@ class Paragraph {
 
   List<int> get bidiIndexLengths {
     return _char_lengths;
-  }
-
-  int get embeddingLevel {
-    return _embedding_level;
-  }
-
-  set embeddingLevel(int value) {
-    _embedding_level = value;
   }
 
   void removeBidiMarkers() {
@@ -117,9 +99,11 @@ class Paragraph {
     for (var c in _text) {
       final cType = getBidiCharacterType(c);
       if (cType == BidiCharacterType.R || cType == BidiCharacterType.AL) {
-        _embedding_level = 1;
+        embeddingLevel = 1;
         break;
-      } else if (cType == BidiCharacterType.L) break;
+      } else if (cType == BidiCharacterType.L) {
+        break;
+      }
     }
   }
 
@@ -724,8 +708,9 @@ class Paragraph {
     var lastClass = getUnicodeCanonicalClass(starterCh);
 
     if (lastClass != UnicodeCanonicalClass.NR) {
-      lastClass = UnicodeCanonicalClass.fromValue(
-          256); // fix for strings staring with a combining mark
+      lastClass = const UnicodeCanonicalClass.fromValue(
+        256, // fix for strings staring with a combining mark
+      );
     }
 
     int oldLen = target.length;
