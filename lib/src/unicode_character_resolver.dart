@@ -2,7 +2,8 @@ import 'enums.dart';
 
 bool _initialized = false;
 
-List<BidiCharacterType> bidiCharType = List<BidiCharacterType>(0xffff);
+List<BidiCharacterType> bidiCharType =
+    List<BidiCharacterType>.filled(0xffff, null);
 Map<int, UnicodeGeneralCategory> categories = {};
 Map<int, UnicodeDecompositionType> decomType = {};
 const Map<int, UnicodeCanonicalClass> canonClass = {

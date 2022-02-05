@@ -2,6 +2,7 @@ library bidi;
 
 import 'dart:core';
 import 'dart:math';
+
 import 'character_mirror_resolver.dart';
 import 'enums.dart';
 import 'shaping_resolver.dart';
@@ -141,7 +142,7 @@ class Paragraph {
       _text.addAll(shaped);
     }
 
-    _text_data = List<CharData>(_text.length);
+    _text_data = List<CharData>.filled(_text.length, CharData());
     for (var i = 0; i < _text_data.length; i++) {
       _text_data[i] = CharData();
     }
@@ -585,7 +586,7 @@ class Paragraph {
     LetterForm last_form = LetterForm.Isolated;
     int last_pos = 0;
     var last_char = BidiChars.NotAChar;
-    final letterForms = List<LetterForm>(text.length);
+    final letterForms = List<LetterForm>.filled(text.length, null);
 
     for (int curr_pos = 0; curr_pos < text.length; ++curr_pos) {
       var ch = text[curr_pos];
