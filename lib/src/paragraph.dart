@@ -16,12 +16,12 @@ class Paragraph {
   int _paragraph_separator = BidiChars.NotAChar;
 
   int _embedding_level = 0;
-  List<CharData> _text_data;
+  late List<CharData> _text_data;
   final List<int> _char_lengths = [];
   final List<int> _bidi_indexes = [];
 
-  bool _hasPersian;
-  bool _hasNSMs;
+  late bool _hasPersian;
+  late bool _hasNSMs;
 
   Paragraph(List<int> text) {
     this.text = text;
@@ -586,7 +586,7 @@ class Paragraph {
     LetterForm last_form = LetterForm.Isolated;
     int last_pos = 0;
     var last_char = BidiChars.NotAChar;
-    final letterForms = List<LetterForm>.filled(text.length, null);
+    final letterForms = List<LetterForm?>.filled(text.length, null);
 
     for (int curr_pos = 0; curr_pos < text.length; ++curr_pos) {
       var ch = text[curr_pos];
@@ -697,7 +697,7 @@ class Paragraph {
         }
       }
 
-      sb.add(getCharacterByLetterForm(ch, letterForms[curr_pos]));
+      sb.add(getCharacterByLetterForm(ch, letterForms[curr_pos]!));
     }
 
     return sb;
@@ -879,8 +879,8 @@ class Paragraph {
 }
 
 class CharData {
-  int _char;
-  int _el; // 0-62 => 6
-  BidiCharacterType _ct; // 0-18 => 5
-  int _idx;
+  late int _char;
+  late int _el; // 0-62 => 6
+  late BidiCharacterType _ct; // 0-18 => 5
+  late int _idx;
 }
