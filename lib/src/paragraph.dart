@@ -741,6 +741,9 @@ class Paragraph {
         target[compPos] = ch;
         //char_lengths[compPos] = char_lengths[compPos] + 1;
         int chkPos = compPos;
+        if (chkPos >= char_lengths.length) {
+          break;
+        }
         if (char_lengths[chkPos] < 0) {
           while (char_lengths[chkPos] < 0) {
             char_lengths[chkPos] = char_lengths[chkPos] + 1;

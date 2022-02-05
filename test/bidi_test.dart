@@ -11,6 +11,11 @@ void main() {
         const [97, 101, 769, 97, 768, 101, 776, 99, 807]);
   });
 
+  test('Latin accents start', () {
+    expect(logicalToVisual('éléphant'),
+        const [101, 769, 108, 101, 769, 112, 104, 97, 110]);
+  });
+
   test('Hebrews', () {
     expect(logicalToVisual('עבריים‎ / עִבְרִים‎'), const [
       1501,
