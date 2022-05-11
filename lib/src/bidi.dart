@@ -21,7 +21,10 @@ List<int> logicalToVisual(String logicalString) {
 /// [lengths] Implies how many characters each original character occupies.
 /// Returns the visual representation of the string.
 String logicalToVisual2(
-    String logicalString, List<int> indexes, List<int> lengths,) {
+  String logicalString,
+  List<int> indexes,
+  List<int> lengths,
+) {
   //Section 3:
   //1. seperate text into paragraphs
   //2. resulate each paragraph to its embeding levels of text
