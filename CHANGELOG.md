@@ -1,7 +1,7 @@
-## [1.0.0] - Nov 08, 2020.
+## [1.0.0+3] - May 11, 2022
 
-* First working version of BiDi.
+* Migrated to null-safety.
 
-## [0.0.1] - Sep 15, 2020.
+## [1.0.0] - Nov 08, 2020
 
-* Initial release.
+* First working version of Bidi.
