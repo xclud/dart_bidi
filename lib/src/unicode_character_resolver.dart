@@ -1,8 +1,11 @@
-import 'enums.dart';
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names
+
+import 'package:bidi/src/enums.dart';
 
 bool _initialized = false;
 
-List<BidiCharacterType> bidiCharType = List<BidiCharacterType>(0xffff);
+List<BidiCharacterType> bidiCharType =
+    List<BidiCharacterType>.filled(0xffff, BidiCharacterType.ON);
 Map<int, UnicodeGeneralCategory> categories = {};
 Map<int, UnicodeDecompositionType> decomType = {};
 const Map<int, UnicodeCanonicalClass> canonClass = {
@@ -15013,7 +15016,7 @@ UnicodeGeneralCategory getUnicodeGeneralCategory(int c) {
   _init();
 
   if (categories.containsKey(c)) {
-    return categories[c];
+    return categories[c]!;
   }
   return UnicodeGeneralCategory.Cn;
 }
@@ -15027,7 +15030,7 @@ UnicodeCanonicalClass getUnicodeCanonicalClass(int c) {
   _init();
 
   if (canonClass.containsKey(c)) {
-    return canonClass[c];
+    return canonClass[c]!;
   }
   return UnicodeCanonicalClass.NR;
 }
@@ -15036,16 +15039,16 @@ UnicodeDecompositionType getUnicodeDecompositionType(int c) {
   _init();
 
   if (decomType.containsKey(c)) {
-    return decomType[c];
+    return decomType[c]!;
   }
   return UnicodeDecompositionType.none;
 }
 
-List<int> getUnicodeDecompositionMapping(int c) {
+List<int>? getUnicodeDecompositionMapping(int c) {
   _init();
 
   if (decomMapping.containsKey(c)) {
-    return decomMapping[c];
+    return decomMapping[c]!;
   }
   return null;
 }
@@ -15054,7 +15057,7 @@ int compose(String sequence) {
   _init();
 
   if (composeMapping.containsKey(sequence)) {
-    return composeMapping[sequence];
+    return composeMapping[sequence]!;
   }
   return 0xFFFF;
 }

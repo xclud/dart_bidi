@@ -1,4 +1,6 @@
 /// Letter joining types of Persian letters.
+// ignore_for_file: constant_identifier_names
+
 enum ShapeJoiningType {
   ///Right Joining
   R,
@@ -473,9 +475,9 @@ class BidiChars {
 
 /// The different canonical classes of Unicode characters.
 class UnicodeCanonicalClass {
-  final int value;
-  const UnicodeCanonicalClass._(this.value);
   const UnicodeCanonicalClass.fromValue(this.value);
+  const UnicodeCanonicalClass._(this.value);
+  final int value;
 
   ///Not Reordered
   ///<remarks>Spacing, split, enclosing, reordrant, and Tibetan subjoined.</remarks>

@@ -1,5 +1,5 @@
-import 'unicode_character_resolver.dart';
-import 'enums.dart';
+import 'package:bidi/src/unicode_character_resolver.dart';
+import 'package:bidi/src/enums.dart';
 
 Map<int, int> _charForms = {
   0x30671: 0xFB50,
@@ -354,7 +354,7 @@ ShapeJoiningType getShapeJoiningType(int c) {
 int getCharacterByLetterForm(int ch, LetterForm form) {
   int key = (ch) | (form.index) << 16;
   if (_charForms.containsKey(key)) {
-    return _charForms[key];
+    return _charForms[key]!;
   }
   return ch;
 }

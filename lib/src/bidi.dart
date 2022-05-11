@@ -1,7 +1,7 @@
 import 'dart:core';
-import 'enums.dart';
-import 'paragraph.dart';
-import 'unicode_character_resolver.dart';
+import 'package:bidi/src/enums.dart';
+import 'package:bidi/src/paragraph.dart';
+import 'package:bidi/src/unicode_character_resolver.dart';
 
 /// Implementation of the BIDI algorithm, as described in http://www.unicode.org/reports/tr9/tr9-17.html
 /// [logicalString] is the original logical-ordered string. Returns the visual representation of the string.
@@ -21,7 +21,7 @@ List<int> logicalToVisual(String logicalString) {
 /// [lengths] Implies how many characters each original character occupies.
 /// Returns the visual representation of the string.
 String logicalToVisual2(
-    String logicalString, List<int> indexes, List<int> lengths) {
+    String logicalString, List<int> indexes, List<int> lengths,) {
   //Section 3:
   //1. seperate text into paragraphs
   //2. resulate each paragraph to its embeding levels of text
