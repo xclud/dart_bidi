@@ -1,4 +1,4 @@
-## [1.0.0+3] - May 11, 2022
+## [2.0.0] - May 11, 2022
 
 * Migrated to null-safety.
 
