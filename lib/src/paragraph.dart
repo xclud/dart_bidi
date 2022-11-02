@@ -686,7 +686,8 @@ class Paragraph {
     if (first < 0 || first > 0xFFFF || second < 0 || second > 0xFFFF) {
       return BidiChars.NotAChar;
     }
-    return compose(first.toString() + second.toString());
+
+    return compose(String.fromCharCodes([first, second]));
   }
 
   void internalCompose(List<int> target, List<int> charLengths) {
@@ -755,9 +756,11 @@ class Paragraph {
       }
     }
     target.length = compPos;
-    if (charLengths.length - compPos > 0) {
-      charLengths.removeRange(compPos, charLengths.length - compPos);
-    }
+
+    final taken = charLengths.take(compPos).toList();
+
+    charLengths.clear();
+    charLengths.addAll(taken);
   }
 
   void getRecursiveDecomposition(bool canonical, int ch, List<int> builder) {
