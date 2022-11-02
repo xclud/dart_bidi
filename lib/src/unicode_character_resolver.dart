@@ -14996,68 +14996,61 @@ void _init() {
   }
 }
 
-/// <summary>
 /// Returns the BiDi type for a given character.
-/// </summary>
-/// <param name="c">A Unicode character for which to get the BiDi type.</param>
-/// <returns>The character BiDi type.</returns>
-BidiCharacterType getBidiCharacterType(int c) {
+///
+/// [char] A Unicode character for which to get the BiDi type.
+///
+/// Returns the character BiDi type.
+BidiCharacterType getBidiCharacterType(int char) {
   _init();
 
-  return bidiCharType[c];
+  return bidiCharType[char];
 }
 
-/// <summary>
 /// Returns the Unicode category for a given character.
-/// </summary>
-/// <param name="c">A Unicode character for which to get the general Unicode category.</param>
-/// <returns>The character general Unicode category.</returns>
-UnicodeGeneralCategory getUnicodeGeneralCategory(int c) {
+///
+/// [char] A Unicode character for which to get the general Unicode category.
+///
+/// Returns the character general Unicode category.
+UnicodeGeneralCategory getUnicodeGeneralCategory(int char) {
   _init();
 
-  if (categories.containsKey(c)) {
-    return categories[c]!;
-  }
-  return UnicodeGeneralCategory.Cn;
+  final returnValue = categories[char] ?? UnicodeGeneralCategory.Cn;
+  return returnValue;
 }
 
-/// <summary>
 /// Returns the Unicode canonical class for a given character.
-/// </summary>
-/// <param name="c">A Unicode character for which to get the Unicode canonical class.</param>
-/// <returns>The character Unicode canonical class.</returns>
-UnicodeCanonicalClass getUnicodeCanonicalClass(int c) {
+///
+/// [char] A Unicode character for which to get the Unicode canonical class.
+///
+/// Returns the character Unicode canonical class.
+UnicodeCanonicalClass getUnicodeCanonicalClass(int char) {
   _init();
 
-  if (canonClass.containsKey(c)) {
-    return canonClass[c]!;
-  }
-  return UnicodeCanonicalClass.NR;
+  final returnValue = canonClass[char] ?? UnicodeCanonicalClass.NR;
+  return returnValue;
 }
 
-UnicodeDecompositionType getUnicodeDecompositionType(int c) {
+/// Gets the Unicode decomposition type.
+UnicodeDecompositionType getUnicodeDecompositionType(int char) {
   _init();
 
-  if (decomType.containsKey(c)) {
-    return decomType[c]!;
-  }
-  return UnicodeDecompositionType.none;
+  final returnValue = decomType[char] ?? UnicodeDecompositionType.none;
+  return returnValue;
 }
 
+/// Gets the Unicode decomposition mapping.
 List<int>? getUnicodeDecompositionMapping(int c) {
   _init();
 
-  if (decomMapping.containsKey(c)) {
-    return decomMapping[c]!;
-  }
-  return null;
+  final returnValue = decomMapping[c];
+  return returnValue;
 }
 
+/// Composes a sequence.
 int compose(String sequence) {
   _init();
 
-  if (composeMapping.containsKey(sequence)) {
-    return composeMapping[sequence]!;
-  }
-  return 0xFFFF;
+  final returnValue = composeMapping[sequence] ?? 0xFFFF;
+  return returnValue;
 }

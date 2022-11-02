@@ -1,8 +1,10 @@
 /// Returns the corresponding mirrored character for the given character, if any. If no mirroring available, returns the given character.
-/// <param name="c">A character to mirror.</param>
-/// <returns>The mirrored character, or the given character if no mirroring available.</returns>
-int getBidiCharacterMirror(int c) {
-  switch (c) {
+///
+/// [char] A character to mirror.
+///
+/// The mirrored character, or the given character if no mirroring available.
+int getBidiCharacterMirror(int char) {
+  switch (char) {
     case 0x0028:
       return 0x0029;
     case 0x0029:
@@ -732,6 +734,6 @@ int getBidiCharacterMirror(int c) {
     case 0xFF63:
       return 0xFF62;
     default:
-      return c;
+      return char;
   }
 }

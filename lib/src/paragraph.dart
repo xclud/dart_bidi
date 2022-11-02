@@ -18,7 +18,7 @@ class Paragraph {
   int paragraphSeparator = BidiChars.NotAChar;
 
   int embeddingLevel = 0;
-  late List<CharData> _textData;
+  late List<_CharData> _textData;
   final List<int> _charLengths = [];
   final List<int> _bidiIndexes = [];
 
@@ -126,7 +126,7 @@ class Paragraph {
       _text.addAll(shaped);
     }
 
-    _textData = List<CharData>.generate(_text.length, (index) => CharData());
+    _textData = List<_CharData>.generate(_text.length, (index) => _CharData());
 
     // X1
     var embeddingLevel = this.embeddingLevel;
@@ -246,7 +246,7 @@ class Paragraph {
     List<int> lengths = [];
 
     final List<int> sb = [];
-    for (CharData cd in _textData) {
+    for (_CharData cd in _textData) {
       sb.add(cd._char);
       indexes.add(cd._idx);
       lengths.add(1);
@@ -259,9 +259,7 @@ class Paragraph {
     _bidiIndexes.addAll(indexes);
   }
 
-  /// <summary>
   /// 3.3.3 Resolving Weak Types
-  /// </summary>
   void resolveWeakTypes(
     int start,
     int limit,
@@ -386,9 +384,7 @@ class Paragraph {
     }
   }
 
-  /// <summary>
   /// 3.3.4 Resolving Neutral Types
-  /// </summary>
   void resolveNeutralTypes(
     int start,
     int limit,
@@ -459,9 +455,7 @@ class Paragraph {
     }
   }
 
-  /// <summary>
   /// 3.3.5 Resolving Implicit Levels
-  /// </summary>
   void resolveImplicitTypes(int start, int limit, int level) {
     // I1. For all characters with an even (left-to-right) embedding direction, those of type R go up one level and those of type AN or EN go up two levels.
     // I2. For all characters with an odd (right-to-left) embedding direction, those of type L, EN or AN go up one level.
@@ -489,9 +483,7 @@ class Paragraph {
     }
   }
 
-  /// <summary>
   /// 3.4 Reordering Resolved Levels
-  /// </summary>
   void reorderString() {
     //L1. On each line, reset the embedding level of the following characters to the paragraph embedding level:
     //    1. Segment separators,
@@ -522,7 +514,7 @@ class Paragraph {
     //     higher.
     int highest = 0;
     int lowestOdd = 63;
-    for (CharData cd in _textData) {
+    for (_CharData cd in _textData) {
       if (cd._el > highest) highest = cd._el;
       if ((cd._el & 1) == 1 && cd._el < lowestOdd) lowestOdd = cd._el;
     }
@@ -539,7 +531,7 @@ class Paragraph {
 
           // reverse run
           for (int j = l2Start, k = limit - 1; j < k; ++j, --k) {
-            CharData tempCd = _textData[j];
+            _CharData tempCd = _textData[j];
             _textData[j] = _textData[k];
             _textData[k] = tempCd;
           }
@@ -555,9 +547,7 @@ class Paragraph {
     // then the ordering of the marks and the base character must be reversed.
   }
 
-  /// <summary>
   /// L4. A character is depicted by a mirrored glyph if and only if (a) the resolved directionality of that character is R, and (b) the Bidi_Mirrored property value of that character is true.
-  /// </summary>
   void fixMirroredCharacters() {
     for (int i = 0; i < _textData.length; ++i) {
       if ((_textData[i]._el & 1) == 1) {
@@ -566,10 +556,8 @@ class Paragraph {
     }
   }
 
-  /// <summary>
   /// 3.5 Shaping
   /// Implements rules R1-R7 and rules L1-L3 of section 8.2 (Persian) of the Unicode standard.
-  /// </summary>
   // TODO - this code is very special-cased.
   List<int> performShaping(List<int> text) {
     ShapeJoiningType lastJt = ShapeJoiningType.U;
@@ -825,23 +813,15 @@ class Paragraph {
     return target;
   }
 
-  /// <summary>
   /// Return the strong type (L or R) corresponding to the embedding level.
-  /// </summary>
-  /// <param name="level">The embedding level to check.</param>
-  /// <returns></returns>
+  ///
+  /// [level] The embedding level to check.
   static BidiCharacterType typeForLevel(int level) {
     return ((level & 1) == 0) ? BidiCharacterType.L : BidiCharacterType.R;
   }
 
-  /// <summary>
   /// Return the limit of the run, starting at index, that includes only resultTypes in validSet.
   /// This checks the value at index, and will return index if that value is not in validSet.
-  /// </summary>
-  /// <param name="index"></param>
-  /// <param name="limit"></param>
-  /// <param name="validSet"></param>
-  /// <returns></returns>
   int findRunLimit(int index, int limit, List<BidiCharacterType> validSet) {
     --index;
     bool found = false;
@@ -857,12 +837,7 @@ class Paragraph {
     return limit;
   }
 
-  /// <summary>
   /// Set resultTypes from start up to (but not including) limit to newType.
-  /// </summary>
-  /// <param name="start"></param>
-  /// <param name="limit"></param>
-  /// <param name="newType"></param>
   void setTypes(int start, int limit, BidiCharacterType newType) {
     for (int i = start; i < limit; ++i) {
       _textData[i]._ct = newType;
@@ -870,7 +845,7 @@ class Paragraph {
   }
 }
 
-class CharData {
+class _CharData {
   late int _char;
   late int _el; // 0-62 => 6
   late BidiCharacterType _ct; // 0-18 => 5
