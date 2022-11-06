@@ -405,12 +405,16 @@ class Paragraph {
           t == BidiCharacterType.S) {
         // find bounds of run of neutrals
         int runstart = i;
-        int runlimit = findRunLimit(runstart, limit, [
-          BidiCharacterType.B,
-          BidiCharacterType.S,
-          BidiCharacterType.WS,
-          BidiCharacterType.ON
-        ]);
+        int runlimit = findRunLimit(
+          runstart,
+          limit,
+          [
+            BidiCharacterType.B,
+            BidiCharacterType.S,
+            BidiCharacterType.WS,
+            BidiCharacterType.ON
+          ],
+        );
 
         // determine effective types at ends of run
         BidiCharacterType leadingType;
@@ -690,6 +694,10 @@ class Paragraph {
     return compose(String.fromCharCodes([first, second]));
   }
 
+  bool _isPartOfArabicShaddaPair(UnicodeCanonicalClass chClass) {
+    return chClass.value >= 28 && chClass.value <= 35;
+  }
+
   void internalCompose(List<int> target, List<int> charLengths) {
     if (target.isEmpty) {
       return;
@@ -719,7 +727,8 @@ class Paragraph {
       final composite = getPairwiseComposition(starterCh, ch);
       final composeType = getUnicodeDecompositionType(composite);
 
-      if (composeType == UnicodeDecompositionType.none &&
+      if ((composeType == UnicodeDecompositionType.none ||
+              _isPartOfArabicShaddaPair(chClass)) &&
           composite != BidiChars.NotAChar &&
           (lastClass.value < chClass.value ||
               lastClass == UnicodeCanonicalClass.NR)) {
@@ -729,7 +738,8 @@ class Paragraph {
         // so we don't have to adjust the decompPos
         starterCh = composite;
       } else {
-        if (chClass == UnicodeCanonicalClass.NR) {
+        if (chClass == UnicodeCanonicalClass.NR ||
+            _isPartOfArabicShaddaPair(chClass)) {
           starterPos = compPos;
           starterCh = ch;
         }

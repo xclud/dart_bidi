@@ -18,4 +18,28 @@ void main() {
     expect(e, 'ﺆﻛ');
     expect(f, 'ﺊﻣ');
   });
+
+  test('Normalizing Arabic Shadda pairs', () {
+    final shaddaCompMapping = {
+      '\u064C\u0651': 64606,
+      '\u0651\u064C': 64606,
+      '\u064D\u0651': 64607,
+      '\u0651\u064D': 64607,
+      '\u064E\u0651': 64608,
+      '\u0651\u064E': 64608,
+      '\u064F\u0651': 64609,
+      '\u0651\u064F': 64609,
+      '\u0650\u0651': 64610,
+      '\u0651\u0650': 64610,
+      '\u0651\u0670': 64611,
+      '\u0670\u0651': 64611,
+    };
+    for (final pair in shaddaCompMapping.keys) {
+      // we added dummy letter [\u0645]=> 65249 to get a real composition
+      expect(
+        bidi.logicalToVisual('\u0645$pair'),
+        [shaddaCompMapping[pair], 65249],
+      );
+    }
+  });
 }

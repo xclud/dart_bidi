@@ -4577,17 +4577,31 @@ const Map<String, int> composeMapping = {
   '\u0020\u0345': 0x037A,
   '\u0020\u064B': 0xFE70,
   '\u0020\u064C': 0xFE72,
+  // Arabic Shadda Isolated combinations
   '\u0020\u064C\u0651': 0xFC5E,
-  '\u0020\u064D': 0xFE74,
+  '\u064C\u0651': 0xFC5E,
+  '\u0651\u064C': 0xFC5E, // ccc28
   '\u0020\u064D\u0651': 0xFC5F,
-  '\u0020\u064E': 0xFE76,
+  '\u064D\u0651': 0xFC5F,
+  '\u0651\u064D': 0xFC5F, // ccc29
   '\u0020\u064E\u0651': 0xFC60,
-  '\u0020\u064F': 0xFE78,
+  '\u064E\u0651': 0xFC60,
+  '\u0651\u064E': 0xFC60, //ccc30
   '\u0020\u064F\u0651': 0xFC61,
-  '\u0020\u0650': 0xFE7A,
+  '\u064F\u0651': 0xFC61,
+  '\u0651\u064F': 0xFC61, //ccc31
   '\u0020\u0650\u0651': 0xFC62,
-  '\u0020\u0651': 0xFE7C,
+  '\u0650\u0651': 0xFC62,
+  '\u0651\u0650': 0xFC62, //ccc32
   '\u0020\u0651\u0670': 0xFC63,
+  '\u0651\u0670': 0xFC63,
+  '\u0670\u0651': 0xFC63,
+  // end
+  '\u0020\u064D': 0xFE74,
+  '\u0020\u064E': 0xFE76,
+  '\u0020\u064F': 0xFE78,
+  '\u0020\u0650': 0xFE7A,
+  '\u0020\u0651': 0xFE7C,
   '\u0020\u0652': 0xFE7E,
   '\u0020\u3099': 0x309B,
   '\u0020\u309A': 0x309C,
@@ -13576,7 +13590,19 @@ List<int> UgcList_Cf = [
   0xFEFF,
   1,
   0xFFF9,
-  3
+  3,
+  0xFC5E,
+  2,
+  0xFC5F,
+  2,
+  0xFC60,
+  2,
+  0xFC61,
+  2,
+  0xFC62,
+  2,
+  0xFC63,
+  2,
 ];
 List<int> UgcList_Cs = [0xD800, 1, 0xDB7F, 2, 0xDBFF, 2, 0xDFFF, 1];
 List<int> UgcList_Co = [0xE000, 1, 0xF8FF, 1];
