@@ -1,3 +1,7 @@
+## 2.0.2
+
+* Fix Arabic Shadda pairs are not composed (#4). Thanks to Milad Akarie.
+
 ## 2.0.1
 
 * Fixes a composition bug. Thanks to Milad Akarie for reporting.
