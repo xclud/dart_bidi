@@ -34,9 +34,12 @@ void main() {
       '\u0651\u0670': 64611,
       '\u0670\u0651': 64611,
     };
-    for(final pair in shaddaCompMapping.keys) {
-       // we added dummy letter [\u0645]=> 65249 to get a real composition
-      expect(bidi.logicalToVisual('\u0645$pair'), [shaddaCompMapping[pair], 65249]);
+    for (final pair in shaddaCompMapping.keys) {
+      // we added dummy letter [\u0645]=> 65249 to get a real composition
+      expect(
+        bidi.logicalToVisual('\u0645$pair'),
+        [shaddaCompMapping[pair], 65249],
+      );
     }
   });
 }
