@@ -9,7 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String? _visual;
+  final _visual = <int>[];
   final _logicalController = TextEditingController();
 
   @override
@@ -23,32 +23,46 @@ class _HomePageState extends State<HomePage> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   controller: _logicalController,
                   onChanged: (value) {
+                    _visual.clear();
                     if (value.isEmpty) {
+                      setState(() {});
                       return;
                     }
 
                     final visual = bidi.logicalToVisual(value);
                     setState(() {
-                      _visual = visual.reversed
-                          .map((e) => String.fromCharCode(e))
-                          .join(' ');
+                      _visual.addAll(visual);
                     });
                   },
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Text(
-                    _visual ?? '',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
+                child: Wrap(
+                  runSpacing: 8,
+                  spacing: 8,
+                  children: _visual.reversed
+                      .map(
+                        (e) => InkWell(
+                          onTap: () {},
+                          hoverColor: Colors.pink,
+                          focusColor: Colors.green,
+                          splashColor: Colors.amber,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 2.0),
+                            child: Text(String.fromCharCode(e)),
+                          ),
+                        ),
+                      )
+                      .toList(),
                 ),
               ),
             ],
