@@ -4,17 +4,23 @@ Implementation of the Bidi algorithm, as described in http://www.unicode.org/rep
 
 Converts *logical* strings to their equivalent *visual* representation. Persian, Hebrew and Arabic languages (and any other RTL language) are supported.
 
-
 ![Screenshot](screenshots/mahdi.png)
 
+## Web Demo
+
+[Web Demo](https://bidi.pwa.ir)
+
 ## Getting Started
+
 In your `pubspec.yaml` file add:
 
 ```dart
 dependencies:
   bidi: any
 ```
+
 Then, in your code import and use the package:
+
 ```dart
 import 'package:bidi/bidi.dart' as bidi;
 
