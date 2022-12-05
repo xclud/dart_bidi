@@ -1,3 +1,7 @@
+## 2.0.3
+
+* More dartdoc comments.
+
 ## 2.0.2
 
 * Fix Arabic Shadda pairs are not composed (#4). Thanks to Milad Akarie.
