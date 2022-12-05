@@ -1,9 +1,11 @@
+part of bidi;
+
 /// Returns the corresponding mirrored character for the given character, if any. If no mirroring available, returns the given character.
 ///
 /// [char] A character to mirror.
 ///
 /// The mirrored character, or the given character if no mirroring available.
-int getBidiCharacterMirror(int char) {
+int _getBidiCharacterMirror(int char) {
   switch (char) {
     case 0x0028:
       return 0x0029;

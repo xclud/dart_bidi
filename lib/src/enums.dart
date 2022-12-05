@@ -1,7 +1,9 @@
+part of bidi;
+
 /// Letter joining types of Persian letters.
 // ignore_for_file: constant_identifier_names
 
-enum ShapeJoiningType {
+enum _ShapeJoiningType {
   ///Right Joining
   R,
 
@@ -23,13 +25,13 @@ enum ShapeJoiningType {
 
 /// Types of BiDi characters (Table 4 in the Unicode BiDi algorithm).
 
-enum BidiCharacterType {
+enum _BidiCharacterType {
   /// Left-to-Right
 
   /// <example>
   /// LRM, most alphabetic, syllabic, Han ideographs, non-European or non-Persian digits, ...
   /// </example>
-  /// <remarks>Strong Type</remarks>
+  /// Strong Type
   L,
 
   /// Left-to-Right Embedding
@@ -37,7 +39,7 @@ enum BidiCharacterType {
   /// <example>
   /// LRE
   /// </example>
-  /// <remarks>Strong Type</remarks>
+  /// Strong Type
   LRE,
 
   /// Left-to-Right Override
@@ -45,7 +47,7 @@ enum BidiCharacterType {
   /// <example>
   /// LRO
   /// </example>
-  /// <remarks>Strong Type</remarks>
+  /// Strong Type
   LRO,
 
   /// Left-to-Right Isolate
@@ -53,7 +55,7 @@ enum BidiCharacterType {
   /// <example>
   /// LRI
   /// </example>
-  /// <remarks>Strong Type</remarks>
+  /// Strong Type
   LRI,
 
   /// Right-to-Left
@@ -61,7 +63,7 @@ enum BidiCharacterType {
   /// <example>
   /// RLM, Hebrew alphabet, and related punctuation
   /// </example>
-  /// <remarks>Strong Type</remarks>
+  /// Strong Type
   R,
 
   /// Right-to-Left Persian
@@ -69,7 +71,7 @@ enum BidiCharacterType {
   /// <example>
   /// Persian, Thaana, and Syriac alphabets, most punctuation specific to those scripts, ...
   /// </example>
-  /// <remarks>Strong Type</remarks>
+  /// Strong Type
   AL,
 
   /// Right-to-Left Embedding
@@ -77,7 +79,7 @@ enum BidiCharacterType {
   /// <example>
   /// RLE
   /// </example>
-  /// <remarks>Strong Type</remarks>
+  /// Strong Type
   RLE,
 
   /// Right-to-Left Override
@@ -85,7 +87,7 @@ enum BidiCharacterType {
   /// <example>
   /// RLO
   /// </example>
-  /// <remarks>Strong Type</remarks>
+  /// Strong Type
   RLO,
 
   /// Right-to-Left Isolate
@@ -93,7 +95,7 @@ enum BidiCharacterType {
   /// <example>
   /// RLI
   /// </example>
-  /// <remarks>Strong Type</remarks>
+  /// Strong Type
   RLI,
 
   /// First Strong Isolate
@@ -101,7 +103,7 @@ enum BidiCharacterType {
   /// <example>
   /// FSI
   /// </example>
-  /// <remarks>Strong Type</remarks>
+  /// Strong Type
   FSI,
 
   /// Pop Directional Format
@@ -109,7 +111,7 @@ enum BidiCharacterType {
   /// <example>
   /// PDF
   /// </example>
-  /// <remarks>Weak Type</remarks>
+  /// Weak Type
   PDF,
 
   /// Pop Directional Isolate
@@ -117,7 +119,7 @@ enum BidiCharacterType {
   /// <example>
   /// PDI
   /// </example>
-  /// <remarks>Weak Type</remarks>
+  /// Weak Type
   PDI,
 
   /// European Number
@@ -125,7 +127,7 @@ enum BidiCharacterType {
   /// <example>
   /// European digits, Eastern Persian-Indic digits, ...
   /// </example>
-  /// <remarks>Weak Type</remarks>
+  /// Weak Type
   EN,
 
   /// European Number Separator
@@ -133,7 +135,7 @@ enum BidiCharacterType {
   /// <example>
   /// Plus sign, minus sign
   /// </example>
-  /// <remarks>Weak Type</remarks>
+  /// Weak Type
   ES,
 
   /// European Number Terminator
@@ -141,7 +143,7 @@ enum BidiCharacterType {
   /// <example>
   /// Degree sign, currency symbols, ...
   /// </example>
-  /// <remarks>Weak Type</remarks>
+  /// Weak Type
   ET,
 
   /// Persian Number
@@ -149,7 +151,7 @@ enum BidiCharacterType {
   /// <example>
   /// Persian-Indic digits, Persian decimal and thousands separators, ...
   /// </example>
-  /// <remarks>Weak Type</remarks>
+  /// Weak Type
   AN,
 
   /// Common Number Separator
@@ -157,7 +159,7 @@ enum BidiCharacterType {
   /// <example>
   /// Colon, comma, full stop (period), No-break space, ...
   /// </example>
-  /// <remarks>Weak Type</remarks>
+  /// Weak Type
   CS,
 
   /// Nonspacing Mark
@@ -165,7 +167,7 @@ enum BidiCharacterType {
   /// <example>
   /// Characters marked Mn (Nonspacing_Mark) and Me (Enclosing_Mark) in the Unicode Character Database
   /// </example>
-  /// <remarks>Weak Type</remarks>
+  /// Weak Type
   NSM,
 
   /// Boundary Neutral
@@ -173,28 +175,28 @@ enum BidiCharacterType {
   /// <example>
   /// Most formatting and control characters, other than those explicitly given types above
   /// </example>
-  /// <remarks>Weak Type</remarks>
+  /// Weak Type
   BN,
 
   /// Paragraph Separator
   /// <example>
   /// Paragraph separator, appropriate Newline Functions, higher-level protocol paragraph determination
   /// </example>
-  /// <remarks>Neutral Type</remarks>
+  /// Neutral Type
   B,
 
   /// Segment Separator
   /// <example>
   /// Tab
   /// </example>
-  /// <remarks>Neutral Type</remarks>
+  /// Neutral Type
   S,
 
   /// Whitespace
   /// <example>
   /// Space, figure space, line separator, form feed, General Punctuation spaces, ...
   /// </example>
-  /// <remarks>Neutral Type</remarks>
+  /// Neutral Type
   WS,
 
   /// Other Neutrals
@@ -202,12 +204,12 @@ enum BidiCharacterType {
   /// <example>
   /// All other characters, including OBJECT REPLACEMENT CHARACTER
   /// </example>
-  /// <remarks>Neutral Type</remarks>
+  /// Neutral Type
   ON
 }
 
 /// The type of Unicode character decomposition.
-enum UnicodeDecompositionType {
+enum _UnicodeDecompositionType {
   ///A base form or no special variant.
   none,
 
@@ -261,7 +263,7 @@ enum UnicodeDecompositionType {
 }
 
 /// Unicode character categories.
-enum UnicodeGeneralCategory {
+enum _UnicodeGeneralCategory {
   ///Letter, Uppercase
   Lu,
 
@@ -355,7 +357,7 @@ enum UnicodeGeneralCategory {
 
 /// Directional Override Statii used to determine current letter direction (Table 2 in the Unicode BiDi algorithm).
 
-enum DirectionalOverrideStatus {
+enum _DirectionalOverrideStatus {
   /// No override is currently active.
   Neutral,
 
@@ -367,7 +369,7 @@ enum DirectionalOverrideStatus {
 }
 
 /// The four different available letter presentation forms.
-enum LetterForm {
+enum _LetterForm {
   /// A presentation form of a letter that begins a sequence of connected letters.
   Initial,
 
@@ -382,8 +384,7 @@ enum LetterForm {
 }
 
 /// A set of common Unicode characters, including BiDi control characters, and some Persian letters used mainly for testing purposes.
-
-class BidiChars {
+class _BidiChars {
   /// Right-to-Left Mark
   /// Right-to-left zero-width non-Persian character.
   static const int RLM = 0x200F;
@@ -474,843 +475,842 @@ class BidiChars {
 }
 
 /// The different canonical classes of Unicode characters.
-class UnicodeCanonicalClass {
-  const UnicodeCanonicalClass.fromValue(this.value);
-  const UnicodeCanonicalClass._(this.value);
+class _UnicodeCanonicalClass {
+  const _UnicodeCanonicalClass.fromValue(this.value);
+  const _UnicodeCanonicalClass._(this.value);
   final int value;
 
-  ///Not Reordered
-  ///<remarks>Spacing, split, enclosing, reordrant, and Tibetan subjoined.</remarks>
-  static const UnicodeCanonicalClass NR = UnicodeCanonicalClass._(0);
+  /// Not Reordered
+  /// Spacing, split, enclosing, reordrant, and Tibetan subjoined.
+  static const _UnicodeCanonicalClass NR = _UnicodeCanonicalClass._(0);
 
-  ///Overlays and interior
-  static const UnicodeCanonicalClass OV = UnicodeCanonicalClass._(1);
+  /// Overlays and interior
+  static const _UnicodeCanonicalClass OV = _UnicodeCanonicalClass._(1);
 
-  ///Nuktas
-  static const UnicodeCanonicalClass NK = UnicodeCanonicalClass._(7);
+  /// Nuktas
+  static const _UnicodeCanonicalClass NK = _UnicodeCanonicalClass._(7);
 
-  ///Hiragana/Katakana voicing marks
-  static const UnicodeCanonicalClass KV = UnicodeCanonicalClass._(8);
+  /// Hiragana/Katakana voicing marks
+  static const _UnicodeCanonicalClass KV = _UnicodeCanonicalClass._(8);
 
-  ///Viramas
-  static const UnicodeCanonicalClass VR = UnicodeCanonicalClass._(9);
+  /// Viramas
+  static const _UnicodeCanonicalClass VR = _UnicodeCanonicalClass._(9);
 
   /// General class level 10.
-
-  static const UnicodeCanonicalClass CLASS_10 = UnicodeCanonicalClass._(10);
+  static const _UnicodeCanonicalClass CLASS_10 = _UnicodeCanonicalClass._(10);
 
   /// General class level 11.
 
-  static const UnicodeCanonicalClass CLASS_11 = UnicodeCanonicalClass._(11);
+  static const _UnicodeCanonicalClass CLASS_11 = _UnicodeCanonicalClass._(11);
 
   /// General class level 12.
 
-  static const UnicodeCanonicalClass CLASS_12 = UnicodeCanonicalClass._(12);
+  static const _UnicodeCanonicalClass CLASS_12 = _UnicodeCanonicalClass._(12);
 
   /// General class level 13.
 
-  static const UnicodeCanonicalClass CLASS_13 = UnicodeCanonicalClass._(13);
+  static const _UnicodeCanonicalClass CLASS_13 = _UnicodeCanonicalClass._(13);
 
   /// General class level 14.
 
-  static const UnicodeCanonicalClass CLASS_14 = UnicodeCanonicalClass._(14);
+  static const _UnicodeCanonicalClass CLASS_14 = _UnicodeCanonicalClass._(14);
 
   /// General class level 15.
 
-  static const UnicodeCanonicalClass CLASS_15 = UnicodeCanonicalClass._(15);
+  static const _UnicodeCanonicalClass CLASS_15 = _UnicodeCanonicalClass._(15);
 
   /// General class level 16.
 
-  static const UnicodeCanonicalClass CLASS_16 = UnicodeCanonicalClass._(16);
+  static const _UnicodeCanonicalClass CLASS_16 = _UnicodeCanonicalClass._(16);
 
   /// General class level 17.
 
-  static const UnicodeCanonicalClass CLASS_17 = UnicodeCanonicalClass._(17);
+  static const _UnicodeCanonicalClass CLASS_17 = _UnicodeCanonicalClass._(17);
 
   /// General class level 18.
 
-  static const UnicodeCanonicalClass CLASS_18 = UnicodeCanonicalClass._(18);
+  static const _UnicodeCanonicalClass CLASS_18 = _UnicodeCanonicalClass._(18);
 
   /// General class level 19.
 
-  static const UnicodeCanonicalClass CLASS_19 = UnicodeCanonicalClass._(19);
+  static const _UnicodeCanonicalClass CLASS_19 = _UnicodeCanonicalClass._(19);
 
   /// General class level 20.
 
-  static const UnicodeCanonicalClass CLASS_20 = UnicodeCanonicalClass._(20);
+  static const _UnicodeCanonicalClass CLASS_20 = _UnicodeCanonicalClass._(20);
 
   /// General class level 21.
 
-  static const UnicodeCanonicalClass CLASS_21 = UnicodeCanonicalClass._(21);
+  static const _UnicodeCanonicalClass CLASS_21 = _UnicodeCanonicalClass._(21);
 
   /// General class level 22.
 
-  static const UnicodeCanonicalClass CLASS_22 = UnicodeCanonicalClass._(22);
+  static const _UnicodeCanonicalClass CLASS_22 = _UnicodeCanonicalClass._(22);
 
   /// General class level 23.
 
-  static const UnicodeCanonicalClass CLASS_23 = UnicodeCanonicalClass._(23);
+  static const _UnicodeCanonicalClass CLASS_23 = _UnicodeCanonicalClass._(23);
 
   /// General class level 24.
 
-  static const UnicodeCanonicalClass CLASS_24 = UnicodeCanonicalClass._(24);
+  static const _UnicodeCanonicalClass CLASS_24 = _UnicodeCanonicalClass._(24);
 
   /// General class level 25.
 
-  static const UnicodeCanonicalClass CLASS_25 = UnicodeCanonicalClass._(25);
+  static const _UnicodeCanonicalClass CLASS_25 = _UnicodeCanonicalClass._(25);
 
   /// General class level 26.
 
-  static const UnicodeCanonicalClass CLASS_26 = UnicodeCanonicalClass._(26);
+  static const _UnicodeCanonicalClass CLASS_26 = _UnicodeCanonicalClass._(26);
 
   /// General class level 27.
 
-  static const UnicodeCanonicalClass CLASS_27 = UnicodeCanonicalClass._(27);
+  static const _UnicodeCanonicalClass CLASS_27 = _UnicodeCanonicalClass._(27);
 
   /// General class level 28.
 
-  static const UnicodeCanonicalClass CLASS_28 = UnicodeCanonicalClass._(28);
+  static const _UnicodeCanonicalClass CLASS_28 = _UnicodeCanonicalClass._(28);
 
   /// General class level 29.
 
-  static const UnicodeCanonicalClass CLASS_29 = UnicodeCanonicalClass._(29);
+  static const _UnicodeCanonicalClass CLASS_29 = _UnicodeCanonicalClass._(29);
 
   /// General class level 30.
 
-  static const UnicodeCanonicalClass CLASS_30 = UnicodeCanonicalClass._(30);
+  static const _UnicodeCanonicalClass CLASS_30 = _UnicodeCanonicalClass._(30);
 
   /// General class level 31.
 
-  static const UnicodeCanonicalClass CLASS_31 = UnicodeCanonicalClass._(31);
+  static const _UnicodeCanonicalClass CLASS_31 = _UnicodeCanonicalClass._(31);
 
   /// General class level 32.
 
-  static const UnicodeCanonicalClass CLASS_32 = UnicodeCanonicalClass._(32);
+  static const _UnicodeCanonicalClass CLASS_32 = _UnicodeCanonicalClass._(32);
 
   /// General class level 33.
 
-  static const UnicodeCanonicalClass CLASS_33 = UnicodeCanonicalClass._(33);
+  static const _UnicodeCanonicalClass CLASS_33 = _UnicodeCanonicalClass._(33);
 
   /// General class level 34.
 
-  static const UnicodeCanonicalClass CLASS_34 = UnicodeCanonicalClass._(34);
+  static const _UnicodeCanonicalClass CLASS_34 = _UnicodeCanonicalClass._(34);
 
   /// General class level 35.
 
-  static const UnicodeCanonicalClass CLASS_35 = UnicodeCanonicalClass._(35);
+  static const _UnicodeCanonicalClass CLASS_35 = _UnicodeCanonicalClass._(35);
 
   /// General class level 36.
 
-  static const UnicodeCanonicalClass CLASS_36 = UnicodeCanonicalClass._(36);
+  static const _UnicodeCanonicalClass CLASS_36 = _UnicodeCanonicalClass._(36);
 
   /// General class level 37.
 
-  static const UnicodeCanonicalClass CLASS_37 = UnicodeCanonicalClass._(37);
+  static const _UnicodeCanonicalClass CLASS_37 = _UnicodeCanonicalClass._(37);
 
   /// General class level 38.
 
-  static const UnicodeCanonicalClass CLASS_38 = UnicodeCanonicalClass._(38);
+  static const _UnicodeCanonicalClass CLASS_38 = _UnicodeCanonicalClass._(38);
 
   /// General class level 39.
 
-  static const UnicodeCanonicalClass CLASS_39 = UnicodeCanonicalClass._(39);
+  static const _UnicodeCanonicalClass CLASS_39 = _UnicodeCanonicalClass._(39);
 
   /// General class level 40.
 
-  static const UnicodeCanonicalClass CLASS_40 = UnicodeCanonicalClass._(40);
+  static const _UnicodeCanonicalClass CLASS_40 = _UnicodeCanonicalClass._(40);
 
   /// General class level 41.
 
-  static const UnicodeCanonicalClass CLASS_41 = UnicodeCanonicalClass._(41);
+  static const _UnicodeCanonicalClass CLASS_41 = _UnicodeCanonicalClass._(41);
 
   /// General class level 42.
 
-  static const UnicodeCanonicalClass CLASS_42 = UnicodeCanonicalClass._(42);
+  static const _UnicodeCanonicalClass CLASS_42 = _UnicodeCanonicalClass._(42);
 
   /// General class level 43.
 
-  static const UnicodeCanonicalClass CLASS_43 = UnicodeCanonicalClass._(43);
+  static const _UnicodeCanonicalClass CLASS_43 = _UnicodeCanonicalClass._(43);
 
   /// General class level 44.
 
-  static const UnicodeCanonicalClass CLASS_44 = UnicodeCanonicalClass._(44);
+  static const _UnicodeCanonicalClass CLASS_44 = _UnicodeCanonicalClass._(44);
 
   /// General class level 45.
 
-  static const UnicodeCanonicalClass CLASS_45 = UnicodeCanonicalClass._(45);
+  static const _UnicodeCanonicalClass CLASS_45 = _UnicodeCanonicalClass._(45);
 
   /// General class level 46.
 
-  static const UnicodeCanonicalClass CLASS_46 = UnicodeCanonicalClass._(46);
+  static const _UnicodeCanonicalClass CLASS_46 = _UnicodeCanonicalClass._(46);
 
   /// General class level 47.
 
-  static const UnicodeCanonicalClass CLASS_47 = UnicodeCanonicalClass._(47);
+  static const _UnicodeCanonicalClass CLASS_47 = _UnicodeCanonicalClass._(47);
 
   /// General class level 48.
 
-  static const UnicodeCanonicalClass CLASS_48 = UnicodeCanonicalClass._(48);
+  static const _UnicodeCanonicalClass CLASS_48 = _UnicodeCanonicalClass._(48);
 
   /// General class level 49.
 
-  static const UnicodeCanonicalClass CLASS_49 = UnicodeCanonicalClass._(49);
+  static const _UnicodeCanonicalClass CLASS_49 = _UnicodeCanonicalClass._(49);
 
   /// General class level 50.
 
-  static const UnicodeCanonicalClass CLASS_50 = UnicodeCanonicalClass._(50);
+  static const _UnicodeCanonicalClass CLASS_50 = _UnicodeCanonicalClass._(50);
 
   /// General class level 51.
 
-  static const UnicodeCanonicalClass CLASS_51 = UnicodeCanonicalClass._(51);
+  static const _UnicodeCanonicalClass CLASS_51 = _UnicodeCanonicalClass._(51);
 
   /// General class level 52.
 
-  static const UnicodeCanonicalClass CLASS_52 = UnicodeCanonicalClass._(52);
+  static const _UnicodeCanonicalClass CLASS_52 = _UnicodeCanonicalClass._(52);
 
   /// General class level 53.
 
-  static const UnicodeCanonicalClass CLASS_53 = UnicodeCanonicalClass._(53);
+  static const _UnicodeCanonicalClass CLASS_53 = _UnicodeCanonicalClass._(53);
 
   /// General class level 54.
 
-  static const UnicodeCanonicalClass CLASS_54 = UnicodeCanonicalClass._(54);
+  static const _UnicodeCanonicalClass CLASS_54 = _UnicodeCanonicalClass._(54);
 
   /// General class level 55.
 
-  static const UnicodeCanonicalClass CLASS_55 = UnicodeCanonicalClass._(55);
+  static const _UnicodeCanonicalClass CLASS_55 = _UnicodeCanonicalClass._(55);
 
   /// General class level 56.
 
-  static const UnicodeCanonicalClass CLASS_56 = UnicodeCanonicalClass._(56);
+  static const _UnicodeCanonicalClass CLASS_56 = _UnicodeCanonicalClass._(56);
 
   /// General class level 57.
 
-  static const UnicodeCanonicalClass CLASS_57 = UnicodeCanonicalClass._(57);
+  static const _UnicodeCanonicalClass CLASS_57 = _UnicodeCanonicalClass._(57);
 
   /// General class level 58.
 
-  static const UnicodeCanonicalClass CLASS_58 = UnicodeCanonicalClass._(58);
+  static const _UnicodeCanonicalClass CLASS_58 = _UnicodeCanonicalClass._(58);
 
   /// General class level 59.
 
-  static const UnicodeCanonicalClass CLASS_59 = UnicodeCanonicalClass._(59);
+  static const _UnicodeCanonicalClass CLASS_59 = _UnicodeCanonicalClass._(59);
 
   /// General class level 60.
 
-  static const UnicodeCanonicalClass CLASS_60 = UnicodeCanonicalClass._(60);
+  static const _UnicodeCanonicalClass CLASS_60 = _UnicodeCanonicalClass._(60);
 
   /// General class level 61.
 
-  static const UnicodeCanonicalClass CLASS_61 = UnicodeCanonicalClass._(61);
+  static const _UnicodeCanonicalClass CLASS_61 = _UnicodeCanonicalClass._(61);
 
   /// General class level 62.
 
-  static const UnicodeCanonicalClass CLASS_62 = UnicodeCanonicalClass._(62);
+  static const _UnicodeCanonicalClass CLASS_62 = _UnicodeCanonicalClass._(62);
 
   /// General class level 63.
 
-  static const UnicodeCanonicalClass CLASS_63 = UnicodeCanonicalClass._(63);
+  static const _UnicodeCanonicalClass CLASS_63 = _UnicodeCanonicalClass._(63);
 
   /// General class level 64.
 
-  static const UnicodeCanonicalClass CLASS_64 = UnicodeCanonicalClass._(64);
+  static const _UnicodeCanonicalClass CLASS_64 = _UnicodeCanonicalClass._(64);
 
   /// General class level 65.
 
-  static const UnicodeCanonicalClass CLASS_65 = UnicodeCanonicalClass._(65);
+  static const _UnicodeCanonicalClass CLASS_65 = _UnicodeCanonicalClass._(65);
 
   /// General class level 66.
 
-  static const UnicodeCanonicalClass CLASS_66 = UnicodeCanonicalClass._(66);
+  static const _UnicodeCanonicalClass CLASS_66 = _UnicodeCanonicalClass._(66);
 
   /// General class level 67.
 
-  static const UnicodeCanonicalClass CLASS_67 = UnicodeCanonicalClass._(67);
+  static const _UnicodeCanonicalClass CLASS_67 = _UnicodeCanonicalClass._(67);
 
   /// General class level 68.
 
-  static const UnicodeCanonicalClass CLASS_68 = UnicodeCanonicalClass._(68);
+  static const _UnicodeCanonicalClass CLASS_68 = _UnicodeCanonicalClass._(68);
 
   /// General class level 69.
 
-  static const UnicodeCanonicalClass CLASS_69 = UnicodeCanonicalClass._(69);
+  static const _UnicodeCanonicalClass CLASS_69 = _UnicodeCanonicalClass._(69);
 
   /// General class level 70.
 
-  static const UnicodeCanonicalClass CLASS_70 = UnicodeCanonicalClass._(70);
+  static const _UnicodeCanonicalClass CLASS_70 = _UnicodeCanonicalClass._(70);
 
   /// General class level 71.
 
-  static const UnicodeCanonicalClass CLASS_71 = UnicodeCanonicalClass._(71);
+  static const _UnicodeCanonicalClass CLASS_71 = _UnicodeCanonicalClass._(71);
 
   /// General class level 72.
 
-  static const UnicodeCanonicalClass CLASS_72 = UnicodeCanonicalClass._(72);
+  static const _UnicodeCanonicalClass CLASS_72 = _UnicodeCanonicalClass._(72);
 
   /// General class level 73.
 
-  static const UnicodeCanonicalClass CLASS_73 = UnicodeCanonicalClass._(73);
+  static const _UnicodeCanonicalClass CLASS_73 = _UnicodeCanonicalClass._(73);
 
   /// General class level 74.
 
-  static const UnicodeCanonicalClass CLASS_74 = UnicodeCanonicalClass._(74);
+  static const _UnicodeCanonicalClass CLASS_74 = _UnicodeCanonicalClass._(74);
 
   /// General class level 75.
 
-  static const UnicodeCanonicalClass CLASS_75 = UnicodeCanonicalClass._(75);
+  static const _UnicodeCanonicalClass CLASS_75 = _UnicodeCanonicalClass._(75);
 
   /// General class level 76.
 
-  static const UnicodeCanonicalClass CLASS_76 = UnicodeCanonicalClass._(76);
+  static const _UnicodeCanonicalClass CLASS_76 = _UnicodeCanonicalClass._(76);
 
   /// General class level 77.
 
-  static const UnicodeCanonicalClass CLASS_77 = UnicodeCanonicalClass._(77);
+  static const _UnicodeCanonicalClass CLASS_77 = _UnicodeCanonicalClass._(77);
 
   /// General class level 78.
 
-  static const UnicodeCanonicalClass CLASS_78 = UnicodeCanonicalClass._(78);
+  static const _UnicodeCanonicalClass CLASS_78 = _UnicodeCanonicalClass._(78);
 
   /// General class level 79.
 
-  static const UnicodeCanonicalClass CLASS_79 = UnicodeCanonicalClass._(79);
+  static const _UnicodeCanonicalClass CLASS_79 = _UnicodeCanonicalClass._(79);
 
   /// General class level 80.
 
-  static const UnicodeCanonicalClass CLASS_80 = UnicodeCanonicalClass._(80);
+  static const _UnicodeCanonicalClass CLASS_80 = _UnicodeCanonicalClass._(80);
 
   /// General class level 81.
 
-  static const UnicodeCanonicalClass CLASS_81 = UnicodeCanonicalClass._(81);
+  static const _UnicodeCanonicalClass CLASS_81 = _UnicodeCanonicalClass._(81);
 
   /// General class level 82.
 
-  static const UnicodeCanonicalClass CLASS_82 = UnicodeCanonicalClass._(82);
+  static const _UnicodeCanonicalClass CLASS_82 = _UnicodeCanonicalClass._(82);
 
   /// General class level 83.
 
-  static const UnicodeCanonicalClass CLASS_83 = UnicodeCanonicalClass._(83);
+  static const _UnicodeCanonicalClass CLASS_83 = _UnicodeCanonicalClass._(83);
 
   /// General class level 84.
 
-  static const UnicodeCanonicalClass CLASS_84 = UnicodeCanonicalClass._(84);
+  static const _UnicodeCanonicalClass CLASS_84 = _UnicodeCanonicalClass._(84);
 
   /// General class level 85.
 
-  static const UnicodeCanonicalClass CLASS_85 = UnicodeCanonicalClass._(85);
+  static const _UnicodeCanonicalClass CLASS_85 = _UnicodeCanonicalClass._(85);
 
   /// General class level 86.
 
-  static const UnicodeCanonicalClass CLASS_86 = UnicodeCanonicalClass._(86);
+  static const _UnicodeCanonicalClass CLASS_86 = _UnicodeCanonicalClass._(86);
 
   /// General class level 87.
 
-  static const UnicodeCanonicalClass CLASS_87 = UnicodeCanonicalClass._(87);
+  static const _UnicodeCanonicalClass CLASS_87 = _UnicodeCanonicalClass._(87);
 
   /// General class level 88.
 
-  static const UnicodeCanonicalClass CLASS_88 = UnicodeCanonicalClass._(88);
+  static const _UnicodeCanonicalClass CLASS_88 = _UnicodeCanonicalClass._(88);
 
   /// General class level 89.
 
-  static const UnicodeCanonicalClass CLASS_89 = UnicodeCanonicalClass._(89);
+  static const _UnicodeCanonicalClass CLASS_89 = _UnicodeCanonicalClass._(89);
 
   /// General class level 90.
 
-  static const UnicodeCanonicalClass CLASS_90 = UnicodeCanonicalClass._(90);
+  static const _UnicodeCanonicalClass CLASS_90 = _UnicodeCanonicalClass._(90);
 
   /// General class level 91.
 
-  static const UnicodeCanonicalClass CLASS_91 = UnicodeCanonicalClass._(91);
+  static const _UnicodeCanonicalClass CLASS_91 = _UnicodeCanonicalClass._(91);
 
   /// General class level 92.
 
-  static const UnicodeCanonicalClass CLASS_92 = UnicodeCanonicalClass._(92);
+  static const _UnicodeCanonicalClass CLASS_92 = _UnicodeCanonicalClass._(92);
 
   /// General class level 93.
 
-  static const UnicodeCanonicalClass CLASS_93 = UnicodeCanonicalClass._(93);
+  static const _UnicodeCanonicalClass CLASS_93 = _UnicodeCanonicalClass._(93);
 
   /// General class level 94.
 
-  static const UnicodeCanonicalClass CLASS_94 = UnicodeCanonicalClass._(94);
+  static const _UnicodeCanonicalClass CLASS_94 = _UnicodeCanonicalClass._(94);
 
   /// General class level 95.
 
-  static const UnicodeCanonicalClass CLASS_95 = UnicodeCanonicalClass._(95);
+  static const _UnicodeCanonicalClass CLASS_95 = _UnicodeCanonicalClass._(95);
 
   /// General class level 96.
 
-  static const UnicodeCanonicalClass CLASS_96 = UnicodeCanonicalClass._(96);
+  static const _UnicodeCanonicalClass CLASS_96 = _UnicodeCanonicalClass._(96);
 
   /// General class level 97.
 
-  static const UnicodeCanonicalClass CLASS_97 = UnicodeCanonicalClass._(97);
+  static const _UnicodeCanonicalClass CLASS_97 = _UnicodeCanonicalClass._(97);
 
   /// General class level 98.
 
-  static const UnicodeCanonicalClass CLASS_98 = UnicodeCanonicalClass._(98);
+  static const _UnicodeCanonicalClass CLASS_98 = _UnicodeCanonicalClass._(98);
 
   /// General class level 99.
 
-  static const UnicodeCanonicalClass CLASS_99 = UnicodeCanonicalClass._(99);
+  static const _UnicodeCanonicalClass CLASS_99 = _UnicodeCanonicalClass._(99);
 
   /// General class level 100.
 
-  static const UnicodeCanonicalClass CLASS_100 = UnicodeCanonicalClass._(100);
+  static const _UnicodeCanonicalClass CLASS_100 = _UnicodeCanonicalClass._(100);
 
   /// General class level 101.
 
-  static const UnicodeCanonicalClass CLASS_101 = UnicodeCanonicalClass._(101);
+  static const _UnicodeCanonicalClass CLASS_101 = _UnicodeCanonicalClass._(101);
 
   /// General class level 102.
 
-  static const UnicodeCanonicalClass CLASS_102 = UnicodeCanonicalClass._(102);
+  static const _UnicodeCanonicalClass CLASS_102 = _UnicodeCanonicalClass._(102);
 
   /// General class level 103.
 
-  static const UnicodeCanonicalClass CLASS_103 = UnicodeCanonicalClass._(103);
+  static const _UnicodeCanonicalClass CLASS_103 = _UnicodeCanonicalClass._(103);
 
   /// General class level 104.
 
-  static const UnicodeCanonicalClass CLASS_104 = UnicodeCanonicalClass._(104);
+  static const _UnicodeCanonicalClass CLASS_104 = _UnicodeCanonicalClass._(104);
 
   /// General class level 105.
 
-  static const UnicodeCanonicalClass CLASS_105 = UnicodeCanonicalClass._(105);
+  static const _UnicodeCanonicalClass CLASS_105 = _UnicodeCanonicalClass._(105);
 
   /// General class level 106.
 
-  static const UnicodeCanonicalClass CLASS_106 = UnicodeCanonicalClass._(106);
+  static const _UnicodeCanonicalClass CLASS_106 = _UnicodeCanonicalClass._(106);
 
   /// General class level 107.
 
-  static const UnicodeCanonicalClass CLASS_107 = UnicodeCanonicalClass._(107);
+  static const _UnicodeCanonicalClass CLASS_107 = _UnicodeCanonicalClass._(107);
 
   /// General class level 108.
 
-  static const UnicodeCanonicalClass CLASS_108 = UnicodeCanonicalClass._(108);
+  static const _UnicodeCanonicalClass CLASS_108 = _UnicodeCanonicalClass._(108);
 
   /// General class level 109.
 
-  static const UnicodeCanonicalClass CLASS_109 = UnicodeCanonicalClass._(109);
+  static const _UnicodeCanonicalClass CLASS_109 = _UnicodeCanonicalClass._(109);
 
   /// General class level 110.
 
-  static const UnicodeCanonicalClass CLASS_110 = UnicodeCanonicalClass._(110);
+  static const _UnicodeCanonicalClass CLASS_110 = _UnicodeCanonicalClass._(110);
 
   /// General class level 111.
 
-  static const UnicodeCanonicalClass CLASS_111 = UnicodeCanonicalClass._(111);
+  static const _UnicodeCanonicalClass CLASS_111 = _UnicodeCanonicalClass._(111);
 
   /// General class level 112.
 
-  static const UnicodeCanonicalClass CLASS_112 = UnicodeCanonicalClass._(112);
+  static const _UnicodeCanonicalClass CLASS_112 = _UnicodeCanonicalClass._(112);
 
   /// General class level 113.
 
-  static const UnicodeCanonicalClass CLASS_113 = UnicodeCanonicalClass._(113);
+  static const _UnicodeCanonicalClass CLASS_113 = _UnicodeCanonicalClass._(113);
 
   /// General class level 114.
 
-  static const UnicodeCanonicalClass CLASS_114 = UnicodeCanonicalClass._(114);
+  static const _UnicodeCanonicalClass CLASS_114 = _UnicodeCanonicalClass._(114);
 
   /// General class level 115.
 
-  static const UnicodeCanonicalClass CLASS_115 = UnicodeCanonicalClass._(115);
+  static const _UnicodeCanonicalClass CLASS_115 = _UnicodeCanonicalClass._(115);
 
   /// General class level 116.
 
-  static const UnicodeCanonicalClass CLASS_116 = UnicodeCanonicalClass._(116);
+  static const _UnicodeCanonicalClass CLASS_116 = _UnicodeCanonicalClass._(116);
 
   /// General class level 117.
 
-  static const UnicodeCanonicalClass CLASS_117 = UnicodeCanonicalClass._(117);
+  static const _UnicodeCanonicalClass CLASS_117 = _UnicodeCanonicalClass._(117);
 
   /// General class level 118.
 
-  static const UnicodeCanonicalClass CLASS_118 = UnicodeCanonicalClass._(118);
+  static const _UnicodeCanonicalClass CLASS_118 = _UnicodeCanonicalClass._(118);
 
   /// General class level 119.
 
-  static const UnicodeCanonicalClass CLASS_119 = UnicodeCanonicalClass._(119);
+  static const _UnicodeCanonicalClass CLASS_119 = _UnicodeCanonicalClass._(119);
 
   /// General class level 120.
 
-  static const UnicodeCanonicalClass CLASS_120 = UnicodeCanonicalClass._(120);
+  static const _UnicodeCanonicalClass CLASS_120 = _UnicodeCanonicalClass._(120);
 
   /// General class level 121.
 
-  static const UnicodeCanonicalClass CLASS_121 = UnicodeCanonicalClass._(121);
+  static const _UnicodeCanonicalClass CLASS_121 = _UnicodeCanonicalClass._(121);
 
   /// General class level 122.
 
-  static const UnicodeCanonicalClass CLASS_122 = UnicodeCanonicalClass._(122);
+  static const _UnicodeCanonicalClass CLASS_122 = _UnicodeCanonicalClass._(122);
 
   /// General class level 123.
 
-  static const UnicodeCanonicalClass CLASS_123 = UnicodeCanonicalClass._(123);
+  static const _UnicodeCanonicalClass CLASS_123 = _UnicodeCanonicalClass._(123);
 
   /// General class level 124.
 
-  static const UnicodeCanonicalClass CLASS_124 = UnicodeCanonicalClass._(124);
+  static const _UnicodeCanonicalClass CLASS_124 = _UnicodeCanonicalClass._(124);
 
   /// General class level 125.
 
-  static const UnicodeCanonicalClass CLASS_125 = UnicodeCanonicalClass._(125);
+  static const _UnicodeCanonicalClass CLASS_125 = _UnicodeCanonicalClass._(125);
 
   /// General class level 126.
 
-  static const UnicodeCanonicalClass CLASS_126 = UnicodeCanonicalClass._(126);
+  static const _UnicodeCanonicalClass CLASS_126 = _UnicodeCanonicalClass._(126);
 
   /// General class level 127.
 
-  static const UnicodeCanonicalClass CLASS_127 = UnicodeCanonicalClass._(127);
+  static const _UnicodeCanonicalClass CLASS_127 = _UnicodeCanonicalClass._(127);
 
   /// General class level 128.
 
-  static const UnicodeCanonicalClass CLASS_128 = UnicodeCanonicalClass._(128);
+  static const _UnicodeCanonicalClass CLASS_128 = _UnicodeCanonicalClass._(128);
 
   /// General class level 129.
 
-  static const UnicodeCanonicalClass CLASS_129 = UnicodeCanonicalClass._(129);
+  static const _UnicodeCanonicalClass CLASS_129 = _UnicodeCanonicalClass._(129);
 
   /// General class level 130.
 
-  static const UnicodeCanonicalClass CLASS_130 = UnicodeCanonicalClass._(130);
+  static const _UnicodeCanonicalClass CLASS_130 = _UnicodeCanonicalClass._(130);
 
   /// General class level 131.
 
-  static const UnicodeCanonicalClass CLASS_131 = UnicodeCanonicalClass._(131);
+  static const _UnicodeCanonicalClass CLASS_131 = _UnicodeCanonicalClass._(131);
 
   /// General class level 132.
 
-  static const UnicodeCanonicalClass CLASS_132 = UnicodeCanonicalClass._(132);
+  static const _UnicodeCanonicalClass CLASS_132 = _UnicodeCanonicalClass._(132);
 
   /// General class level 133.
 
-  static const UnicodeCanonicalClass CLASS_133 = UnicodeCanonicalClass._(133);
+  static const _UnicodeCanonicalClass CLASS_133 = _UnicodeCanonicalClass._(133);
 
   /// General class level 134.
 
-  static const UnicodeCanonicalClass CLASS_134 = UnicodeCanonicalClass._(134);
+  static const _UnicodeCanonicalClass CLASS_134 = _UnicodeCanonicalClass._(134);
 
   /// General class level 135.
 
-  static const UnicodeCanonicalClass CLASS_135 = UnicodeCanonicalClass._(135);
+  static const _UnicodeCanonicalClass CLASS_135 = _UnicodeCanonicalClass._(135);
 
   /// General class level 136.
 
-  static const UnicodeCanonicalClass CLASS_136 = UnicodeCanonicalClass._(136);
+  static const _UnicodeCanonicalClass CLASS_136 = _UnicodeCanonicalClass._(136);
 
   /// General class level 137.
 
-  static const UnicodeCanonicalClass CLASS_137 = UnicodeCanonicalClass._(137);
+  static const _UnicodeCanonicalClass CLASS_137 = _UnicodeCanonicalClass._(137);
 
   /// General class level 138.
 
-  static const UnicodeCanonicalClass CLASS_138 = UnicodeCanonicalClass._(138);
+  static const _UnicodeCanonicalClass CLASS_138 = _UnicodeCanonicalClass._(138);
 
   /// General class level 139.
 
-  static const UnicodeCanonicalClass CLASS_139 = UnicodeCanonicalClass._(139);
+  static const _UnicodeCanonicalClass CLASS_139 = _UnicodeCanonicalClass._(139);
 
   /// General class level 140.
 
-  static const UnicodeCanonicalClass CLASS_140 = UnicodeCanonicalClass._(140);
+  static const _UnicodeCanonicalClass CLASS_140 = _UnicodeCanonicalClass._(140);
 
   /// General class level 141.
 
-  static const UnicodeCanonicalClass CLASS_141 = UnicodeCanonicalClass._(141);
+  static const _UnicodeCanonicalClass CLASS_141 = _UnicodeCanonicalClass._(141);
 
   /// General class level 142.
 
-  static const UnicodeCanonicalClass CLASS_142 = UnicodeCanonicalClass._(142);
+  static const _UnicodeCanonicalClass CLASS_142 = _UnicodeCanonicalClass._(142);
 
   /// General class level 143.
 
-  static const UnicodeCanonicalClass CLASS_143 = UnicodeCanonicalClass._(143);
+  static const _UnicodeCanonicalClass CLASS_143 = _UnicodeCanonicalClass._(143);
 
   /// General class level 144.
 
-  static const UnicodeCanonicalClass CLASS_144 = UnicodeCanonicalClass._(144);
+  static const _UnicodeCanonicalClass CLASS_144 = _UnicodeCanonicalClass._(144);
 
   /// General class level 145.
 
-  static const UnicodeCanonicalClass CLASS_145 = UnicodeCanonicalClass._(145);
+  static const _UnicodeCanonicalClass CLASS_145 = _UnicodeCanonicalClass._(145);
 
   /// General class level 146.
 
-  static const UnicodeCanonicalClass CLASS_146 = UnicodeCanonicalClass._(146);
+  static const _UnicodeCanonicalClass CLASS_146 = _UnicodeCanonicalClass._(146);
 
   /// General class level 147.
 
-  static const UnicodeCanonicalClass CLASS_147 = UnicodeCanonicalClass._(147);
+  static const _UnicodeCanonicalClass CLASS_147 = _UnicodeCanonicalClass._(147);
 
   /// General class level 148.
 
-  static const UnicodeCanonicalClass CLASS_148 = UnicodeCanonicalClass._(148);
+  static const _UnicodeCanonicalClass CLASS_148 = _UnicodeCanonicalClass._(148);
 
   /// General class level 149.
 
-  static const UnicodeCanonicalClass CLASS_149 = UnicodeCanonicalClass._(149);
+  static const _UnicodeCanonicalClass CLASS_149 = _UnicodeCanonicalClass._(149);
 
   /// General class level 150.
 
-  static const UnicodeCanonicalClass CLASS_150 = UnicodeCanonicalClass._(150);
+  static const _UnicodeCanonicalClass CLASS_150 = _UnicodeCanonicalClass._(150);
 
   /// General class level 151.
 
-  static const UnicodeCanonicalClass CLASS_151 = UnicodeCanonicalClass._(151);
+  static const _UnicodeCanonicalClass CLASS_151 = _UnicodeCanonicalClass._(151);
 
   /// General class level 152.
 
-  static const UnicodeCanonicalClass CLASS_152 = UnicodeCanonicalClass._(152);
+  static const _UnicodeCanonicalClass CLASS_152 = _UnicodeCanonicalClass._(152);
 
   /// General class level 153.
 
-  static const UnicodeCanonicalClass CLASS_153 = UnicodeCanonicalClass._(153);
+  static const _UnicodeCanonicalClass CLASS_153 = _UnicodeCanonicalClass._(153);
 
   /// General class level 154.
 
-  static const UnicodeCanonicalClass CLASS_154 = UnicodeCanonicalClass._(154);
+  static const _UnicodeCanonicalClass CLASS_154 = _UnicodeCanonicalClass._(154);
 
   /// General class level 155.
 
-  static const UnicodeCanonicalClass CLASS_155 = UnicodeCanonicalClass._(155);
+  static const _UnicodeCanonicalClass CLASS_155 = _UnicodeCanonicalClass._(155);
 
   /// General class level 156.
 
-  static const UnicodeCanonicalClass CLASS_156 = UnicodeCanonicalClass._(156);
+  static const _UnicodeCanonicalClass CLASS_156 = _UnicodeCanonicalClass._(156);
 
   /// General class level 157.
 
-  static const UnicodeCanonicalClass CLASS_157 = UnicodeCanonicalClass._(157);
+  static const _UnicodeCanonicalClass CLASS_157 = _UnicodeCanonicalClass._(157);
 
   /// General class level 158.
 
-  static const UnicodeCanonicalClass CLASS_158 = UnicodeCanonicalClass._(158);
+  static const _UnicodeCanonicalClass CLASS_158 = _UnicodeCanonicalClass._(158);
 
   /// General class level 159.
 
-  static const UnicodeCanonicalClass CLASS_159 = UnicodeCanonicalClass._(159);
+  static const _UnicodeCanonicalClass CLASS_159 = _UnicodeCanonicalClass._(159);
 
   /// General class level 160.
 
-  static const UnicodeCanonicalClass CLASS_160 = UnicodeCanonicalClass._(160);
+  static const _UnicodeCanonicalClass CLASS_160 = _UnicodeCanonicalClass._(160);
 
   /// General class level 161.
 
-  static const UnicodeCanonicalClass CLASS_161 = UnicodeCanonicalClass._(161);
+  static const _UnicodeCanonicalClass CLASS_161 = _UnicodeCanonicalClass._(161);
 
   /// General class level 162.
 
-  static const UnicodeCanonicalClass CLASS_162 = UnicodeCanonicalClass._(122);
+  static const _UnicodeCanonicalClass CLASS_162 = _UnicodeCanonicalClass._(122);
 
   /// General class level 163.
 
-  static const UnicodeCanonicalClass CLASS_163 = UnicodeCanonicalClass._(166);
+  static const _UnicodeCanonicalClass CLASS_163 = _UnicodeCanonicalClass._(166);
 
   /// General class level 164.
 
-  static const UnicodeCanonicalClass CLASS_164 = UnicodeCanonicalClass._(164);
+  static const _UnicodeCanonicalClass CLASS_164 = _UnicodeCanonicalClass._(164);
 
   /// General class level 165.
 
-  static const UnicodeCanonicalClass CLASS_165 = UnicodeCanonicalClass._(165);
+  static const _UnicodeCanonicalClass CLASS_165 = _UnicodeCanonicalClass._(165);
 
   /// General class level 166.
 
-  static const UnicodeCanonicalClass CLASS_166 = UnicodeCanonicalClass._(166);
+  static const _UnicodeCanonicalClass CLASS_166 = _UnicodeCanonicalClass._(166);
 
   /// General class level 167.
 
-  static const UnicodeCanonicalClass CLASS_167 = UnicodeCanonicalClass._(167);
+  static const _UnicodeCanonicalClass CLASS_167 = _UnicodeCanonicalClass._(167);
 
   /// General class level 168.
 
-  static const UnicodeCanonicalClass CLASS_168 = UnicodeCanonicalClass._(168);
+  static const _UnicodeCanonicalClass CLASS_168 = _UnicodeCanonicalClass._(168);
 
   /// General class level 169.
 
-  static const UnicodeCanonicalClass CLASS_169 = UnicodeCanonicalClass._(169);
+  static const _UnicodeCanonicalClass CLASS_169 = _UnicodeCanonicalClass._(169);
 
   /// General class level 170.
 
-  static const UnicodeCanonicalClass CLASS_170 = UnicodeCanonicalClass._(170);
+  static const _UnicodeCanonicalClass CLASS_170 = _UnicodeCanonicalClass._(170);
 
   /// General class level 171.
 
-  static const UnicodeCanonicalClass CLASS_171 = UnicodeCanonicalClass._(171);
+  static const _UnicodeCanonicalClass CLASS_171 = _UnicodeCanonicalClass._(171);
 
   /// General class level 172.
 
-  static const UnicodeCanonicalClass CLASS_172 = UnicodeCanonicalClass._(172);
+  static const _UnicodeCanonicalClass CLASS_172 = _UnicodeCanonicalClass._(172);
 
   /// General class level 173.
 
-  static const UnicodeCanonicalClass CLASS_173 = UnicodeCanonicalClass._(173);
+  static const _UnicodeCanonicalClass CLASS_173 = _UnicodeCanonicalClass._(173);
 
   /// General class level 174.
 
-  static const UnicodeCanonicalClass CLASS_174 = UnicodeCanonicalClass._(174);
+  static const _UnicodeCanonicalClass CLASS_174 = _UnicodeCanonicalClass._(174);
 
   /// General class level 175.
 
-  static const UnicodeCanonicalClass CLASS_175 = UnicodeCanonicalClass._(175);
+  static const _UnicodeCanonicalClass CLASS_175 = _UnicodeCanonicalClass._(175);
 
   /// General class level 176.
 
-  static const UnicodeCanonicalClass CLASS_176 = UnicodeCanonicalClass._(176);
+  static const _UnicodeCanonicalClass CLASS_176 = _UnicodeCanonicalClass._(176);
 
   /// General class level 177.
 
-  static const UnicodeCanonicalClass CLASS_177 = UnicodeCanonicalClass._(177);
+  static const _UnicodeCanonicalClass CLASS_177 = _UnicodeCanonicalClass._(177);
 
   /// General class level 178.
 
-  static const UnicodeCanonicalClass CLASS_178 = UnicodeCanonicalClass._(178);
+  static const _UnicodeCanonicalClass CLASS_178 = _UnicodeCanonicalClass._(178);
 
   /// General class level 179.
 
-  static const UnicodeCanonicalClass CLASS_179 = UnicodeCanonicalClass._(179);
+  static const _UnicodeCanonicalClass CLASS_179 = _UnicodeCanonicalClass._(179);
 
   /// General class level 180.
 
-  static const UnicodeCanonicalClass CLASS_180 = UnicodeCanonicalClass._(180);
+  static const _UnicodeCanonicalClass CLASS_180 = _UnicodeCanonicalClass._(180);
 
   /// General class level 181.
 
-  static const UnicodeCanonicalClass CLASS_181 = UnicodeCanonicalClass._(181);
+  static const _UnicodeCanonicalClass CLASS_181 = _UnicodeCanonicalClass._(181);
 
   /// General class level 182.
 
-  static const UnicodeCanonicalClass CLASS_182 = UnicodeCanonicalClass._(182);
+  static const _UnicodeCanonicalClass CLASS_182 = _UnicodeCanonicalClass._(182);
 
   /// General class level 183.
 
-  static const UnicodeCanonicalClass CLASS_183 = UnicodeCanonicalClass._(183);
+  static const _UnicodeCanonicalClass CLASS_183 = _UnicodeCanonicalClass._(183);
 
   /// General class level 184.
 
-  static const UnicodeCanonicalClass CLASS_184 = UnicodeCanonicalClass._(184);
+  static const _UnicodeCanonicalClass CLASS_184 = _UnicodeCanonicalClass._(184);
 
   /// General class level 185.
 
-  static const UnicodeCanonicalClass CLASS_185 = UnicodeCanonicalClass._(185);
+  static const _UnicodeCanonicalClass CLASS_185 = _UnicodeCanonicalClass._(185);
 
   /// General class level 186.
 
-  static const UnicodeCanonicalClass CLASS_186 = UnicodeCanonicalClass._(186);
+  static const _UnicodeCanonicalClass CLASS_186 = _UnicodeCanonicalClass._(186);
 
   /// General class level 187.
 
-  static const UnicodeCanonicalClass CLASS_187 = UnicodeCanonicalClass._(187);
+  static const _UnicodeCanonicalClass CLASS_187 = _UnicodeCanonicalClass._(187);
 
   /// General class level 188.
 
-  static const UnicodeCanonicalClass CLASS_188 = UnicodeCanonicalClass._(188);
+  static const _UnicodeCanonicalClass CLASS_188 = _UnicodeCanonicalClass._(188);
 
   /// General class level 189.
 
-  static const UnicodeCanonicalClass CLASS_189 = UnicodeCanonicalClass._(189);
+  static const _UnicodeCanonicalClass CLASS_189 = _UnicodeCanonicalClass._(189);
 
   /// General class level 190.
 
-  static const UnicodeCanonicalClass CLASS_190 = UnicodeCanonicalClass._(190);
+  static const _UnicodeCanonicalClass CLASS_190 = _UnicodeCanonicalClass._(190);
 
   /// General class level 191.
 
-  static const UnicodeCanonicalClass CLASS_191 = UnicodeCanonicalClass._(191);
+  static const _UnicodeCanonicalClass CLASS_191 = _UnicodeCanonicalClass._(191);
 
   /// General class level 192.
 
-  static const UnicodeCanonicalClass CLASS_192 = UnicodeCanonicalClass._(192);
+  static const _UnicodeCanonicalClass CLASS_192 = _UnicodeCanonicalClass._(192);
 
   /// General class level 193.
 
-  static const UnicodeCanonicalClass CLASS_193 = UnicodeCanonicalClass._(193);
+  static const _UnicodeCanonicalClass CLASS_193 = _UnicodeCanonicalClass._(193);
 
   /// General class level 194.
 
-  static const UnicodeCanonicalClass CLASS_194 = UnicodeCanonicalClass._(194);
+  static const _UnicodeCanonicalClass CLASS_194 = _UnicodeCanonicalClass._(194);
 
   /// General class level 195.
 
-  static const UnicodeCanonicalClass CLASS_195 = UnicodeCanonicalClass._(195);
+  static const _UnicodeCanonicalClass CLASS_195 = _UnicodeCanonicalClass._(195);
 
   /// General class level 196.
 
-  static const UnicodeCanonicalClass CLASS_196 = UnicodeCanonicalClass._(196);
+  static const _UnicodeCanonicalClass CLASS_196 = _UnicodeCanonicalClass._(196);
 
   /// General class level 197.
 
-  static const UnicodeCanonicalClass CLASS_197 = UnicodeCanonicalClass._(197);
+  static const _UnicodeCanonicalClass CLASS_197 = _UnicodeCanonicalClass._(197);
 
   /// General class level 198.
 
-  static const UnicodeCanonicalClass CLASS_198 = UnicodeCanonicalClass._(198);
+  static const _UnicodeCanonicalClass CLASS_198 = _UnicodeCanonicalClass._(198);
 
   /// General class level 199.
 
-  static const UnicodeCanonicalClass CLASS_199 = UnicodeCanonicalClass._(199);
+  static const _UnicodeCanonicalClass CLASS_199 = _UnicodeCanonicalClass._(199);
 
   ///Attached Below Left
-  static const UnicodeCanonicalClass ATBL = UnicodeCanonicalClass._(200);
+  static const _UnicodeCanonicalClass ATBL = _UnicodeCanonicalClass._(200);
 
   ///Attached Below
-  static const UnicodeCanonicalClass ATB = UnicodeCanonicalClass._(202);
+  static const _UnicodeCanonicalClass ATB = _UnicodeCanonicalClass._(202);
 
   ///Attached Below Right
-  static const UnicodeCanonicalClass ATBR = UnicodeCanonicalClass._(204);
+  static const _UnicodeCanonicalClass ATBR = _UnicodeCanonicalClass._(204);
 
   ///Attached Left
-  ///<remarks>Reordrant around single base character.</remarks>
-  static const UnicodeCanonicalClass ATL = UnicodeCanonicalClass._(208);
+  ///Reordrant around single base character.
+  static const _UnicodeCanonicalClass ATL = _UnicodeCanonicalClass._(208);
 
   ///Attached Right
-  static const UnicodeCanonicalClass ATR = UnicodeCanonicalClass._(210);
+  static const _UnicodeCanonicalClass ATR = _UnicodeCanonicalClass._(210);
 
   ///Attached Above Left
-  static const UnicodeCanonicalClass ATAL = UnicodeCanonicalClass._(212);
+  static const _UnicodeCanonicalClass ATAL = _UnicodeCanonicalClass._(212);
 
   ///Attached Above
-  static const UnicodeCanonicalClass ATA = UnicodeCanonicalClass._(214);
+  static const _UnicodeCanonicalClass ATA = _UnicodeCanonicalClass._(214);
 
   ///Attached Above Right
-  static const UnicodeCanonicalClass ATAR = UnicodeCanonicalClass._(216);
+  static const _UnicodeCanonicalClass ATAR = _UnicodeCanonicalClass._(216);
 
   ///Below Left
-  static const UnicodeCanonicalClass BL = UnicodeCanonicalClass._(218);
+  static const _UnicodeCanonicalClass BL = _UnicodeCanonicalClass._(218);
 
   ///Below
-  static const UnicodeCanonicalClass B = UnicodeCanonicalClass._(220);
+  static const _UnicodeCanonicalClass B = _UnicodeCanonicalClass._(220);
 
   ///Below Right
-  static const UnicodeCanonicalClass BR = UnicodeCanonicalClass._(222);
+  static const _UnicodeCanonicalClass BR = _UnicodeCanonicalClass._(222);
 
   ///Left
-  ///<remarks>Reordrant around single base character.</remarks>
-  static const UnicodeCanonicalClass L = UnicodeCanonicalClass._(224);
+  ///Reordrant around single base character.
+  static const _UnicodeCanonicalClass L = _UnicodeCanonicalClass._(224);
 
   ///Right
-  static const UnicodeCanonicalClass R = UnicodeCanonicalClass._(226);
+  static const _UnicodeCanonicalClass R = _UnicodeCanonicalClass._(226);
 
   ///Above Left
-  static const UnicodeCanonicalClass AL = UnicodeCanonicalClass._(228);
+  static const _UnicodeCanonicalClass AL = _UnicodeCanonicalClass._(228);
 
   ///Above
-  static const UnicodeCanonicalClass A = UnicodeCanonicalClass._(230);
+  static const _UnicodeCanonicalClass A = _UnicodeCanonicalClass._(230);
 
   ///Above Right
-  static const UnicodeCanonicalClass AR = UnicodeCanonicalClass._(232);
+  static const _UnicodeCanonicalClass AR = _UnicodeCanonicalClass._(232);
 
   ///Double Below
-  static const UnicodeCanonicalClass DB = UnicodeCanonicalClass._(233);
+  static const _UnicodeCanonicalClass DB = _UnicodeCanonicalClass._(233);
 
   ///Double Above
-  static const UnicodeCanonicalClass DA = UnicodeCanonicalClass._(234);
+  static const _UnicodeCanonicalClass DA = _UnicodeCanonicalClass._(234);
 
   ///Iota Subscript
-  static const UnicodeCanonicalClass IS = UnicodeCanonicalClass._(240);
+  static const _UnicodeCanonicalClass IS = _UnicodeCanonicalClass._(240);
 }

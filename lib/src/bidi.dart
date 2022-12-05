@@ -1,7 +1,4 @@
-import 'dart:core';
-import 'package:bidi/src/enums.dart';
-import 'package:bidi/src/paragraph.dart';
-import 'package:bidi/src/unicode_character_resolver.dart';
+part of bidi;
 
 /// Implementation of the BIDI algorithm, as described in http://www.unicode.org/reports/tr9/tr9-17.html
 /// [logicalString] is the original logical-ordered string. Returns the visual representation of the string.
@@ -49,19 +46,21 @@ String logicalToVisual2(
   return String.fromCharCodes(sb);
 }
 
-// 3.3.1.P1 - Split the text into separate paragraphs.
-// A paragraph separator is kept with the previous paragraph.
-// Within each paragraph, apply all the other rules of this algorithm.
+/// Split the text into separate paragraphs.
+///
+/// A paragraph separator is kept with the previous paragraph.
+/// Within each paragraph, apply all the other rules of this algorithm.
+///
+/// 3.3.1.P1.
 List<Paragraph> splitStringToParagraphs(String logicalString) {
   List<Paragraph> ret = [];
 
   var sb = <int>[];
   for (var i = 0; i < logicalString.length; ++i) {
     final c = logicalString.codeUnits[i];
-    final cType = getBidiCharacterType(c);
-    if (cType == BidiCharacterType.B) {
-      final p = Paragraph(sb);
-      p.paragraphSeparator = c;
+    final cType = _getBidiCharacterType(c);
+    if (cType == _BidiCharacterType.B) {
+      final p = Paragraph._(sb, c);
       ret.add(p);
       sb = [];
     } else {
@@ -70,7 +69,7 @@ List<Paragraph> splitStringToParagraphs(String logicalString) {
   }
   if (sb.isNotEmpty) // string ended without a paragraph separator
   {
-    ret.add(Paragraph(sb));
+    ret.add(Paragraph._(sb, _BidiChars.NotAChar));
   }
   return ret;
 }

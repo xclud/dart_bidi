@@ -1,659 +1,664 @@
+part of bidi;
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
-import 'package:bidi/src/enums.dart';
+class _Range {
+  const _Range(this.start, this.count);
+  final int start;
+  final int count;
+}
 
 bool _initialized = false;
 
-List<BidiCharacterType> bidiCharType =
-    List<BidiCharacterType>.filled(0xffff, BidiCharacterType.ON);
-Map<int, UnicodeGeneralCategory> categories = {};
-Map<int, UnicodeDecompositionType> decomType = {};
-const Map<int, UnicodeCanonicalClass> canonClass = {
-  0300: UnicodeCanonicalClass.A,
-  0x0300: UnicodeCanonicalClass.A,
-  0x0301: UnicodeCanonicalClass.A,
-  0x0302: UnicodeCanonicalClass.A,
-  0x0303: UnicodeCanonicalClass.A,
-  0x0304: UnicodeCanonicalClass.A,
-  0x0305: UnicodeCanonicalClass.A,
-  0x0306: UnicodeCanonicalClass.A,
-  0x0307: UnicodeCanonicalClass.A,
-  0x0308: UnicodeCanonicalClass.A,
-  0x0309: UnicodeCanonicalClass.A,
-  0x030A: UnicodeCanonicalClass.A,
-  0x030B: UnicodeCanonicalClass.A,
-  0x030C: UnicodeCanonicalClass.A,
-  0x030D: UnicodeCanonicalClass.A,
-  0x030E: UnicodeCanonicalClass.A,
-  0x030F: UnicodeCanonicalClass.A,
-  0x0310: UnicodeCanonicalClass.A,
-  0x0311: UnicodeCanonicalClass.A,
-  0x0312: UnicodeCanonicalClass.A,
-  0x0313: UnicodeCanonicalClass.A,
-  0x0314: UnicodeCanonicalClass.A,
-  0x0315: UnicodeCanonicalClass.AR,
-  0x0316: UnicodeCanonicalClass.B,
-  0x0317: UnicodeCanonicalClass.B,
-  0x0318: UnicodeCanonicalClass.B,
-  0x0319: UnicodeCanonicalClass.B,
-  0x031A: UnicodeCanonicalClass.AR,
-  0x031B: UnicodeCanonicalClass.ATAR,
-  0x031C: UnicodeCanonicalClass.B,
-  0x031D: UnicodeCanonicalClass.B,
-  0x031E: UnicodeCanonicalClass.B,
-  0x031F: UnicodeCanonicalClass.B,
-  0x0320: UnicodeCanonicalClass.B,
-  0x0321: UnicodeCanonicalClass.ATB,
-  0x0322: UnicodeCanonicalClass.ATB,
-  0x0323: UnicodeCanonicalClass.B,
-  0x0324: UnicodeCanonicalClass.B,
-  0x0325: UnicodeCanonicalClass.B,
-  0x0326: UnicodeCanonicalClass.B,
-  0x0327: UnicodeCanonicalClass.ATB,
-  0x0328: UnicodeCanonicalClass.ATB,
-  0x0329: UnicodeCanonicalClass.B,
-  0x032A: UnicodeCanonicalClass.B,
-  0x032B: UnicodeCanonicalClass.B,
-  0x032C: UnicodeCanonicalClass.B,
-  0x032D: UnicodeCanonicalClass.B,
-  0x032E: UnicodeCanonicalClass.B,
-  0x032F: UnicodeCanonicalClass.B,
-  0x0330: UnicodeCanonicalClass.B,
-  0x0331: UnicodeCanonicalClass.B,
-  0x0332: UnicodeCanonicalClass.B,
-  0x0333: UnicodeCanonicalClass.B,
-  0x0334: UnicodeCanonicalClass.OV,
-  0x0335: UnicodeCanonicalClass.OV,
-  0x0336: UnicodeCanonicalClass.OV,
-  0x0337: UnicodeCanonicalClass.OV,
-  0x0338: UnicodeCanonicalClass.OV,
-  0x0339: UnicodeCanonicalClass.B,
-  0x033A: UnicodeCanonicalClass.B,
-  0x033B: UnicodeCanonicalClass.B,
-  0x033C: UnicodeCanonicalClass.B,
-  0x033D: UnicodeCanonicalClass.A,
-  0x033E: UnicodeCanonicalClass.A,
-  0x033F: UnicodeCanonicalClass.A,
-  0x0340: UnicodeCanonicalClass.A,
-  0x0341: UnicodeCanonicalClass.A,
-  0x0342: UnicodeCanonicalClass.A,
-  0x0343: UnicodeCanonicalClass.A,
-  0x0344: UnicodeCanonicalClass.A,
-  0x0345: UnicodeCanonicalClass.IS,
-  0x0346: UnicodeCanonicalClass.A,
-  0x0347: UnicodeCanonicalClass.B,
-  0x0348: UnicodeCanonicalClass.B,
-  0x0349: UnicodeCanonicalClass.B,
-  0x034A: UnicodeCanonicalClass.A,
-  0x034B: UnicodeCanonicalClass.A,
-  0x034C: UnicodeCanonicalClass.A,
-  0x034D: UnicodeCanonicalClass.B,
-  0x034E: UnicodeCanonicalClass.B,
-  0x0350: UnicodeCanonicalClass.A,
-  0x0351: UnicodeCanonicalClass.A,
-  0x0352: UnicodeCanonicalClass.A,
-  0x0353: UnicodeCanonicalClass.B,
-  0x0354: UnicodeCanonicalClass.B,
-  0x0355: UnicodeCanonicalClass.B,
-  0x0356: UnicodeCanonicalClass.B,
-  0x0357: UnicodeCanonicalClass.A,
-  0x0358: UnicodeCanonicalClass.AR,
-  0x0359: UnicodeCanonicalClass.B,
-  0x035A: UnicodeCanonicalClass.B,
-  0x035B: UnicodeCanonicalClass.A,
-  0x035C: UnicodeCanonicalClass.DB,
-  0x035D: UnicodeCanonicalClass.DA,
-  0x035E: UnicodeCanonicalClass.DA,
-  0x035F: UnicodeCanonicalClass.DB,
-  0x0360: UnicodeCanonicalClass.DA,
-  0x0361: UnicodeCanonicalClass.DA,
-  0x0362: UnicodeCanonicalClass.DB,
-  0x0363: UnicodeCanonicalClass.A,
-  0x0364: UnicodeCanonicalClass.A,
-  0x0365: UnicodeCanonicalClass.A,
-  0x0366: UnicodeCanonicalClass.A,
-  0x0367: UnicodeCanonicalClass.A,
-  0x0368: UnicodeCanonicalClass.A,
-  0x0369: UnicodeCanonicalClass.A,
-  0x036A: UnicodeCanonicalClass.A,
-  0x036B: UnicodeCanonicalClass.A,
-  0x036C: UnicodeCanonicalClass.A,
-  0x036D: UnicodeCanonicalClass.A,
-  0x036E: UnicodeCanonicalClass.A,
-  0x036F: UnicodeCanonicalClass.A,
-  0x0483: UnicodeCanonicalClass.A,
-  0x0484: UnicodeCanonicalClass.A,
-  0x0485: UnicodeCanonicalClass.A,
-  0x0486: UnicodeCanonicalClass.A,
-  0x0487: UnicodeCanonicalClass.A,
-  0x0591: UnicodeCanonicalClass.B,
-  0x0592: UnicodeCanonicalClass.A,
-  0x0593: UnicodeCanonicalClass.A,
-  0x0594: UnicodeCanonicalClass.A,
-  0x0595: UnicodeCanonicalClass.A,
-  0x0596: UnicodeCanonicalClass.B,
-  0x0597: UnicodeCanonicalClass.A,
-  0x0598: UnicodeCanonicalClass.A,
-  0x0599: UnicodeCanonicalClass.A,
-  0x059A: UnicodeCanonicalClass.BR,
-  0x059B: UnicodeCanonicalClass.B,
-  0x059C: UnicodeCanonicalClass.A,
-  0x059D: UnicodeCanonicalClass.A,
-  0x059E: UnicodeCanonicalClass.A,
-  0x059F: UnicodeCanonicalClass.A,
-  0x05A0: UnicodeCanonicalClass.A,
-  0x05A1: UnicodeCanonicalClass.A,
-  0x05A2: UnicodeCanonicalClass.B,
-  0x05A3: UnicodeCanonicalClass.B,
-  0x05A4: UnicodeCanonicalClass.B,
-  0x05A5: UnicodeCanonicalClass.B,
-  0x05A6: UnicodeCanonicalClass.B,
-  0x05A7: UnicodeCanonicalClass.B,
-  0x05A8: UnicodeCanonicalClass.A,
-  0x05A9: UnicodeCanonicalClass.A,
-  0x05AA: UnicodeCanonicalClass.B,
-  0x05AB: UnicodeCanonicalClass.A,
-  0x05AC: UnicodeCanonicalClass.A,
-  0x05AD: UnicodeCanonicalClass.BR,
-  0x05AE: UnicodeCanonicalClass.AL,
-  0x05AF: UnicodeCanonicalClass.A,
-  0x05B0: UnicodeCanonicalClass.CLASS_10,
-  0x05B1: UnicodeCanonicalClass.CLASS_11,
-  0x05B2: UnicodeCanonicalClass.CLASS_12,
-  0x05B3: UnicodeCanonicalClass.CLASS_13,
-  0x05B4: UnicodeCanonicalClass.CLASS_14,
-  0x05B5: UnicodeCanonicalClass.CLASS_15,
-  0x05B6: UnicodeCanonicalClass.CLASS_16,
-  0x05B7: UnicodeCanonicalClass.CLASS_17,
-  0x05B8: UnicodeCanonicalClass.CLASS_18,
-  0x05B9: UnicodeCanonicalClass.CLASS_19,
-  0x05BA: UnicodeCanonicalClass.CLASS_19,
-  0x05BB: UnicodeCanonicalClass.CLASS_20,
-  0x05BC: UnicodeCanonicalClass.CLASS_21,
-  0x05BD: UnicodeCanonicalClass.CLASS_22,
-  0x05BF: UnicodeCanonicalClass.CLASS_23,
-  0x05C1: UnicodeCanonicalClass.CLASS_24,
-  0x05C2: UnicodeCanonicalClass.CLASS_25,
-  0x05C4: UnicodeCanonicalClass.A,
-  0x05C5: UnicodeCanonicalClass.B,
-  0x05C7: UnicodeCanonicalClass.CLASS_18,
-  0x0610: UnicodeCanonicalClass.A,
-  0x0611: UnicodeCanonicalClass.A,
-  0x0612: UnicodeCanonicalClass.A,
-  0x0613: UnicodeCanonicalClass.A,
-  0x0614: UnicodeCanonicalClass.A,
-  0x0615: UnicodeCanonicalClass.A,
-  0x0616: UnicodeCanonicalClass.A,
-  0x0617: UnicodeCanonicalClass.A,
-  0x0618: UnicodeCanonicalClass.CLASS_30,
-  0x0619: UnicodeCanonicalClass.CLASS_31,
-  0x061A: UnicodeCanonicalClass.CLASS_32,
-  0x064B: UnicodeCanonicalClass.CLASS_27,
-  0x064C: UnicodeCanonicalClass.CLASS_28,
-  0x064D: UnicodeCanonicalClass.CLASS_29,
-  0x064E: UnicodeCanonicalClass.CLASS_30,
-  0x064F: UnicodeCanonicalClass.CLASS_31,
-  0x0650: UnicodeCanonicalClass.CLASS_32,
-  0x0651: UnicodeCanonicalClass.CLASS_33,
-  0x0652: UnicodeCanonicalClass.CLASS_34,
-  0x0653: UnicodeCanonicalClass.A,
-  0x0654: UnicodeCanonicalClass.A,
-  0x0655: UnicodeCanonicalClass.B,
-  0x0656: UnicodeCanonicalClass.B,
-  0x0657: UnicodeCanonicalClass.A,
-  0x0658: UnicodeCanonicalClass.A,
-  0x0659: UnicodeCanonicalClass.A,
-  0x065A: UnicodeCanonicalClass.A,
-  0x065B: UnicodeCanonicalClass.A,
-  0x065C: UnicodeCanonicalClass.B,
-  0x065D: UnicodeCanonicalClass.A,
-  0x065E: UnicodeCanonicalClass.A,
-  0x065F: UnicodeCanonicalClass.B,
-  0x0670: UnicodeCanonicalClass.CLASS_35,
-  0x06D6: UnicodeCanonicalClass.A,
-  0x06D7: UnicodeCanonicalClass.A,
-  0x06D8: UnicodeCanonicalClass.A,
-  0x06D9: UnicodeCanonicalClass.A,
-  0x06DA: UnicodeCanonicalClass.A,
-  0x06DB: UnicodeCanonicalClass.A,
-  0x06DC: UnicodeCanonicalClass.A,
-  0x06DF: UnicodeCanonicalClass.A,
-  0x06E0: UnicodeCanonicalClass.A,
-  0x06E1: UnicodeCanonicalClass.A,
-  0x06E2: UnicodeCanonicalClass.A,
-  0x06E3: UnicodeCanonicalClass.B,
-  0x06E4: UnicodeCanonicalClass.A,
-  0x06E7: UnicodeCanonicalClass.A,
-  0x06E8: UnicodeCanonicalClass.A,
-  0x06EA: UnicodeCanonicalClass.B,
-  0x06EB: UnicodeCanonicalClass.A,
-  0x06EC: UnicodeCanonicalClass.A,
-  0x06ED: UnicodeCanonicalClass.B,
-  0x0711: UnicodeCanonicalClass.CLASS_36,
-  0x0730: UnicodeCanonicalClass.A,
-  0x0731: UnicodeCanonicalClass.B,
-  0x0732: UnicodeCanonicalClass.A,
-  0x0733: UnicodeCanonicalClass.A,
-  0x0734: UnicodeCanonicalClass.B,
-  0x0735: UnicodeCanonicalClass.A,
-  0x0736: UnicodeCanonicalClass.A,
-  0x0737: UnicodeCanonicalClass.B,
-  0x0738: UnicodeCanonicalClass.B,
-  0x0739: UnicodeCanonicalClass.B,
-  0x073A: UnicodeCanonicalClass.A,
-  0x073B: UnicodeCanonicalClass.B,
-  0x073C: UnicodeCanonicalClass.B,
-  0x073D: UnicodeCanonicalClass.A,
-  0x073E: UnicodeCanonicalClass.B,
-  0x073F: UnicodeCanonicalClass.A,
-  0x0740: UnicodeCanonicalClass.A,
-  0x0741: UnicodeCanonicalClass.A,
-  0x0742: UnicodeCanonicalClass.B,
-  0x0743: UnicodeCanonicalClass.A,
-  0x0744: UnicodeCanonicalClass.B,
-  0x0745: UnicodeCanonicalClass.A,
-  0x0746: UnicodeCanonicalClass.B,
-  0x0747: UnicodeCanonicalClass.A,
-  0x0748: UnicodeCanonicalClass.B,
-  0x0749: UnicodeCanonicalClass.A,
-  0x074A: UnicodeCanonicalClass.A,
-  0x07EB: UnicodeCanonicalClass.A,
-  0x07EC: UnicodeCanonicalClass.A,
-  0x07ED: UnicodeCanonicalClass.A,
-  0x07EE: UnicodeCanonicalClass.A,
-  0x07EF: UnicodeCanonicalClass.A,
-  0x07F0: UnicodeCanonicalClass.A,
-  0x07F1: UnicodeCanonicalClass.A,
-  0x07F2: UnicodeCanonicalClass.B,
-  0x07F3: UnicodeCanonicalClass.A,
-  0x0816: UnicodeCanonicalClass.A,
-  0x0817: UnicodeCanonicalClass.A,
-  0x0818: UnicodeCanonicalClass.A,
-  0x0819: UnicodeCanonicalClass.A,
-  0x081B: UnicodeCanonicalClass.A,
-  0x081C: UnicodeCanonicalClass.A,
-  0x081D: UnicodeCanonicalClass.A,
-  0x081E: UnicodeCanonicalClass.A,
-  0x081F: UnicodeCanonicalClass.A,
-  0x0820: UnicodeCanonicalClass.A,
-  0x0821: UnicodeCanonicalClass.A,
-  0x0822: UnicodeCanonicalClass.A,
-  0x0823: UnicodeCanonicalClass.A,
-  0x0825: UnicodeCanonicalClass.A,
-  0x0826: UnicodeCanonicalClass.A,
-  0x0827: UnicodeCanonicalClass.A,
-  0x0829: UnicodeCanonicalClass.A,
-  0x082A: UnicodeCanonicalClass.A,
-  0x082B: UnicodeCanonicalClass.A,
-  0x082C: UnicodeCanonicalClass.A,
-  0x082D: UnicodeCanonicalClass.A,
-  0x0859: UnicodeCanonicalClass.B,
-  0x085A: UnicodeCanonicalClass.B,
-  0x085B: UnicodeCanonicalClass.B,
-  0x08E4: UnicodeCanonicalClass.A,
-  0x08E5: UnicodeCanonicalClass.A,
-  0x08E6: UnicodeCanonicalClass.B,
-  0x08E7: UnicodeCanonicalClass.A,
-  0x08E8: UnicodeCanonicalClass.A,
-  0x08E9: UnicodeCanonicalClass.B,
-  0x08EA: UnicodeCanonicalClass.A,
-  0x08EB: UnicodeCanonicalClass.A,
-  0x08EC: UnicodeCanonicalClass.A,
-  0x08ED: UnicodeCanonicalClass.B,
-  0x08EE: UnicodeCanonicalClass.B,
-  0x08EF: UnicodeCanonicalClass.B,
-  0x08F0: UnicodeCanonicalClass.CLASS_27,
-  0x08F1: UnicodeCanonicalClass.CLASS_28,
-  0x08F2: UnicodeCanonicalClass.CLASS_29,
-  0x08F3: UnicodeCanonicalClass.A,
-  0x08F4: UnicodeCanonicalClass.A,
-  0x08F5: UnicodeCanonicalClass.A,
-  0x08F6: UnicodeCanonicalClass.B,
-  0x08F7: UnicodeCanonicalClass.A,
-  0x08F8: UnicodeCanonicalClass.A,
-  0x08F9: UnicodeCanonicalClass.B,
-  0x08FA: UnicodeCanonicalClass.B,
-  0x08FB: UnicodeCanonicalClass.A,
-  0x08FC: UnicodeCanonicalClass.A,
-  0x08FD: UnicodeCanonicalClass.A,
-  0x08FE: UnicodeCanonicalClass.A,
-  0x08FF: UnicodeCanonicalClass.A,
-  0x093C: UnicodeCanonicalClass.NK,
-  0x094D: UnicodeCanonicalClass.VR,
-  0x0951: UnicodeCanonicalClass.A,
-  0x0952: UnicodeCanonicalClass.B,
-  0x0953: UnicodeCanonicalClass.A,
-  0x0954: UnicodeCanonicalClass.A,
-  0x09BC: UnicodeCanonicalClass.NK,
-  0x09CD: UnicodeCanonicalClass.VR,
-  0x0A3C: UnicodeCanonicalClass.NK,
-  0x0A4D: UnicodeCanonicalClass.VR,
-  0x0ABC: UnicodeCanonicalClass.NK,
-  0x0ACD: UnicodeCanonicalClass.VR,
-  0x0B3C: UnicodeCanonicalClass.NK,
-  0x0B4D: UnicodeCanonicalClass.VR,
-  0x0BCD: UnicodeCanonicalClass.VR,
-  0x0C4D: UnicodeCanonicalClass.VR,
-  0x0C55: UnicodeCanonicalClass.CLASS_84,
-  0x0C56: UnicodeCanonicalClass.CLASS_91,
-  0x0CBC: UnicodeCanonicalClass.NK,
-  0x0CCD: UnicodeCanonicalClass.VR,
-  0x0D4D: UnicodeCanonicalClass.VR,
-  0x0DCA: UnicodeCanonicalClass.VR,
-  0x0E38: UnicodeCanonicalClass.CLASS_103,
-  0x0E39: UnicodeCanonicalClass.CLASS_103,
-  0x0E3A: UnicodeCanonicalClass.VR,
-  0x0E48: UnicodeCanonicalClass.CLASS_107,
-  0x0E49: UnicodeCanonicalClass.CLASS_107,
-  0x0E4A: UnicodeCanonicalClass.CLASS_107,
-  0x0E4B: UnicodeCanonicalClass.CLASS_107,
-  0x0EB8: UnicodeCanonicalClass.CLASS_118,
-  0x0EB9: UnicodeCanonicalClass.CLASS_118,
-  0x0EC8: UnicodeCanonicalClass.CLASS_162,
-  0x0EC9: UnicodeCanonicalClass.CLASS_162,
-  0x0ECA: UnicodeCanonicalClass.CLASS_162,
-  0x0ECB: UnicodeCanonicalClass.CLASS_162,
-  0x0F18: UnicodeCanonicalClass.B,
-  0x0F19: UnicodeCanonicalClass.B,
-  0x0F35: UnicodeCanonicalClass.B,
-  0x0F37: UnicodeCanonicalClass.B,
-  0x0F39: UnicodeCanonicalClass.ATAR,
-  0x0F71: UnicodeCanonicalClass.CLASS_129,
-  0x0F72: UnicodeCanonicalClass.CLASS_130,
-  0x0F74: UnicodeCanonicalClass.CLASS_132,
-  0x0F7A: UnicodeCanonicalClass.CLASS_130,
-  0x0F7B: UnicodeCanonicalClass.CLASS_130,
-  0x0F7C: UnicodeCanonicalClass.CLASS_130,
-  0x0F7D: UnicodeCanonicalClass.CLASS_130,
-  0x0F80: UnicodeCanonicalClass.CLASS_130,
-  0x0F82: UnicodeCanonicalClass.A,
-  0x0F83: UnicodeCanonicalClass.A,
-  0x0F84: UnicodeCanonicalClass.VR,
-  0x0F86: UnicodeCanonicalClass.A,
-  0x0F87: UnicodeCanonicalClass.A,
-  0x0FC6: UnicodeCanonicalClass.B,
-  0x1037: UnicodeCanonicalClass.NK,
-  0x1039: UnicodeCanonicalClass.VR,
-  0x103A: UnicodeCanonicalClass.VR,
-  0x108D: UnicodeCanonicalClass.B,
-  0x135D: UnicodeCanonicalClass.A,
-  0x135E: UnicodeCanonicalClass.A,
-  0x135F: UnicodeCanonicalClass.A,
-  0x1714: UnicodeCanonicalClass.VR,
-  0x1734: UnicodeCanonicalClass.VR,
-  0x17D2: UnicodeCanonicalClass.VR,
-  0x17DD: UnicodeCanonicalClass.A,
-  0x18A9: UnicodeCanonicalClass.AL,
-  0x1939: UnicodeCanonicalClass.BR,
-  0x193A: UnicodeCanonicalClass.A,
-  0x193B: UnicodeCanonicalClass.B,
-  0x1A17: UnicodeCanonicalClass.A,
-  0x1A18: UnicodeCanonicalClass.B,
-  0x1A60: UnicodeCanonicalClass.VR,
-  0x1A75: UnicodeCanonicalClass.A,
-  0x1A76: UnicodeCanonicalClass.A,
-  0x1A77: UnicodeCanonicalClass.A,
-  0x1A78: UnicodeCanonicalClass.A,
-  0x1A79: UnicodeCanonicalClass.A,
-  0x1A7A: UnicodeCanonicalClass.A,
-  0x1A7B: UnicodeCanonicalClass.A,
-  0x1A7C: UnicodeCanonicalClass.A,
-  0x1A7F: UnicodeCanonicalClass.B,
-  0x1AB0: UnicodeCanonicalClass.A,
-  0x1AB1: UnicodeCanonicalClass.A,
-  0x1AB2: UnicodeCanonicalClass.A,
-  0x1AB3: UnicodeCanonicalClass.A,
-  0x1AB4: UnicodeCanonicalClass.A,
-  0x1AB5: UnicodeCanonicalClass.B,
-  0x1AB6: UnicodeCanonicalClass.B,
-  0x1AB7: UnicodeCanonicalClass.B,
-  0x1AB8: UnicodeCanonicalClass.B,
-  0x1AB9: UnicodeCanonicalClass.B,
-  0x1ABA: UnicodeCanonicalClass.B,
-  0x1ABB: UnicodeCanonicalClass.A,
-  0x1ABC: UnicodeCanonicalClass.A,
-  0x1ABD: UnicodeCanonicalClass.B,
-  0x1B34: UnicodeCanonicalClass.NK,
-  0x1B44: UnicodeCanonicalClass.VR,
-  0x1B6B: UnicodeCanonicalClass.A,
-  0x1B6C: UnicodeCanonicalClass.B,
-  0x1B6D: UnicodeCanonicalClass.A,
-  0x1B6E: UnicodeCanonicalClass.A,
-  0x1B6F: UnicodeCanonicalClass.A,
-  0x1B70: UnicodeCanonicalClass.A,
-  0x1B71: UnicodeCanonicalClass.A,
-  0x1B72: UnicodeCanonicalClass.A,
-  0x1B73: UnicodeCanonicalClass.A,
-  0x1BAA: UnicodeCanonicalClass.VR,
-  0x1BAB: UnicodeCanonicalClass.VR,
-  0x1BE6: UnicodeCanonicalClass.NK,
-  0x1BF2: UnicodeCanonicalClass.VR,
-  0x1BF3: UnicodeCanonicalClass.VR,
-  0x1C37: UnicodeCanonicalClass.NK,
-  0x1CD0: UnicodeCanonicalClass.A,
-  0x1CD1: UnicodeCanonicalClass.A,
-  0x1CD2: UnicodeCanonicalClass.A,
-  0x1CD4: UnicodeCanonicalClass.OV,
-  0x1CD5: UnicodeCanonicalClass.B,
-  0x1CD6: UnicodeCanonicalClass.B,
-  0x1CD7: UnicodeCanonicalClass.B,
-  0x1CD8: UnicodeCanonicalClass.B,
-  0x1CD9: UnicodeCanonicalClass.B,
-  0x1CDA: UnicodeCanonicalClass.A,
-  0x1CDB: UnicodeCanonicalClass.A,
-  0x1CDC: UnicodeCanonicalClass.B,
-  0x1CDD: UnicodeCanonicalClass.B,
-  0x1CDE: UnicodeCanonicalClass.B,
-  0x1CDF: UnicodeCanonicalClass.B,
-  0x1CE0: UnicodeCanonicalClass.A,
-  0x1CE2: UnicodeCanonicalClass.OV,
-  0x1CE3: UnicodeCanonicalClass.OV,
-  0x1CE4: UnicodeCanonicalClass.OV,
-  0x1CE5: UnicodeCanonicalClass.OV,
-  0x1CE6: UnicodeCanonicalClass.OV,
-  0x1CE7: UnicodeCanonicalClass.OV,
-  0x1CE8: UnicodeCanonicalClass.OV,
-  0x1CED: UnicodeCanonicalClass.B,
-  0x1CF4: UnicodeCanonicalClass.A,
-  0x1CF8: UnicodeCanonicalClass.A,
-  0x1CF9: UnicodeCanonicalClass.A,
-  0x1DC0: UnicodeCanonicalClass.A,
-  0x1DC1: UnicodeCanonicalClass.A,
-  0x1DC2: UnicodeCanonicalClass.B,
-  0x1DC3: UnicodeCanonicalClass.A,
-  0x1DC4: UnicodeCanonicalClass.A,
-  0x1DC5: UnicodeCanonicalClass.A,
-  0x1DC6: UnicodeCanonicalClass.A,
-  0x1DC7: UnicodeCanonicalClass.A,
-  0x1DC8: UnicodeCanonicalClass.A,
-  0x1DC9: UnicodeCanonicalClass.A,
-  0x1DCA: UnicodeCanonicalClass.B,
-  0x1DCB: UnicodeCanonicalClass.A,
-  0x1DCC: UnicodeCanonicalClass.A,
-  0x1DCD: UnicodeCanonicalClass.DA,
-  0x1DCE: UnicodeCanonicalClass.ATA,
-  0x1DCF: UnicodeCanonicalClass.B,
-  0x1DD0: UnicodeCanonicalClass.ATB,
-  0x1DD1: UnicodeCanonicalClass.A,
-  0x1DD2: UnicodeCanonicalClass.A,
-  0x1DD3: UnicodeCanonicalClass.A,
-  0x1DD4: UnicodeCanonicalClass.A,
-  0x1DD5: UnicodeCanonicalClass.A,
-  0x1DD6: UnicodeCanonicalClass.A,
-  0x1DD7: UnicodeCanonicalClass.A,
-  0x1DD8: UnicodeCanonicalClass.A,
-  0x1DD9: UnicodeCanonicalClass.A,
-  0x1DDA: UnicodeCanonicalClass.A,
-  0x1DDB: UnicodeCanonicalClass.A,
-  0x1DDC: UnicodeCanonicalClass.A,
-  0x1DDD: UnicodeCanonicalClass.A,
-  0x1DDE: UnicodeCanonicalClass.A,
-  0x1DDF: UnicodeCanonicalClass.A,
-  0x1DE0: UnicodeCanonicalClass.A,
-  0x1DE1: UnicodeCanonicalClass.A,
-  0x1DE2: UnicodeCanonicalClass.A,
-  0x1DE3: UnicodeCanonicalClass.A,
-  0x1DE4: UnicodeCanonicalClass.A,
-  0x1DE5: UnicodeCanonicalClass.A,
-  0x1DE6: UnicodeCanonicalClass.A,
-  0x1DE7: UnicodeCanonicalClass.A,
-  0x1DE8: UnicodeCanonicalClass.A,
-  0x1DE9: UnicodeCanonicalClass.A,
-  0x1DEA: UnicodeCanonicalClass.A,
-  0x1DEB: UnicodeCanonicalClass.A,
-  0x1DEC: UnicodeCanonicalClass.A,
-  0x1DED: UnicodeCanonicalClass.A,
-  0x1DEE: UnicodeCanonicalClass.A,
-  0x1DEF: UnicodeCanonicalClass.A,
-  0x1DF0: UnicodeCanonicalClass.A,
-  0x1DF1: UnicodeCanonicalClass.A,
-  0x1DF2: UnicodeCanonicalClass.A,
-  0x1DF3: UnicodeCanonicalClass.A,
-  0x1DF4: UnicodeCanonicalClass.A,
-  0x1DF5: UnicodeCanonicalClass.A,
-  0x1DFC: UnicodeCanonicalClass.DB,
-  0x1DFD: UnicodeCanonicalClass.B,
-  0x1DFE: UnicodeCanonicalClass.A,
-  0x1DFF: UnicodeCanonicalClass.B,
-  0x20D0: UnicodeCanonicalClass.A,
-  0x20D1: UnicodeCanonicalClass.A,
-  0x20D2: UnicodeCanonicalClass.OV,
-  0x20D3: UnicodeCanonicalClass.OV,
-  0x20D4: UnicodeCanonicalClass.A,
-  0x20D5: UnicodeCanonicalClass.A,
-  0x20D6: UnicodeCanonicalClass.A,
-  0x20D7: UnicodeCanonicalClass.A,
-  0x20D8: UnicodeCanonicalClass.OV,
-  0x20D9: UnicodeCanonicalClass.OV,
-  0x20DA: UnicodeCanonicalClass.OV,
-  0x20DB: UnicodeCanonicalClass.A,
-  0x20DC: UnicodeCanonicalClass.A,
-  0x20E1: UnicodeCanonicalClass.A,
-  0x20E5: UnicodeCanonicalClass.OV,
-  0x20E6: UnicodeCanonicalClass.OV,
-  0x20E7: UnicodeCanonicalClass.A,
-  0x20E8: UnicodeCanonicalClass.B,
-  0x20E9: UnicodeCanonicalClass.A,
-  0x20EA: UnicodeCanonicalClass.OV,
-  0x20EB: UnicodeCanonicalClass.OV,
-  0x20EC: UnicodeCanonicalClass.B,
-  0x20ED: UnicodeCanonicalClass.B,
-  0x20EE: UnicodeCanonicalClass.B,
-  0x20EF: UnicodeCanonicalClass.B,
-  0x20F0: UnicodeCanonicalClass.A,
-  0x2CEF: UnicodeCanonicalClass.A,
-  0x2CF0: UnicodeCanonicalClass.A,
-  0x2CF1: UnicodeCanonicalClass.A,
-  0x2D7F: UnicodeCanonicalClass.VR,
-  0x2DE0: UnicodeCanonicalClass.A,
-  0x2DE1: UnicodeCanonicalClass.A,
-  0x2DE2: UnicodeCanonicalClass.A,
-  0x2DE3: UnicodeCanonicalClass.A,
-  0x2DE4: UnicodeCanonicalClass.A,
-  0x2DE5: UnicodeCanonicalClass.A,
-  0x2DE6: UnicodeCanonicalClass.A,
-  0x2DE7: UnicodeCanonicalClass.A,
-  0x2DE8: UnicodeCanonicalClass.A,
-  0x2DE9: UnicodeCanonicalClass.A,
-  0x2DEA: UnicodeCanonicalClass.A,
-  0x2DEB: UnicodeCanonicalClass.A,
-  0x2DEC: UnicodeCanonicalClass.A,
-  0x2DED: UnicodeCanonicalClass.A,
-  0x2DEE: UnicodeCanonicalClass.A,
-  0x2DEF: UnicodeCanonicalClass.A,
-  0x2DF0: UnicodeCanonicalClass.A,
-  0x2DF1: UnicodeCanonicalClass.A,
-  0x2DF2: UnicodeCanonicalClass.A,
-  0x2DF3: UnicodeCanonicalClass.A,
-  0x2DF4: UnicodeCanonicalClass.A,
-  0x2DF5: UnicodeCanonicalClass.A,
-  0x2DF6: UnicodeCanonicalClass.A,
-  0x2DF7: UnicodeCanonicalClass.A,
-  0x2DF8: UnicodeCanonicalClass.A,
-  0x2DF9: UnicodeCanonicalClass.A,
-  0x2DFA: UnicodeCanonicalClass.A,
-  0x2DFB: UnicodeCanonicalClass.A,
-  0x2DFC: UnicodeCanonicalClass.A,
-  0x2DFD: UnicodeCanonicalClass.A,
-  0x2DFE: UnicodeCanonicalClass.A,
-  0x2DFF: UnicodeCanonicalClass.A,
-  0x302A: UnicodeCanonicalClass.BL,
-  0x302B: UnicodeCanonicalClass.AL,
-  0x302C: UnicodeCanonicalClass.AR,
-  0x302D: UnicodeCanonicalClass.BR,
-  0x302E: UnicodeCanonicalClass.L,
-  0x302F: UnicodeCanonicalClass.L,
-  0x3099: UnicodeCanonicalClass.KV,
-  0x309A: UnicodeCanonicalClass.KV,
-  0xA66F: UnicodeCanonicalClass.A,
-  0xA674: UnicodeCanonicalClass.A,
-  0xA675: UnicodeCanonicalClass.A,
-  0xA676: UnicodeCanonicalClass.A,
-  0xA677: UnicodeCanonicalClass.A,
-  0xA678: UnicodeCanonicalClass.A,
-  0xA679: UnicodeCanonicalClass.A,
-  0xA67A: UnicodeCanonicalClass.A,
-  0xA67B: UnicodeCanonicalClass.A,
-  0xA67C: UnicodeCanonicalClass.A,
-  0xA67D: UnicodeCanonicalClass.A,
-  0xA69F: UnicodeCanonicalClass.A,
-  0xA6F0: UnicodeCanonicalClass.A,
-  0xA6F1: UnicodeCanonicalClass.A,
-  0xA806: UnicodeCanonicalClass.VR,
-  0xA8C4: UnicodeCanonicalClass.VR,
-  0xA8E0: UnicodeCanonicalClass.A,
-  0xA8E1: UnicodeCanonicalClass.A,
-  0xA8E2: UnicodeCanonicalClass.A,
-  0xA8E3: UnicodeCanonicalClass.A,
-  0xA8E4: UnicodeCanonicalClass.A,
-  0xA8E5: UnicodeCanonicalClass.A,
-  0xA8E6: UnicodeCanonicalClass.A,
-  0xA8E7: UnicodeCanonicalClass.A,
-  0xA8E8: UnicodeCanonicalClass.A,
-  0xA8E9: UnicodeCanonicalClass.A,
-  0xA8EA: UnicodeCanonicalClass.A,
-  0xA8EB: UnicodeCanonicalClass.A,
-  0xA8EC: UnicodeCanonicalClass.A,
-  0xA8ED: UnicodeCanonicalClass.A,
-  0xA8EE: UnicodeCanonicalClass.A,
-  0xA8EF: UnicodeCanonicalClass.A,
-  0xA8F0: UnicodeCanonicalClass.A,
-  0xA8F1: UnicodeCanonicalClass.A,
-  0xA92B: UnicodeCanonicalClass.B,
-  0xA92C: UnicodeCanonicalClass.B,
-  0xA92D: UnicodeCanonicalClass.B,
-  0xA953: UnicodeCanonicalClass.VR,
-  0xA9B3: UnicodeCanonicalClass.NK,
-  0xA9C0: UnicodeCanonicalClass.VR,
-  0xAAB0: UnicodeCanonicalClass.A,
-  0xAAB2: UnicodeCanonicalClass.A,
-  0xAAB3: UnicodeCanonicalClass.A,
-  0xAAB4: UnicodeCanonicalClass.B,
-  0xAAB7: UnicodeCanonicalClass.A,
-  0xAAB8: UnicodeCanonicalClass.A,
-  0xAABE: UnicodeCanonicalClass.A,
-  0xAABF: UnicodeCanonicalClass.A,
-  0xAAC1: UnicodeCanonicalClass.A,
-  0xAAF6: UnicodeCanonicalClass.VR,
-  0xABED: UnicodeCanonicalClass.VR,
-  0xFB1E: UnicodeCanonicalClass.CLASS_26,
-  0xFE20: UnicodeCanonicalClass.A,
-  0xFE21: UnicodeCanonicalClass.A,
-  0xFE22: UnicodeCanonicalClass.A,
-  0xFE23: UnicodeCanonicalClass.A,
-  0xFE24: UnicodeCanonicalClass.A,
-  0xFE25: UnicodeCanonicalClass.A,
-  0xFE26: UnicodeCanonicalClass.A,
-  0xFE27: UnicodeCanonicalClass.B,
-  0xFE28: UnicodeCanonicalClass.B,
-  0xFE29: UnicodeCanonicalClass.B,
-  0xFE2A: UnicodeCanonicalClass.B,
-  0xFE2B: UnicodeCanonicalClass.B,
-  0xFE2C: UnicodeCanonicalClass.B,
-  0xFE2D: UnicodeCanonicalClass.B,
+List<_BidiCharacterType> _bidiCharType =
+    List<_BidiCharacterType>.filled(0xffff, _BidiCharacterType.ON);
+Map<int, _UnicodeGeneralCategory> _categories = {};
+Map<int, _UnicodeDecompositionType> _decomType = {};
+const Map<int, _UnicodeCanonicalClass> _canonClass = {
+  0300: _UnicodeCanonicalClass.A,
+  0x0300: _UnicodeCanonicalClass.A,
+  0x0301: _UnicodeCanonicalClass.A,
+  0x0302: _UnicodeCanonicalClass.A,
+  0x0303: _UnicodeCanonicalClass.A,
+  0x0304: _UnicodeCanonicalClass.A,
+  0x0305: _UnicodeCanonicalClass.A,
+  0x0306: _UnicodeCanonicalClass.A,
+  0x0307: _UnicodeCanonicalClass.A,
+  0x0308: _UnicodeCanonicalClass.A,
+  0x0309: _UnicodeCanonicalClass.A,
+  0x030A: _UnicodeCanonicalClass.A,
+  0x030B: _UnicodeCanonicalClass.A,
+  0x030C: _UnicodeCanonicalClass.A,
+  0x030D: _UnicodeCanonicalClass.A,
+  0x030E: _UnicodeCanonicalClass.A,
+  0x030F: _UnicodeCanonicalClass.A,
+  0x0310: _UnicodeCanonicalClass.A,
+  0x0311: _UnicodeCanonicalClass.A,
+  0x0312: _UnicodeCanonicalClass.A,
+  0x0313: _UnicodeCanonicalClass.A,
+  0x0314: _UnicodeCanonicalClass.A,
+  0x0315: _UnicodeCanonicalClass.AR,
+  0x0316: _UnicodeCanonicalClass.B,
+  0x0317: _UnicodeCanonicalClass.B,
+  0x0318: _UnicodeCanonicalClass.B,
+  0x0319: _UnicodeCanonicalClass.B,
+  0x031A: _UnicodeCanonicalClass.AR,
+  0x031B: _UnicodeCanonicalClass.ATAR,
+  0x031C: _UnicodeCanonicalClass.B,
+  0x031D: _UnicodeCanonicalClass.B,
+  0x031E: _UnicodeCanonicalClass.B,
+  0x031F: _UnicodeCanonicalClass.B,
+  0x0320: _UnicodeCanonicalClass.B,
+  0x0321: _UnicodeCanonicalClass.ATB,
+  0x0322: _UnicodeCanonicalClass.ATB,
+  0x0323: _UnicodeCanonicalClass.B,
+  0x0324: _UnicodeCanonicalClass.B,
+  0x0325: _UnicodeCanonicalClass.B,
+  0x0326: _UnicodeCanonicalClass.B,
+  0x0327: _UnicodeCanonicalClass.ATB,
+  0x0328: _UnicodeCanonicalClass.ATB,
+  0x0329: _UnicodeCanonicalClass.B,
+  0x032A: _UnicodeCanonicalClass.B,
+  0x032B: _UnicodeCanonicalClass.B,
+  0x032C: _UnicodeCanonicalClass.B,
+  0x032D: _UnicodeCanonicalClass.B,
+  0x032E: _UnicodeCanonicalClass.B,
+  0x032F: _UnicodeCanonicalClass.B,
+  0x0330: _UnicodeCanonicalClass.B,
+  0x0331: _UnicodeCanonicalClass.B,
+  0x0332: _UnicodeCanonicalClass.B,
+  0x0333: _UnicodeCanonicalClass.B,
+  0x0334: _UnicodeCanonicalClass.OV,
+  0x0335: _UnicodeCanonicalClass.OV,
+  0x0336: _UnicodeCanonicalClass.OV,
+  0x0337: _UnicodeCanonicalClass.OV,
+  0x0338: _UnicodeCanonicalClass.OV,
+  0x0339: _UnicodeCanonicalClass.B,
+  0x033A: _UnicodeCanonicalClass.B,
+  0x033B: _UnicodeCanonicalClass.B,
+  0x033C: _UnicodeCanonicalClass.B,
+  0x033D: _UnicodeCanonicalClass.A,
+  0x033E: _UnicodeCanonicalClass.A,
+  0x033F: _UnicodeCanonicalClass.A,
+  0x0340: _UnicodeCanonicalClass.A,
+  0x0341: _UnicodeCanonicalClass.A,
+  0x0342: _UnicodeCanonicalClass.A,
+  0x0343: _UnicodeCanonicalClass.A,
+  0x0344: _UnicodeCanonicalClass.A,
+  0x0345: _UnicodeCanonicalClass.IS,
+  0x0346: _UnicodeCanonicalClass.A,
+  0x0347: _UnicodeCanonicalClass.B,
+  0x0348: _UnicodeCanonicalClass.B,
+  0x0349: _UnicodeCanonicalClass.B,
+  0x034A: _UnicodeCanonicalClass.A,
+  0x034B: _UnicodeCanonicalClass.A,
+  0x034C: _UnicodeCanonicalClass.A,
+  0x034D: _UnicodeCanonicalClass.B,
+  0x034E: _UnicodeCanonicalClass.B,
+  0x0350: _UnicodeCanonicalClass.A,
+  0x0351: _UnicodeCanonicalClass.A,
+  0x0352: _UnicodeCanonicalClass.A,
+  0x0353: _UnicodeCanonicalClass.B,
+  0x0354: _UnicodeCanonicalClass.B,
+  0x0355: _UnicodeCanonicalClass.B,
+  0x0356: _UnicodeCanonicalClass.B,
+  0x0357: _UnicodeCanonicalClass.A,
+  0x0358: _UnicodeCanonicalClass.AR,
+  0x0359: _UnicodeCanonicalClass.B,
+  0x035A: _UnicodeCanonicalClass.B,
+  0x035B: _UnicodeCanonicalClass.A,
+  0x035C: _UnicodeCanonicalClass.DB,
+  0x035D: _UnicodeCanonicalClass.DA,
+  0x035E: _UnicodeCanonicalClass.DA,
+  0x035F: _UnicodeCanonicalClass.DB,
+  0x0360: _UnicodeCanonicalClass.DA,
+  0x0361: _UnicodeCanonicalClass.DA,
+  0x0362: _UnicodeCanonicalClass.DB,
+  0x0363: _UnicodeCanonicalClass.A,
+  0x0364: _UnicodeCanonicalClass.A,
+  0x0365: _UnicodeCanonicalClass.A,
+  0x0366: _UnicodeCanonicalClass.A,
+  0x0367: _UnicodeCanonicalClass.A,
+  0x0368: _UnicodeCanonicalClass.A,
+  0x0369: _UnicodeCanonicalClass.A,
+  0x036A: _UnicodeCanonicalClass.A,
+  0x036B: _UnicodeCanonicalClass.A,
+  0x036C: _UnicodeCanonicalClass.A,
+  0x036D: _UnicodeCanonicalClass.A,
+  0x036E: _UnicodeCanonicalClass.A,
+  0x036F: _UnicodeCanonicalClass.A,
+  0x0483: _UnicodeCanonicalClass.A,
+  0x0484: _UnicodeCanonicalClass.A,
+  0x0485: _UnicodeCanonicalClass.A,
+  0x0486: _UnicodeCanonicalClass.A,
+  0x0487: _UnicodeCanonicalClass.A,
+  0x0591: _UnicodeCanonicalClass.B,
+  0x0592: _UnicodeCanonicalClass.A,
+  0x0593: _UnicodeCanonicalClass.A,
+  0x0594: _UnicodeCanonicalClass.A,
+  0x0595: _UnicodeCanonicalClass.A,
+  0x0596: _UnicodeCanonicalClass.B,
+  0x0597: _UnicodeCanonicalClass.A,
+  0x0598: _UnicodeCanonicalClass.A,
+  0x0599: _UnicodeCanonicalClass.A,
+  0x059A: _UnicodeCanonicalClass.BR,
+  0x059B: _UnicodeCanonicalClass.B,
+  0x059C: _UnicodeCanonicalClass.A,
+  0x059D: _UnicodeCanonicalClass.A,
+  0x059E: _UnicodeCanonicalClass.A,
+  0x059F: _UnicodeCanonicalClass.A,
+  0x05A0: _UnicodeCanonicalClass.A,
+  0x05A1: _UnicodeCanonicalClass.A,
+  0x05A2: _UnicodeCanonicalClass.B,
+  0x05A3: _UnicodeCanonicalClass.B,
+  0x05A4: _UnicodeCanonicalClass.B,
+  0x05A5: _UnicodeCanonicalClass.B,
+  0x05A6: _UnicodeCanonicalClass.B,
+  0x05A7: _UnicodeCanonicalClass.B,
+  0x05A8: _UnicodeCanonicalClass.A,
+  0x05A9: _UnicodeCanonicalClass.A,
+  0x05AA: _UnicodeCanonicalClass.B,
+  0x05AB: _UnicodeCanonicalClass.A,
+  0x05AC: _UnicodeCanonicalClass.A,
+  0x05AD: _UnicodeCanonicalClass.BR,
+  0x05AE: _UnicodeCanonicalClass.AL,
+  0x05AF: _UnicodeCanonicalClass.A,
+  0x05B0: _UnicodeCanonicalClass.CLASS_10,
+  0x05B1: _UnicodeCanonicalClass.CLASS_11,
+  0x05B2: _UnicodeCanonicalClass.CLASS_12,
+  0x05B3: _UnicodeCanonicalClass.CLASS_13,
+  0x05B4: _UnicodeCanonicalClass.CLASS_14,
+  0x05B5: _UnicodeCanonicalClass.CLASS_15,
+  0x05B6: _UnicodeCanonicalClass.CLASS_16,
+  0x05B7: _UnicodeCanonicalClass.CLASS_17,
+  0x05B8: _UnicodeCanonicalClass.CLASS_18,
+  0x05B9: _UnicodeCanonicalClass.CLASS_19,
+  0x05BA: _UnicodeCanonicalClass.CLASS_19,
+  0x05BB: _UnicodeCanonicalClass.CLASS_20,
+  0x05BC: _UnicodeCanonicalClass.CLASS_21,
+  0x05BD: _UnicodeCanonicalClass.CLASS_22,
+  0x05BF: _UnicodeCanonicalClass.CLASS_23,
+  0x05C1: _UnicodeCanonicalClass.CLASS_24,
+  0x05C2: _UnicodeCanonicalClass.CLASS_25,
+  0x05C4: _UnicodeCanonicalClass.A,
+  0x05C5: _UnicodeCanonicalClass.B,
+  0x05C7: _UnicodeCanonicalClass.CLASS_18,
+  0x0610: _UnicodeCanonicalClass.A,
+  0x0611: _UnicodeCanonicalClass.A,
+  0x0612: _UnicodeCanonicalClass.A,
+  0x0613: _UnicodeCanonicalClass.A,
+  0x0614: _UnicodeCanonicalClass.A,
+  0x0615: _UnicodeCanonicalClass.A,
+  0x0616: _UnicodeCanonicalClass.A,
+  0x0617: _UnicodeCanonicalClass.A,
+  0x0618: _UnicodeCanonicalClass.CLASS_30,
+  0x0619: _UnicodeCanonicalClass.CLASS_31,
+  0x061A: _UnicodeCanonicalClass.CLASS_32,
+  0x064B: _UnicodeCanonicalClass.CLASS_27,
+  0x064C: _UnicodeCanonicalClass.CLASS_28,
+  0x064D: _UnicodeCanonicalClass.CLASS_29,
+  0x064E: _UnicodeCanonicalClass.CLASS_30,
+  0x064F: _UnicodeCanonicalClass.CLASS_31,
+  0x0650: _UnicodeCanonicalClass.CLASS_32,
+  0x0651: _UnicodeCanonicalClass.CLASS_33,
+  0x0652: _UnicodeCanonicalClass.CLASS_34,
+  0x0653: _UnicodeCanonicalClass.A,
+  0x0654: _UnicodeCanonicalClass.A,
+  0x0655: _UnicodeCanonicalClass.B,
+  0x0656: _UnicodeCanonicalClass.B,
+  0x0657: _UnicodeCanonicalClass.A,
+  0x0658: _UnicodeCanonicalClass.A,
+  0x0659: _UnicodeCanonicalClass.A,
+  0x065A: _UnicodeCanonicalClass.A,
+  0x065B: _UnicodeCanonicalClass.A,
+  0x065C: _UnicodeCanonicalClass.B,
+  0x065D: _UnicodeCanonicalClass.A,
+  0x065E: _UnicodeCanonicalClass.A,
+  0x065F: _UnicodeCanonicalClass.B,
+  0x0670: _UnicodeCanonicalClass.CLASS_35,
+  0x06D6: _UnicodeCanonicalClass.A,
+  0x06D7: _UnicodeCanonicalClass.A,
+  0x06D8: _UnicodeCanonicalClass.A,
+  0x06D9: _UnicodeCanonicalClass.A,
+  0x06DA: _UnicodeCanonicalClass.A,
+  0x06DB: _UnicodeCanonicalClass.A,
+  0x06DC: _UnicodeCanonicalClass.A,
+  0x06DF: _UnicodeCanonicalClass.A,
+  0x06E0: _UnicodeCanonicalClass.A,
+  0x06E1: _UnicodeCanonicalClass.A,
+  0x06E2: _UnicodeCanonicalClass.A,
+  0x06E3: _UnicodeCanonicalClass.B,
+  0x06E4: _UnicodeCanonicalClass.A,
+  0x06E7: _UnicodeCanonicalClass.A,
+  0x06E8: _UnicodeCanonicalClass.A,
+  0x06EA: _UnicodeCanonicalClass.B,
+  0x06EB: _UnicodeCanonicalClass.A,
+  0x06EC: _UnicodeCanonicalClass.A,
+  0x06ED: _UnicodeCanonicalClass.B,
+  0x0711: _UnicodeCanonicalClass.CLASS_36,
+  0x0730: _UnicodeCanonicalClass.A,
+  0x0731: _UnicodeCanonicalClass.B,
+  0x0732: _UnicodeCanonicalClass.A,
+  0x0733: _UnicodeCanonicalClass.A,
+  0x0734: _UnicodeCanonicalClass.B,
+  0x0735: _UnicodeCanonicalClass.A,
+  0x0736: _UnicodeCanonicalClass.A,
+  0x0737: _UnicodeCanonicalClass.B,
+  0x0738: _UnicodeCanonicalClass.B,
+  0x0739: _UnicodeCanonicalClass.B,
+  0x073A: _UnicodeCanonicalClass.A,
+  0x073B: _UnicodeCanonicalClass.B,
+  0x073C: _UnicodeCanonicalClass.B,
+  0x073D: _UnicodeCanonicalClass.A,
+  0x073E: _UnicodeCanonicalClass.B,
+  0x073F: _UnicodeCanonicalClass.A,
+  0x0740: _UnicodeCanonicalClass.A,
+  0x0741: _UnicodeCanonicalClass.A,
+  0x0742: _UnicodeCanonicalClass.B,
+  0x0743: _UnicodeCanonicalClass.A,
+  0x0744: _UnicodeCanonicalClass.B,
+  0x0745: _UnicodeCanonicalClass.A,
+  0x0746: _UnicodeCanonicalClass.B,
+  0x0747: _UnicodeCanonicalClass.A,
+  0x0748: _UnicodeCanonicalClass.B,
+  0x0749: _UnicodeCanonicalClass.A,
+  0x074A: _UnicodeCanonicalClass.A,
+  0x07EB: _UnicodeCanonicalClass.A,
+  0x07EC: _UnicodeCanonicalClass.A,
+  0x07ED: _UnicodeCanonicalClass.A,
+  0x07EE: _UnicodeCanonicalClass.A,
+  0x07EF: _UnicodeCanonicalClass.A,
+  0x07F0: _UnicodeCanonicalClass.A,
+  0x07F1: _UnicodeCanonicalClass.A,
+  0x07F2: _UnicodeCanonicalClass.B,
+  0x07F3: _UnicodeCanonicalClass.A,
+  0x0816: _UnicodeCanonicalClass.A,
+  0x0817: _UnicodeCanonicalClass.A,
+  0x0818: _UnicodeCanonicalClass.A,
+  0x0819: _UnicodeCanonicalClass.A,
+  0x081B: _UnicodeCanonicalClass.A,
+  0x081C: _UnicodeCanonicalClass.A,
+  0x081D: _UnicodeCanonicalClass.A,
+  0x081E: _UnicodeCanonicalClass.A,
+  0x081F: _UnicodeCanonicalClass.A,
+  0x0820: _UnicodeCanonicalClass.A,
+  0x0821: _UnicodeCanonicalClass.A,
+  0x0822: _UnicodeCanonicalClass.A,
+  0x0823: _UnicodeCanonicalClass.A,
+  0x0825: _UnicodeCanonicalClass.A,
+  0x0826: _UnicodeCanonicalClass.A,
+  0x0827: _UnicodeCanonicalClass.A,
+  0x0829: _UnicodeCanonicalClass.A,
+  0x082A: _UnicodeCanonicalClass.A,
+  0x082B: _UnicodeCanonicalClass.A,
+  0x082C: _UnicodeCanonicalClass.A,
+  0x082D: _UnicodeCanonicalClass.A,
+  0x0859: _UnicodeCanonicalClass.B,
+  0x085A: _UnicodeCanonicalClass.B,
+  0x085B: _UnicodeCanonicalClass.B,
+  0x08E4: _UnicodeCanonicalClass.A,
+  0x08E5: _UnicodeCanonicalClass.A,
+  0x08E6: _UnicodeCanonicalClass.B,
+  0x08E7: _UnicodeCanonicalClass.A,
+  0x08E8: _UnicodeCanonicalClass.A,
+  0x08E9: _UnicodeCanonicalClass.B,
+  0x08EA: _UnicodeCanonicalClass.A,
+  0x08EB: _UnicodeCanonicalClass.A,
+  0x08EC: _UnicodeCanonicalClass.A,
+  0x08ED: _UnicodeCanonicalClass.B,
+  0x08EE: _UnicodeCanonicalClass.B,
+  0x08EF: _UnicodeCanonicalClass.B,
+  0x08F0: _UnicodeCanonicalClass.CLASS_27,
+  0x08F1: _UnicodeCanonicalClass.CLASS_28,
+  0x08F2: _UnicodeCanonicalClass.CLASS_29,
+  0x08F3: _UnicodeCanonicalClass.A,
+  0x08F4: _UnicodeCanonicalClass.A,
+  0x08F5: _UnicodeCanonicalClass.A,
+  0x08F6: _UnicodeCanonicalClass.B,
+  0x08F7: _UnicodeCanonicalClass.A,
+  0x08F8: _UnicodeCanonicalClass.A,
+  0x08F9: _UnicodeCanonicalClass.B,
+  0x08FA: _UnicodeCanonicalClass.B,
+  0x08FB: _UnicodeCanonicalClass.A,
+  0x08FC: _UnicodeCanonicalClass.A,
+  0x08FD: _UnicodeCanonicalClass.A,
+  0x08FE: _UnicodeCanonicalClass.A,
+  0x08FF: _UnicodeCanonicalClass.A,
+  0x093C: _UnicodeCanonicalClass.NK,
+  0x094D: _UnicodeCanonicalClass.VR,
+  0x0951: _UnicodeCanonicalClass.A,
+  0x0952: _UnicodeCanonicalClass.B,
+  0x0953: _UnicodeCanonicalClass.A,
+  0x0954: _UnicodeCanonicalClass.A,
+  0x09BC: _UnicodeCanonicalClass.NK,
+  0x09CD: _UnicodeCanonicalClass.VR,
+  0x0A3C: _UnicodeCanonicalClass.NK,
+  0x0A4D: _UnicodeCanonicalClass.VR,
+  0x0ABC: _UnicodeCanonicalClass.NK,
+  0x0ACD: _UnicodeCanonicalClass.VR,
+  0x0B3C: _UnicodeCanonicalClass.NK,
+  0x0B4D: _UnicodeCanonicalClass.VR,
+  0x0BCD: _UnicodeCanonicalClass.VR,
+  0x0C4D: _UnicodeCanonicalClass.VR,
+  0x0C55: _UnicodeCanonicalClass.CLASS_84,
+  0x0C56: _UnicodeCanonicalClass.CLASS_91,
+  0x0CBC: _UnicodeCanonicalClass.NK,
+  0x0CCD: _UnicodeCanonicalClass.VR,
+  0x0D4D: _UnicodeCanonicalClass.VR,
+  0x0DCA: _UnicodeCanonicalClass.VR,
+  0x0E38: _UnicodeCanonicalClass.CLASS_103,
+  0x0E39: _UnicodeCanonicalClass.CLASS_103,
+  0x0E3A: _UnicodeCanonicalClass.VR,
+  0x0E48: _UnicodeCanonicalClass.CLASS_107,
+  0x0E49: _UnicodeCanonicalClass.CLASS_107,
+  0x0E4A: _UnicodeCanonicalClass.CLASS_107,
+  0x0E4B: _UnicodeCanonicalClass.CLASS_107,
+  0x0EB8: _UnicodeCanonicalClass.CLASS_118,
+  0x0EB9: _UnicodeCanonicalClass.CLASS_118,
+  0x0EC8: _UnicodeCanonicalClass.CLASS_162,
+  0x0EC9: _UnicodeCanonicalClass.CLASS_162,
+  0x0ECA: _UnicodeCanonicalClass.CLASS_162,
+  0x0ECB: _UnicodeCanonicalClass.CLASS_162,
+  0x0F18: _UnicodeCanonicalClass.B,
+  0x0F19: _UnicodeCanonicalClass.B,
+  0x0F35: _UnicodeCanonicalClass.B,
+  0x0F37: _UnicodeCanonicalClass.B,
+  0x0F39: _UnicodeCanonicalClass.ATAR,
+  0x0F71: _UnicodeCanonicalClass.CLASS_129,
+  0x0F72: _UnicodeCanonicalClass.CLASS_130,
+  0x0F74: _UnicodeCanonicalClass.CLASS_132,
+  0x0F7A: _UnicodeCanonicalClass.CLASS_130,
+  0x0F7B: _UnicodeCanonicalClass.CLASS_130,
+  0x0F7C: _UnicodeCanonicalClass.CLASS_130,
+  0x0F7D: _UnicodeCanonicalClass.CLASS_130,
+  0x0F80: _UnicodeCanonicalClass.CLASS_130,
+  0x0F82: _UnicodeCanonicalClass.A,
+  0x0F83: _UnicodeCanonicalClass.A,
+  0x0F84: _UnicodeCanonicalClass.VR,
+  0x0F86: _UnicodeCanonicalClass.A,
+  0x0F87: _UnicodeCanonicalClass.A,
+  0x0FC6: _UnicodeCanonicalClass.B,
+  0x1037: _UnicodeCanonicalClass.NK,
+  0x1039: _UnicodeCanonicalClass.VR,
+  0x103A: _UnicodeCanonicalClass.VR,
+  0x108D: _UnicodeCanonicalClass.B,
+  0x135D: _UnicodeCanonicalClass.A,
+  0x135E: _UnicodeCanonicalClass.A,
+  0x135F: _UnicodeCanonicalClass.A,
+  0x1714: _UnicodeCanonicalClass.VR,
+  0x1734: _UnicodeCanonicalClass.VR,
+  0x17D2: _UnicodeCanonicalClass.VR,
+  0x17DD: _UnicodeCanonicalClass.A,
+  0x18A9: _UnicodeCanonicalClass.AL,
+  0x1939: _UnicodeCanonicalClass.BR,
+  0x193A: _UnicodeCanonicalClass.A,
+  0x193B: _UnicodeCanonicalClass.B,
+  0x1A17: _UnicodeCanonicalClass.A,
+  0x1A18: _UnicodeCanonicalClass.B,
+  0x1A60: _UnicodeCanonicalClass.VR,
+  0x1A75: _UnicodeCanonicalClass.A,
+  0x1A76: _UnicodeCanonicalClass.A,
+  0x1A77: _UnicodeCanonicalClass.A,
+  0x1A78: _UnicodeCanonicalClass.A,
+  0x1A79: _UnicodeCanonicalClass.A,
+  0x1A7A: _UnicodeCanonicalClass.A,
+  0x1A7B: _UnicodeCanonicalClass.A,
+  0x1A7C: _UnicodeCanonicalClass.A,
+  0x1A7F: _UnicodeCanonicalClass.B,
+  0x1AB0: _UnicodeCanonicalClass.A,
+  0x1AB1: _UnicodeCanonicalClass.A,
+  0x1AB2: _UnicodeCanonicalClass.A,
+  0x1AB3: _UnicodeCanonicalClass.A,
+  0x1AB4: _UnicodeCanonicalClass.A,
+  0x1AB5: _UnicodeCanonicalClass.B,
+  0x1AB6: _UnicodeCanonicalClass.B,
+  0x1AB7: _UnicodeCanonicalClass.B,
+  0x1AB8: _UnicodeCanonicalClass.B,
+  0x1AB9: _UnicodeCanonicalClass.B,
+  0x1ABA: _UnicodeCanonicalClass.B,
+  0x1ABB: _UnicodeCanonicalClass.A,
+  0x1ABC: _UnicodeCanonicalClass.A,
+  0x1ABD: _UnicodeCanonicalClass.B,
+  0x1B34: _UnicodeCanonicalClass.NK,
+  0x1B44: _UnicodeCanonicalClass.VR,
+  0x1B6B: _UnicodeCanonicalClass.A,
+  0x1B6C: _UnicodeCanonicalClass.B,
+  0x1B6D: _UnicodeCanonicalClass.A,
+  0x1B6E: _UnicodeCanonicalClass.A,
+  0x1B6F: _UnicodeCanonicalClass.A,
+  0x1B70: _UnicodeCanonicalClass.A,
+  0x1B71: _UnicodeCanonicalClass.A,
+  0x1B72: _UnicodeCanonicalClass.A,
+  0x1B73: _UnicodeCanonicalClass.A,
+  0x1BAA: _UnicodeCanonicalClass.VR,
+  0x1BAB: _UnicodeCanonicalClass.VR,
+  0x1BE6: _UnicodeCanonicalClass.NK,
+  0x1BF2: _UnicodeCanonicalClass.VR,
+  0x1BF3: _UnicodeCanonicalClass.VR,
+  0x1C37: _UnicodeCanonicalClass.NK,
+  0x1CD0: _UnicodeCanonicalClass.A,
+  0x1CD1: _UnicodeCanonicalClass.A,
+  0x1CD2: _UnicodeCanonicalClass.A,
+  0x1CD4: _UnicodeCanonicalClass.OV,
+  0x1CD5: _UnicodeCanonicalClass.B,
+  0x1CD6: _UnicodeCanonicalClass.B,
+  0x1CD7: _UnicodeCanonicalClass.B,
+  0x1CD8: _UnicodeCanonicalClass.B,
+  0x1CD9: _UnicodeCanonicalClass.B,
+  0x1CDA: _UnicodeCanonicalClass.A,
+  0x1CDB: _UnicodeCanonicalClass.A,
+  0x1CDC: _UnicodeCanonicalClass.B,
+  0x1CDD: _UnicodeCanonicalClass.B,
+  0x1CDE: _UnicodeCanonicalClass.B,
+  0x1CDF: _UnicodeCanonicalClass.B,
+  0x1CE0: _UnicodeCanonicalClass.A,
+  0x1CE2: _UnicodeCanonicalClass.OV,
+  0x1CE3: _UnicodeCanonicalClass.OV,
+  0x1CE4: _UnicodeCanonicalClass.OV,
+  0x1CE5: _UnicodeCanonicalClass.OV,
+  0x1CE6: _UnicodeCanonicalClass.OV,
+  0x1CE7: _UnicodeCanonicalClass.OV,
+  0x1CE8: _UnicodeCanonicalClass.OV,
+  0x1CED: _UnicodeCanonicalClass.B,
+  0x1CF4: _UnicodeCanonicalClass.A,
+  0x1CF8: _UnicodeCanonicalClass.A,
+  0x1CF9: _UnicodeCanonicalClass.A,
+  0x1DC0: _UnicodeCanonicalClass.A,
+  0x1DC1: _UnicodeCanonicalClass.A,
+  0x1DC2: _UnicodeCanonicalClass.B,
+  0x1DC3: _UnicodeCanonicalClass.A,
+  0x1DC4: _UnicodeCanonicalClass.A,
+  0x1DC5: _UnicodeCanonicalClass.A,
+  0x1DC6: _UnicodeCanonicalClass.A,
+  0x1DC7: _UnicodeCanonicalClass.A,
+  0x1DC8: _UnicodeCanonicalClass.A,
+  0x1DC9: _UnicodeCanonicalClass.A,
+  0x1DCA: _UnicodeCanonicalClass.B,
+  0x1DCB: _UnicodeCanonicalClass.A,
+  0x1DCC: _UnicodeCanonicalClass.A,
+  0x1DCD: _UnicodeCanonicalClass.DA,
+  0x1DCE: _UnicodeCanonicalClass.ATA,
+  0x1DCF: _UnicodeCanonicalClass.B,
+  0x1DD0: _UnicodeCanonicalClass.ATB,
+  0x1DD1: _UnicodeCanonicalClass.A,
+  0x1DD2: _UnicodeCanonicalClass.A,
+  0x1DD3: _UnicodeCanonicalClass.A,
+  0x1DD4: _UnicodeCanonicalClass.A,
+  0x1DD5: _UnicodeCanonicalClass.A,
+  0x1DD6: _UnicodeCanonicalClass.A,
+  0x1DD7: _UnicodeCanonicalClass.A,
+  0x1DD8: _UnicodeCanonicalClass.A,
+  0x1DD9: _UnicodeCanonicalClass.A,
+  0x1DDA: _UnicodeCanonicalClass.A,
+  0x1DDB: _UnicodeCanonicalClass.A,
+  0x1DDC: _UnicodeCanonicalClass.A,
+  0x1DDD: _UnicodeCanonicalClass.A,
+  0x1DDE: _UnicodeCanonicalClass.A,
+  0x1DDF: _UnicodeCanonicalClass.A,
+  0x1DE0: _UnicodeCanonicalClass.A,
+  0x1DE1: _UnicodeCanonicalClass.A,
+  0x1DE2: _UnicodeCanonicalClass.A,
+  0x1DE3: _UnicodeCanonicalClass.A,
+  0x1DE4: _UnicodeCanonicalClass.A,
+  0x1DE5: _UnicodeCanonicalClass.A,
+  0x1DE6: _UnicodeCanonicalClass.A,
+  0x1DE7: _UnicodeCanonicalClass.A,
+  0x1DE8: _UnicodeCanonicalClass.A,
+  0x1DE9: _UnicodeCanonicalClass.A,
+  0x1DEA: _UnicodeCanonicalClass.A,
+  0x1DEB: _UnicodeCanonicalClass.A,
+  0x1DEC: _UnicodeCanonicalClass.A,
+  0x1DED: _UnicodeCanonicalClass.A,
+  0x1DEE: _UnicodeCanonicalClass.A,
+  0x1DEF: _UnicodeCanonicalClass.A,
+  0x1DF0: _UnicodeCanonicalClass.A,
+  0x1DF1: _UnicodeCanonicalClass.A,
+  0x1DF2: _UnicodeCanonicalClass.A,
+  0x1DF3: _UnicodeCanonicalClass.A,
+  0x1DF4: _UnicodeCanonicalClass.A,
+  0x1DF5: _UnicodeCanonicalClass.A,
+  0x1DFC: _UnicodeCanonicalClass.DB,
+  0x1DFD: _UnicodeCanonicalClass.B,
+  0x1DFE: _UnicodeCanonicalClass.A,
+  0x1DFF: _UnicodeCanonicalClass.B,
+  0x20D0: _UnicodeCanonicalClass.A,
+  0x20D1: _UnicodeCanonicalClass.A,
+  0x20D2: _UnicodeCanonicalClass.OV,
+  0x20D3: _UnicodeCanonicalClass.OV,
+  0x20D4: _UnicodeCanonicalClass.A,
+  0x20D5: _UnicodeCanonicalClass.A,
+  0x20D6: _UnicodeCanonicalClass.A,
+  0x20D7: _UnicodeCanonicalClass.A,
+  0x20D8: _UnicodeCanonicalClass.OV,
+  0x20D9: _UnicodeCanonicalClass.OV,
+  0x20DA: _UnicodeCanonicalClass.OV,
+  0x20DB: _UnicodeCanonicalClass.A,
+  0x20DC: _UnicodeCanonicalClass.A,
+  0x20E1: _UnicodeCanonicalClass.A,
+  0x20E5: _UnicodeCanonicalClass.OV,
+  0x20E6: _UnicodeCanonicalClass.OV,
+  0x20E7: _UnicodeCanonicalClass.A,
+  0x20E8: _UnicodeCanonicalClass.B,
+  0x20E9: _UnicodeCanonicalClass.A,
+  0x20EA: _UnicodeCanonicalClass.OV,
+  0x20EB: _UnicodeCanonicalClass.OV,
+  0x20EC: _UnicodeCanonicalClass.B,
+  0x20ED: _UnicodeCanonicalClass.B,
+  0x20EE: _UnicodeCanonicalClass.B,
+  0x20EF: _UnicodeCanonicalClass.B,
+  0x20F0: _UnicodeCanonicalClass.A,
+  0x2CEF: _UnicodeCanonicalClass.A,
+  0x2CF0: _UnicodeCanonicalClass.A,
+  0x2CF1: _UnicodeCanonicalClass.A,
+  0x2D7F: _UnicodeCanonicalClass.VR,
+  0x2DE0: _UnicodeCanonicalClass.A,
+  0x2DE1: _UnicodeCanonicalClass.A,
+  0x2DE2: _UnicodeCanonicalClass.A,
+  0x2DE3: _UnicodeCanonicalClass.A,
+  0x2DE4: _UnicodeCanonicalClass.A,
+  0x2DE5: _UnicodeCanonicalClass.A,
+  0x2DE6: _UnicodeCanonicalClass.A,
+  0x2DE7: _UnicodeCanonicalClass.A,
+  0x2DE8: _UnicodeCanonicalClass.A,
+  0x2DE9: _UnicodeCanonicalClass.A,
+  0x2DEA: _UnicodeCanonicalClass.A,
+  0x2DEB: _UnicodeCanonicalClass.A,
+  0x2DEC: _UnicodeCanonicalClass.A,
+  0x2DED: _UnicodeCanonicalClass.A,
+  0x2DEE: _UnicodeCanonicalClass.A,
+  0x2DEF: _UnicodeCanonicalClass.A,
+  0x2DF0: _UnicodeCanonicalClass.A,
+  0x2DF1: _UnicodeCanonicalClass.A,
+  0x2DF2: _UnicodeCanonicalClass.A,
+  0x2DF3: _UnicodeCanonicalClass.A,
+  0x2DF4: _UnicodeCanonicalClass.A,
+  0x2DF5: _UnicodeCanonicalClass.A,
+  0x2DF6: _UnicodeCanonicalClass.A,
+  0x2DF7: _UnicodeCanonicalClass.A,
+  0x2DF8: _UnicodeCanonicalClass.A,
+  0x2DF9: _UnicodeCanonicalClass.A,
+  0x2DFA: _UnicodeCanonicalClass.A,
+  0x2DFB: _UnicodeCanonicalClass.A,
+  0x2DFC: _UnicodeCanonicalClass.A,
+  0x2DFD: _UnicodeCanonicalClass.A,
+  0x2DFE: _UnicodeCanonicalClass.A,
+  0x2DFF: _UnicodeCanonicalClass.A,
+  0x302A: _UnicodeCanonicalClass.BL,
+  0x302B: _UnicodeCanonicalClass.AL,
+  0x302C: _UnicodeCanonicalClass.AR,
+  0x302D: _UnicodeCanonicalClass.BR,
+  0x302E: _UnicodeCanonicalClass.L,
+  0x302F: _UnicodeCanonicalClass.L,
+  0x3099: _UnicodeCanonicalClass.KV,
+  0x309A: _UnicodeCanonicalClass.KV,
+  0xA66F: _UnicodeCanonicalClass.A,
+  0xA674: _UnicodeCanonicalClass.A,
+  0xA675: _UnicodeCanonicalClass.A,
+  0xA676: _UnicodeCanonicalClass.A,
+  0xA677: _UnicodeCanonicalClass.A,
+  0xA678: _UnicodeCanonicalClass.A,
+  0xA679: _UnicodeCanonicalClass.A,
+  0xA67A: _UnicodeCanonicalClass.A,
+  0xA67B: _UnicodeCanonicalClass.A,
+  0xA67C: _UnicodeCanonicalClass.A,
+  0xA67D: _UnicodeCanonicalClass.A,
+  0xA69F: _UnicodeCanonicalClass.A,
+  0xA6F0: _UnicodeCanonicalClass.A,
+  0xA6F1: _UnicodeCanonicalClass.A,
+  0xA806: _UnicodeCanonicalClass.VR,
+  0xA8C4: _UnicodeCanonicalClass.VR,
+  0xA8E0: _UnicodeCanonicalClass.A,
+  0xA8E1: _UnicodeCanonicalClass.A,
+  0xA8E2: _UnicodeCanonicalClass.A,
+  0xA8E3: _UnicodeCanonicalClass.A,
+  0xA8E4: _UnicodeCanonicalClass.A,
+  0xA8E5: _UnicodeCanonicalClass.A,
+  0xA8E6: _UnicodeCanonicalClass.A,
+  0xA8E7: _UnicodeCanonicalClass.A,
+  0xA8E8: _UnicodeCanonicalClass.A,
+  0xA8E9: _UnicodeCanonicalClass.A,
+  0xA8EA: _UnicodeCanonicalClass.A,
+  0xA8EB: _UnicodeCanonicalClass.A,
+  0xA8EC: _UnicodeCanonicalClass.A,
+  0xA8ED: _UnicodeCanonicalClass.A,
+  0xA8EE: _UnicodeCanonicalClass.A,
+  0xA8EF: _UnicodeCanonicalClass.A,
+  0xA8F0: _UnicodeCanonicalClass.A,
+  0xA8F1: _UnicodeCanonicalClass.A,
+  0xA92B: _UnicodeCanonicalClass.B,
+  0xA92C: _UnicodeCanonicalClass.B,
+  0xA92D: _UnicodeCanonicalClass.B,
+  0xA953: _UnicodeCanonicalClass.VR,
+  0xA9B3: _UnicodeCanonicalClass.NK,
+  0xA9C0: _UnicodeCanonicalClass.VR,
+  0xAAB0: _UnicodeCanonicalClass.A,
+  0xAAB2: _UnicodeCanonicalClass.A,
+  0xAAB3: _UnicodeCanonicalClass.A,
+  0xAAB4: _UnicodeCanonicalClass.B,
+  0xAAB7: _UnicodeCanonicalClass.A,
+  0xAAB8: _UnicodeCanonicalClass.A,
+  0xAABE: _UnicodeCanonicalClass.A,
+  0xAABF: _UnicodeCanonicalClass.A,
+  0xAAC1: _UnicodeCanonicalClass.A,
+  0xAAF6: _UnicodeCanonicalClass.VR,
+  0xABED: _UnicodeCanonicalClass.VR,
+  0xFB1E: _UnicodeCanonicalClass.CLASS_26,
+  0xFE20: _UnicodeCanonicalClass.A,
+  0xFE21: _UnicodeCanonicalClass.A,
+  0xFE22: _UnicodeCanonicalClass.A,
+  0xFE23: _UnicodeCanonicalClass.A,
+  0xFE24: _UnicodeCanonicalClass.A,
+  0xFE25: _UnicodeCanonicalClass.A,
+  0xFE26: _UnicodeCanonicalClass.A,
+  0xFE27: _UnicodeCanonicalClass.B,
+  0xFE28: _UnicodeCanonicalClass.B,
+  0xFE29: _UnicodeCanonicalClass.B,
+  0xFE2A: _UnicodeCanonicalClass.B,
+  0xFE2B: _UnicodeCanonicalClass.B,
+  0xFE2C: _UnicodeCanonicalClass.B,
+  0xFE2D: _UnicodeCanonicalClass.B,
 };
 
-const Map<int, List<int>> decomMapping = {
+const Map<int, List<int>> _decomMapping = {
   0x00A0: [0x0020],
   0x00A8: [0x0020, 0x0308],
   0x00AA: [0x0061],
@@ -4557,7 +4562,7 @@ const Map<int, List<int>> decomMapping = {
   0xFFED: [0x25A0],
   0xFFEE: [0x25CB],
 };
-const Map<String, int> composeMapping = {
+const Map<String, int> _composeMapping = {
   '\u0020': 0x3000,
   '\u0020\u0301': 0x0384,
   '\u0020\u0303': 0x02DC,
@@ -7677,10 +7682,10 @@ const Map<String, int> composeMapping = {
   'صلى الله عليه وسلم': 0xFDFA
 };
 
-const List<int> BctList_LRE = [0x202A, 1];
-const List<int> BctList_LRO = [0x202D, 1];
-const List<int> BctList_LRI = [0x2066, 1];
-const List<int> BctList_R = [
+const List<_Range> _BctList_LRE = [_Range(0x202A, 1)];
+const List<int> _BctList_LRO = [0x202D, 1];
+const List<int> _BctList_LRI = [0x2066, 1];
+const List<int> _BctList_R = [
   0x05BE,
   1,
   0x05C0,
@@ -7732,7 +7737,7 @@ const List<int> BctList_R = [
   0xFB46,
   10
 ];
-const List<int> BctList_AL = [
+const List<int> _BctList_AL = [
   0x0608,
   1,
   0x060B,
@@ -7778,13 +7783,13 @@ const List<int> BctList_AL = [
   0xFE76,
   135
 ];
-const List<int> BctList_RLE = [0x202B, 1];
-const List<int> BctList_RLO = [0x202E, 1];
-const List<int> BctList_RLI = [0x2067, 1];
-const List<int> BctList_FSI = [0x2068, 1];
-const List<int> BctList_PDF = [0x202C, 1];
-const List<int> BctList_PDI = [0x2069, 1];
-const List<int> BctList_EN = [
+const List<int> _BctList_RLE = [0x202B, 1];
+const List<int> _BctList_RLO = [0x202E, 1];
+const List<int> _BctList_RLI = [0x2067, 1];
+const List<int> _BctList_FSI = [0x2068, 1];
+const List<int> _BctList_PDF = [0x202C, 1];
+const List<int> _BctList_PDI = [0x2069, 1];
+const List<int> _BctList_EN = [
   0x0030,
   10,
   0x00B2,
@@ -7804,7 +7809,7 @@ const List<int> BctList_EN = [
   0xFF10,
   10
 ];
-const List<int> BctList_ES = [
+const List<int> _BctList_ES = [
   0x002B,
   1,
   0x002D,
@@ -7824,7 +7829,7 @@ const List<int> BctList_ES = [
   0xFF0D,
   1
 ];
-const List<int> BctList_ET = [
+const List<int> _BctList_ET = [
   0x0023,
   3,
   0x00A2,
@@ -7870,8 +7875,8 @@ const List<int> BctList_ET = [
   0xFFE5,
   2
 ];
-const List<int> BctList_AN = [0x0600, 6, 0x0660, 10, 0x066B, 2, 0x06DD, 1];
-const List<int> BctList_CS = [
+const List<int> _BctList_AN = [0x0600, 6, 0x0660, 10, 0x066B, 2, 0x06DD, 1];
+const List<int> _BctList_CS = [
   0x002C,
   1,
   0x002E,
@@ -7899,7 +7904,7 @@ const List<int> BctList_CS = [
   0xFF1A,
   1
 ];
-const List<int> BctList_NSM = [
+const List<int> _BctList_NSM = [
   0x0300,
   112,
   0x0483,
@@ -8293,7 +8298,7 @@ const List<int> BctList_NSM = [
   0xFE20,
   14
 ];
-const List<int> BctList_BN = [
+const List<int> _BctList_BN = [
   0x0000,
   9,
   0x000E,
@@ -8315,7 +8320,7 @@ const List<int> BctList_BN = [
   0xFEFF,
   1
 ];
-const List<int> BctList_B = [
+const List<int> _BctList_B = [
   0x000A,
   1,
   0x000D,
@@ -8327,8 +8332,8 @@ const List<int> BctList_B = [
   0x2029,
   1
 ];
-const List<int> BctList_S = [0x0009, 1, 0x000B, 1, 0x001F, 1];
-const List<int> BctList_WS = [
+const List<int> _BctList_S = [0x0009, 1, 0x000B, 1, 0x001F, 1];
+const List<int> _BctList_WS = [
   0x000C,
   1,
   0x0020,
@@ -8344,7 +8349,7 @@ const List<int> BctList_WS = [
   0x3000,
   1
 ];
-const List<int> BctList_ON = [
+const List<int> _BctList_ON = [
   0x0021,
   2,
   0x0026,
@@ -8614,7 +8619,7 @@ const List<int> BctList_ON = [
   0xFFF9,
   5
 ];
-const List<int> UgcList_Lu = [
+const List<int> _UgcList_Lu = [
   0x0041,
   26,
   0x00C0,
@@ -9794,7 +9799,7 @@ const List<int> UgcList_Lu = [
   0xFF21,
   26
 ];
-const List<int> UgcList_Ll = [
+const List<int> _UgcList_Ll = [
   0x0061,
   26,
   0x00B5,
@@ -10986,7 +10991,7 @@ const List<int> UgcList_Ll = [
   0xFF41,
   26
 ];
-const List<int> UgcList_Lt = [
+const List<int> _UgcList_Lt = [
   0x01C5,
   1,
   0x01C8,
@@ -11008,7 +11013,7 @@ const List<int> UgcList_Lt = [
   0x1FFC,
   1
 ];
-const List<int> UgcList_Lm = [
+const List<int> _UgcList_Lm = [
   0x02B0,
   18,
   0x02C6,
@@ -11118,7 +11123,7 @@ const List<int> UgcList_Lm = [
   0xFF9E,
   2
 ];
-const List<int> UgcList_Lo = [
+const List<int> _UgcList_Lo = [
   0x00AA,
   1,
   0x00BA,
@@ -11702,7 +11707,7 @@ const List<int> UgcList_Lo = [
   0xFFDA,
   3
 ];
-const List<int> UgcList_Mn = [
+const List<int> _UgcList_Mn = [
   0x0300,
   112,
   0x0483,
@@ -12104,7 +12109,7 @@ const List<int> UgcList_Mn = [
   0xFE20,
   14
 ];
-List<int> UgcList_Mc = [
+List<int> _UgcList_Mc = [
   0x0903,
   1,
   0x093B,
@@ -12328,8 +12333,8 @@ List<int> UgcList_Mc = [
   0xABEC,
   1
 ];
-List<int> UgcList_Me = [0x0488, 2, 0x1ABE, 1, 0x20DD, 4, 0x20E2, 3, 0xA670, 3];
-List<int> UgcList_Nd = [
+List<int> _UgcList_Me = [0x0488, 2, 0x1ABE, 1, 0x20DD, 4, 0x20E2, 3, 0xA670, 3];
+List<int> _UgcList_Nd = [
   0x0030,
   10,
   0x0660,
@@ -12405,7 +12410,7 @@ List<int> UgcList_Nd = [
   0xFF10,
   10
 ];
-List<int> UgcList_Nl = [
+List<int> _UgcList_Nl = [
   0x16EE,
   3,
   0x2160,
@@ -12421,7 +12426,7 @@ List<int> UgcList_Nl = [
   0xA6E6,
   10
 ];
-List<int> UgcList_No = [
+List<int> _UgcList_No = [
   0x00B2,
   2,
   0x00B9,
@@ -12479,7 +12484,7 @@ List<int> UgcList_No = [
   0xA830,
   6
 ];
-List<int> UgcList_Pc = [
+List<int> _UgcList_Pc = [
   0x005F,
   1,
   0x203F,
@@ -12493,7 +12498,7 @@ List<int> UgcList_Pc = [
   0xFF3F,
   1
 ];
-List<int> UgcList_Pd = [
+List<int> _UgcList_Pd = [
   0x002D,
   1,
   0x058A,
@@ -12529,7 +12534,7 @@ List<int> UgcList_Pd = [
   0xFF0D,
   1
 ];
-List<int> UgcList_Ps = [
+List<int> _UgcList_Ps = [
   0x0028,
   1,
   0x005B,
@@ -12681,7 +12686,7 @@ List<int> UgcList_Ps = [
   0xFF62,
   1
 ];
-List<int> UgcList_Pe = [
+List<int> _UgcList_Pe = [
   0x0029,
   1,
   0x005D,
@@ -12827,7 +12832,7 @@ List<int> UgcList_Pe = [
   0xFF63,
   1
 ];
-List<int> UgcList_Pi = [
+List<int> _UgcList_Pi = [
   0x00AB,
   1,
   0x2018,
@@ -12851,7 +12856,7 @@ List<int> UgcList_Pi = [
   0x2E20,
   1
 ];
-List<int> UgcList_Pf = [
+List<int> _UgcList_Pf = [
   0x00BB,
   1,
   0x2019,
@@ -12873,7 +12878,7 @@ List<int> UgcList_Pf = [
   0x2E21,
   1
 ];
-List<int> UgcList_Po = [
+List<int> _UgcList_Po = [
   0x0021,
   3,
   0x0025,
@@ -13119,7 +13124,7 @@ List<int> UgcList_Po = [
   0xFF64,
   2
 ];
-List<int> UgcList_Sm = [
+List<int> _UgcList_Sm = [
   0x002B,
   1,
   0x003C,
@@ -13227,7 +13232,7 @@ List<int> UgcList_Sm = [
   0xFFE9,
   4
 ];
-List<int> UgcList_Sc = [
+List<int> _UgcList_Sc = [
   0x0024,
   1,
   0x00A2,
@@ -13263,7 +13268,7 @@ List<int> UgcList_Sc = [
   0xFFE5,
   2
 ];
-List<int> UgcList_Sk = [
+List<int> _UgcList_Sk = [
   0x005E,
   1,
   0x0060,
@@ -13321,7 +13326,7 @@ List<int> UgcList_Sk = [
   0xFFE3,
   1
 ];
-List<int> UgcList_So = [
+List<int> _UgcList_So = [
   0x00A6,
   1,
   0x00A9,
@@ -13547,7 +13552,7 @@ List<int> UgcList_So = [
   0xFFFC,
   2
 ];
-List<int> UgcList_Zs = [
+List<int> _UgcList_Zs = [
   0x0020,
   1,
   0x00A0,
@@ -13563,10 +13568,10 @@ List<int> UgcList_Zs = [
   0x3000,
   1
 ];
-List<int> UgcList_Zl = [0x2028, 1];
-List<int> UgcList_Zp = [0x2029, 1];
-List<int> UgcList_Cc = [0x0000, 32, 0x007F, 33];
-List<int> UgcList_Cf = [
+List<int> _UgcList_Zl = [0x2028, 1];
+List<int> _UgcList_Zp = [0x2029, 1];
+List<int> _UgcList_Cc = [0x0000, 32, 0x007F, 33];
+List<int> _UgcList_Cf = [
   0x00AD,
   1,
   0x0600,
@@ -13604,9 +13609,9 @@ List<int> UgcList_Cf = [
   0xFC63,
   2,
 ];
-List<int> UgcList_Cs = [0xD800, 1, 0xDB7F, 2, 0xDBFF, 2, 0xDFFF, 1];
-List<int> UgcList_Co = [0xE000, 1, 0xF8FF, 1];
-List<int> UdtList_Font = [
+List<int> _UgcList_Cs = [0xD800, 1, 0xDB7F, 2, 0xDBFF, 2, 0xDFFF, 1];
+List<int> _UgcList_Co = [0xE000, 1, 0xF8FF, 1];
+List<int> _UdtList_Font = [
   0x2102,
   1,
   0x210A,
@@ -13634,7 +13639,7 @@ List<int> UdtList_Font = [
   0xFB20,
   10
 ];
-List<int> UdtList_NoBreak = [
+List<int> _UdtList_NoBreak = [
   0x00A0,
   1,
   0x0F0C,
@@ -13646,7 +13651,7 @@ List<int> UdtList_NoBreak = [
   0x202F,
   1
 ];
-List<int> UdtList_Initial = [
+List<int> _UdtList_Initial = [
   0xFB54,
   1,
   0xFB58,
@@ -13798,7 +13803,7 @@ List<int> UdtList_Initial = [
   0xFEF3,
   1
 ];
-List<int> UdtList_Medial = [
+List<int> _UdtList_Medial = [
   0xFB55,
   1,
   0xFB59,
@@ -13908,7 +13913,7 @@ List<int> UdtList_Medial = [
   0xFEF4,
   1
 ];
-List<int> UdtList_Final = [
+List<int> _UdtList_Final = [
   0xFB51,
   1,
   0xFB53,
@@ -14136,7 +14141,7 @@ List<int> UdtList_Final = [
   0xFEFC,
   1
 ];
-List<int> UdtList_Isolated = [
+List<int> _UdtList_Isolated = [
   0xFB50,
   1,
   0xFB52,
@@ -14334,7 +14339,7 @@ List<int> UdtList_Isolated = [
   0xFEFB,
   1
 ];
-List<int> UdtList_Circle = [
+List<int> _UdtList_Circle = [
   0x2460,
   20,
   0x24B6,
@@ -14348,7 +14353,7 @@ List<int> UdtList_Circle = [
   0x32D0,
   47
 ];
-List<int> UdtList_Super = [
+List<int> _UdtList_Super = [
   0x00AA,
   1,
   0x00B2,
@@ -14396,8 +14401,14 @@ List<int> UdtList_Super = [
   0xAB5C,
   4
 ];
-List<int> UdtList_Sub = [0x1D62, 9, 0x2080, 15, 0x2090, 13, 0x2C7C, 1];
-List<int> UdtList_Vertical = [
+const _UdtList_Sub = [
+  _Range(0x1D62, 9),
+  _Range(0x2080, 15),
+  _Range(0x2090, 13),
+  _Range(0x2C7C, 1)
+];
+
+List<int> _UdtList_Vertical = [
   0x309F,
   1,
   0x30FF,
@@ -14409,8 +14420,13 @@ List<int> UdtList_Vertical = [
   0xFE47,
   2
 ];
-List<int> UdtList_Wide = [0x3000, 1, 0xFF01, 96, 0xFFE0, 7];
-List<int> UdtList_Narrow = [
+const _UdtList_Wide = [
+  _Range(0x3000, 1),
+  _Range(0xFF01, 96),
+  _Range(0xFFE0, 7)
+];
+
+List<int> _UdtList_Narrow = [
   0xFF61,
   94,
   0xFFC2,
@@ -14424,8 +14440,8 @@ List<int> UdtList_Narrow = [
   0xFFE8,
   7
 ];
-List<int> UdtList_Small = [0xFE50, 3, 0xFE54, 19, 0xFE68, 4];
-List<int> UdtList_Square = [
+List<int> _UdtList_Small = [0xFE50, 3, 0xFE54, 19, 0xFE68, 4];
+List<int> _UdtList_Square = [
   0x3250,
   1,
   0x32CC,
@@ -14437,8 +14453,8 @@ List<int> UdtList_Square = [
   0x33FF,
   1
 ];
-List<int> UdtList_Fraction = [0x00BC, 3, 0x2150, 16, 0x2189, 1];
-List<int> UdtList_Compat = [
+List<int> _UdtList_Fraction = [0x00BC, 3, 0x2150, 16, 0x2189, 1];
+List<int> _UdtList_Compat = [
   0x00A8,
   1,
   0x00AF,
@@ -14583,6 +14599,23 @@ List<int> UdtList_Compat = [
   7
 ];
 
+void _setBidiCharacterType(List<_Range> ranges, _BidiCharacterType type) {
+  for (final range in ranges) {
+    for (int j = range.start; j < range.start + range.count; ++j) {
+      _bidiCharType[j] = type;
+    }
+  }
+}
+
+void _setUnicodeDecompositionType(
+    List<_Range> ranges, _UnicodeDecompositionType type) {
+  for (final range in ranges) {
+    for (int j = range.start; j < range.start + range.count; ++j) {
+      _decomType[j] = type;
+    }
+  }
+}
+
 void _init() {
   if (_initialized) {
     return;
@@ -14591,433 +14624,438 @@ void _init() {
   _initialized = true;
 
   for (int i = 0; i < 0xffff; ++i) {
-    bidiCharType[i] = BidiCharacterType.L;
-  }
-  for (int i = 0; i < BctList_LRE.length; i += 2) {
-    for (int j = BctList_LRE[i]; j < BctList_LRE[i] + BctList_LRE[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.LRE;
-    }
+    _bidiCharType[i] = _BidiCharacterType.L;
   }
 
-  for (int i = 0; i < BctList_LRO.length; i += 2) {
-    for (int j = BctList_LRO[i]; j < BctList_LRO[i] + BctList_LRO[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.LRO;
-    }
-  }
+  _setBidiCharacterType(_BctList_LRE, _BidiCharacterType.LRE);
 
-  for (int i = 0; i < BctList_LRI.length; i += 2) {
-    for (int j = BctList_LRI[i]; j < BctList_LRI[i] + BctList_LRI[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.LRI;
-    }
-  }
-
-  for (int i = 0; i < BctList_R.length; i += 2) {
-    for (int j = BctList_R[i]; j < BctList_R[i] + BctList_R[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.R;
-    }
-  }
-
-  for (int i = 0; i < BctList_AL.length; i += 2) {
-    for (int j = BctList_AL[i]; j < BctList_AL[i] + BctList_AL[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.AL;
-    }
-  }
-
-  for (int i = 0; i < BctList_RLE.length; i += 2) {
-    for (int j = BctList_RLE[i]; j < BctList_RLE[i] + BctList_RLE[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.RLE;
-    }
-  }
-
-  for (int i = 0; i < BctList_RLO.length; i += 2) {
-    for (int j = BctList_RLO[i]; j < BctList_RLO[i] + BctList_RLO[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.RLO;
-    }
-  }
-
-  for (int i = 0; i < BctList_RLI.length; i += 2) {
-    for (int j = BctList_RLI[i]; j < BctList_RLI[i] + BctList_RLI[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.RLI;
-    }
-  }
-
-  for (int i = 0; i < BctList_FSI.length; i += 2) {
-    for (int j = BctList_FSI[i]; j < BctList_FSI[i] + BctList_FSI[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.FSI;
-    }
-  }
-
-  for (int i = 0; i < BctList_PDF.length; i += 2) {
-    for (int j = BctList_PDF[i]; j < BctList_PDF[i] + BctList_PDF[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.PDF;
-    }
-  }
-
-  for (int i = 0; i < BctList_PDI.length; i += 2) {
-    for (int j = BctList_PDI[i]; j < BctList_PDI[i] + BctList_PDI[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.PDI;
-    }
-  }
-
-  for (int i = 0; i < BctList_EN.length; i += 2) {
-    for (int j = BctList_EN[i]; j < BctList_EN[i] + BctList_EN[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.EN;
-    }
-  }
-
-  for (int i = 0; i < BctList_ES.length; i += 2) {
-    for (int j = BctList_ES[i]; j < BctList_ES[i] + BctList_ES[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.ES;
-    }
-  }
-
-  for (int i = 0; i < BctList_ET.length; i += 2) {
-    for (int j = BctList_ET[i]; j < BctList_ET[i] + BctList_ET[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.ET;
-    }
-  }
-
-  for (int i = 0; i < BctList_AN.length; i += 2) {
-    for (int j = BctList_AN[i]; j < BctList_AN[i] + BctList_AN[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.AN;
-    }
-  }
-
-  for (int i = 0; i < BctList_CS.length; i += 2) {
-    for (int j = BctList_CS[i]; j < BctList_CS[i] + BctList_CS[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.CS;
-    }
-  }
-  for (int i = 0; i < BctList_NSM.length; i += 2) {
-    for (int j = BctList_NSM[i]; j < BctList_NSM[i] + BctList_NSM[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.NSM;
-    }
-  }
-
-  for (int i = 0; i < BctList_BN.length; i += 2) {
-    for (int j = BctList_BN[i]; j < BctList_BN[i] + BctList_BN[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.BN;
-    }
-  }
-
-  for (int i = 0; i < BctList_B.length; i += 2) {
-    for (int j = BctList_B[i]; j < BctList_B[i] + BctList_B[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.B;
-    }
-  }
-
-  for (int i = 0; i < BctList_S.length; i += 2) {
-    for (int j = BctList_S[i]; j < BctList_S[i] + BctList_S[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.S;
-    }
-  }
-
-  for (int i = 0; i < BctList_WS.length; i += 2) {
-    for (int j = BctList_WS[i]; j < BctList_WS[i] + BctList_WS[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.WS;
-    }
-  }
-
-  for (int i = 0; i < BctList_ON.length; i += 2) {
-    for (int j = BctList_ON[i]; j < BctList_ON[i] + BctList_ON[i + 1]; ++j) {
-      bidiCharType[j] = BidiCharacterType.ON;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Lu.length; i += 2) {
-    for (int j = UgcList_Lu[i]; j < UgcList_Lu[i] + UgcList_Lu[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Lu;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Ll.length; i += 2) {
-    for (int j = UgcList_Ll[i]; j < UgcList_Ll[i] + UgcList_Ll[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Ll;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Lt.length; i += 2) {
-    for (int j = UgcList_Lt[i]; j < UgcList_Lt[i] + UgcList_Lt[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Lt;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Lm.length; i += 2) {
-    for (int j = UgcList_Lm[i]; j < UgcList_Lm[i] + UgcList_Lm[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Lm;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Lo.length; i += 2) {
-    for (int j = UgcList_Lo[i]; j < UgcList_Lo[i] + UgcList_Lo[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Lo;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Mn.length; i += 2) {
-    for (int j = UgcList_Mn[i]; j < UgcList_Mn[i] + UgcList_Mn[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Mn;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Mc.length; i += 2) {
-    for (int j = UgcList_Mc[i]; j < UgcList_Mc[i] + UgcList_Mc[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Mc;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Me.length; i += 2) {
-    for (int j = UgcList_Me[i]; j < UgcList_Me[i] + UgcList_Me[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Me;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Nd.length; i += 2) {
-    for (int j = UgcList_Nd[i]; j < UgcList_Nd[i] + UgcList_Nd[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Nd;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Nl.length; i += 2) {
-    for (int j = UgcList_Nl[i]; j < UgcList_Nl[i] + UgcList_Nl[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Nl;
-    }
-  }
-
-  for (int i = 0; i < UgcList_No.length; i += 2) {
-    for (int j = UgcList_No[i]; j < UgcList_No[i] + UgcList_No[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.No;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Pc.length; i += 2) {
-    for (int j = UgcList_Pc[i]; j < UgcList_Pc[i] + UgcList_Pc[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Pc;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Pd.length; i += 2) {
-    for (int j = UgcList_Pd[i]; j < UgcList_Pd[i] + UgcList_Pd[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Pd;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Ps.length; i += 2) {
-    for (int j = UgcList_Ps[i]; j < UgcList_Ps[i] + UgcList_Ps[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Ps;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Pe.length; i += 2) {
-    for (int j = UgcList_Pe[i]; j < UgcList_Pe[i] + UgcList_Pe[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Pe;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Pi.length; i += 2) {
-    for (int j = UgcList_Pi[i]; j < UgcList_Pi[i] + UgcList_Pi[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Pi;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Pf.length; i += 2) {
-    for (int j = UgcList_Pf[i]; j < UgcList_Pf[i] + UgcList_Pf[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Pf;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Po.length; i += 2) {
-    for (int j = UgcList_Po[i]; j < UgcList_Po[i] + UgcList_Po[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Po;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Sm.length; i += 2) {
-    for (int j = UgcList_Sm[i]; j < UgcList_Sm[i] + UgcList_Sm[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Sm;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Sc.length; i += 2) {
-    for (int j = UgcList_Sc[i]; j < UgcList_Sc[i] + UgcList_Sc[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Sc;
-    }
-  }
-  for (int i = 0; i < UgcList_Sk.length; i += 2) {
-    for (int j = UgcList_Sk[i]; j < UgcList_Sk[i] + UgcList_Sk[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Sk;
-    }
-  }
-
-  for (int i = 0; i < UgcList_So.length; i += 2) {
-    for (int j = UgcList_So[i]; j < UgcList_So[i] + UgcList_So[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.So;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Zs.length; i += 2) {
-    for (int j = UgcList_Zs[i]; j < UgcList_Zs[i] + UgcList_Zs[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Zs;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Zl.length; i += 2) {
-    for (int j = UgcList_Zl[i]; j < UgcList_Zl[i] + UgcList_Zl[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Zl;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Zp.length; i += 2) {
-    for (int j = UgcList_Zp[i]; j < UgcList_Zp[i] + UgcList_Zp[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Zp;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Cc.length; i += 2) {
-    for (int j = UgcList_Cc[i]; j < UgcList_Cc[i] + UgcList_Cc[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Cc;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Cf.length; i += 2) {
-    for (int j = UgcList_Cf[i]; j < UgcList_Cf[i] + UgcList_Cf[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Cf;
-    }
-  }
-
-  for (int i = 0; i < UgcList_Cs.length; i += 2) {
-    for (int j = UgcList_Cs[i]; j < UgcList_Cs[i] + UgcList_Cs[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Cs;
-    }
-  }
-  for (int i = 0; i < UgcList_Co.length; i += 2) {
-    for (int j = UgcList_Co[i]; j < UgcList_Co[i] + UgcList_Co[i + 1]; ++j) {
-      categories[j] = UnicodeGeneralCategory.Co;
-    }
-  }
-
-  for (int i = 0; i < UdtList_Font.length; i += 2) {
-    for (int j = UdtList_Font[i];
-        j < UdtList_Font[i] + UdtList_Font[i + 1];
+  for (int i = 0; i < _BctList_LRO.length; i += 2) {
+    for (int j = _BctList_LRO[i];
+        j < _BctList_LRO[i] + _BctList_LRO[i + 1];
         ++j) {
-      decomType[j] = UnicodeDecompositionType.Font;
+      _bidiCharType[j] = _BidiCharacterType.LRO;
     }
   }
 
-  for (int i = 0; i < UdtList_NoBreak.length; i += 2) {
-    for (int j = UdtList_NoBreak[i];
-        j < UdtList_NoBreak[i] + UdtList_NoBreak[i + 1];
+  for (int i = 0; i < _BctList_LRI.length; i += 2) {
+    for (int j = _BctList_LRI[i];
+        j < _BctList_LRI[i] + _BctList_LRI[i + 1];
         ++j) {
-      decomType[j] = UnicodeDecompositionType.NoBreak;
+      _bidiCharType[j] = _BidiCharacterType.LRI;
     }
   }
 
-  for (int i = 0; i < UdtList_Initial.length; i += 2) {
-    for (int j = UdtList_Initial[i];
-        j < UdtList_Initial[i] + UdtList_Initial[i + 1];
-        ++j) {
-      decomType[j] = UnicodeDecompositionType.Initial;
+  for (int i = 0; i < _BctList_R.length; i += 2) {
+    for (int j = _BctList_R[i]; j < _BctList_R[i] + _BctList_R[i + 1]; ++j) {
+      _bidiCharType[j] = _BidiCharacterType.R;
     }
   }
 
-  for (int i = 0; i < UdtList_Medial.length; i += 2) {
-    for (int j = UdtList_Medial[i];
-        j < UdtList_Medial[i] + UdtList_Medial[i + 1];
-        ++j) {
-      decomType[j] = UnicodeDecompositionType.Medial;
+  for (int i = 0; i < _BctList_AL.length; i += 2) {
+    for (int j = _BctList_AL[i]; j < _BctList_AL[i] + _BctList_AL[i + 1]; ++j) {
+      _bidiCharType[j] = _BidiCharacterType.AL;
     }
   }
 
-  for (int i = 0; i < UdtList_Final.length; i += 2) {
-    for (int j = UdtList_Final[i];
-        j < UdtList_Final[i] + UdtList_Final[i + 1];
+  for (int i = 0; i < _BctList_RLE.length; i += 2) {
+    for (int j = _BctList_RLE[i];
+        j < _BctList_RLE[i] + _BctList_RLE[i + 1];
         ++j) {
-      decomType[j] = UnicodeDecompositionType.Final;
-    }
-  }
-  for (int i = 0; i < UdtList_Isolated.length; i += 2) {
-    for (int j = UdtList_Isolated[i];
-        j < UdtList_Isolated[i] + UdtList_Isolated[i + 1];
-        ++j) {
-      decomType[j] = UnicodeDecompositionType.Isolated;
+      _bidiCharType[j] = _BidiCharacterType.RLE;
     }
   }
 
-  for (int i = 0; i < UdtList_Circle.length; i += 2) {
-    for (int j = UdtList_Circle[i];
-        j < UdtList_Circle[i] + UdtList_Circle[i + 1];
+  for (int i = 0; i < _BctList_RLO.length; i += 2) {
+    for (int j = _BctList_RLO[i];
+        j < _BctList_RLO[i] + _BctList_RLO[i + 1];
         ++j) {
-      decomType[j] = UnicodeDecompositionType.Circle;
+      _bidiCharType[j] = _BidiCharacterType.RLO;
     }
   }
 
-  for (int i = 0; i < UdtList_Super.length; i += 2) {
-    for (int j = UdtList_Super[i];
-        j < UdtList_Super[i] + UdtList_Super[i + 1];
+  for (int i = 0; i < _BctList_RLI.length; i += 2) {
+    for (int j = _BctList_RLI[i];
+        j < _BctList_RLI[i] + _BctList_RLI[i + 1];
         ++j) {
-      decomType[j] = UnicodeDecompositionType.Super;
+      _bidiCharType[j] = _BidiCharacterType.RLI;
     }
   }
 
-  for (int i = 0; i < UdtList_Sub.length; i += 2) {
-    for (int j = UdtList_Sub[i]; j < UdtList_Sub[i] + UdtList_Sub[i + 1]; ++j) {
-      decomType[j] = UnicodeDecompositionType.Sub;
+  for (int i = 0; i < _BctList_FSI.length; i += 2) {
+    for (int j = _BctList_FSI[i];
+        j < _BctList_FSI[i] + _BctList_FSI[i + 1];
+        ++j) {
+      _bidiCharType[j] = _BidiCharacterType.FSI;
     }
   }
 
-  for (int i = 0; i < UdtList_Vertical.length; i += 2) {
-    for (int j = UdtList_Vertical[i];
-        j < UdtList_Vertical[i] + UdtList_Vertical[i + 1];
+  for (int i = 0; i < _BctList_PDF.length; i += 2) {
+    for (int j = _BctList_PDF[i];
+        j < _BctList_PDF[i] + _BctList_PDF[i + 1];
         ++j) {
-      decomType[j] = UnicodeDecompositionType.Vertical;
+      _bidiCharType[j] = _BidiCharacterType.PDF;
     }
   }
 
-  for (int i = 0; i < UdtList_Wide.length; i += 2) {
-    for (int j = UdtList_Wide[i];
-        j < UdtList_Wide[i] + UdtList_Wide[i + 1];
+  for (int i = 0; i < _BctList_PDI.length; i += 2) {
+    for (int j = _BctList_PDI[i];
+        j < _BctList_PDI[i] + _BctList_PDI[i + 1];
         ++j) {
-      decomType[j] = UnicodeDecompositionType.Wide;
+      _bidiCharType[j] = _BidiCharacterType.PDI;
     }
   }
 
-  for (int i = 0; i < UdtList_Narrow.length; i += 2) {
-    for (int j = UdtList_Narrow[i];
-        j < UdtList_Narrow[i] + UdtList_Narrow[i + 1];
-        ++j) {
-      decomType[j] = UnicodeDecompositionType.Narrow;
+  for (int i = 0; i < _BctList_EN.length; i += 2) {
+    for (int j = _BctList_EN[i]; j < _BctList_EN[i] + _BctList_EN[i + 1]; ++j) {
+      _bidiCharType[j] = _BidiCharacterType.EN;
     }
   }
 
-  for (int i = 0; i < UdtList_Small.length; i += 2) {
-    for (int j = UdtList_Small[i];
-        j < UdtList_Small[i] + UdtList_Small[i + 1];
-        ++j) {
-      decomType[j] = UnicodeDecompositionType.Small;
+  for (int i = 0; i < _BctList_ES.length; i += 2) {
+    for (int j = _BctList_ES[i]; j < _BctList_ES[i] + _BctList_ES[i + 1]; ++j) {
+      _bidiCharType[j] = _BidiCharacterType.ES;
     }
   }
 
-  for (int i = 0; i < UdtList_Square.length; i += 2) {
-    for (int j = UdtList_Square[i];
-        j < UdtList_Square[i] + UdtList_Square[i + 1];
-        ++j) {
-      decomType[j] = UnicodeDecompositionType.Square;
+  for (int i = 0; i < _BctList_ET.length; i += 2) {
+    for (int j = _BctList_ET[i]; j < _BctList_ET[i] + _BctList_ET[i + 1]; ++j) {
+      _bidiCharType[j] = _BidiCharacterType.ET;
     }
   }
 
-  for (int i = 0; i < UdtList_Fraction.length; i += 2) {
-    for (int j = UdtList_Fraction[i];
-        j < UdtList_Fraction[i] + UdtList_Fraction[i + 1];
-        ++j) {
-      decomType[j] = UnicodeDecompositionType.Fraction;
+  for (int i = 0; i < _BctList_AN.length; i += 2) {
+    for (int j = _BctList_AN[i]; j < _BctList_AN[i] + _BctList_AN[i + 1]; ++j) {
+      _bidiCharType[j] = _BidiCharacterType.AN;
     }
   }
 
-  for (int i = 0; i < UdtList_Compat.length; i += 2) {
-    for (int j = UdtList_Compat[i];
-        j < UdtList_Compat[i] + UdtList_Compat[i + 1];
+  for (int i = 0; i < _BctList_CS.length; i += 2) {
+    for (int j = _BctList_CS[i]; j < _BctList_CS[i] + _BctList_CS[i + 1]; ++j) {
+      _bidiCharType[j] = _BidiCharacterType.CS;
+    }
+  }
+  for (int i = 0; i < _BctList_NSM.length; i += 2) {
+    for (int j = _BctList_NSM[i];
+        j < _BctList_NSM[i] + _BctList_NSM[i + 1];
         ++j) {
-      decomType[j] = UnicodeDecompositionType.Compat;
+      _bidiCharType[j] = _BidiCharacterType.NSM;
+    }
+  }
+
+  for (int i = 0; i < _BctList_BN.length; i += 2) {
+    for (int j = _BctList_BN[i]; j < _BctList_BN[i] + _BctList_BN[i + 1]; ++j) {
+      _bidiCharType[j] = _BidiCharacterType.BN;
+    }
+  }
+
+  for (int i = 0; i < _BctList_B.length; i += 2) {
+    for (int j = _BctList_B[i]; j < _BctList_B[i] + _BctList_B[i + 1]; ++j) {
+      _bidiCharType[j] = _BidiCharacterType.B;
+    }
+  }
+
+  for (int i = 0; i < _BctList_S.length; i += 2) {
+    for (int j = _BctList_S[i]; j < _BctList_S[i] + _BctList_S[i + 1]; ++j) {
+      _bidiCharType[j] = _BidiCharacterType.S;
+    }
+  }
+
+  for (int i = 0; i < _BctList_WS.length; i += 2) {
+    for (int j = _BctList_WS[i]; j < _BctList_WS[i] + _BctList_WS[i + 1]; ++j) {
+      _bidiCharType[j] = _BidiCharacterType.WS;
+    }
+  }
+
+  for (int i = 0; i < _BctList_ON.length; i += 2) {
+    for (int j = _BctList_ON[i]; j < _BctList_ON[i] + _BctList_ON[i + 1]; ++j) {
+      _bidiCharType[j] = _BidiCharacterType.ON;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Lu.length; i += 2) {
+    for (int j = _UgcList_Lu[i]; j < _UgcList_Lu[i] + _UgcList_Lu[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Lu;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Ll.length; i += 2) {
+    for (int j = _UgcList_Ll[i]; j < _UgcList_Ll[i] + _UgcList_Ll[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Ll;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Lt.length; i += 2) {
+    for (int j = _UgcList_Lt[i]; j < _UgcList_Lt[i] + _UgcList_Lt[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Lt;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Lm.length; i += 2) {
+    for (int j = _UgcList_Lm[i]; j < _UgcList_Lm[i] + _UgcList_Lm[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Lm;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Lo.length; i += 2) {
+    for (int j = _UgcList_Lo[i]; j < _UgcList_Lo[i] + _UgcList_Lo[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Lo;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Mn.length; i += 2) {
+    for (int j = _UgcList_Mn[i]; j < _UgcList_Mn[i] + _UgcList_Mn[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Mn;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Mc.length; i += 2) {
+    for (int j = _UgcList_Mc[i]; j < _UgcList_Mc[i] + _UgcList_Mc[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Mc;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Me.length; i += 2) {
+    for (int j = _UgcList_Me[i]; j < _UgcList_Me[i] + _UgcList_Me[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Me;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Nd.length; i += 2) {
+    for (int j = _UgcList_Nd[i]; j < _UgcList_Nd[i] + _UgcList_Nd[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Nd;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Nl.length; i += 2) {
+    for (int j = _UgcList_Nl[i]; j < _UgcList_Nl[i] + _UgcList_Nl[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Nl;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_No.length; i += 2) {
+    for (int j = _UgcList_No[i]; j < _UgcList_No[i] + _UgcList_No[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.No;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Pc.length; i += 2) {
+    for (int j = _UgcList_Pc[i]; j < _UgcList_Pc[i] + _UgcList_Pc[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Pc;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Pd.length; i += 2) {
+    for (int j = _UgcList_Pd[i]; j < _UgcList_Pd[i] + _UgcList_Pd[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Pd;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Ps.length; i += 2) {
+    for (int j = _UgcList_Ps[i]; j < _UgcList_Ps[i] + _UgcList_Ps[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Ps;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Pe.length; i += 2) {
+    for (int j = _UgcList_Pe[i]; j < _UgcList_Pe[i] + _UgcList_Pe[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Pe;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Pi.length; i += 2) {
+    for (int j = _UgcList_Pi[i]; j < _UgcList_Pi[i] + _UgcList_Pi[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Pi;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Pf.length; i += 2) {
+    for (int j = _UgcList_Pf[i]; j < _UgcList_Pf[i] + _UgcList_Pf[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Pf;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Po.length; i += 2) {
+    for (int j = _UgcList_Po[i]; j < _UgcList_Po[i] + _UgcList_Po[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Po;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Sm.length; i += 2) {
+    for (int j = _UgcList_Sm[i]; j < _UgcList_Sm[i] + _UgcList_Sm[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Sm;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Sc.length; i += 2) {
+    for (int j = _UgcList_Sc[i]; j < _UgcList_Sc[i] + _UgcList_Sc[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Sc;
+    }
+  }
+  for (int i = 0; i < _UgcList_Sk.length; i += 2) {
+    for (int j = _UgcList_Sk[i]; j < _UgcList_Sk[i] + _UgcList_Sk[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Sk;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_So.length; i += 2) {
+    for (int j = _UgcList_So[i]; j < _UgcList_So[i] + _UgcList_So[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.So;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Zs.length; i += 2) {
+    for (int j = _UgcList_Zs[i]; j < _UgcList_Zs[i] + _UgcList_Zs[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Zs;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Zl.length; i += 2) {
+    for (int j = _UgcList_Zl[i]; j < _UgcList_Zl[i] + _UgcList_Zl[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Zl;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Zp.length; i += 2) {
+    for (int j = _UgcList_Zp[i]; j < _UgcList_Zp[i] + _UgcList_Zp[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Zp;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Cc.length; i += 2) {
+    for (int j = _UgcList_Cc[i]; j < _UgcList_Cc[i] + _UgcList_Cc[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Cc;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Cf.length; i += 2) {
+    for (int j = _UgcList_Cf[i]; j < _UgcList_Cf[i] + _UgcList_Cf[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Cf;
+    }
+  }
+
+  for (int i = 0; i < _UgcList_Cs.length; i += 2) {
+    for (int j = _UgcList_Cs[i]; j < _UgcList_Cs[i] + _UgcList_Cs[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Cs;
+    }
+  }
+  for (int i = 0; i < _UgcList_Co.length; i += 2) {
+    for (int j = _UgcList_Co[i]; j < _UgcList_Co[i] + _UgcList_Co[i + 1]; ++j) {
+      _categories[j] = _UnicodeGeneralCategory.Co;
+    }
+  }
+
+  for (int i = 0; i < _UdtList_Font.length; i += 2) {
+    for (int j = _UdtList_Font[i];
+        j < _UdtList_Font[i] + _UdtList_Font[i + 1];
+        ++j) {
+      _decomType[j] = _UnicodeDecompositionType.Font;
+    }
+  }
+
+  for (int i = 0; i < _UdtList_NoBreak.length; i += 2) {
+    for (int j = _UdtList_NoBreak[i];
+        j < _UdtList_NoBreak[i] + _UdtList_NoBreak[i + 1];
+        ++j) {
+      _decomType[j] = _UnicodeDecompositionType.NoBreak;
+    }
+  }
+
+  for (int i = 0; i < _UdtList_Initial.length; i += 2) {
+    for (int j = _UdtList_Initial[i];
+        j < _UdtList_Initial[i] + _UdtList_Initial[i + 1];
+        ++j) {
+      _decomType[j] = _UnicodeDecompositionType.Initial;
+    }
+  }
+
+  for (int i = 0; i < _UdtList_Medial.length; i += 2) {
+    for (int j = _UdtList_Medial[i];
+        j < _UdtList_Medial[i] + _UdtList_Medial[i + 1];
+        ++j) {
+      _decomType[j] = _UnicodeDecompositionType.Medial;
+    }
+  }
+
+  for (int i = 0; i < _UdtList_Final.length; i += 2) {
+    for (int j = _UdtList_Final[i];
+        j < _UdtList_Final[i] + _UdtList_Final[i + 1];
+        ++j) {
+      _decomType[j] = _UnicodeDecompositionType.Final;
+    }
+  }
+  for (int i = 0; i < _UdtList_Isolated.length; i += 2) {
+    for (int j = _UdtList_Isolated[i];
+        j < _UdtList_Isolated[i] + _UdtList_Isolated[i + 1];
+        ++j) {
+      _decomType[j] = _UnicodeDecompositionType.Isolated;
+    }
+  }
+
+  for (int i = 0; i < _UdtList_Circle.length; i += 2) {
+    for (int j = _UdtList_Circle[i];
+        j < _UdtList_Circle[i] + _UdtList_Circle[i + 1];
+        ++j) {
+      _decomType[j] = _UnicodeDecompositionType.Circle;
+    }
+  }
+
+  for (int i = 0; i < _UdtList_Super.length; i += 2) {
+    for (int j = _UdtList_Super[i];
+        j < _UdtList_Super[i] + _UdtList_Super[i + 1];
+        ++j) {
+      _decomType[j] = _UnicodeDecompositionType.Super;
+    }
+  }
+
+  _setUnicodeDecompositionType(_UdtList_Sub, _UnicodeDecompositionType.Sub);
+
+  for (int i = 0; i < _UdtList_Vertical.length; i += 2) {
+    for (int j = _UdtList_Vertical[i];
+        j < _UdtList_Vertical[i] + _UdtList_Vertical[i + 1];
+        ++j) {
+      _decomType[j] = _UnicodeDecompositionType.Vertical;
+    }
+  }
+
+  _setUnicodeDecompositionType(_UdtList_Wide, _UnicodeDecompositionType.Wide);
+
+  for (int i = 0; i < _UdtList_Narrow.length; i += 2) {
+    for (int j = _UdtList_Narrow[i];
+        j < _UdtList_Narrow[i] + _UdtList_Narrow[i + 1];
+        ++j) {
+      _decomType[j] = _UnicodeDecompositionType.Narrow;
+    }
+  }
+
+  for (int i = 0; i < _UdtList_Small.length; i += 2) {
+    for (int j = _UdtList_Small[i];
+        j < _UdtList_Small[i] + _UdtList_Small[i + 1];
+        ++j) {
+      _decomType[j] = _UnicodeDecompositionType.Small;
+    }
+  }
+
+  for (int i = 0; i < _UdtList_Square.length; i += 2) {
+    for (int j = _UdtList_Square[i];
+        j < _UdtList_Square[i] + _UdtList_Square[i + 1];
+        ++j) {
+      _decomType[j] = _UnicodeDecompositionType.Square;
+    }
+  }
+
+  for (int i = 0; i < _UdtList_Fraction.length; i += 2) {
+    for (int j = _UdtList_Fraction[i];
+        j < _UdtList_Fraction[i] + _UdtList_Fraction[i + 1];
+        ++j) {
+      _decomType[j] = _UnicodeDecompositionType.Fraction;
+    }
+  }
+
+  for (int i = 0; i < _UdtList_Compat.length; i += 2) {
+    for (int j = _UdtList_Compat[i];
+        j < _UdtList_Compat[i] + _UdtList_Compat[i + 1];
+        ++j) {
+      _decomType[j] = _UnicodeDecompositionType.Compat;
     }
   }
 }
@@ -15027,10 +15065,10 @@ void _init() {
 /// [char] A Unicode character for which to get the BiDi type.
 ///
 /// Returns the character BiDi type.
-BidiCharacterType getBidiCharacterType(int char) {
+_BidiCharacterType _getBidiCharacterType(int char) {
   _init();
 
-  return bidiCharType[char];
+  return _bidiCharType[char];
 }
 
 /// Returns the Unicode category for a given character.
@@ -15038,10 +15076,10 @@ BidiCharacterType getBidiCharacterType(int char) {
 /// [char] A Unicode character for which to get the general Unicode category.
 ///
 /// Returns the character general Unicode category.
-UnicodeGeneralCategory getUnicodeGeneralCategory(int char) {
+_UnicodeGeneralCategory _getUnicodeGeneralCategory(int char) {
   _init();
 
-  final returnValue = categories[char] ?? UnicodeGeneralCategory.Cn;
+  final returnValue = _categories[char] ?? _UnicodeGeneralCategory.Cn;
   return returnValue;
 }
 
@@ -15050,18 +15088,18 @@ UnicodeGeneralCategory getUnicodeGeneralCategory(int char) {
 /// [char] A Unicode character for which to get the Unicode canonical class.
 ///
 /// Returns the character Unicode canonical class.
-UnicodeCanonicalClass getUnicodeCanonicalClass(int char) {
+_UnicodeCanonicalClass _getUnicodeCanonicalClass(int char) {
   _init();
 
-  final returnValue = canonClass[char] ?? UnicodeCanonicalClass.NR;
+  final returnValue = _canonClass[char] ?? _UnicodeCanonicalClass.NR;
   return returnValue;
 }
 
 /// Gets the Unicode decomposition type.
-UnicodeDecompositionType getUnicodeDecompositionType(int char) {
+_UnicodeDecompositionType _getUnicodeDecompositionType(int char) {
   _init();
 
-  final returnValue = decomType[char] ?? UnicodeDecompositionType.none;
+  final returnValue = _decomType[char] ?? _UnicodeDecompositionType.none;
   return returnValue;
 }
 
@@ -15069,7 +15107,7 @@ UnicodeDecompositionType getUnicodeDecompositionType(int char) {
 List<int>? getUnicodeDecompositionMapping(int c) {
   _init();
 
-  final returnValue = decomMapping[c];
+  final returnValue = _decomMapping[c];
   return returnValue;
 }
 
@@ -15077,6 +15115,6 @@ List<int>? getUnicodeDecompositionMapping(int c) {
 int compose(String sequence) {
   _init();
 
-  final returnValue = composeMapping[sequence] ?? 0xFFFF;
+  final returnValue = _composeMapping[sequence] ?? 0xFFFF;
   return returnValue;
 }

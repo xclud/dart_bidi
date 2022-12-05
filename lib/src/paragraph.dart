@@ -1,23 +1,18 @@
-library bidi;
+part of bidi;
 
-import 'dart:core';
-import 'dart:math';
-import 'package:bidi/src/character_mirror_resolver.dart';
-import 'package:bidi/src/enums.dart';
-import 'package:bidi/src/shaping_resolver.dart';
-import 'package:bidi/src/stack.dart';
-import 'package:bidi/src/unicode_character_resolver.dart';
-
+/// Represents a paragraph in text.
 class Paragraph {
-  Paragraph(List<int> text) {
+  /// Constructor.
+  Paragraph._(List<int> text, this._paragraphSeparator) {
     this.text = text;
   }
+
+  final int _paragraphSeparator;
   final List<int> _originalText = [];
   final List<int> _text = [];
   final List<int> _bidiText = [];
-  int paragraphSeparator = BidiChars.NotAChar;
 
-  int embeddingLevel = 0;
+  int _embeddingLevel = 0;
   late List<_CharData> _textData;
   final List<int> _charLengths = [];
   final List<int> _bidiIndexes = [];
@@ -25,10 +20,12 @@ class Paragraph {
   late bool _hasPersian;
   late bool _hasNSMs;
 
+  /// Original text.
   List<int> get text {
     return _originalText;
   }
 
+  /// Original text.
   set text(Iterable<int> value) {
     _originalText.clear();
     _text.clear();
@@ -38,32 +35,36 @@ class Paragraph {
       _text.addAll(value);
     }
 
-    normalizeText();
+    _normalizeText();
 
-    recalculateParagraphEmbeddingLevel();
-    recalculateCharactersEmbeddingLevels();
+    _recalculateParagraphEmbeddingLevel();
+    _recalculateCharactersEmbeddingLevels();
 
-    removeBidiMarkers();
+    _removeBidiMarkers();
   }
 
+  /// Bidi text.
   List<int> get bidiText {
     var ret = _bidiText.toList();
 
-    if (paragraphSeparator != BidiChars.NotAChar) {
-      ret.add(paragraphSeparator);
+    if (_paragraphSeparator != _BidiChars.NotAChar) {
+      ret.add(_paragraphSeparator);
     }
     return ret;
   }
 
+  /// Bidi indexes.
   List<int> get bidiIndexes {
     return _bidiIndexes;
   }
 
+  /// Bidi index lengths.
   List<int> get bidiIndexLengths {
     return _charLengths;
   }
 
-  void removeBidiMarkers() {
+  /// Removes Bidi markers from text.
+  void _removeBidiMarkers() {
     final controlChars = [
       0x200F,
       0x202B,
@@ -95,28 +96,28 @@ class Paragraph {
   // P2 - In each paragraph, find the first character of type L, AL, or R.
   // P3 - If a character is found in P2 and it is of type AL or R, then
   // set the paragraph embedding level to one; otherwise, set it to zero.
-  void recalculateParagraphEmbeddingLevel() {
+  void _recalculateParagraphEmbeddingLevel() {
     for (var c in _text) {
-      final cType = getBidiCharacterType(c);
-      if (cType == BidiCharacterType.R || cType == BidiCharacterType.AL) {
-        embeddingLevel = 1;
+      final cType = _getBidiCharacterType(c);
+      if (cType == _BidiCharacterType.R || cType == _BidiCharacterType.AL) {
+        _embeddingLevel = 1;
         break;
-      } else if (cType == BidiCharacterType.L) {
+      } else if (cType == _BidiCharacterType.L) {
         break;
       }
     }
   }
 
-  void normalizeText() {
-    final sb = internalDecompose(_charLengths);
-    internalCompose(sb, _charLengths);
+  void _normalizeText() {
+    final sb = _internalDecompose(_charLengths);
+    _internalCompose(sb, _charLengths);
 
     _text.clear();
     _text.addAll(sb);
   }
 
   // 3.3.2 Explicit Levels and Directions
-  void recalculateCharactersEmbeddingLevels() {
+  void _recalculateCharactersEmbeddingLevels() {
     // This method is implemented in such a way it handles the string in logical order,
     // rather than visual order, so it is easier to handle complex layouts. That is why
     // it is placed BEFORE ReorderString rather than AFTER it, as its number suggests.
@@ -129,23 +130,23 @@ class Paragraph {
     _textData = List<_CharData>.generate(_text.length, (index) => _CharData());
 
     // X1
-    var embeddingLevel = this.embeddingLevel;
-    DirectionalOverrideStatus dos = DirectionalOverrideStatus.Neutral;
-    Stack<DirectionalOverrideStatus> dosStack =
-        Stack<DirectionalOverrideStatus>();
-    Stack<int> elStack = Stack<int>();
+    var embeddingLevel = _embeddingLevel;
+    _DirectionalOverrideStatus dos = _DirectionalOverrideStatus.Neutral;
+    _Stack<_DirectionalOverrideStatus> dosStack =
+        _Stack<_DirectionalOverrideStatus>();
+    _Stack<int> elStack = _Stack<int>();
     int idx = 0;
     for (int i = 0; i < _text.length; ++i) {
       bool x9Char = false;
       final c = _text[i];
-      _textData[i]._ct = getBidiCharacterType(c);
+      _textData[i]._ct = _getBidiCharacterType(c);
       _textData[i]._char = c;
       _textData[i]._idx = idx;
       idx += _charLengths[i];
 
       // X2. With each RLE, compute the least greater odd embedding level.
       // X4. With each RLO, compute the least greater odd embedding level.
-      if (c == BidiChars.RLE || c == BidiChars.RLO) {
+      if (c == _BidiChars.RLE || c == _BidiChars.RLO) {
         x9Char = true;
         if (embeddingLevel < 60) {
           elStack.push(embeddingLevel);
@@ -154,16 +155,16 @@ class Paragraph {
           ++embeddingLevel;
           embeddingLevel |= 1;
 
-          if (c == BidiChars.RLE) {
-            dos = DirectionalOverrideStatus.Neutral;
+          if (c == _BidiChars.RLE) {
+            dos = _DirectionalOverrideStatus.Neutral;
           } else {
-            dos = DirectionalOverrideStatus.RTL;
+            dos = _DirectionalOverrideStatus.RTL;
           }
         }
       }
       // X3. With each LRE, compute the least greater even embedding level.
       // X5. With each LRO, compute the least greater even embedding level.
-      else if (c == BidiChars.LRE || c == BidiChars.LRO) {
+      else if (c == _BidiChars.LRE || c == _BidiChars.LRO) {
         x9Char = true;
         if (embeddingLevel < 59) {
           elStack.push(embeddingLevel);
@@ -172,25 +173,25 @@ class Paragraph {
           embeddingLevel |= 1;
           ++embeddingLevel;
 
-          if (c == BidiChars.LRE) {
-            dos = DirectionalOverrideStatus.Neutral;
+          if (c == _BidiChars.LRE) {
+            dos = _DirectionalOverrideStatus.Neutral;
           } else {
-            dos = DirectionalOverrideStatus.LTR;
+            dos = _DirectionalOverrideStatus.LTR;
           }
         }
       }
 
       // X6. For all types besides RLE, LRE, RLO, LRO, and PDF: (...)
-      else if (c != BidiChars.PDF) {
+      else if (c != _BidiChars.PDF) {
         // a. Set the level of the current character to the current embedding level.
         _textData[i]._el = embeddingLevel;
 
         //b. Whenever the directional override status is not neutral,
         //reset the current character type to the directional override status.
-        if (dos == DirectionalOverrideStatus.LTR) {
-          _textData[i]._ct = BidiCharacterType.L;
-        } else if (dos == DirectionalOverrideStatus.RTL) {
-          _textData[i]._ct = BidiCharacterType.R;
+        if (dos == _DirectionalOverrideStatus.LTR) {
+          _textData[i]._ct = _BidiCharacterType.L;
+        } else if (dos == _DirectionalOverrideStatus.RTL) {
+          _textData[i]._ct = _BidiCharacterType.R;
         }
       }
 
@@ -198,7 +199,7 @@ class Paragraph {
       // X7. With each PDF, determine the matching embedding or override code.
       // If there was a valid matching code, restore (pop) the last remembered (pushed)
       // embedding level and directional override.
-      else if (c == BidiChars.PDF) {
+      else if (c == _BidiChars.PDF) {
         x9Char = true;
         if (elStack.length > 0) {
           embeddingLevel = elStack.pop();
@@ -210,7 +211,7 @@ class Paragraph {
       // terminated at the end of each paragraph. Paragraph separators are not
       // included in the embedding.
 
-      if (x9Char || _textData[i]._ct == BidiCharacterType.BN) {
+      if (x9Char || _textData[i]._ct == _BidiCharacterType.BN) {
         _textData[i]._el = embeddingLevel;
       }
     }
@@ -220,7 +221,7 @@ class Paragraph {
     int start = 0;
     while (start < _text.length) {
       final level = _textData[start]._el;
-      final sor = typeForLevel(max(prevLevel, level));
+      final sor = _typeForLevel(max(prevLevel, level));
 
       int limit = start + 1;
       while (limit < _text.length && _textData[limit]._el == level) {
@@ -229,10 +230,10 @@ class Paragraph {
 
       final nextLevel =
           limit < _text.length ? _textData[limit]._el : embeddingLevel;
-      final eor = typeForLevel(max(nextLevel, level));
+      final eor = _typeForLevel(max(nextLevel, level));
 
-      resolveWeakTypes(start, limit, sor, eor);
-      resolveNeutralTypes(start, limit, sor, eor, level);
+      _resolveWeakTypes(start, limit, sor, eor);
+      _resolveNeutralTypes(start, limit, sor, eor, level);
       resolveImplicitTypes(start, limit, level);
 
       prevLevel = level;
@@ -260,21 +261,21 @@ class Paragraph {
   }
 
   /// 3.3.3 Resolving Weak Types
-  void resolveWeakTypes(
+  void _resolveWeakTypes(
     int start,
     int limit,
-    BidiCharacterType sor,
-    BidiCharacterType eor,
+    _BidiCharacterType sor,
+    _BidiCharacterType eor,
   ) {
     // TODO - all these repeating runs seems somewhat unefficient...
     // TODO - rules 2 and 7 are the same, except for minor parameter changes...
 
     // W1. Examine each nonspacing mark (NSM) in the level run, and change the type of the NSM to the type of the previous character. If the NSM is at the start of the level run, it will get the type of sor.
     if (_hasNSMs) {
-      BidiCharacterType preceedingCharacterType = sor;
+      _BidiCharacterType preceedingCharacterType = sor;
       for (int i = start; i < limit; ++i) {
-        BidiCharacterType t = _textData[i]._ct;
-        if (t == BidiCharacterType.NSM) {
+        _BidiCharacterType t = _textData[i]._ct;
+        if (t == _BidiCharacterType.NSM) {
           _textData[i]._ct = preceedingCharacterType;
         } else {
           preceedingCharacterType = t;
@@ -284,14 +285,14 @@ class Paragraph {
 
     // W2. Search backward from each instance of a European number until the first strong type (R, L, AL, or sor) is found. If an AL is found, change the type of the European number to Persian number.
 
-    var tW2 = BidiCharacterType.EN;
+    var tW2 = _BidiCharacterType.EN;
     for (int i = start; i < limit; ++i) {
-      if (_textData[i]._ct == BidiCharacterType.L ||
-          _textData[i]._ct == BidiCharacterType.R) {
-        tW2 = BidiCharacterType.EN;
-      } else if (_textData[i]._ct == BidiCharacterType.AL) {
-        tW2 = BidiCharacterType.AN;
-      } else if (_textData[i]._ct == BidiCharacterType.EN) {
+      if (_textData[i]._ct == _BidiCharacterType.L ||
+          _textData[i]._ct == _BidiCharacterType.R) {
+        tW2 = _BidiCharacterType.EN;
+      } else if (_textData[i]._ct == _BidiCharacterType.AL) {
+        tW2 = _BidiCharacterType.AN;
+      } else if (_textData[i]._ct == _BidiCharacterType.EN) {
         _textData[i]._ct = tW2;
       }
     }
@@ -299,8 +300,8 @@ class Paragraph {
     // W3. Change all ALs to R.
     if (_hasPersian) {
       for (int i = start; i < limit; ++i) {
-        if (_textData[i]._ct == BidiCharacterType.AL) {
-          _textData[i]._ct = BidiCharacterType.R;
+        if (_textData[i]._ct == _BidiCharacterType.AL) {
+          _textData[i]._ct = _BidiCharacterType.R;
         }
       }
     }
@@ -319,38 +320,38 @@ class Paragraph {
     // or its change will have no effect on the remainder of the analysis.
 
     for (int i = start + 1; i < limit - 1; ++i) {
-      if (_textData[i]._ct == BidiCharacterType.ES ||
-          _textData[i]._ct == BidiCharacterType.CS) {
-        BidiCharacterType prevSepType = _textData[i - 1]._ct;
-        BidiCharacterType succSepType = _textData[i + 1]._ct;
-        if (prevSepType == BidiCharacterType.EN &&
-            succSepType == BidiCharacterType.EN) {
-          _textData[i]._ct = BidiCharacterType.EN;
-        } else if (_textData[i]._ct == BidiCharacterType.CS &&
-            prevSepType == BidiCharacterType.AN &&
-            succSepType == BidiCharacterType.AN) {
-          _textData[i]._ct = BidiCharacterType.AN;
+      if (_textData[i]._ct == _BidiCharacterType.ES ||
+          _textData[i]._ct == _BidiCharacterType.CS) {
+        _BidiCharacterType prevSepType = _textData[i - 1]._ct;
+        _BidiCharacterType succSepType = _textData[i + 1]._ct;
+        if (prevSepType == _BidiCharacterType.EN &&
+            succSepType == _BidiCharacterType.EN) {
+          _textData[i]._ct = _BidiCharacterType.EN;
+        } else if (_textData[i]._ct == _BidiCharacterType.CS &&
+            prevSepType == _BidiCharacterType.AN &&
+            succSepType == _BidiCharacterType.AN) {
+          _textData[i]._ct = _BidiCharacterType.AN;
         }
       }
     }
 
     // W5. A sequence of European terminators adjacent to European numbers changes to all European numbers.
     for (int i = start; i < limit; ++i) {
-      if (_textData[i]._ct == BidiCharacterType.ET) {
+      if (_textData[i]._ct == _BidiCharacterType.ET) {
         // locate end of sequence
         int runstart = i;
-        int runlimit = findRunLimit(runstart, limit, [BidiCharacterType.ET]);
+        int runlimit = _findRunLimit(runstart, limit, [_BidiCharacterType.ET]);
 
         // check values at ends of sequence
-        BidiCharacterType t =
+        _BidiCharacterType t =
             runstart == start ? sor : _textData[runstart - 1]._ct;
 
-        if (t != BidiCharacterType.EN) {
+        if (t != _BidiCharacterType.EN) {
           t = runlimit == limit ? eor : _textData[runlimit]._ct;
         }
 
-        if (t == BidiCharacterType.EN) {
-          setTypes(runstart, runlimit, BidiCharacterType.EN);
+        if (t == _BidiCharacterType.EN) {
+          _setTypes(runstart, runlimit, _BidiCharacterType.EN);
         }
 
         // continue at end of sequence
@@ -360,36 +361,37 @@ class Paragraph {
 
     // W6. Otherwise, separators and terminators change to Other Neutral.
     for (int i = start; i < limit; ++i) {
-      BidiCharacterType t = _textData[i]._ct;
-      if (t == BidiCharacterType.ES ||
-          t == BidiCharacterType.ET ||
-          t == BidiCharacterType.CS) {
-        _textData[i]._ct = BidiCharacterType.ON;
+      _BidiCharacterType t = _textData[i]._ct;
+      if (t == _BidiCharacterType.ES ||
+          t == _BidiCharacterType.ET ||
+          t == _BidiCharacterType.CS) {
+        _textData[i]._ct = _BidiCharacterType.ON;
       }
     }
 
     // W7. Search backward from each instance of a European number until the first strong type (R, L, or sor) is found.
     //     If an L is found, then change the type of the European number to L.
 
-    BidiCharacterType tW7 =
-        sor == BidiCharacterType.L ? BidiCharacterType.L : BidiCharacterType.EN;
+    _BidiCharacterType tW7 = sor == _BidiCharacterType.L
+        ? _BidiCharacterType.L
+        : _BidiCharacterType.EN;
     for (int i = start; i < limit; ++i) {
-      if (_textData[i]._ct == BidiCharacterType.R) {
-        tW7 = BidiCharacterType.EN;
-      } else if (_textData[i]._ct == BidiCharacterType.L) {
-        tW7 = BidiCharacterType.L;
-      } else if (_textData[i]._ct == BidiCharacterType.EN) {
+      if (_textData[i]._ct == _BidiCharacterType.R) {
+        tW7 = _BidiCharacterType.EN;
+      } else if (_textData[i]._ct == _BidiCharacterType.L) {
+        tW7 = _BidiCharacterType.L;
+      } else if (_textData[i]._ct == _BidiCharacterType.EN) {
         _textData[i]._ct = tW7;
       }
     }
   }
 
   /// 3.3.4 Resolving Neutral Types
-  void resolveNeutralTypes(
+  void _resolveNeutralTypes(
     int start,
     int limit,
-    BidiCharacterType sor,
-    BidiCharacterType eor,
+    _BidiCharacterType sor,
+    _BidiCharacterType eor,
     int level,
   ) {
     // N1. A sequence of neutrals takes the direction of the surrounding strong text if the text on both sides has the same direction.
@@ -398,35 +400,35 @@ class Paragraph {
     // N2. Any remaining neutrals take the embedding direction.
 
     for (int i = start; i < limit; ++i) {
-      BidiCharacterType t = _textData[i]._ct;
-      if (t == BidiCharacterType.WS ||
-          t == BidiCharacterType.ON ||
-          t == BidiCharacterType.B ||
-          t == BidiCharacterType.S) {
+      _BidiCharacterType t = _textData[i]._ct;
+      if (t == _BidiCharacterType.WS ||
+          t == _BidiCharacterType.ON ||
+          t == _BidiCharacterType.B ||
+          t == _BidiCharacterType.S) {
         // find bounds of run of neutrals
         int runstart = i;
-        int runlimit = findRunLimit(
+        int runlimit = _findRunLimit(
           runstart,
           limit,
           [
-            BidiCharacterType.B,
-            BidiCharacterType.S,
-            BidiCharacterType.WS,
-            BidiCharacterType.ON
+            _BidiCharacterType.B,
+            _BidiCharacterType.S,
+            _BidiCharacterType.WS,
+            _BidiCharacterType.ON
           ],
         );
 
         // determine effective types at ends of run
-        BidiCharacterType leadingType;
-        BidiCharacterType trailingType;
+        _BidiCharacterType leadingType;
+        _BidiCharacterType trailingType;
 
         if (runstart == start) {
           leadingType = sor;
         } else {
           leadingType = _textData[runstart - 1]._ct;
-          if (leadingType == BidiCharacterType.AN ||
-              leadingType == BidiCharacterType.EN) {
-            leadingType = BidiCharacterType.R;
+          if (leadingType == _BidiCharacterType.AN ||
+              leadingType == _BidiCharacterType.EN) {
+            leadingType = _BidiCharacterType.R;
           }
         }
 
@@ -434,13 +436,13 @@ class Paragraph {
           trailingType = eor;
         } else {
           trailingType = _textData[runlimit]._ct;
-          if (trailingType == BidiCharacterType.AN ||
-              trailingType == BidiCharacterType.EN) {
-            trailingType = BidiCharacterType.R;
+          if (trailingType == _BidiCharacterType.AN ||
+              trailingType == _BidiCharacterType.EN) {
+            trailingType = _BidiCharacterType.R;
           }
         }
 
-        BidiCharacterType resolvedType;
+        _BidiCharacterType resolvedType;
         if (leadingType == trailingType) {
           // Rule N1.
           resolvedType = leadingType;
@@ -448,10 +450,10 @@ class Paragraph {
           // Rule N2.
           // Notice the embedding level of the run is used, not
           // the paragraph embedding level.
-          resolvedType = typeForLevel(level);
+          resolvedType = _typeForLevel(level);
         }
 
-        setTypes(runstart, runlimit, resolvedType);
+        _setTypes(runstart, runlimit, resolvedType);
 
         // skip over run of (former) neutrals
         i = runlimit;
@@ -467,22 +469,22 @@ class Paragraph {
     if ((level & 1) == 0) // even level
     {
       for (int i = start; i < limit; ++i) {
-        BidiCharacterType t = _textData[i]._ct;
+        _BidiCharacterType t = _textData[i]._ct;
         // Rule I1.
-        if (t == BidiCharacterType.R) {
+        if (t == _BidiCharacterType.R) {
           _textData[i]._el += 1;
-        } else if (t == BidiCharacterType.AN || t == BidiCharacterType.EN) {
+        } else if (t == _BidiCharacterType.AN || t == _BidiCharacterType.EN) {
           _textData[i]._el += 2;
         }
       }
     } else // odd level
     {
       for (int i = start; i < limit; ++i) {
-        BidiCharacterType t = _textData[i]._ct;
+        _BidiCharacterType t = _textData[i]._ct;
         // Rule I2.
-        if (t == BidiCharacterType.L ||
-            t == BidiCharacterType.AN ||
-            t == BidiCharacterType.EN) _textData[i]._el += 1;
+        if (t == _BidiCharacterType.L ||
+            t == _BidiCharacterType.AN ||
+            t == _BidiCharacterType.EN) _textData[i]._el += 1;
       }
     }
   }
@@ -497,19 +499,19 @@ class Paragraph {
 
     int l1Start = 0;
     for (int i = 0; i < _textData.length; ++i) {
-      if (_textData[i]._ct == BidiCharacterType.S ||
-          _textData[i]._ct == BidiCharacterType.B) {
+      if (_textData[i]._ct == _BidiCharacterType.S ||
+          _textData[i]._ct == _BidiCharacterType.B) {
         for (int j = l1Start; j <= i; ++j) {
-          _textData[j]._el = embeddingLevel;
+          _textData[j]._el = _embeddingLevel;
         }
       }
 
-      if (_textData[i]._ct != BidiCharacterType.WS) {
+      if (_textData[i]._ct != _BidiCharacterType.WS) {
         l1Start = i + 1;
       }
     }
     for (int j = l1Start; j < _textData.length; ++j) {
-      _textData[j]._el = embeddingLevel;
+      _textData[j]._el = _embeddingLevel;
     }
 
     // L2. From the highest level found in the text to the lowest odd level on each
@@ -555,7 +557,7 @@ class Paragraph {
   void fixMirroredCharacters() {
     for (int i = 0; i < _textData.length; ++i) {
       if ((_textData[i]._el & 1) == 1) {
-        _textData[i]._char = getBidiCharacterMirror(_textData[i]._char);
+        _textData[i]._char = _getBidiCharacterMirror(_textData[i]._char);
       }
     }
   }
@@ -564,49 +566,49 @@ class Paragraph {
   /// Implements rules R1-R7 and rules L1-L3 of section 8.2 (Persian) of the Unicode standard.
   // TODO - this code is very special-cased.
   List<int> performShaping(List<int> text) {
-    ShapeJoiningType lastJt = ShapeJoiningType.U;
-    LetterForm lastForm = LetterForm.Isolated;
+    _ShapeJoiningType lastJt = _ShapeJoiningType.U;
+    _LetterForm lastForm = _LetterForm.Isolated;
     int lastPos = 0;
-    var lastChar = BidiChars.NotAChar;
+    var lastChar = _BidiChars.NotAChar;
     final letterForms =
-        List<LetterForm>.filled(text.length, LetterForm.Initial);
+        List<_LetterForm>.filled(text.length, _LetterForm.Initial);
 
     for (int currPos = 0; currPos < text.length; ++currPos) {
       var ch = text[currPos];
       //string chStr = (ch).toString("X4");
 
-      final jt = getShapeJoiningType(ch);
+      final jt = _getShapeJoiningType(ch);
 
-      if ((jt == ShapeJoiningType.R ||
-              jt == ShapeJoiningType.D ||
-              jt == ShapeJoiningType.C) &&
-          (lastJt == ShapeJoiningType.L ||
-              lastJt == ShapeJoiningType.D ||
-              lastJt == ShapeJoiningType.C)) {
-        if (lastForm == LetterForm.Isolated &&
-            (lastJt == ShapeJoiningType.D || lastJt == ShapeJoiningType.L)) {
-          letterForms[lastPos] = LetterForm.Initial;
-        } else if (lastForm == LetterForm.Final &&
-            lastJt == ShapeJoiningType.D) {
-          letterForms[lastPos] = LetterForm.Medial;
+      if ((jt == _ShapeJoiningType.R ||
+              jt == _ShapeJoiningType.D ||
+              jt == _ShapeJoiningType.C) &&
+          (lastJt == _ShapeJoiningType.L ||
+              lastJt == _ShapeJoiningType.D ||
+              lastJt == _ShapeJoiningType.C)) {
+        if (lastForm == _LetterForm.Isolated &&
+            (lastJt == _ShapeJoiningType.D || lastJt == _ShapeJoiningType.L)) {
+          letterForms[lastPos] = _LetterForm.Initial;
+        } else if (lastForm == _LetterForm.Final &&
+            lastJt == _ShapeJoiningType.D) {
+          letterForms[lastPos] = _LetterForm.Medial;
         }
-        letterForms[currPos] = LetterForm.Final;
-        lastForm = LetterForm.Final;
+        letterForms[currPos] = _LetterForm.Final;
+        lastForm = _LetterForm.Final;
         lastJt = jt;
         lastPos = currPos;
         lastChar = ch;
-      } else if (jt != ShapeJoiningType.T) {
-        letterForms[currPos] = LetterForm.Isolated;
-        lastForm = LetterForm.Isolated;
+      } else if (jt != _ShapeJoiningType.T) {
+        letterForms[currPos] = _LetterForm.Isolated;
+        lastForm = _LetterForm.Isolated;
         lastJt = jt;
         lastPos = currPos;
         lastChar = ch;
       } else {
-        letterForms[currPos] = LetterForm.Isolated;
+        letterForms[currPos] = _LetterForm.Isolated;
       }
     }
 
-    lastChar = BidiChars.NotAChar;
+    lastChar = _BidiChars.NotAChar;
     lastPos = 0;
     int insertPos = 0;
 
@@ -615,90 +617,90 @@ class Paragraph {
     for (int currPos = 0; currPos < text.length; ++currPos) {
       var ch = text[currPos];
       //string chStr = (ch).toString("X4");
-      final jt = getShapeJoiningType(ch);
+      final jt = _getShapeJoiningType(ch);
 
-      if (lastChar == BidiChars.ARABIC_LAM &&
-          ch != BidiChars.ARABIC_ALEF &&
-          ch != BidiChars.ARABIC_ALEF_MADDA_ABOVE &&
-          ch != BidiChars.ARABIC_ALEF_HAMZA_ABOVE &&
-          ch != BidiChars.ARABIC_ALEF_HAMZA_BELOW &&
-          jt != ShapeJoiningType.T) {
-        lastChar = BidiChars.NotAChar;
-      } else if (ch == BidiChars.ARABIC_LAM) {
+      if (lastChar == _BidiChars.ARABIC_LAM &&
+          ch != _BidiChars.ARABIC_ALEF &&
+          ch != _BidiChars.ARABIC_ALEF_MADDA_ABOVE &&
+          ch != _BidiChars.ARABIC_ALEF_HAMZA_ABOVE &&
+          ch != _BidiChars.ARABIC_ALEF_HAMZA_BELOW &&
+          jt != _ShapeJoiningType.T) {
+        lastChar = _BidiChars.NotAChar;
+      } else if (ch == _BidiChars.ARABIC_LAM) {
         lastChar = ch;
         lastPos = currPos;
         insertPos = sb.length;
       }
 
-      if (lastChar == BidiChars.ARABIC_LAM) {
-        if (letterForms[lastPos] == LetterForm.Medial) {
+      if (lastChar == _BidiChars.ARABIC_LAM) {
+        if (letterForms[lastPos] == _LetterForm.Medial) {
           switch (ch) {
-            case BidiChars.ARABIC_ALEF:
-              sb[insertPos] = BidiChars.ARABIC_LAM_ALEF_FINAL;
+            case _BidiChars.ARABIC_ALEF:
+              sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_FINAL;
               _charLengths.removeAt(insertPos);
               continue;
 
-            case BidiChars.ARABIC_ALEF_MADDA_ABOVE:
-              sb[insertPos] = BidiChars.ARABIC_LAM_ALEF_MADDA_ABOVE_FINAL;
+            case _BidiChars.ARABIC_ALEF_MADDA_ABOVE:
+              sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_MADDA_ABOVE_FINAL;
               _charLengths.removeAt(insertPos);
               _charLengths[insertPos] = _charLengths[insertPos] + 1;
               continue;
 
-            case BidiChars.ARABIC_ALEF_HAMZA_ABOVE:
-              sb[insertPos] = BidiChars.ARABIC_LAM_ALEF_HAMZA_ABOVE_FINAL;
+            case _BidiChars.ARABIC_ALEF_HAMZA_ABOVE:
+              sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_HAMZA_ABOVE_FINAL;
               _charLengths.removeAt(insertPos);
               continue;
 
-            case BidiChars.ARABIC_ALEF_HAMZA_BELOW:
-              sb[insertPos] = BidiChars.ARABIC_LAM_ALEF_HAMZA_BELOW_FINAL;
+            case _BidiChars.ARABIC_ALEF_HAMZA_BELOW:
+              sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_HAMZA_BELOW_FINAL;
               _charLengths.removeAt(insertPos);
               continue;
           }
-        } else if (letterForms[lastPos] == LetterForm.Initial) {
+        } else if (letterForms[lastPos] == _LetterForm.Initial) {
           switch (ch) {
-            case BidiChars.ARABIC_ALEF:
-              sb[insertPos] = BidiChars.ARABIC_LAM_ALEF_ISOLATED;
+            case _BidiChars.ARABIC_ALEF:
+              sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_ISOLATED;
               _charLengths.removeAt(insertPos);
               continue;
 
-            case BidiChars.ARABIC_ALEF_MADDA_ABOVE:
-              sb[insertPos] = BidiChars.ARABIC_LAM_ALEF_MADDA_ABOVE_ISOLATED;
+            case _BidiChars.ARABIC_ALEF_MADDA_ABOVE:
+              sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_MADDA_ABOVE_ISOLATED;
               _charLengths.removeAt(insertPos);
               _charLengths[insertPos] = _charLengths[insertPos] + 1;
               continue;
 
-            case BidiChars.ARABIC_ALEF_HAMZA_ABOVE:
-              sb[insertPos] = BidiChars.ARABIC_LAM_ALEF_HAMZA_ABOVE_ISOLATED;
+            case _BidiChars.ARABIC_ALEF_HAMZA_ABOVE:
+              sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_HAMZA_ABOVE_ISOLATED;
               _charLengths.removeAt(insertPos);
               continue;
 
-            case BidiChars.ARABIC_ALEF_HAMZA_BELOW:
-              sb[insertPos] = BidiChars.ARABIC_LAM_ALEF_HAMZA_BELOW_ISOLATED;
+            case _BidiChars.ARABIC_ALEF_HAMZA_BELOW:
+              sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_HAMZA_BELOW_ISOLATED;
               _charLengths.removeAt(insertPos);
               continue;
           }
         }
       }
 
-      sb.add(getCharacterByLetterForm(ch, letterForms[currPos]));
+      sb.add(_getCharacterByLetterForm(ch, letterForms[currPos]));
     }
 
     return sb;
   }
 
-  int getPairwiseComposition(int first, int second) {
+  int _getPairwiseComposition(int first, int second) {
     if (first < 0 || first > 0xFFFF || second < 0 || second > 0xFFFF) {
-      return BidiChars.NotAChar;
+      return _BidiChars.NotAChar;
     }
 
     return compose(String.fromCharCodes([first, second]));
   }
 
-  bool _isPartOfArabicShaddaPair(UnicodeCanonicalClass chClass) {
+  bool _isPartOfArabicShaddaPair(_UnicodeCanonicalClass chClass) {
     return chClass.value >= 28 && chClass.value <= 35;
   }
 
-  void internalCompose(List<int> target, List<int> charLengths) {
+  void _internalCompose(List<int> target, List<int> charLengths) {
     if (target.isEmpty) {
       return;
     }
@@ -709,10 +711,10 @@ class Paragraph {
 
     charLengths[starterPos] = charLengths[starterPos] + 1;
 
-    var lastClass = getUnicodeCanonicalClass(starterCh);
+    var lastClass = _getUnicodeCanonicalClass(starterCh);
 
-    if (lastClass != UnicodeCanonicalClass.NR) {
-      lastClass = UnicodeCanonicalClass.fromValue(
+    if (lastClass != _UnicodeCanonicalClass.NR) {
+      lastClass = _UnicodeCanonicalClass.fromValue(
         256,
       ); // fix for strings staring with a combining mark
     }
@@ -723,22 +725,22 @@ class Paragraph {
     int ch;
     for (int decompPos = compPos; decompPos < target.length; ++decompPos) {
       ch = target[decompPos];
-      final chClass = getUnicodeCanonicalClass(ch);
-      final composite = getPairwiseComposition(starterCh, ch);
-      final composeType = getUnicodeDecompositionType(composite);
+      final chClass = _getUnicodeCanonicalClass(ch);
+      final composite = _getPairwiseComposition(starterCh, ch);
+      final composeType = _getUnicodeDecompositionType(composite);
 
-      if ((composeType == UnicodeDecompositionType.none ||
+      if ((composeType == _UnicodeDecompositionType.none ||
               _isPartOfArabicShaddaPair(chClass)) &&
-          composite != BidiChars.NotAChar &&
+          composite != _BidiChars.NotAChar &&
           (lastClass.value < chClass.value ||
-              lastClass == UnicodeCanonicalClass.NR)) {
+              lastClass == _UnicodeCanonicalClass.NR)) {
         target[starterPos] = composite;
         charLengths[starterPos] = charLengths[starterPos] + 1;
         // we know that we will only be replacing non-supplementaries by non-supplementaries
         // so we don't have to adjust the decompPos
         starterCh = composite;
       } else {
-        if (chClass == UnicodeCanonicalClass.NR ||
+        if (chClass == _UnicodeCanonicalClass.NR ||
             _isPartOfArabicShaddaPair(chClass)) {
           starterPos = compPos;
           starterCh = ch;
@@ -773,13 +775,14 @@ class Paragraph {
     charLengths.addAll(taken);
   }
 
-  void getRecursiveDecomposition(bool canonical, int ch, List<int> builder) {
+  void _getRecursiveDecomposition(bool canonical, int ch, List<int> builder) {
     final decomp = getUnicodeDecompositionMapping(ch);
     if (decomp != null &&
         !(canonical &&
-            getUnicodeDecompositionType(ch) != UnicodeDecompositionType.none)) {
+            _getUnicodeDecompositionType(ch) !=
+                _UnicodeDecompositionType.none)) {
       for (int i = 0; i < decomp.length; ++i) {
-        getRecursiveDecomposition(canonical, decomp[i], builder);
+        _getRecursiveDecomposition(canonical, decomp[i], builder);
       }
     } else // if no decomp, append
     {
@@ -787,7 +790,7 @@ class Paragraph {
     }
   }
 
-  List<int> internalDecompose(List<int> charLengths) {
+  List<int> _internalDecompose(List<int> charLengths) {
     final List<int> target = [];
     final List<int> buffer = [];
 
@@ -795,13 +798,13 @@ class Paragraph {
     _hasNSMs = false;
 
     for (int i = 0; i < _text.length; ++i) {
-      final ct = getBidiCharacterType(_text[i]);
+      final ct = _getBidiCharacterType(_text[i]);
       _hasPersian |=
-          ((ct == BidiCharacterType.AL) || (ct == BidiCharacterType.AN));
-      _hasNSMs |= (ct == BidiCharacterType.NSM);
+          ((ct == _BidiCharacterType.AL) || (ct == _BidiCharacterType.AN));
+      _hasNSMs |= (ct == _BidiCharacterType.NSM);
 
       buffer.clear();
-      getRecursiveDecomposition(false, _text[i], buffer);
+      _getRecursiveDecomposition(false, _text[i], buffer);
       charLengths.add(1 - buffer.length);
       // add all of the characters in the decomposition.
       // (may be just the original character, if there was
@@ -810,14 +813,14 @@ class Paragraph {
       int ch;
       for (int j = 0; j < buffer.length; ++j) {
         ch = buffer[j];
-        final chClass = getUnicodeCanonicalClass(ch);
+        final chClass = _getUnicodeCanonicalClass(ch);
         int k = target.length; // insertion point
-        if (chClass != UnicodeCanonicalClass.NR) {
+        if (chClass != _UnicodeCanonicalClass.NR) {
           // bubble-sort combining marks as necessary
           int ch2;
           for (; k > 0; --k) {
             ch2 = target[k - 1];
-            if (getUnicodeCanonicalClass(ch2).value <= chClass.value) break;
+            if (_getUnicodeCanonicalClass(ch2).value <= chClass.value) break;
           }
         }
         target.insert(k, ch);
@@ -829,17 +832,17 @@ class Paragraph {
   /// Return the strong type (L or R) corresponding to the embedding level.
   ///
   /// [level] The embedding level to check.
-  static BidiCharacterType typeForLevel(int level) {
-    return ((level & 1) == 0) ? BidiCharacterType.L : BidiCharacterType.R;
+  static _BidiCharacterType _typeForLevel(int level) {
+    return ((level & 1) == 0) ? _BidiCharacterType.L : _BidiCharacterType.R;
   }
 
   /// Return the limit of the run, starting at index, that includes only resultTypes in validSet.
   /// This checks the value at index, and will return index if that value is not in validSet.
-  int findRunLimit(int index, int limit, List<BidiCharacterType> validSet) {
+  int _findRunLimit(int index, int limit, List<_BidiCharacterType> validSet) {
     --index;
     bool found = false;
     while (++index < limit) {
-      BidiCharacterType t = _textData[index]._ct;
+      _BidiCharacterType t = _textData[index]._ct;
       found = false;
       for (int i = 0; i < validSet.length && !found; ++i) {
         if (t == validSet[i]) found = true;
@@ -851,7 +854,7 @@ class Paragraph {
   }
 
   /// Set resultTypes from start up to (but not including) limit to newType.
-  void setTypes(int start, int limit, BidiCharacterType newType) {
+  void _setTypes(int start, int limit, _BidiCharacterType newType) {
     for (int i = start; i < limit; ++i) {
       _textData[i]._ct = newType;
     }
@@ -861,6 +864,6 @@ class Paragraph {
 class _CharData {
   late int _char;
   late int _el; // 0-62 => 6
-  late BidiCharacterType _ct; // 0-18 => 5
+  late _BidiCharacterType _ct; // 0-18 => 5
   late int _idx;
 }

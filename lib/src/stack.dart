@@ -1,6 +1,6 @@
-import 'dart:collection';
+part of bidi;
 
-class Stack<T> {
+class _Stack<T> {
   final _stack = Queue<T>();
   int get length => _stack.length;
 
