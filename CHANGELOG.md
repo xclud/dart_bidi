@@ -1,3 +1,7 @@
+## 2.0.4
+
+* Pass static analysis.
+
 ## 2.0.3
 
 * More dartdoc comments.
