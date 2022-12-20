@@ -1,3 +1,7 @@
+## 2.0.5
+
+* Make `paragraphSeparator` public.
+
 ## 2.0.4
 
 * Pass static analysis.

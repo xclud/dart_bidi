@@ -12,7 +12,7 @@ Converts *logical* strings to their equivalent *visual* representation. Persian,
 
 In your `pubspec.yaml` file add:
 
-```dart
+```yaml
 dependencies:
   bidi: any
 ```

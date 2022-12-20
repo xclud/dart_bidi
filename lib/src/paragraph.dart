@@ -63,6 +63,9 @@ class Paragraph {
     return _charLengths;
   }
 
+  /// The paragraph separatpr.
+  int get paragraphSeparator => _paragraphSeparator;
+
   /// Removes Bidi markers from text.
   void _removeBidiMarkers() {
     final controlChars = [
