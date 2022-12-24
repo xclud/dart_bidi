@@ -1,3 +1,7 @@
+## 2.0.6
+
+* Deprecate `paragraphSeparator` in favor of `separator`.
+
 ## 2.0.5
 
 * Make `paragraphSeparator` public.

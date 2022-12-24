@@ -3,11 +3,11 @@ part of bidi;
 /// Represents a paragraph in text.
 class Paragraph {
   /// Constructor.
-  Paragraph._(List<int> text, this._paragraphSeparator) {
+  Paragraph._(List<int> text, this._separator) {
     this.text = text;
   }
 
-  final int _paragraphSeparator;
+  final int _separator;
   final List<int> _originalText = [];
   final List<int> _text = [];
   final List<int> _bidiText = [];
@@ -47,8 +47,8 @@ class Paragraph {
   List<int> get bidiText {
     var ret = _bidiText.toList();
 
-    if (_paragraphSeparator != _BidiChars.NotAChar) {
-      ret.add(_paragraphSeparator);
+    if (_separator != _BidiChars.NotAChar) {
+      ret.add(_separator);
     }
     return ret;
   }
@@ -64,7 +64,11 @@ class Paragraph {
   }
 
   /// The paragraph separatpr.
-  int get paragraphSeparator => _paragraphSeparator;
+  int get separator => _separator;
+
+  /// The paragraph separatpr.
+  @Deprecated('Please use separator')
+  int get paragraphSeparator => _separator;
 
   /// Removes Bidi markers from text.
   void _removeBidiMarkers() {
