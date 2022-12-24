@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:bidi/bidi.dart' as bidi;
 
+const _initialText =
+    'چو چپ راست کرد و خم آورد راست، خروش از خم چرخ چاچی بخاست.';
+
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
 
@@ -10,7 +13,26 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _visual = <int>[];
-  final _logicalController = TextEditingController();
+
+  void _onChanged(value) {
+    _visual.clear();
+    if (value.isEmpty) {
+      setState(() {});
+      return;
+    }
+
+    final visual = bidi.logicalToVisual(value);
+    setState(() {
+      _visual.addAll(visual);
+    });
+  }
+
+  @override
+  void initState() {
+    _onChanged(_initialText);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +50,8 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
-                  controller: _logicalController,
-                  onChanged: (value) {
-                    _visual.clear();
-                    if (value.isEmpty) {
-                      setState(() {});
-                      return;
-                    }
-
-                    final visual = bidi.logicalToVisual(value);
-                    setState(() {
-                      _visual.addAll(visual);
-                    });
-                  },
+                  initialValue: _initialText,
+                  onChanged: _onChanged,
                 ),
               ),
               Padding(
