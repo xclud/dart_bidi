@@ -1,3 +1,7 @@
+## 2.0.7
+
+* Dart SDK 3.0 support.
+
 ## 2.0.6
 
 * Deprecate `paragraphSeparator` in favor of `separator`.
