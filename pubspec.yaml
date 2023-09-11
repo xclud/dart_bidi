@@ -1,6 +1,6 @@
 name: bidi
 description: Implementation of the Bidi algorithm, as described in http://www.unicode.org/reports/tr9/tr9-17.html.
-version: 2.0.7
+version: 2.0.8
 repository: https://github.com/xclud/dart_bidi
 homepage: https://pwa.ir
 

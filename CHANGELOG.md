@@ -1,3 +1,8 @@
+## 2.0.8
+
+* Performance improvement.
+* Preparing for version 3.0.
+
 ## 2.0.7
 
 * Dart SDK 3.0 support.

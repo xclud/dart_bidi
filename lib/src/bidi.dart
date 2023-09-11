@@ -58,8 +58,8 @@ List<Paragraph> splitStringToParagraphs(String logicalString) {
   var sb = <int>[];
   for (var i = 0; i < logicalString.length; ++i) {
     final c = logicalString.codeUnits[i];
-    final cType = _getBidiCharacterType(c);
-    if (cType == _BidiCharacterType.B) {
+    final cType = getCharacterType(c);
+    if (cType == CharacterType.b) {
       final p = Paragraph._(sb, c);
       ret.add(p);
       sb = [];
@@ -69,7 +69,7 @@ List<Paragraph> splitStringToParagraphs(String logicalString) {
   }
   if (sb.isNotEmpty) // string ended without a paragraph separator
   {
-    ret.add(Paragraph._(sb, _BidiChars.NotAChar));
+    ret.add(Paragraph._(sb, _BidiChars.notAChar));
   }
   return ret;
 }

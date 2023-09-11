@@ -1,6 +1,6 @@
 part of bidi;
 
-Map<int, int> _charForms = {
+const _charForms = <int, int>{
   0x30671: 0xFB50,
   0x20671: 0xFB51,
   0x3067B: 0xFB52,
@@ -245,115 +245,14 @@ Map<int, int> _charForms = {
   0x1064A: 0xFEF4,
 };
 
-_ShapeJoiningType _getShapeJoiningType(int c) {
-  if (c >= 0x0600 && c <= 0x0605) return _ShapeJoiningType.U;
-  if (c == 0x0608) return _ShapeJoiningType.U;
-  if (c == 0x060B) return _ShapeJoiningType.U;
-  if (c == 0x0620) return _ShapeJoiningType.D;
-  if (c == 0x0621) return _ShapeJoiningType.U;
-  if (c >= 0x0622 && c <= 0x0625) return _ShapeJoiningType.R;
-  if (c == 0x0626) return _ShapeJoiningType.D;
-  if (c == 0x0627) return _ShapeJoiningType.R;
-  if (c == 0x0628) return _ShapeJoiningType.D;
-  if (c == 0x0629) return _ShapeJoiningType.R;
-  if (c >= 0x062A && c <= 0x062E) return _ShapeJoiningType.D;
-  if (c >= 0x062F && c <= 0x0632) return _ShapeJoiningType.R;
-  if (c >= 0x0633 && c <= 0x063F) return _ShapeJoiningType.D;
-  if (c == 0x0640) return _ShapeJoiningType.C;
-  if (c >= 0x0641 && c <= 0x0647) return _ShapeJoiningType.D;
-  if (c == 0x0648) return _ShapeJoiningType.R;
-  if (c >= 0x0649 && c <= 0x064A) return _ShapeJoiningType.D;
-  if (c >= 0x066E && c <= 0x066F) return _ShapeJoiningType.D;
-  if (c >= 0x0671 && c <= 0x0673) return _ShapeJoiningType.R;
-  if (c == 0x0674) return _ShapeJoiningType.U;
-  if (c >= 0x0675 && c <= 0x0677) return _ShapeJoiningType.R;
-  if (c >= 0x0678 && c <= 0x0687) return _ShapeJoiningType.D;
-  if (c >= 0x0688 && c <= 0x0699) return _ShapeJoiningType.R;
-  if (c >= 0x069A && c <= 0x06BF) return _ShapeJoiningType.D;
-  if (c == 0x06C0) return _ShapeJoiningType.R;
-  if (c >= 0x06C1 && c <= 0x06C2) return _ShapeJoiningType.D;
-  if (c >= 0x06C3 && c <= 0x06CB) return _ShapeJoiningType.R;
-  if (c == 0x06CC) return _ShapeJoiningType.D;
-  if (c == 0x06CD) return _ShapeJoiningType.R;
-  if (c == 0x06CE) return _ShapeJoiningType.D;
-  if (c == 0x06CF) return _ShapeJoiningType.R;
-  if (c >= 0x06D0 && c <= 0x06D1) return _ShapeJoiningType.D;
-  if (c >= 0x06D2 && c <= 0x06D3) return _ShapeJoiningType.R;
-  if (c == 0x06D5) return _ShapeJoiningType.R;
-  if (c == 0x06DD) return _ShapeJoiningType.U;
-  if (c >= 0x06EE && c <= 0x06EF) return _ShapeJoiningType.R;
-  if (c >= 0x06FA && c <= 0x06FC) return _ShapeJoiningType.D;
-  if (c == 0x06FF) return _ShapeJoiningType.D;
-  if (c == 0x0710) return _ShapeJoiningType.R;
-  if (c >= 0x0712 && c <= 0x0714) return _ShapeJoiningType.D;
-  if (c >= 0x0715 && c <= 0x0719) return _ShapeJoiningType.R;
-  if (c >= 0x071A && c <= 0x071D) return _ShapeJoiningType.D;
-  if (c == 0x071E) return _ShapeJoiningType.R;
-  if (c >= 0x071F && c <= 0x0727) return _ShapeJoiningType.D;
-  if (c == 0x0728) return _ShapeJoiningType.R;
-  if (c == 0x0729) return _ShapeJoiningType.D;
-  if (c == 0x072A) return _ShapeJoiningType.R;
-  if (c == 0x072B) return _ShapeJoiningType.D;
-  if (c == 0x072C) return _ShapeJoiningType.R;
-  if (c >= 0x072D && c <= 0x072E) return _ShapeJoiningType.D;
-  if (c == 0x072F) return _ShapeJoiningType.R;
-  if (c == 0x074D) return _ShapeJoiningType.R;
-  if (c >= 0x074E && c <= 0x0758) return _ShapeJoiningType.D;
-  if (c >= 0x0759 && c <= 0x075B) return _ShapeJoiningType.R;
-  if (c >= 0x075C && c <= 0x076A) return _ShapeJoiningType.D;
-  if (c >= 0x076B && c <= 0x076C) return _ShapeJoiningType.R;
-  if (c >= 0x076D && c <= 0x0770) return _ShapeJoiningType.D;
-  if (c == 0x0771) return _ShapeJoiningType.R;
-  if (c == 0x0772) return _ShapeJoiningType.D;
-  if (c >= 0x0773 && c <= 0x0774) return _ShapeJoiningType.R;
-  if (c >= 0x0775 && c <= 0x0777) return _ShapeJoiningType.D;
-  if (c >= 0x0778 && c <= 0x0779) return _ShapeJoiningType.R;
-  if (c >= 0x077A && c <= 0x077F) return _ShapeJoiningType.D;
-  if (c >= 0x07CA && c <= 0x07EA) return _ShapeJoiningType.D;
-  if (c == 0x07FA) return _ShapeJoiningType.C;
-  if (c == 0x0840) return _ShapeJoiningType.R;
-  if (c >= 0x0841 && c <= 0x0845) return _ShapeJoiningType.D;
-  if (c == 0x0846) return _ShapeJoiningType.R;
-  if (c >= 0x0847 && c <= 0x0848) return _ShapeJoiningType.D;
-  if (c == 0x0849) return _ShapeJoiningType.R;
-  if (c >= 0x084A && c <= 0x084E) return _ShapeJoiningType.D;
-  if (c == 0x084F) return _ShapeJoiningType.R;
-  if (c >= 0x0850 && c <= 0x0853) return _ShapeJoiningType.D;
-  if (c == 0x0854) return _ShapeJoiningType.R;
-  if (c == 0x0855) return _ShapeJoiningType.D;
-  if (c >= 0x0856 && c <= 0x0858) return _ShapeJoiningType.U;
-  if (c >= 0x08A0 && c <= 0x08A9) return _ShapeJoiningType.D;
-  if (c >= 0x08AA && c <= 0x08AC) return _ShapeJoiningType.R;
-  if (c == 0x08AD) return _ShapeJoiningType.U;
-  if (c == 0x08AE) return _ShapeJoiningType.R;
-  if (c >= 0x08AF && c <= 0x08B0) return _ShapeJoiningType.D;
-  if (c >= 0x08B1 && c <= 0x08B2) return _ShapeJoiningType.R;
-  if (c == 0x1806) return _ShapeJoiningType.U;
-  if (c == 0x1807) return _ShapeJoiningType.D;
-  if (c == 0x180A) return _ShapeJoiningType.C;
-  if (c == 0x180E) return _ShapeJoiningType.U;
-  if (c >= 0x1820 && c <= 0x1877) return _ShapeJoiningType.D;
-  if (c >= 0x1880 && c <= 0x1886) return _ShapeJoiningType.U;
-  if (c >= 0x1887 && c <= 0x18A8) return _ShapeJoiningType.D;
-  if (c == 0x18AA) return _ShapeJoiningType.D;
-  if (c == 0x200C) return _ShapeJoiningType.U;
-  if (c == 0x200D) return _ShapeJoiningType.C;
-  if (c >= 0x2066 && c <= 0x2069) return _ShapeJoiningType.U;
-  if (c >= 0xA840 && c <= 0xA871) return _ShapeJoiningType.D;
-  if (c == 0xA872) return _ShapeJoiningType.L;
-  if (c == 0xA873) return _ShapeJoiningType.U;
+int _getCharacterByLetterForm(int character, LetterForm form) {
+  int key = (character) | (form.index) << 16;
 
-  final ugc = _getUnicodeGeneralCategory(c);
-  if (ugc == _UnicodeGeneralCategory.Mn ||
-      ugc == _UnicodeGeneralCategory.Me ||
-      ugc == _UnicodeGeneralCategory.Cf) return _ShapeJoiningType.T;
-  return _ShapeJoiningType.U;
-}
+  final f = _charForms[key];
 
-int _getCharacterByLetterForm(int ch, _LetterForm form) {
-  int key = (ch) | (form.index) << 16;
-  if (_charForms.containsKey(key)) {
-    return _charForms[key]!;
+  if (f != null) {
+    return f;
   }
-  return ch;
+
+  return character;
 }

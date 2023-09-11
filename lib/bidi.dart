@@ -8,6 +8,12 @@ import 'dart:math';
 import 'dart:collection';
 
 part 'src/bidi.dart';
+part 'src/character_type.dart';
+part 'src/direction_override.dart';
+part 'src/shape_joining_type.dart';
+part 'src/decomposition_type.dart';
+part 'src/letter_form.dart';
+part 'src/character_category.dart';
 part 'src/paragraph.dart';
 part 'src/stack.dart';
 part 'src/character_mirror_resolver.dart';
