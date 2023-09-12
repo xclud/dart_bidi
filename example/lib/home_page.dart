@@ -12,19 +12,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _visual = <int>[];
+  final _paragraphs = <bidi.Paragraph>[];
+  bool _spacing = true;
 
-  void _onChanged(value) {
-    _visual.clear();
-    if (value.isEmpty) {
-      setState(() {});
-      return;
+  void _onChanged(String value) {
+    _paragraphs.clear();
+
+    if (value.isNotEmpty) {
+      final bidiText = bidi.BidiString.fromLogical(value);
+      _paragraphs.addAll(bidiText.paragraphs);
     }
 
-    final visual = bidi.logicalToVisual(value);
-    setState(() {
-      _visual.addAll(visual);
-    });
+    setState(() {});
   }
 
   @override
@@ -39,6 +38,16 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Bidi'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.space_bar),
+            onPressed: () {
+              setState(() {
+                _spacing = !_spacing;
+              });
+            },
+          )
+        ],
       ),
       body: Directionality(
         textDirection: TextDirection.rtl,
@@ -51,29 +60,36 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   initialValue: _initialText,
+                  maxLines: 8,
                   onChanged: _onChanged,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Wrap(
-                  runSpacing: 8,
-                  spacing: 8,
-                  children: _visual.reversed
-                      .map(
-                        (e) => InkWell(
-                          onTap: () {},
-                          hoverColor: Colors.pink,
-                          focusColor: Colors.green,
-                          splashColor: Colors.amber,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 2.0),
-                            child: Text(String.fromCharCode(e)),
+              ..._paragraphs.map(
+                (p) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Wrap(
+                    runSpacing: 8,
+                    spacing: _spacing ? 8 : 0,
+                    children: p.bidiText.reversed
+                        .map(
+                          (e) => InkWell(
+                            onTap: () {},
+                            hoverColor: Colors.pink,
+                            focusColor: Colors.green,
+                            splashColor: Colors.amber,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: _spacing ? 2.0 : 0,
+                              ),
+                              child: Text(
+                                String.fromCharCode(e),
+                                textScaler: TextScaler.linear(2),
+                              ),
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
+                        )
+                        .toList(),
+                  ),
                 ),
               ),
             ],

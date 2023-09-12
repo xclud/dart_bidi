@@ -13,8 +13,8 @@ class Paragraph {
 
     n._compose();
 
-    _embeddingLevel = _calculateEmbeddingLevel(n);
-    _recalculateCharactersEmbeddingLevels(n);
+    final embeddingLevel = _calculateEmbeddingLevel(n);
+    _recalculateCharactersEmbeddingLevels(n, embeddingLevel);
 
     _removeBidiMarkers();
   }
@@ -26,7 +26,6 @@ class Paragraph {
   /// N
   final Normalization n;
 
-  int _embeddingLevel = 0;
   final List<int> _lengths = [];
   final List<int> _indices = [];
 
@@ -104,26 +103,25 @@ class Paragraph {
   }
 
   // 3.3.2 Explicit Levels and Directions
-  void _recalculateCharactersEmbeddingLevels(Normalization n) {
+  void _recalculateCharactersEmbeddingLevels(Normalization n, int el) {
     // This method is implemented in such a way it handles the string in logical order,
     // rather than visual order, so it is easier to handle complex layouts. That is why
     // it is placed BEFORE ReorderString rather than AFTER it, as its number suggests.
     if (n.hasPersian) {
       final shaped = n._performShaping();
-      n.target.clear();
-      n.target.addAll(shaped);
+      n.text.clear();
+      n.text.addAll(shaped);
     }
-
-    final text = n.target;
+    int embeddingLevel = el;
+    final text = n.text;
     final lengths = n.lengths;
 
     final textData =
-        List<_CharData>.generate(n.target.length, (index) => _CharData());
+        List<_CharData>.generate(n.text.length, (index) => _CharData());
 
     // X1
-    var embeddingLevel = _embeddingLevel;
-    DirectionOverride dos = DirectionOverride.neutral;
-    _Stack<DirectionOverride> dosStack = _Stack<DirectionOverride>();
+    var dos = DirectionOverride.neutral;
+    final dosStack = _Stack<DirectionOverride>();
     _Stack<int> elStack = _Stack<int>();
     int idx = 0;
     for (int i = 0; i < text.length; ++i) {
@@ -231,7 +229,7 @@ class Paragraph {
       start = limit;
     }
 
-    _reorderString(textData, _embeddingLevel);
+    _reorderString(textData, el);
     _fixMirroredCharacters(textData);
 
     List<int> indexes = [];
@@ -269,7 +267,7 @@ CharacterType _typeForLevel(int level) {
 class Normalization {
   /// Decomposition.
   const Normalization._(
-    this.target,
+    this.text,
     this.lengths,
     this.hasPersian,
     this.hasNonspacingMark,
@@ -277,7 +275,7 @@ class Normalization {
 
   /// Calculates the internal decomposition of the input text.
   factory Normalization.decompose(List<int> characters) {
-    final List<int> target = [];
+    final List<int> text = [];
     final List<int> lengths = [];
 
     var hasPersian = false;
@@ -298,32 +296,32 @@ class Normalization {
       for (int j = 0; j < buffer.length; ++j) {
         final character = buffer[j];
         final chClass = _getCanonicalClass(character);
-        int k = target.length; // insertion point
+        int k = text.length; // insertion point
         if (chClass != _CanonicalClass.notReordered) {
           // bubble-sort combining marks as necessary
           int ch2;
           for (; k > 0; --k) {
-            ch2 = target[k - 1];
+            ch2 = text[k - 1];
             if (_getCanonicalClass(ch2).value <= chClass.value) break;
           }
         }
 
-        target.insert(k, character);
+        text.insert(k, character);
       }
     }
 
-    return Normalization._(target, lengths, hasPersian, hasNSMs);
+    return Normalization._(text, lengths, hasPersian, hasNSMs);
   }
 
   /// Compose.
   void _compose() {
-    if (target.isEmpty) {
+    if (text.isEmpty) {
       return;
     }
 
     int starterPos = 0;
     int compPos = 1;
-    var starterCh = target[0];
+    var starterCh = text[0];
 
     lengths[starterPos] = lengths[starterPos] + 1;
 
@@ -335,12 +333,12 @@ class Normalization {
       ); // fix for strings staring with a combining mark
     }
 
-    int oldLen = target.length;
+    int oldLen = text.length;
 
     // Loop on the decomposed characters, combining where possible
     int ch;
-    for (int decompPos = compPos; decompPos < target.length; ++decompPos) {
-      ch = target[decompPos];
+    for (int decompPos = compPos; decompPos < text.length; ++decompPos) {
+      ch = text[decompPos];
       final chClass = _getCanonicalClass(ch);
       final isShaddaPair = chClass.isShaddaPair;
       final composite = _getPairwiseComposition(starterCh, ch);
@@ -350,7 +348,7 @@ class Normalization {
           composite != _BidiChars.notAChar &&
           (lastClass.value < chClass.value ||
               lastClass == _CanonicalClass.notReordered)) {
-        target[starterPos] = composite;
+        text[starterPos] = composite;
         lengths[starterPos] = lengths[starterPos] + 1;
         // we know that we will only be replacing non-supplementaries by non-supplementaries
         // so we don't have to adjust the decompPos
@@ -361,7 +359,7 @@ class Normalization {
           starterCh = ch;
         }
         lastClass = chClass;
-        target[compPos] = ch;
+        text[compPos] = ch;
         //char_lengths[compPos] = char_lengths[compPos] + 1;
         int chkPos = compPos;
         if (lengths[chkPos] < 0) {
@@ -374,15 +372,15 @@ class Normalization {
           lengths[chkPos] = lengths[chkPos] + 1;
         }
 
-        if (target.length != oldLen) // MAY HAVE TO ADJUST!
+        if (text.length != oldLen) // MAY HAVE TO ADJUST!
         {
-          decompPos += target.length - oldLen;
-          oldLen = target.length;
+          decompPos += text.length - oldLen;
+          oldLen = text.length;
         }
         ++compPos;
       }
     }
-    target.length = compPos;
+    text.length = compPos;
 
     final taken = lengths.take(compPos).toList();
 
@@ -394,17 +392,15 @@ class Normalization {
   /// Implements rules R1-R7 and rules L1-L3 of section 8.2 (Persian) of the Unicode standard.
   // TODO - this code is very special-cased.
   List<int> _performShaping() {
-    final text = target;
-
-    ShapeJoiningType lastJt = ShapeJoiningType.nonJoining;
-    LetterForm lastForm = LetterForm.isolated;
+    var lastJt = ShapeJoiningType.nonJoining;
+    var lastForm = LetterForm.isolated;
     int lastPos = 0;
     var lastChar = _BidiChars.notAChar;
     final letterForms =
         List<LetterForm>.filled(text.length, LetterForm.initial);
 
-    for (int currPos = 0; currPos < text.length; ++currPos) {
-      var ch = text[currPos];
+    for (int i = 0; i < text.length; ++i) {
+      var ch = text[i];
       //string chStr = (ch).toString("X4");
 
       final jt = getShapeJoiningType(ch);
@@ -423,19 +419,19 @@ class Normalization {
             lastJt == ShapeJoiningType.dual) {
           letterForms[lastPos] = LetterForm.medial;
         }
-        letterForms[currPos] = LetterForm.finalForm;
+        letterForms[i] = LetterForm.finalForm;
         lastForm = LetterForm.finalForm;
         lastJt = jt;
-        lastPos = currPos;
+        lastPos = i;
         lastChar = ch;
       } else if (jt != ShapeJoiningType.transparent) {
-        letterForms[currPos] = LetterForm.isolated;
+        letterForms[i] = LetterForm.isolated;
         lastForm = LetterForm.isolated;
         lastJt = jt;
-        lastPos = currPos;
+        lastPos = i;
         lastChar = ch;
       } else {
-        letterForms[currPos] = LetterForm.isolated;
+        letterForms[i] = LetterForm.isolated;
       }
     }
 
@@ -445,8 +441,8 @@ class Normalization {
 
     final sb = <int>[];
 
-    for (int currPos = 0; currPos < text.length; ++currPos) {
-      var ch = text[currPos];
+    for (int i = 0; i < text.length; ++i) {
+      var ch = text[i];
       //string chStr = (ch).toString("X4");
       final jt = getShapeJoiningType(ch);
 
@@ -459,7 +455,7 @@ class Normalization {
         lastChar = _BidiChars.notAChar;
       } else if (ch == _BidiChars.ARABIC_LAM) {
         lastChar = ch;
-        lastPos = currPos;
+        lastPos = i;
         insertPos = sb.length;
       }
 
@@ -513,14 +509,14 @@ class Normalization {
         }
       }
 
-      sb.add(_getCharacterByLetterForm(ch, letterForms[currPos]));
+      sb.add(_getCharacterByLetterForm(ch, letterForms[i]));
     }
 
     return sb;
   }
 
   /// Target.
-  final List<int> target;
+  final List<int> text;
 
   /// Lengths.
   final List<int> lengths;
@@ -546,7 +542,7 @@ int _getPairwiseComposition(int first, int second) {
 // set the paragraph embedding level to one; otherwise, set it to zero.
 int _calculateEmbeddingLevel(Normalization n) {
   int embeddingLevel = 0;
-  for (var c in n.target) {
+  for (var c in n.text) {
     final cType = getCharacterType(c);
     if (cType == CharacterType.rtl || cType == CharacterType.al) {
       embeddingLevel = 1;
