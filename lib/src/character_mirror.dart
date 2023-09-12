@@ -5,7 +5,7 @@ part of bidi;
 /// [char] A character to mirror.
 ///
 /// The mirrored character, or the given character if no mirroring available.
-int _getBidiCharacterMirror(int char) {
+int _getCharacterMirror(int char) {
   switch (char) {
     case 0x0028:
       return 0x0029;

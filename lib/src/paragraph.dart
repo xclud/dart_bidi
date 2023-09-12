@@ -3,44 +3,36 @@ part of bidi;
 /// Represents a paragraph in text.
 class Paragraph {
   /// Constructor.
-  Paragraph._(List<int> text, this._separator) {
-    this.text = text;
+  Paragraph._(List<int> text, this._separator)
+      : n = Normalization.decompose(text) {
+    _originalText.clear();
+
+    if (text.isNotEmpty) {
+      _originalText.addAll(text);
+    }
+
+    n._compose();
+
+    _embeddingLevel = _calculateEmbeddingLevel(n);
+    _recalculateCharactersEmbeddingLevels(n);
+
+    _removeBidiMarkers();
   }
 
   final int _separator;
   final List<int> _originalText = [];
-  final List<int> _text = [];
   final List<int> _bidiText = [];
 
-  int _embeddingLevel = 0;
-  late List<_CharData> _textData;
-  final List<int> _charLengths = [];
-  final List<int> _bidiIndexes = [];
+  /// N
+  final Normalization n;
 
-  late bool _hasPersian;
-  late bool _hasNSMs;
+  int _embeddingLevel = 0;
+  final List<int> _lengths = [];
+  final List<int> _indices = [];
 
   /// Original text.
   List<int> get text {
     return _originalText;
-  }
-
-  /// Original text.
-  set text(Iterable<int> value) {
-    _originalText.clear();
-    _text.clear();
-
-    if (value.isNotEmpty) {
-      _originalText.addAll(value);
-      _text.addAll(value);
-    }
-
-    _normalizeText();
-
-    _recalculateParagraphEmbeddingLevel();
-    _recalculateCharactersEmbeddingLevels();
-
-    _removeBidiMarkers();
   }
 
   /// Bidi text.
@@ -54,13 +46,25 @@ class Paragraph {
   }
 
   /// Bidi indexes.
+  @Deprecated('Please use indices')
   List<int> get bidiIndexes {
-    return _bidiIndexes;
+    return _indices;
+  }
+
+  /// Indices of the bidi text.
+  List<int> get indices {
+    return _indices;
   }
 
   /// Bidi index lengths.
+  @Deprecated('Please use lengths')
   List<int> get bidiIndexLengths {
-    return _charLengths;
+    return _lengths;
+  }
+
+  /// Index lengths.
+  List<int> get lengths {
+    return _lengths;
   }
 
   /// The paragraph separatpr.
@@ -88,8 +92,8 @@ class Paragraph {
     while (i < sb.length) {
       if (controlChars.contains(sb[i])) {
         sb.removeAt(i);
-        _bidiIndexes.removeAt(i);
-        _charLengths.removeAt(i);
+        _indices.removeAt(i);
+        _lengths.removeAt(i);
       } else {
         ++i;
       }
@@ -99,42 +103,22 @@ class Paragraph {
     _bidiText.addAll(sb);
   }
 
-  // 3.3.1 The Paragraph Level
-  // P2 - In each paragraph, find the first character of type L, AL, or R.
-  // P3 - If a character is found in P2 and it is of type AL or R, then
-  // set the paragraph embedding level to one; otherwise, set it to zero.
-  void _recalculateParagraphEmbeddingLevel() {
-    for (var c in _text) {
-      final cType = getCharacterType(c);
-      if (cType == CharacterType.rtl || cType == CharacterType.al) {
-        _embeddingLevel = 1;
-        break;
-      } else if (cType == CharacterType.ltr) {
-        break;
-      }
-    }
-  }
-
-  void _normalizeText() {
-    final sb = _internalDecompose(_charLengths);
-    _internalCompose(sb, _charLengths);
-
-    _text.clear();
-    _text.addAll(sb);
-  }
-
   // 3.3.2 Explicit Levels and Directions
-  void _recalculateCharactersEmbeddingLevels() {
+  void _recalculateCharactersEmbeddingLevels(Normalization n) {
     // This method is implemented in such a way it handles the string in logical order,
     // rather than visual order, so it is easier to handle complex layouts. That is why
     // it is placed BEFORE ReorderString rather than AFTER it, as its number suggests.
-    if (_hasPersian) {
-      final shaped = performShaping(_text);
-      _text.clear();
-      _text.addAll(shaped);
+    if (n.hasPersian) {
+      final shaped = n._performShaping();
+      n.target.clear();
+      n.target.addAll(shaped);
     }
 
-    _textData = List<_CharData>.generate(_text.length, (index) => _CharData());
+    final text = n.target;
+    final lengths = n.lengths;
+
+    final textData =
+        List<_CharData>.generate(n.target.length, (index) => _CharData());
 
     // X1
     var embeddingLevel = _embeddingLevel;
@@ -142,13 +126,13 @@ class Paragraph {
     _Stack<DirectionOverride> dosStack = _Stack<DirectionOverride>();
     _Stack<int> elStack = _Stack<int>();
     int idx = 0;
-    for (int i = 0; i < _text.length; ++i) {
+    for (int i = 0; i < text.length; ++i) {
       bool x9Char = false;
-      final c = _text[i];
-      _textData[i]._ct = getCharacterType(c);
-      _textData[i]._char = c;
-      _textData[i]._idx = idx;
-      idx += _charLengths[i];
+      final c = text[i];
+      textData[i].type = getCharacterType(c);
+      textData[i].char = c;
+      textData[i].index = idx;
+      idx += lengths[i];
 
       // X2. With each RLE, compute the least greater odd embedding level.
       // X4. With each RLO, compute the least greater odd embedding level.
@@ -190,14 +174,14 @@ class Paragraph {
       // X6. For all types besides RLE, LRE, RLO, LRO, and PDF: (...)
       else if (c != _BidiChars.PDF) {
         // a. Set the level of the current character to the current embedding level.
-        _textData[i]._el = embeddingLevel;
+        textData[i].embeddingLevel = embeddingLevel;
 
         //b. Whenever the directional override status is not neutral,
         //reset the current character type to the directional override status.
         if (dos == DirectionOverride.ltr) {
-          _textData[i]._ct = CharacterType.ltr;
+          textData[i].type = CharacterType.ltr;
         } else if (dos == DirectionOverride.rtl) {
-          _textData[i]._ct = CharacterType.rtl;
+          textData[i].type = CharacterType.rtl;
         }
       }
 
@@ -217,359 +201,201 @@ class Paragraph {
       // terminated at the end of each paragraph. Paragraph separators are not
       // included in the embedding.
 
-      if (x9Char || _textData[i]._ct == CharacterType.bn) {
-        _textData[i]._el = embeddingLevel;
+      if (x9Char || textData[i].type == CharacterType.bn) {
+        textData[i].embeddingLevel = embeddingLevel;
       }
     }
 
     // X10. The remaining rules are applied to each run of characters at the same level.
     int prevLevel = embeddingLevel;
     int start = 0;
-    while (start < _text.length) {
-      final level = _textData[start]._el;
+    while (start < text.length) {
+      final level = textData[start].embeddingLevel;
       final sor = _typeForLevel(max(prevLevel, level));
 
       int limit = start + 1;
-      while (limit < _text.length && _textData[limit]._el == level) {
+      while (limit < text.length && textData[limit].embeddingLevel == level) {
         ++limit;
       }
 
       final nextLevel =
-          limit < _text.length ? _textData[limit]._el : embeddingLevel;
+          limit < text.length ? textData[limit].embeddingLevel : embeddingLevel;
       final eor = _typeForLevel(max(nextLevel, level));
 
-      _resolveWeakTypes(start, limit, sor, eor);
-      _resolveNeutralTypes(start, limit, sor, eor, level);
-      resolveImplicitTypes(start, limit, level);
+      _resolveWeakTypes(
+          textData, start, limit, sor, eor, n.hasPersian, n.hasNonspacingMark);
+      _resolveNeutralTypes(textData, start, limit, sor, eor, level);
+      _resolveImplicitTypes(textData, start, limit, level);
 
       prevLevel = level;
       start = limit;
     }
 
-    reorderString();
-    fixMirroredCharacters();
+    _reorderString(textData, _embeddingLevel);
+    _fixMirroredCharacters(textData);
 
     List<int> indexes = [];
-    List<int> lengths = [];
 
     final List<int> sb = [];
-    for (_CharData cd in _textData) {
-      sb.add(cd._char);
-      indexes.add(cd._idx);
-      lengths.add(1);
+    for (final cd in textData) {
+      sb.add(cd.char);
+      indexes.add(cd.index);
     }
 
     _bidiText.clear();
     _bidiText.addAll(sb);
 
-    _bidiIndexes.clear();
-    _bidiIndexes.addAll(indexes);
+    _indices.clear();
+    _indices.addAll(indexes);
   }
+}
 
-  /// 3.3.3 Resolving Weak Types
-  void _resolveWeakTypes(
-    int start,
-    int limit,
-    CharacterType sor,
-    CharacterType eor,
-  ) {
-    // TODO - all these repeating runs seems somewhat unefficient...
-    // TODO - rules 2 and 7 are the same, except for minor parameter changes...
+class _CharData {
+  late int char;
+  late int embeddingLevel; // 0-62 => 6
+  late CharacterType type; // 0-18 => 5
+  late int index;
+}
 
-    // W1. Examine each nonspacing mark (NSM) in the level run, and change the type of the NSM to the type of the previous character. If the NSM is at the start of the level run, it will get the type of sor.
-    if (_hasNSMs) {
-      CharacterType preceedingCharacterType = sor;
-      for (int i = start; i < limit; ++i) {
-        CharacterType t = _textData[i]._ct;
-        if (t == CharacterType.nonspacingMark) {
-          _textData[i]._ct = preceedingCharacterType;
-        } else {
-          preceedingCharacterType = t;
-        }
-      }
-    }
+/// Return the strong type (L or R) corresponding to the embedding level.
+///
+/// [level] The embedding level to check.
+CharacterType _typeForLevel(int level) {
+  return ((level & 1) == 0) ? CharacterType.ltr : CharacterType.rtl;
+}
 
-    // W2. Search backward from each instance of a European number until the first strong type (R, L, AL, or sor) is found. If an AL is found, change the type of the European number to Persian number.
+/// Contains a set of functions for bidi text
+/// normalization (decomposition and composition).
+class Normalization {
+  /// Decomposition.
+  const Normalization._(
+    this.target,
+    this.lengths,
+    this.hasPersian,
+    this.hasNonspacingMark,
+  );
 
-    var tW2 = CharacterType.en;
-    for (int i = start; i < limit; ++i) {
-      if (_textData[i]._ct == CharacterType.ltr ||
-          _textData[i]._ct == CharacterType.rtl) {
-        tW2 = CharacterType.en;
-      } else if (_textData[i]._ct == CharacterType.al) {
-        tW2 = CharacterType.an;
-      } else if (_textData[i]._ct == CharacterType.en) {
-        _textData[i]._ct = tW2;
-      }
-    }
+  /// Calculates the internal decomposition of the input text.
+  factory Normalization.decompose(List<int> characters) {
+    final List<int> target = [];
+    final List<int> lengths = [];
 
-    // W3. Change all ALs to R.
-    if (_hasPersian) {
-      for (int i = start; i < limit; ++i) {
-        if (_textData[i]._ct == CharacterType.al) {
-          _textData[i]._ct = CharacterType.rtl;
-        }
-      }
-    }
+    var hasPersian = false;
+    var hasNSMs = false;
 
-    // W4. A single European separator between two European numbers changes to a European number. A single common separator between two numbers of the same type changes to that type.
+    for (int i = 0; i < characters.length; ++i) {
+      final ct = getCharacterType(characters[i]);
+      hasPersian |= ((ct == CharacterType.al) || (ct == CharacterType.an));
+      hasNSMs |= (ct == CharacterType.nonspacingMark);
 
-    // Since there must be values on both sides for this rule to have an
-    // effect, the scan skips the first and last value.
-    //
-    // Although the scan proceeds left to right, and changes the type values
-    // in a way that would appear to affect the computations later in the scan,
-    // there is actually no problem.  A change in the current value can only
-    // affect the value to its immediate right, and only affect it if it is
-    // ES or CS.  But the current value can only change if the value to its
-    // right is not ES or CS.  Thus either the current value will not change,
-    // or its change will have no effect on the remainder of the analysis.
+      final buffer = <int>[];
+      _getRecursiveDecomposition(false, characters[i], buffer);
+      lengths.add(1 - buffer.length);
+      // add all of the characters in the decomposition.
+      // (may be just the original character, if there was
+      // no decomposition mapping)
 
-    for (int i = start + 1; i < limit - 1; ++i) {
-      if (_textData[i]._ct == CharacterType.es ||
-          _textData[i]._ct == CharacterType.commonNumberSeparator) {
-        CharacterType prevSepType = _textData[i - 1]._ct;
-        CharacterType succSepType = _textData[i + 1]._ct;
-        if (prevSepType == CharacterType.en &&
-            succSepType == CharacterType.en) {
-          _textData[i]._ct = CharacterType.en;
-        } else if (_textData[i]._ct == CharacterType.commonNumberSeparator &&
-            prevSepType == CharacterType.an &&
-            succSepType == CharacterType.an) {
-          _textData[i]._ct = CharacterType.an;
-        }
-      }
-    }
-
-    // W5. A sequence of European terminators adjacent to European numbers changes to all European numbers.
-    for (int i = start; i < limit; ++i) {
-      if (_textData[i]._ct == CharacterType.et) {
-        // locate end of sequence
-        int runstart = i;
-        int runlimit = _findRunLimit(runstart, limit, [CharacterType.et]);
-
-        // check values at ends of sequence
-        CharacterType t = runstart == start ? sor : _textData[runstart - 1]._ct;
-
-        if (t != CharacterType.en) {
-          t = runlimit == limit ? eor : _textData[runlimit]._ct;
-        }
-
-        if (t == CharacterType.en) {
-          _setTypes(runstart, runlimit, CharacterType.en);
-        }
-
-        // continue at end of sequence
-        i = runlimit;
-      }
-    }
-
-    // W6. Otherwise, separators and terminators change to Other Neutral.
-    for (int i = start; i < limit; ++i) {
-      CharacterType t = _textData[i]._ct;
-      if (t == CharacterType.es ||
-          t == CharacterType.et ||
-          t == CharacterType.commonNumberSeparator) {
-        _textData[i]._ct = CharacterType.otherNeutrals;
-      }
-    }
-
-    // W7. Search backward from each instance of a European number until the first strong type (R, L, or sor) is found.
-    //     If an L is found, then change the type of the European number to L.
-
-    CharacterType tW7 =
-        sor == CharacterType.ltr ? CharacterType.ltr : CharacterType.en;
-    for (int i = start; i < limit; ++i) {
-      if (_textData[i]._ct == CharacterType.rtl) {
-        tW7 = CharacterType.en;
-      } else if (_textData[i]._ct == CharacterType.ltr) {
-        tW7 = CharacterType.ltr;
-      } else if (_textData[i]._ct == CharacterType.en) {
-        _textData[i]._ct = tW7;
-      }
-    }
-  }
-
-  /// 3.3.4 Resolving Neutral Types
-  void _resolveNeutralTypes(
-    int start,
-    int limit,
-    CharacterType sor,
-    CharacterType eor,
-    int level,
-  ) {
-    // N1. A sequence of neutrals takes the direction of the surrounding strong text if the text on both sides has the same direction.
-    //     European and Persian numbers act as if they were R in terms of their influence on neutrals.
-    //     Start-of-level-run (sor) and end-of-level-run (eor) are used at level run boundaries.
-    // N2. Any remaining neutrals take the embedding direction.
-
-    for (int i = start; i < limit; ++i) {
-      CharacterType t = _textData[i]._ct;
-      if (t == CharacterType.whitespace ||
-          t == CharacterType.otherNeutrals ||
-          t == CharacterType.b ||
-          t == CharacterType.segmentSeparator) {
-        // find bounds of run of neutrals
-        int runstart = i;
-        int runlimit = _findRunLimit(
-          runstart,
-          limit,
-          [
-            CharacterType.b,
-            CharacterType.segmentSeparator,
-            CharacterType.whitespace,
-            CharacterType.otherNeutrals
-          ],
-        );
-
-        // determine effective types at ends of run
-        CharacterType leadingType;
-        CharacterType trailingType;
-
-        if (runstart == start) {
-          leadingType = sor;
-        } else {
-          leadingType = _textData[runstart - 1]._ct;
-          if (leadingType == CharacterType.an ||
-              leadingType == CharacterType.en) {
-            leadingType = CharacterType.rtl;
+      for (int j = 0; j < buffer.length; ++j) {
+        final character = buffer[j];
+        final chClass = _getCanonicalClass(character);
+        int k = target.length; // insertion point
+        if (chClass != _CanonicalClass.notReordered) {
+          // bubble-sort combining marks as necessary
+          int ch2;
+          for (; k > 0; --k) {
+            ch2 = target[k - 1];
+            if (_getCanonicalClass(ch2).value <= chClass.value) break;
           }
         }
 
-        if (runlimit == limit) {
-          trailingType = eor;
+        target.insert(k, character);
+      }
+    }
+
+    return Normalization._(target, lengths, hasPersian, hasNSMs);
+  }
+
+  /// Compose.
+  void _compose() {
+    if (target.isEmpty) {
+      return;
+    }
+
+    int starterPos = 0;
+    int compPos = 1;
+    var starterCh = target[0];
+
+    lengths[starterPos] = lengths[starterPos] + 1;
+
+    var lastClass = _getCanonicalClass(starterCh);
+
+    if (lastClass != _CanonicalClass.notReordered) {
+      lastClass = _CanonicalClass.fromValue(
+        256,
+      ); // fix for strings staring with a combining mark
+    }
+
+    int oldLen = target.length;
+
+    // Loop on the decomposed characters, combining where possible
+    int ch;
+    for (int decompPos = compPos; decompPos < target.length; ++decompPos) {
+      ch = target[decompPos];
+      final chClass = _getCanonicalClass(ch);
+      final isShaddaPair = chClass.isShaddaPair;
+      final composite = _getPairwiseComposition(starterCh, ch);
+      final composeType = getDecompositionType(composite);
+
+      if ((composeType == null || (isShaddaPair)) &&
+          composite != _BidiChars.notAChar &&
+          (lastClass.value < chClass.value ||
+              lastClass == _CanonicalClass.notReordered)) {
+        target[starterPos] = composite;
+        lengths[starterPos] = lengths[starterPos] + 1;
+        // we know that we will only be replacing non-supplementaries by non-supplementaries
+        // so we don't have to adjust the decompPos
+        starterCh = composite;
+      } else {
+        if (chClass == _CanonicalClass.notReordered || (isShaddaPair)) {
+          starterPos = compPos;
+          starterCh = ch;
+        }
+        lastClass = chClass;
+        target[compPos] = ch;
+        //char_lengths[compPos] = char_lengths[compPos] + 1;
+        int chkPos = compPos;
+        if (lengths[chkPos] < 0) {
+          while (lengths[chkPos] < 0) {
+            lengths[chkPos] = lengths[chkPos] + 1;
+            lengths.insert(compPos, 0);
+            chkPos++;
+          }
         } else {
-          trailingType = _textData[runlimit]._ct;
-          if (trailingType == CharacterType.an ||
-              trailingType == CharacterType.en) {
-            trailingType = CharacterType.rtl;
-          }
+          lengths[chkPos] = lengths[chkPos] + 1;
         }
 
-        CharacterType resolvedType;
-        if (leadingType == trailingType) {
-          // Rule N1.
-          resolvedType = leadingType;
-        } else {
-          // Rule N2.
-          // Notice the embedding level of the run is used, not
-          // the paragraph embedding level.
-          resolvedType = _typeForLevel(level);
+        if (target.length != oldLen) // MAY HAVE TO ADJUST!
+        {
+          decompPos += target.length - oldLen;
+          oldLen = target.length;
         }
-
-        _setTypes(runstart, runlimit, resolvedType);
-
-        // skip over run of (former) neutrals
-        i = runlimit;
+        ++compPos;
       }
     }
-  }
+    target.length = compPos;
 
-  /// 3.3.5 Resolving Implicit Levels
-  void resolveImplicitTypes(int start, int limit, int level) {
-    // I1. For all characters with an even (left-to-right) embedding direction, those of type R go up one level and those of type AN or EN go up two levels.
-    // I2. For all characters with an odd (right-to-left) embedding direction, those of type L, EN or AN go up one level.
+    final taken = lengths.take(compPos).toList();
 
-    if ((level & 1) == 0) // even level
-    {
-      for (int i = start; i < limit; ++i) {
-        CharacterType t = _textData[i]._ct;
-        // Rule I1.
-        if (t == CharacterType.rtl) {
-          _textData[i]._el += 1;
-        } else if (t == CharacterType.an || t == CharacterType.en) {
-          _textData[i]._el += 2;
-        }
-      }
-    } else // odd level
-    {
-      for (int i = start; i < limit; ++i) {
-        CharacterType t = _textData[i]._ct;
-        // Rule I2.
-        if (t == CharacterType.ltr ||
-            t == CharacterType.an ||
-            t == CharacterType.en) _textData[i]._el += 1;
-      }
-    }
-  }
-
-  /// 3.4 Reordering Resolved Levels
-  void reorderString() {
-    //L1. On each line, reset the embedding level of the following characters to the paragraph embedding level:
-    //    1. Segment separators,
-    //    2. Paragraph separators,
-    //    3. Any sequence of whitespace characters preceding a segment separator or paragraph separator, and
-    //    4. Any sequence of white space characters at the end of the line.
-
-    int l1Start = 0;
-    for (int i = 0; i < _textData.length; ++i) {
-      if (_textData[i]._ct == CharacterType.segmentSeparator ||
-          _textData[i]._ct == CharacterType.b) {
-        for (int j = l1Start; j <= i; ++j) {
-          _textData[j]._el = _embeddingLevel;
-        }
-      }
-
-      if (_textData[i]._ct != CharacterType.whitespace) {
-        l1Start = i + 1;
-      }
-    }
-    for (int j = l1Start; j < _textData.length; ++j) {
-      _textData[j]._el = _embeddingLevel;
-    }
-
-    // L2. From the highest level found in the text to the lowest odd level on each
-    //     line, including intermediate levels not actually present in the text,
-    //     reverse any contiguous sequence of characters that are at that level or
-    //     higher.
-    int highest = 0;
-    int lowestOdd = 63;
-    for (_CharData cd in _textData) {
-      if (cd._el > highest) highest = cd._el;
-      if ((cd._el & 1) == 1 && cd._el < lowestOdd) lowestOdd = cd._el;
-    }
-
-    for (var el = highest; el >= lowestOdd; --el) {
-      for (int i = 0; i < _textData.length; ++i) {
-        if (_textData[i]._el >= el) {
-          // find range of text at or above this level
-          int l2Start = i;
-          int limit = i + 1;
-          while (limit < _textData.length && _textData[limit]._el >= el) {
-            ++limit;
-          }
-
-          // reverse run
-          for (int j = l2Start, k = limit - 1; j < k; ++j, --k) {
-            _CharData tempCd = _textData[j];
-            _textData[j] = _textData[k];
-            _textData[k] = tempCd;
-          }
-
-          // skip to end of level run
-          i = limit;
-        }
-      }
-    }
-
-    // TODO - L3. Combining marks applied to a right-to-left base character will at this point precede their base
-    // character. If the rendering engine expects them to follow the base characters in the final display process,
-    // then the ordering of the marks and the base character must be reversed.
-  }
-
-  /// L4. A character is depicted by a mirrored glyph if and only if (a) the resolved directionality of that character is R, and (b) the Bidi_Mirrored property value of that character is true.
-  void fixMirroredCharacters() {
-    for (int i = 0; i < _textData.length; ++i) {
-      if ((_textData[i]._el & 1) == 1) {
-        _textData[i]._char = _getBidiCharacterMirror(_textData[i]._char);
-      }
-    }
+    lengths.clear();
+    lengths.addAll(taken);
   }
 
   /// 3.5 Shaping
   /// Implements rules R1-R7 and rules L1-L3 of section 8.2 (Persian) of the Unicode standard.
   // TODO - this code is very special-cased.
-  List<int> performShaping(List<int> text) {
+  List<int> _performShaping() {
+    final text = target;
+
     ShapeJoiningType lastJt = ShapeJoiningType.nonJoining;
     LetterForm lastForm = LetterForm.isolated;
     int lastPos = 0;
@@ -642,46 +468,46 @@ class Paragraph {
           switch (ch) {
             case _BidiChars.ARABIC_ALEF:
               sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_FINAL;
-              _charLengths.removeAt(insertPos);
+              lengths.removeAt(insertPos);
               continue;
 
             case _BidiChars.ARABIC_ALEF_MADDA_ABOVE:
               sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_MADDA_ABOVE_FINAL;
-              _charLengths.removeAt(insertPos);
-              _charLengths[insertPos] = _charLengths[insertPos] + 1;
+              lengths.removeAt(insertPos);
+              lengths[insertPos] = lengths[insertPos] + 1;
               continue;
 
             case _BidiChars.ARABIC_ALEF_HAMZA_ABOVE:
               sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_HAMZA_ABOVE_FINAL;
-              _charLengths.removeAt(insertPos);
+              lengths.removeAt(insertPos);
               continue;
 
             case _BidiChars.ARABIC_ALEF_HAMZA_BELOW:
               sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_HAMZA_BELOW_FINAL;
-              _charLengths.removeAt(insertPos);
+              lengths.removeAt(insertPos);
               continue;
           }
         } else if (letterForms[lastPos] == LetterForm.initial) {
           switch (ch) {
             case _BidiChars.ARABIC_ALEF:
               sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_ISOLATED;
-              _charLengths.removeAt(insertPos);
+              lengths.removeAt(insertPos);
               continue;
 
             case _BidiChars.ARABIC_ALEF_MADDA_ABOVE:
               sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_MADDA_ABOVE_ISOLATED;
-              _charLengths.removeAt(insertPos);
-              _charLengths[insertPos] = _charLengths[insertPos] + 1;
+              lengths.removeAt(insertPos);
+              lengths[insertPos] = lengths[insertPos] + 1;
               continue;
 
             case _BidiChars.ARABIC_ALEF_HAMZA_ABOVE:
               sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_HAMZA_ABOVE_ISOLATED;
-              _charLengths.removeAt(insertPos);
+              lengths.removeAt(insertPos);
               continue;
 
             case _BidiChars.ARABIC_ALEF_HAMZA_BELOW:
               sb[insertPos] = _BidiChars.ARABIC_LAM_ALEF_HAMZA_BELOW_ISOLATED;
-              _charLengths.removeAt(insertPos);
+              lengths.removeAt(insertPos);
               continue;
           }
         }
@@ -693,177 +519,389 @@ class Paragraph {
     return sb;
   }
 
-  int _getPairwiseComposition(int first, int second) {
-    if (first < 0 || first > 0xFFFF || second < 0 || second > 0xFFFF) {
-      return _BidiChars.notAChar;
-    }
+  /// Target.
+  final List<int> target;
 
-    return compose(String.fromCharCodes([first, second]));
+  /// Lengths.
+  final List<int> lengths;
+
+  /// Has Persian Characters.
+  final bool hasPersian;
+
+  /// Has Nonspacing Mark.
+  final bool hasNonspacingMark;
+}
+
+int _getPairwiseComposition(int first, int second) {
+  if (first < 0 || first > 0xFFFF || second < 0 || second > 0xFFFF) {
+    return _BidiChars.notAChar;
   }
 
-  bool _isPartOfArabicShaddaPair(_UnicodeCanonicalClass chClass) {
-    return chClass.value >= 28 && chClass.value <= 35;
-  }
+  return compose(String.fromCharCodes([first, second]));
+}
 
-  void _internalCompose(List<int> target, List<int> charLengths) {
-    if (target.isEmpty) {
-      return;
-    }
-
-    int starterPos = 0;
-    int compPos = 1;
-    var starterCh = target[0];
-
-    charLengths[starterPos] = charLengths[starterPos] + 1;
-
-    var lastClass = _getUnicodeCanonicalClass(starterCh);
-
-    if (lastClass != _UnicodeCanonicalClass.NR) {
-      lastClass = _UnicodeCanonicalClass.fromValue(
-        256,
-      ); // fix for strings staring with a combining mark
-    }
-
-    int oldLen = target.length;
-
-    // Loop on the decomposed characters, combining where possible
-    int ch;
-    for (int decompPos = compPos; decompPos < target.length; ++decompPos) {
-      ch = target[decompPos];
-      final chClass = _getUnicodeCanonicalClass(ch);
-      final composite = _getPairwiseComposition(starterCh, ch);
-      final composeType = getDecompositionType(composite);
-
-      if ((composeType == null || _isPartOfArabicShaddaPair(chClass)) &&
-          composite != _BidiChars.notAChar &&
-          (lastClass.value < chClass.value ||
-              lastClass == _UnicodeCanonicalClass.NR)) {
-        target[starterPos] = composite;
-        charLengths[starterPos] = charLengths[starterPos] + 1;
-        // we know that we will only be replacing non-supplementaries by non-supplementaries
-        // so we don't have to adjust the decompPos
-        starterCh = composite;
-      } else {
-        if (chClass == _UnicodeCanonicalClass.NR ||
-            _isPartOfArabicShaddaPair(chClass)) {
-          starterPos = compPos;
-          starterCh = ch;
-        }
-        lastClass = chClass;
-        target[compPos] = ch;
-        //char_lengths[compPos] = char_lengths[compPos] + 1;
-        int chkPos = compPos;
-        if (charLengths[chkPos] < 0) {
-          while (charLengths[chkPos] < 0) {
-            charLengths[chkPos] = charLengths[chkPos] + 1;
-            charLengths.insert(compPos, 0);
-            chkPos++;
-          }
-        } else {
-          charLengths[chkPos] = charLengths[chkPos] + 1;
-        }
-
-        if (target.length != oldLen) // MAY HAVE TO ADJUST!
-        {
-          decompPos += target.length - oldLen;
-          oldLen = target.length;
-        }
-        ++compPos;
-      }
-    }
-    target.length = compPos;
-
-    final taken = charLengths.take(compPos).toList();
-
-    charLengths.clear();
-    charLengths.addAll(taken);
-  }
-
-  void _getRecursiveDecomposition(bool canonical, int ch, List<int> builder) {
-    final decomp = getUnicodeDecompositionMapping(ch);
-    if (decomp != null && !(canonical && getDecompositionType(ch) != null)) {
-      for (int i = 0; i < decomp.length; ++i) {
-        _getRecursiveDecomposition(canonical, decomp[i], builder);
-      }
-    } else // if no decomp, append
-    {
-      builder.add(ch);
+// 3.3.1 The Paragraph Level
+// P2 - In each paragraph, find the first character of type L, AL, or R.
+// P3 - If a character is found in P2 and it is of type AL or R, then
+// set the paragraph embedding level to one; otherwise, set it to zero.
+int _calculateEmbeddingLevel(Normalization n) {
+  int embeddingLevel = 0;
+  for (var c in n.target) {
+    final cType = getCharacterType(c);
+    if (cType == CharacterType.rtl || cType == CharacterType.al) {
+      embeddingLevel = 1;
+      break;
+    } else if (cType == CharacterType.ltr) {
+      break;
     }
   }
 
-  List<int> _internalDecompose(List<int> charLengths) {
-    final List<int> target = [];
-    final List<int> buffer = [];
+  return embeddingLevel;
+}
 
-    _hasPersian = false;
-    _hasNSMs = false;
+/// 3.3.3 Resolving Weak Types
+void _resolveWeakTypes(
+  List<_CharData> textData,
+  int start,
+  int limit,
+  CharacterType sor,
+  CharacterType eor,
+  bool hasPersian,
+  bool hasNSMs,
+) {
+  // TODO - all these repeating runs seems somewhat unefficient...
+  // TODO - rules 2 and 7 are the same, except for minor parameter changes...
 
-    for (int i = 0; i < _text.length; ++i) {
-      final ct = getCharacterType(_text[i]);
-      _hasPersian |= ((ct == CharacterType.al) || (ct == CharacterType.an));
-      _hasNSMs |= (ct == CharacterType.nonspacingMark);
-
-      buffer.clear();
-      _getRecursiveDecomposition(false, _text[i], buffer);
-      charLengths.add(1 - buffer.length);
-      // add all of the characters in the decomposition.
-      // (may be just the original character, if there was
-      // no decomposition mapping)
-
-      int ch;
-      for (int j = 0; j < buffer.length; ++j) {
-        ch = buffer[j];
-        final chClass = _getUnicodeCanonicalClass(ch);
-        int k = target.length; // insertion point
-        if (chClass != _UnicodeCanonicalClass.NR) {
-          // bubble-sort combining marks as necessary
-          int ch2;
-          for (; k > 0; --k) {
-            ch2 = target[k - 1];
-            if (_getUnicodeCanonicalClass(ch2).value <= chClass.value) break;
-          }
-        }
-        target.insert(k, ch);
-      }
-    }
-    return target;
-  }
-
-  /// Return the strong type (L or R) corresponding to the embedding level.
-  ///
-  /// [level] The embedding level to check.
-  static CharacterType _typeForLevel(int level) {
-    return ((level & 1) == 0) ? CharacterType.ltr : CharacterType.rtl;
-  }
-
-  /// Return the limit of the run, starting at index, that includes only resultTypes in validSet.
-  /// This checks the value at index, and will return index if that value is not in validSet.
-  int _findRunLimit(int index, int limit, List<CharacterType> validSet) {
-    --index;
-    bool found = false;
-    while (++index < limit) {
-      CharacterType t = _textData[index]._ct;
-      found = false;
-      for (int i = 0; i < validSet.length && !found; ++i) {
-        if (t == validSet[i]) found = true;
-      }
-
-      if (!found) return index; // didn't find a match in validSet
-    }
-    return limit;
-  }
-
-  /// Set resultTypes from start up to (but not including) limit to newType.
-  void _setTypes(int start, int limit, CharacterType newType) {
+  // W1. Examine each nonspacing mark (NSM) in the level run, and change the type of the NSM to the type of the previous character. If the NSM is at the start of the level run, it will get the type of sor.
+  if (hasNSMs) {
+    CharacterType preceedingCharacterType = sor;
     for (int i = start; i < limit; ++i) {
-      _textData[i]._ct = newType;
+      CharacterType t = textData[i].type;
+      if (t == CharacterType.nonspacingMark) {
+        textData[i].type = preceedingCharacterType;
+      } else {
+        preceedingCharacterType = t;
+      }
+    }
+  }
+
+  // W2. Search backward from each instance of a European number until the first strong type (R, L, AL, or sor) is found. If an AL is found, change the type of the European number to Persian number.
+
+  var tW2 = CharacterType.en;
+  for (int i = start; i < limit; ++i) {
+    if (textData[i].type == CharacterType.ltr ||
+        textData[i].type == CharacterType.rtl) {
+      tW2 = CharacterType.en;
+    } else if (textData[i].type == CharacterType.al) {
+      tW2 = CharacterType.an;
+    } else if (textData[i].type == CharacterType.en) {
+      textData[i].type = tW2;
+    }
+  }
+
+  // W3. Change all ALs to R.
+  if (hasPersian) {
+    for (int i = start; i < limit; ++i) {
+      if (textData[i].type == CharacterType.al) {
+        textData[i].type = CharacterType.rtl;
+      }
+    }
+  }
+
+  // W4. A single European separator between two European numbers changes to a European number. A single common separator between two numbers of the same type changes to that type.
+
+  // Since there must be values on both sides for this rule to have an
+  // effect, the scan skips the first and last value.
+  //
+  // Although the scan proceeds left to right, and changes the type values
+  // in a way that would appear to affect the computations later in the scan,
+  // there is actually no problem.  A change in the current value can only
+  // affect the value to its immediate right, and only affect it if it is
+  // ES or CS.  But the current value can only change if the value to its
+  // right is not ES or CS.  Thus either the current value will not change,
+  // or its change will have no effect on the remainder of the analysis.
+
+  for (int i = start + 1; i < limit - 1; ++i) {
+    if (textData[i].type == CharacterType.es ||
+        textData[i].type == CharacterType.commonNumberSeparator) {
+      CharacterType prevSepType = textData[i - 1].type;
+      CharacterType succSepType = textData[i + 1].type;
+      if (prevSepType == CharacterType.en && succSepType == CharacterType.en) {
+        textData[i].type = CharacterType.en;
+      } else if (textData[i].type == CharacterType.commonNumberSeparator &&
+          prevSepType == CharacterType.an &&
+          succSepType == CharacterType.an) {
+        textData[i].type = CharacterType.an;
+      }
+    }
+  }
+
+  // W5. A sequence of European terminators adjacent to European numbers changes to all European numbers.
+  for (int i = start; i < limit; ++i) {
+    if (textData[i].type == CharacterType.et) {
+      // locate end of sequence
+      int runstart = i;
+      int runlimit =
+          _findRunLimit(textData, runstart, limit, [CharacterType.et]);
+
+      // check values at ends of sequence
+      CharacterType t = runstart == start ? sor : textData[runstart - 1].type;
+
+      if (t != CharacterType.en) {
+        t = runlimit == limit ? eor : textData[runlimit].type;
+      }
+
+      if (t == CharacterType.en) {
+        _setTypes(textData, runstart, runlimit, CharacterType.en);
+      }
+
+      // continue at end of sequence
+      i = runlimit;
+    }
+  }
+
+  // W6. Otherwise, separators and terminators change to Other Neutral.
+  for (int i = start; i < limit; ++i) {
+    CharacterType t = textData[i].type;
+    if (t == CharacterType.es ||
+        t == CharacterType.et ||
+        t == CharacterType.commonNumberSeparator) {
+      textData[i].type = CharacterType.otherNeutrals;
+    }
+  }
+
+  // W7. Search backward from each instance of a European number until the first strong type (R, L, or sor) is found.
+  //     If an L is found, then change the type of the European number to L.
+
+  CharacterType tW7 =
+      sor == CharacterType.ltr ? CharacterType.ltr : CharacterType.en;
+  for (int i = start; i < limit; ++i) {
+    if (textData[i].type == CharacterType.rtl) {
+      tW7 = CharacterType.en;
+    } else if (textData[i].type == CharacterType.ltr) {
+      tW7 = CharacterType.ltr;
+    } else if (textData[i].type == CharacterType.en) {
+      textData[i].type = tW7;
     }
   }
 }
 
-class _CharData {
-  late int _char;
-  late int _el; // 0-62 => 6
-  late CharacterType _ct; // 0-18 => 5
-  late int _idx;
+/// 3.3.4 Resolving Neutral Types
+void _resolveNeutralTypes(
+  List<_CharData> textData,
+  int start,
+  int limit,
+  CharacterType sor,
+  CharacterType eor,
+  int level,
+) {
+  // N1. A sequence of neutrals takes the direction of the surrounding strong text if the text on both sides has the same direction.
+  //     European and Persian numbers act as if they were R in terms of their influence on neutrals.
+  //     Start-of-level-run (sor) and end-of-level-run (eor) are used at level run boundaries.
+  // N2. Any remaining neutrals take the embedding direction.
+
+  for (int i = start; i < limit; ++i) {
+    CharacterType t = textData[i].type;
+    if (t == CharacterType.whitespace ||
+        t == CharacterType.otherNeutrals ||
+        t == CharacterType.separator ||
+        t == CharacterType.segmentSeparator) {
+      // find bounds of run of neutrals
+      int runstart = i;
+      int runlimit = _findRunLimit(
+        textData,
+        runstart,
+        limit,
+        [
+          CharacterType.separator,
+          CharacterType.segmentSeparator,
+          CharacterType.whitespace,
+          CharacterType.otherNeutrals
+        ],
+      );
+
+      // determine effective types at ends of run
+      CharacterType leadingType;
+      CharacterType trailingType;
+
+      if (runstart == start) {
+        leadingType = sor;
+      } else {
+        leadingType = textData[runstart - 1].type;
+        if (leadingType == CharacterType.an ||
+            leadingType == CharacterType.en) {
+          leadingType = CharacterType.rtl;
+        }
+      }
+
+      if (runlimit == limit) {
+        trailingType = eor;
+      } else {
+        trailingType = textData[runlimit].type;
+        if (trailingType == CharacterType.an ||
+            trailingType == CharacterType.en) {
+          trailingType = CharacterType.rtl;
+        }
+      }
+
+      CharacterType resolvedType;
+      if (leadingType == trailingType) {
+        // Rule N1.
+        resolvedType = leadingType;
+      } else {
+        // Rule N2.
+        // Notice the embedding level of the run is used, not
+        // the paragraph embedding level.
+        resolvedType = _typeForLevel(level);
+      }
+
+      _setTypes(textData, runstart, runlimit, resolvedType);
+
+      // skip over run of (former) neutrals
+      i = runlimit;
+    }
+  }
+}
+
+/// 3.3.5 Resolving Implicit Levels
+void _resolveImplicitTypes(
+  List<_CharData> textData,
+  int start,
+  int limit,
+  int level,
+) {
+  // I1. For all characters with an even (left-to-right) embedding direction, those of type R go up one level and those of type AN or EN go up two levels.
+  // I2. For all characters with an odd (right-to-left) embedding direction, those of type L, EN or AN go up one level.
+
+  if ((level & 1) == 0) // even level
+  {
+    for (int i = start; i < limit; ++i) {
+      CharacterType t = textData[i].type;
+      // Rule I1.
+      if (t == CharacterType.rtl) {
+        textData[i].embeddingLevel += 1;
+      } else if (t == CharacterType.an || t == CharacterType.en) {
+        textData[i].embeddingLevel += 2;
+      }
+    }
+  } else // odd level
+  {
+    for (int i = start; i < limit; ++i) {
+      CharacterType t = textData[i].type;
+      // Rule I2.
+      if (t == CharacterType.ltr ||
+          t == CharacterType.an ||
+          t == CharacterType.en) textData[i].embeddingLevel += 1;
+    }
+  }
+}
+
+/// 3.4 Reordering Resolved Levels
+void _reorderString(List<_CharData> textData, int embeddingLevel) {
+  //L1. On each line, reset the embedding level of the following characters to the paragraph embedding level:
+  //    1. Segment separators,
+  //    2. Paragraph separators,
+  //    3. Any sequence of whitespace characters preceding a segment separator or paragraph separator, and
+  //    4. Any sequence of white space characters at the end of the line.
+
+  int l1Start = 0;
+  for (int i = 0; i < textData.length; ++i) {
+    if (textData[i].type == CharacterType.segmentSeparator ||
+        textData[i].type == CharacterType.separator) {
+      for (int j = l1Start; j <= i; ++j) {
+        textData[j].embeddingLevel = embeddingLevel;
+      }
+    }
+
+    if (textData[i].type != CharacterType.whitespace) {
+      l1Start = i + 1;
+    }
+  }
+  for (int j = l1Start; j < textData.length; ++j) {
+    textData[j].embeddingLevel = embeddingLevel;
+  }
+
+  // L2. From the highest level found in the text to the lowest odd level on each
+  //     line, including intermediate levels not actually present in the text,
+  //     reverse any contiguous sequence of characters that are at that level or
+  //     higher.
+  int highest = 0;
+  int lowestOdd = 63;
+  for (_CharData cd in textData) {
+    if (cd.embeddingLevel > highest) highest = cd.embeddingLevel;
+    if ((cd.embeddingLevel & 1) == 1 && cd.embeddingLevel < lowestOdd) {
+      lowestOdd = cd.embeddingLevel;
+    }
+  }
+
+  for (var el = highest; el >= lowestOdd; --el) {
+    for (int i = 0; i < textData.length; ++i) {
+      if (textData[i].embeddingLevel >= el) {
+        // find range of text at or above this level
+        int l2Start = i;
+        int limit = i + 1;
+        while (
+            limit < textData.length && textData[limit].embeddingLevel >= el) {
+          ++limit;
+        }
+
+        // reverse run
+        for (int j = l2Start, k = limit - 1; j < k; ++j, --k) {
+          _CharData tempCd = textData[j];
+          textData[j] = textData[k];
+          textData[k] = tempCd;
+        }
+
+        // skip to end of level run
+        i = limit;
+      }
+    }
+  }
+
+  // TODO - L3. Combining marks applied to a right-to-left base character will at this point precede their base
+  // character. If the rendering engine expects them to follow the base characters in the final display process,
+  // then the ordering of the marks and the base character must be reversed.
+}
+
+/// L4. A character is depicted by a mirrored glyph if and only if (a) the resolved directionality of that character is R, and (b) the Bidi_Mirrored property value of that character is true.
+void _fixMirroredCharacters(List<_CharData> textData) {
+  for (int i = 0; i < textData.length; ++i) {
+    if ((textData[i].embeddingLevel & 1) == 1) {
+      textData[i].char = _getCharacterMirror(textData[i].char);
+    }
+  }
+}
+
+/// Return the limit of the run, starting at index, that includes only resultTypes in [validSet].
+/// This checks the value at index, and will return index if that value is not in [validSet].
+int _findRunLimit(
+  List<_CharData> textData,
+  int index,
+  int limit,
+  List<CharacterType> validSet,
+) {
+  --index;
+  bool found = false;
+  while (++index < limit) {
+    final t = textData[index].type;
+    found = false;
+    for (int i = 0; i < validSet.length && !found; ++i) {
+      if (t == validSet[i]) found = true;
+    }
+
+    if (!found) return index; // didn't find a match in validSet
+  }
+  return limit;
+}
+
+/// Set resultTypes from start up to (but not including) limit to newType.
+void _setTypes(
+  List<_CharData> textData,
+  int start,
+  int limit,
+  CharacterType newType,
+) {
+  for (int i = start; i < limit; ++i) {
+    textData[i].type = newType;
+  }
 }

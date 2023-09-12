@@ -1,11 +1,46 @@
 part of bidi;
 
+/// Bidi String.
+class BidiString {
+  BidiString._(this.paragraphs);
+
+  /// Implementation of the BIDI algorithm, as described in http://www.unicode.org/reports/tr9/tr9-17.html
+  /// [text] is the original logical-ordered string. Returns the visual representation of the string.
+  factory BidiString.fromLogical(String text) {
+    final paragraphs = <Paragraph>[];
+    final codeUnits = text.codeUnits;
+
+    var next = <int>[];
+    for (var i = 0; i < codeUnits.length; ++i) {
+      final char = codeUnits[i];
+      final type = getCharacterType(char);
+      if (type == CharacterType.separator) {
+        final paragraph = Paragraph._(next, char);
+        paragraphs.add(paragraph);
+        next = [];
+      } else {
+        next.add(char);
+      }
+    }
+
+    if (next.isNotEmpty) // string ended without a paragraph separator
+    {
+      paragraphs.add(Paragraph._(next, _BidiChars.notAChar));
+    }
+
+    return BidiString._(paragraphs);
+  }
+
+  /// Paragraphs.
+  final List<Paragraph> paragraphs;
+}
+
 /// Implementation of the BIDI algorithm, as described in http://www.unicode.org/reports/tr9/tr9-17.html
 /// [logicalString] is the original logical-ordered string. Returns the visual representation of the string.
 List<int> logicalToVisual(String logicalString) {
-  final pars = splitStringToParagraphs(logicalString);
+  final paragraphs = BidiString.fromLogical(logicalString).paragraphs;
   final sb = <int>[];
-  for (final p in pars) {
+  for (final p in paragraphs) {
     sb.addAll(p.bidiText);
   }
 
@@ -35,12 +70,13 @@ String logicalToVisual2(
   //(4) resolving neutral types.
   //(5) resolving implicit embedding levels.
 
-  List<Paragraph> pars = splitStringToParagraphs(logicalString);
+  final paragraphs = BidiString.fromLogical(logicalString).paragraphs;
+
   final sb = <int>[];
-  for (Paragraph p in pars) {
+  for (final p in paragraphs) {
     sb.addAll(p.bidiText);
-    indexes.addAll(p.bidiIndexes);
-    lengths.addAll(p.bidiIndexLengths);
+    indexes.addAll(p.indices);
+    lengths.addAll(p._lengths);
   }
 
   return String.fromCharCodes(sb);
@@ -52,24 +88,26 @@ String logicalToVisual2(
 /// Within each paragraph, apply all the other rules of this algorithm.
 ///
 /// 3.3.1.P1.
+@Deprecated('Please use BidiString.fromLogical')
 List<Paragraph> splitStringToParagraphs(String logicalString) {
-  List<Paragraph> ret = [];
+  final paragraphs = <Paragraph>[];
+  final codeUnits = logicalString.codeUnits;
 
-  var sb = <int>[];
-  for (var i = 0; i < logicalString.length; ++i) {
-    final c = logicalString.codeUnits[i];
-    final cType = getCharacterType(c);
-    if (cType == CharacterType.b) {
-      final p = Paragraph._(sb, c);
-      ret.add(p);
-      sb = [];
+  var text = <int>[];
+  for (var i = 0; i < codeUnits.length; ++i) {
+    final char = codeUnits[i];
+    final type = getCharacterType(char);
+    if (type == CharacterType.separator) {
+      final paragraph = Paragraph._(text, char);
+      paragraphs.add(paragraph);
+      text = [];
     } else {
-      sb.add(c);
+      text.add(char);
     }
   }
-  if (sb.isNotEmpty) // string ended without a paragraph separator
+  if (text.isNotEmpty) // string ended without a paragraph separator
   {
-    ret.add(Paragraph._(sb, _BidiChars.notAChar));
+    paragraphs.add(Paragraph._(text, _BidiChars.notAChar));
   }
-  return ret;
+  return paragraphs;
 }

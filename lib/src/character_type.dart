@@ -59,9 +59,8 @@ enum CharacterType {
   /// Boundary Neutral
   bn,
 
-  /// Paragraph Separator
-  /// B
-  b,
+  /// Paragraph Separator (B).
+  separator,
 
   /// Segment Separator (s).
   segmentSeparator,
@@ -85,10 +84,10 @@ const characterTypes = <int, CharacterType>{
   7: CharacterType.bn,
   8: CharacterType.bn,
   9: CharacterType.segmentSeparator,
-  10: CharacterType.b,
+  10: CharacterType.separator,
   11: CharacterType.segmentSeparator,
   12: CharacterType.whitespace,
-  13: CharacterType.b,
+  13: CharacterType.separator,
   14: CharacterType.bn,
   15: CharacterType.bn,
   16: CharacterType.bn,
@@ -103,9 +102,9 @@ const characterTypes = <int, CharacterType>{
   25: CharacterType.bn,
   26: CharacterType.bn,
   27: CharacterType.bn,
-  28: CharacterType.b,
-  29: CharacterType.b,
-  30: CharacterType.b,
+  28: CharacterType.separator,
+  29: CharacterType.separator,
+  30: CharacterType.separator,
   31: CharacterType.segmentSeparator,
   32: CharacterType.whitespace,
   33: CharacterType.otherNeutrals,
@@ -156,7 +155,7 @@ const characterTypes = <int, CharacterType>{
   130: CharacterType.bn,
   131: CharacterType.bn,
   132: CharacterType.bn,
-  133: CharacterType.b,
+  133: CharacterType.separator,
   134: CharacterType.bn,
   135: CharacterType.bn,
   136: CharacterType.bn,
@@ -1735,7 +1734,7 @@ const characterTypes = <int, CharacterType>{
   8230: CharacterType.otherNeutrals,
   8231: CharacterType.otherNeutrals,
   8232: CharacterType.whitespace,
-  8233: CharacterType.b,
+  8233: CharacterType.separator,
   8234: CharacterType.lre,
   8235: CharacterType.rle,
   8236: CharacterType.pdf,
