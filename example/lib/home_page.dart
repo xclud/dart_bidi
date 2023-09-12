@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bidi/bidi.dart' as bidi;
+import 'package:flutter/services.dart';
 
 const _initialText =
     'چو چپ راست کرد و خم آورد راست، خروش از خم چرخ چاچی بخاست.';
@@ -73,7 +74,13 @@ class _HomePageState extends State<HomePage> {
                     children: p.bidiText.reversed
                         .map(
                           (e) => InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Clipboard.setData(
+                                ClipboardData(
+                                  text: String.fromCharCode(e),
+                                ),
+                              );
+                            },
                             hoverColor: Colors.pink,
                             focusColor: Colors.green,
                             splashColor: Colors.amber,
