@@ -1,6 +1,8 @@
 [![pub package](https://img.shields.io/pub/v/bidi.svg)](https://pub.dartlang.org/packages/bidi)
 
-Implementation of the Bidi algorithm, as described in http://www.unicode.org/reports/tr9/tr9-17.html.
+Implementation of the Unicode Bidirectional Algorithm (UBA).
+
+Reference: [http://www.unicode.org/reports/tr9/](http://www.unicode.org/reports/tr9/).
 
 Converts *logical* strings to their equivalent *visual* representation. Persian, Hebrew and Arabic languages (and any other RTL language) are supported.
 
