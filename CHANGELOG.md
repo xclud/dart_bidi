@@ -1,6 +1,6 @@
-## 2.0.9
+## 2.0.10
 
-* Improve package scrore.
+* Improve package score.
 
 ## 2.0.8
 
