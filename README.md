@@ -27,3 +27,7 @@ import 'package:bidi/bidi.dart' as bidi;
 final visual = bidi.logicalToVisual('نوشته پارسی اینجا گذارده شود.');
 print(visual);
 ```
+
+## Other Implementations
+
+This package is also written in Rust (apart from this package, which is written in Dart). If you are looking for a pure Rust implementation of this package, look at [https://crates.io/crates/bidi/](https://crates.io/crates/bidi/).
