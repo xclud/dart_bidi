@@ -92,4 +92,3 @@ class _BidiChars {
   /// Persian Ligature Lam With Alef Final Form
   static const int ARABIC_LAM_ALEF_FINAL = 0xFEFC;
 }
-
