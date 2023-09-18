@@ -2,7 +2,7 @@
 
 Implementation of the Unicode Bidirectional Algorithm (UBA).
 
-Reference: [http://www.unicode.org/reports/tr9/](http://www.unicode.org/reports/tr9/).
+Reference: [https://unicode.org/reports/tr9/](https://unicode.org/reports/tr9/).
 
 Converts *logical* strings to their equivalent *visual* representation. Persian, Hebrew and Arabic languages (and any other RTL language) are supported.
 
