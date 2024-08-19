@@ -76,7 +76,6 @@ String logicalToVisual2(
   for (final p in paragraphs) {
     sb.addAll(p.bidiText);
     indexes.addAll(p.indices);
-    lengths.addAll(p._lengths);
   }
 
   return String.fromCharCodes(sb);
