@@ -1,3 +1,7 @@
+## 2.0.12
+
+* Improve package score.
+
 ## 2.0.10
 
 * Improve package score.
