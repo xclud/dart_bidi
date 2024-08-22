@@ -1,6 +1,6 @@
 name: bidi
 description: Implementation of the Unicode Bidirectional Algorithm (UBA). Converts logical strings to their equivalent visual representation.
-version: 2.0.11
+version: 2.0.12
 repository: https://github.com/xclud/dart_bidi
 homepage: https://pwa.ir
 
@@ -8,6 +8,5 @@ environment:
   sdk: ">=2.12.0 <4.0.0"
 
 dev_dependencies:
-  test: ^1.22.0
-  lints: ^2.0.0
-  file: ^7.0.0
+  test: ^1.25.0
+  lints: ^4.0.0
