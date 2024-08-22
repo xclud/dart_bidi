@@ -1,4 +1,4 @@
-part of bidi;
+part of '../bidi.dart';
 
 /// The four different available letter presentation forms.
 enum LetterForm {

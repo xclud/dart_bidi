@@ -1,4 +1,4 @@
-part of bidi;
+part of '../bidi.dart';
 
 /// Returns the corresponding mirrored character for the given character, if any. If no mirroring available, returns the given character.
 ///

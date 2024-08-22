@@ -1,4 +1,4 @@
-part of bidi;
+part of '../bidi.dart';
 
 const _charForms = <int, int>{
   0x30671: 0xFB50,

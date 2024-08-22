@@ -1,4 +1,4 @@
-part of bidi;
+part of '../bidi.dart';
 
 /// Unicode character categories.
 enum CharacterCategory {

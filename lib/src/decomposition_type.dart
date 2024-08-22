@@ -1,4 +1,4 @@
-part of bidi;
+part of '../bidi.dart';
 
 /// The type of Unicode character decomposition.
 enum DecompositionType {

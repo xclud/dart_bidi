@@ -1,4 +1,4 @@
-part of bidi;
+part of '../bidi.dart';
 
 class _Stack<T> {
   final _stack = Queue<T>();

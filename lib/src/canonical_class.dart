@@ -1,4 +1,4 @@
-part of bidi;
+part of '../bidi.dart';
 
 // ignore_for_file: constant_identifier_names
 

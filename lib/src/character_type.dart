@@ -1,4 +1,4 @@
-part of bidi;
+part of '../bidi.dart';
 
 /// Types of BiDi characters (Table 4 in the Unicode BiDi algorithm).
 enum CharacterType {

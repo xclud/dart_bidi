@@ -1,4 +1,4 @@
-part of bidi;
+part of '../bidi.dart';
 
 /// Bidi String.
 class BidiString {

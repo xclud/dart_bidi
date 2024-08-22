@@ -1,4 +1,4 @@
-part of bidi;
+part of '../bidi.dart';
 
 /// Letter joining types of Persian letters.
 enum ShapeJoiningType {
