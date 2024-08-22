@@ -26,7 +26,6 @@ class Paragraph {
   /// N
   final Normalization n;
 
-  final List<int> _lengths = [];
   final List<int> _indices = [];
 
   /// Original text.
@@ -55,17 +54,6 @@ class Paragraph {
     return _indices;
   }
 
-  /// Bidi index lengths.
-  @Deprecated('Please use lengths')
-  List<int> get bidiIndexLengths {
-    return _lengths;
-  }
-
-  /// Index lengths.
-  List<int> get lengths {
-    return _lengths;
-  }
-
   /// The paragraph separatpr.
   int get separator => _separator;
 
@@ -92,7 +80,6 @@ class Paragraph {
       if (controlChars.contains(sb[i])) {
         sb.removeAt(i);
         _indices.removeAt(i);
-        _lengths.removeAt(i);
       } else {
         ++i;
       }
