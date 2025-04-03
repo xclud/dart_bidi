@@ -774,7 +774,9 @@ void _resolveImplicitTypes(
       // Rule I2.
       if (t == CharacterType.ltr ||
           t == CharacterType.an ||
-          t == CharacterType.en) textData[i].embeddingLevel += 1;
+          t == CharacterType.en) {
+        textData[i].embeddingLevel += 1;
+      }
     }
   }
 }
